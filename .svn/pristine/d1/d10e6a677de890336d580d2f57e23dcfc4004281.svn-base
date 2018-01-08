@@ -1,0 +1,37 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script type="text/javascript" charset="utf-8">
+	<%		
+ %>
+</script>
+
+<div style="padding: 5px;">
+	
+		
+		
+		
+	<table id="dg" style="height:330px"
+			data-options="fitColumns:true,singleSelect:true,pagination:true,url:'${pageContext.request.contextPath}/back_user_log/user_log_datagrid.action?user_id=${user_id}&username=${username}',method:'get'">
+		<thead>
+			<tr>
+				<th data-options="field:'create_time',width:240">登录时间</th>
+				<th data-options="field:'login_ip',width:150">登录IP</th>
+				<th data-options="field:'login_address',width:80">登录地点</th>
+			</tr>
+			
+		</thead>
+	</table>
+		
+		
+	
+</div>
+
+	<script type="text/javascript">
+		$(function(){
+			var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+			
+		});
+		function description(value){
+		alert(value);
+		}
+	</script>

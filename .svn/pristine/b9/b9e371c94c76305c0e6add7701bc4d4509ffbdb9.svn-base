@@ -1,0 +1,394 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<jsp:include page="/backstage/base/inc.jsp"></jsp:include>
+<script type="text/javascript" charset="utf-8">
+	var datagrid;
+	$(function() {
+
+		datagrid = $('#datagrid').datagrid({
+			url : '${pageContext.request.contextPath}/back_file/datagrid.action',
+			title : '',
+			iconCls : 'icon-save',
+			pagination : true,
+			pageSize : 10,
+			pageList : [ 10, 20, 30, 40 ],
+			fit : true,
+			fitColumns : true,
+			nowrap : false,
+			border : false,
+			idField : 'id',
+			sortName : 'upload_time',
+			sortOrder : 'desc',
+			checkOnSelect : true,
+			selectOnCheck : true,
+			frozenColumns : [ [ {
+				title : '编号',
+				field : 'id',
+				width : 150,
+				sortable : true,
+				checkbox : true
+			}, {
+				title : '文档名称',
+				field : 'filename',
+				width : 250,
+				formatter:function(value,rowData,rowIndex){
+					var rows = datagrid.datagrid('getRows');
+					var row = rows[rowIndex];
+					return '<a href="javascript:void(0);" onclick="viewDetails('+row.id+')" >'+value+'</a>';
+				}
+			} ] ],
+			columns : [ [ {
+				title : '路径',
+				field : 'path',
+				width : 100,
+				hidden : true
+			},
+			{
+				title : '类型',
+				field : 'file_type',
+				width : 100,
+				sortable : true,
+				formatter:function(v){
+					if(v=="0"){
+						return '文档';
+					}else if(v=="1"){
+						return '教案';
+					}
+				}
+			}, {
+				title : '长度',
+				field : 'length',
+				width : 100
+			}, {
+				title : '大小',
+				field : 'size',
+				width : 100,
+				sortable : true,
+			}, {
+				title : '格式',
+				field : 'format',
+				width : 100,
+				sortable : true,
+			}, {
+				title : '上传时间',
+				field : 'upload_time',
+				sortable : true,
+				width : 150,
+			}, {
+				title : '上传人',
+				field : 'userName',
+				width : 100,
+			}, {
+				title : '状态',
+				field : 'status',
+				width : 100,
+				sortable : true,
+				formatter:function(v){
+					if(v=="0"){
+						return '正常';
+					}else if(v=="1"){
+						return '未审核';
+					}else if(v=="2"){
+						return "审核不通过";
+					}else if(v=="3"){
+						return "删除";						
+					}
+				}
+			},{
+				title : '操作',
+				field : 'statusType',
+				width : 100,
+				sortable : true,
+				formatter:function(value, rowData, rowIndex){
+					var rows = datagrid.datagrid('getRows');
+					var row = rows[rowIndex];
+					return '<a href="${pageContext.request.contextPath}/userFile/to_file.action?id='+row.id+'" target="_blank" >预览</a>';
+				}
+			} ] ],
+			toolbar : [ {
+				text : '删除',
+				iconCls : 'icon-remove',
+				handler : function() {
+					remove();
+				}
+			}, '-', {
+				text : '取消选中',
+				iconCls : 'icon-undo',
+				handler : function() {
+					datagrid.datagrid('unselectAll');
+				}
+			}, '-', {
+				text : '批量审核',
+				iconCls : 'icon-edit',
+				handler : function() {
+					review();
+				}
+			}, '-'],
+			onRowContextMenu : function(e, rowIndex, rowData) {
+				e.preventDefault();
+				$(this).datagrid('unselectAll');
+				$(this).datagrid('selectRow', rowIndex);
+				$('#menu').menu('show', {
+					left : e.pageX,
+					top : e.pageY
+				});
+			}
+		});
+
+	});
+	function viewDetails(value){
+		var p = parent.sy.dialog({
+			title : '文档详情',
+			href : '${pageContext.request.contextPath}/back_file/to_file_detail.action',
+			width : 530,
+			height : 400,
+			buttons : [ {
+				text : '返回',
+				handler : function() {
+					var f = p.find('form');
+					p.dialog('close');
+				}
+			} ],
+			onLoad : function() {
+				var f = p.find('form');
+				$.ajax({
+					url : '${pageContext.request.contextPath}/back_file/query_fileDetail.action',
+					data : {
+						id : value
+					},
+					dataType : 'json',
+					success : function(d) {
+						if(d.success){
+							f.form('load', {
+								title : d.obj.title,
+								profile : d.obj.profile,
+								type : d.obj.type,
+								labels : d.obj.labels,
+								columnName : d.obj.columnName,
+								version : d.obj.version,
+								grade : d.obj.grade,
+								price : d.obj.price,
+								status : d.obj.status,
+								reason : d.obj.reason,
+							});
+						}
+					}
+				});
+			},
+		});
+	}
+	
+	function readFile(value){
+		window.location.href = '${pageContext.request.contextPath}/back_file/to_read_file.action?id='+value;
+	}
+	
+	function review(){
+		var rows = datagrid.datagrid('getSelections');
+		var ids = [];
+		if (rows.length > 0) {
+			for ( var i = 0; i < rows.length; i++) {
+				if(rows[i].status==3){
+					parent.sy.messagerAlert('提示', rows[i].filename+'<br/>文档已删除，不能审核', 'error');
+					return false;
+				}else{
+					ids.push(rows[i].id);
+				}
+			}
+			var p = parent.sy.dialog({
+				title : '批量审核文档',
+				href : '${pageContext.request.contextPath}/back_file/to_review_file.action',
+				width : 300,
+				height : 200,
+				buttons : [ {
+					text : '审核',
+					handler : function() {
+						var f = p.find('form');
+						f.form('submit', {
+							url : '${pageContext.request.contextPath}/back_file/save_review_file.action',
+							success : function(d) {
+								var json = $.parseJSON(d);
+								if (json.success) {
+									datagrid.datagrid('reload');
+									p.dialog('close');
+								}
+								parent.sy.messagerShow({
+									msg : json.msg,
+									title : '提示'
+								});
+							}
+						});
+					}
+				} ],
+				onLoad : function() {
+					var f = p.find('form');
+					f.form('load', {
+						ids : ids.join(',')
+					});
+				}
+			});
+		} else {
+			parent.sy.messagerAlert('提示', '请勾选要审核的记录！', 'error');
+		}
+	}
+	function edit() {
+		var rows = datagrid.datagrid('getSelections');
+		if (rows.length == 1) {
+			var p = parent.sy.dialog({
+				title : '编辑文档',
+				href : '${pageContext.request.contextPath}/back_file/to_file_edit.action',
+				width : 420,
+				height : 260,
+				buttons : [ {
+					text : '编辑',
+					handler : function() {
+						var f = p.find('form');
+						f.form('submit', {
+							url : '${pageContext.request.contextPath}/back_file/edit_file.action',
+							success : function(d) {
+								var json = $.parseJSON(d);
+								if (json.success) {
+									datagrid.datagrid('reload');
+									p.dialog('close');
+								}
+								parent.sy.messagerShow({
+									msg : json.msg,
+									title : '提示'
+								});
+							}
+						});
+					}
+				} ],
+				onLoad : function() {
+					var f = p.find('form');
+					var authIds = f.find('input[name=authIds]');
+					var authIdsTree = authIds.combotree({
+						lines : true,
+						url : '${pageContext.request.contextPath}/back_auth/doNotNeedSession_tree_recursive.action',
+						checkbox : true,
+						multiple : true,
+						cascadeCheck:false,
+						onLoadSuccess : function() {
+							parent.$.messager.progress('close');
+						}
+					});
+					f.form('load', {
+						id : rows[0].id,
+						filename : rows[0].filename,
+						remarks : rows[0].remarks,
+						authIds : sy.getList(rows[0].authIds)
+					});
+				}
+			});
+		} else if (rows.length > 1) {
+			parent.sy.messagerAlert('提示', '同一时间只能编辑一条记录！', 'error');
+		} else {
+			parent.sy.messagerAlert('提示', '请勾选要编辑的记录！', 'error');
+		}
+	}
+	function append() {
+		var p = parent.sy.dialog({
+			title : '添加文档',
+			href : '${pageContext.request.contextPath}/back_file/to_file_add.action',
+			width : 420,
+			height : 260,
+			buttons : [ {
+				text : '添加',
+				handler : function() {
+					var f = p.find('form');
+					f.form('submit', {
+						url : '${pageContext.request.contextPath}/back_file/save_file.action',
+						success : function(d) {
+							var json = $.parseJSON(d);
+							if (json.success) {
+								datagrid.datagrid('reload');
+								p.dialog('close');
+							}
+							parent.sy.messagerShow({
+								msg : json.msg,
+								title : '提示'
+							});
+						}
+					});
+				}
+			} ],
+			onLoad : function() {
+				var f = p.find('form');
+				var authIds = f.find('input[name=authIds]');
+				var authIdsTree = authIds.combotree({
+					lines : true,
+					url : '${pageContext.request.contextPath}/back_auth/doNotNeedSession_tree_recursive.action',
+					checkbox : true,
+					multiple : true,
+					cascadeCheck:false
+				});
+			}
+		});
+	}
+	function remove() {
+		var rows = datagrid.datagrid('getChecked');
+		var ids = [];
+		if (rows.length > 0) {
+			parent.sy.messagerConfirm('请确认', '您要删除当前所选项目？', function(r) {
+				if (r) {
+					for ( var i = 0; i < rows.length; i++) {
+						ids.push(rows[i].id);
+					}
+					$.ajax({
+						url : '${pageContext.request.contextPath}/back_file/delete_file.action',
+						data : {
+							ids : ids.join(',')
+						},
+						dataType : 'json',
+						success : function(d) {
+							datagrid.datagrid('load');
+							datagrid.datagrid('unselectAll');
+							parent.sy.messagerShow({
+								title : '提示',
+								msg : d.msg
+							});
+						}
+					});
+				}
+			});
+		} else {
+			parent.sy.messagerAlert('提示', '请勾选要删除的记录！', 'error');
+		}
+	}
+	
+	function _search() {
+		datagrid.datagrid('load', sy.serializeObject($('#searchForm')));
+	}
+	function cleanSearch() {
+		datagrid.datagrid('load', {});
+		$('#searchForm input').val('');
+	}
+</script>
+</head>
+<body class="easyui-layout" data-options="fit:true">
+	<div data-options="region:'north',border:false,title:'过滤条件'" style="height: 160px;overflow: hidden;" align="left">
+		<form id="searchForm" style="width: 100%;height: 100%;">
+			<table class="tableForm datagrid-toolbar" style="width: 100%;height: 100%;">
+				<tr>
+					<th>文档名称</th>
+					<td>
+						<input name="filename" style="width:317px;" />
+						<a href="javascript:void(0);" class="easyui-linkbutton" onclick="_search();">过滤</a><a href="javascript:void(0);" class="easyui-linkbutton" onclick="cleanSearch();">清空</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div data-options="region:'center',border:false" style="overflow: hidden;">
+		<table id="datagrid"></table>
+	</div>
+
+	<div id="menu" class="easyui-menu" style="width:120px;display: none;">
+		<div onclick="append();" data-options="iconCls:'icon-add'">增加</div>
+		<div onclick="remove();" data-options="iconCls:'icon-remove'">删除</div>
+		<div onclick="edit();" data-options="iconCls:'icon-edit'">编辑</div>
+	</div>
+</body>
+</html>

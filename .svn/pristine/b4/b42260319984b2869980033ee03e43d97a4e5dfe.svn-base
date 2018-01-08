@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>个人中心-我的社区-我创建的社区</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+</head>
+<body >
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+
+        <div class="col-lg-9 col-md-8  course-detail-main" >
+
+            <section class="cn-section">
+
+                <div class="nav-btn-tab community_tabs">
+                    <ul class="nav nav-tabs">
+                        <li ><a href="my-community-index.html">社区主页</a></li>
+                        <li ><a href="my-community-join.html" >我加入的社区</a></li>
+                        <li class="active"><a href="my-community-create-index.html" >我组建的社区</a></li>
+                        <li><a href="my-community-topic.html" >我发起的话题</a></li>
+                    </ul>
+                </div>
+                <a href="my-community-create-new.html" class="btn btn-warning pull-right" target="_blank">创建社区</a>
+                <!--我参加的社区-->
+                <div class="my-group">
+
+                    <h5 style="margin: 70px 0 20px 0;">我参加的社区:
+                        <a href="#">
+                            <span class="pull-right num num_num" style="background: #3ebbce;padding: 0 10px;border-radius: 20px;color: #fff;">7</span>
+                        </a>
+                    </h5>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="teacher-item">
+                                <div class="teacher-top" style="padding: 5px;">
+                                    <a href="javascript:void(0);">
+                                        <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 100px;height: 100px;">
+                                    </a>
+
+                                    <div class="title community_info" style="">
+                                        <a class="link-dark" href="javascript:void(0);">夜魔学习组</a>
+                                    </div>
+                                    <div style="margin-left: 35px;margin-top: 20px;">
+                                        <i class="es-icon es-icon-people"></i>71
+                                        <br/>
+                                        <i class="es-icon es-icon-textsms"></i>10
+                                    </div>
+                                </div>
+
+                                <div class="teacher-bottom">
+                                    <div class="metas" style="">
+                                        <a class="btn btn-primary btn-sm btn-danger" href="javascript:void(0);" >关闭</a>
+                                        <a class="btn btn-default btn-sm btn-info" href="javascript:void(0);">管理</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

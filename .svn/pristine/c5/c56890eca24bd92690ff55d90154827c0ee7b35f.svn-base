@@ -1,0 +1,159 @@
+package cn.bnsr.edu_yun.backstage.base.view;
+/**
+ * 用户统计
+ * @author fangxiongwei
+ * @date 2016年10月14日
+ */
+public class UserStatsView {
+	private String days;//日期
+	private String year;//年
+	private String month;//月
+	private int frontNum;//前台用户注册数量
+	private int logType;//0-注册；1-登录；
+	private int timeType;//0-本月；1-上月；2-近三月；3-起止时间；4-本周   （用户登录注册）
+	//0-次日；1-三日；2-七日；3-起止时间；（用户留存率）
+	//0-今天；1-昨天；2-最近七天；3-最近30天
+	private int isDuration;//是否是时间段：0-是；1-否；
+	private int timeUnit;//时间单位：0-按时；1-按日；2-按周；3-按月；
+	private int device;//设备：0-全部；1-PC端；2-移动端
+	private String province_id;//省、直辖市、自治区 id 0--全国
+	private Integer compare;//对比：0-前一日；1-上一周期；
+	private String startTime;//起始时间    
+	private String endTime;//结束时间
+	private String returnTime;//月回归上限时间
+	private String oneDay;//true,it's that song
+	private int countNum;//总数
+	private int newNum;//新增数
+	private int activeNum;//活跃数
+	private int returnNum;//回归数
+	private int remain_type;//留存方式  0-求和，1-查询某一天
+	private int remainRatio;//留存率
+	
+	
+	public String getDays() {
+		return days;
+	}
+	public void setDays(String days) {
+		this.days = days;
+	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public int getFrontNum() {
+		return frontNum;
+	}
+	public void setFrontNum(int frontNum) {
+		this.frontNum = frontNum;
+	}
+	public int getLogType() {
+		return logType;
+	}
+	public void setLogType(int logType) {
+		this.logType = logType;
+	}
+	public int getTimeType() {
+		return timeType;
+	}
+	public void setTimeType(int timeType) {
+		this.timeType = timeType;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public String getOneDay() {
+		return oneDay;
+	}
+	public void setOneDay(String oneDay) {
+		this.oneDay = oneDay;
+	}
+	public int getCountNum() {
+		return countNum;
+	}
+	public void setCountNum(int countNum) {
+		this.countNum = countNum;
+	}
+	public int getNewNum() {
+		return newNum;
+	}
+	public void setNewNum(int newNum) {
+		this.newNum = newNum;
+	}
+	public int getRemain_type() {
+		return remain_type;
+	}
+	public void setRemain_type(int remain_type) {
+		this.remain_type = remain_type;
+	}
+	public int getRemainRatio() {
+		return remainRatio;
+	}
+	public void setRemainRatio(int remainRatio) {
+		this.remainRatio = remainRatio;
+	}
+	public String getReturnTime() {
+		return returnTime;
+	}
+	public void setReturnTime(String returnTime) {
+		this.returnTime = returnTime;
+	}
+	public int getActiveNum() {
+		return activeNum;
+	}
+	public void setActiveNum(int activeNum) {
+		this.activeNum = activeNum;
+	}
+	public int getReturnNum() {
+		return returnNum;
+	}
+	public void setReturnNum(int returnNum) {
+		this.returnNum = returnNum;
+	}
+	public int getIsDuration() {
+		return isDuration;
+	}
+	public void setIsDuration(int isDuration) {
+		this.isDuration = isDuration;
+	}
+	public int getTimeUnit() {
+		return timeUnit;
+	}
+	public void setTimeUnit(int timeUnit) {
+		this.timeUnit = timeUnit;
+	}
+	public int getDevice() {
+		return device;
+	}
+	public void setDevice(int device) {
+		this.device = device;
+	}
+	public String getProvince_id() {
+		return province_id;
+	}
+	public void setProvince_id(String province_id) {
+		this.province_id = province_id;
+	}
+	public Integer getCompare() {
+		return compare;
+	}
+	public void setCompare(Integer compare) {
+		this.compare = compare;
+	}
+}

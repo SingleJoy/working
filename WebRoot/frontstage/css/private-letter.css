@@ -1,0 +1,67 @@
+* {margin:0;padding:0;text-decoration:none;color: #6d6d6d;}
+
+li{list-style:none;}
+a{text-decoration : none ;}
+input,button,select,textarea{outline:none;box-shadow: none;}
+img,button{outline:none;box-shadow: none;border: none;}
+button{text-align: center;}
+select{border: 1px solid #ddd;}
+
+
+/*我的私信*/
+.notice_main{width: 750px;background-color: #fff;margin: 30px auto;border-radius: 5px;border: 1px solid #ddd;min-height: 600px;}
+/*.private_letter_main>h2,.notice_main>h2{font-size: 25px;margin-left: 50px;margin-top: 45px;font-weight: normal;display: inline-block;}*/
+/*.private_letter_main>a{font-size: 14px;background-color:#fff;text-align: center;border: 1px solid #3ebbce;border-radius: 30px;color: #3ebbce;display: inline-block;padding: 6px 24px;margin-left: 515px;}*/
+/*#private_letter_main>a:hover{background-color:#3ebbce;color: #fff;}*/
+.private_letter_main_content{margin-top: 10px;}
+.private_letter_main_content>ul{}
+.private_letter_main_content>ul>li{width: 650px;height:59px;border-bottom: 1px solid #ddd;margin-top: 15px;}
+.private_letter_main_content>ul>li:last-child{margin-bottom:50px;}
+.private_letter_main_content>ul>li>label{float: right;font-size: 14px;opacity: 0.8;margin-top: 30px;}
+.private_letter_main_content>ul>li>label>a{display: none;}
+.private_letter_main_content>ul>li>label>a>span{padding: 0 10px;}
+.private_letter_main_content>ul>li>p{margin-left: 50px;margin-top: -40px;}
+.private_letter_main_content>ul>li>a>img{width: 40px;height: 40px;border-radius: 50%;}
+.private_letter_main_content>ul>li>p>a,.private_letter_main_content>ul>li>p>label{font-size: 14px;cursor: pointer;}
+.private_letter_main_content>ul>li>p>span{font-size: 14px;color:#8a6d3b;}
+.private_letter_main_content>ul>li>span{font-size: 14px;margin-left: 50px;opacity: 0.7;margin-top: -10px;position: absolute;}
+
+/*写私信*/
+/*#private_letter_write_main{height:500px;}*/
+/*.private_letter_write_main>a{border: 1px solid #ddd;color: #6d6d6d;}*/
+/*.private_letter_write_main>a:hover{border: 1px solid #3ebbce;color: #3ebbce;}*/
+/*.private_letter_write_main>input{border: 1px solid #ddd;width: 640px;height:34px;border-radius: 5px;margin-left: 50px;margin-top: 30px;padding-left: 10px;font-size:14px;}*/
+/*.private_letter_write_main>span{font-size:14px;color: #9a4449;margin-left: 50px;}*/
+/*.private_letter_write_main>textarea{border: 1px solid #ddd;width: 650px;border-radius: 5px;margin-left: 50px;margin-top: 30px;padding-left: 10px;font-size:14px;resize: none;padding-top: 7px;}*/
+/*.private_letter_write_main>button{border: 1px solid #3ebbce;border-radius: 30px;margin-left: 620px;margin-top: 15px;padding:6px 24px;font-size:14px;background-color: #fff;color: #3ebbce;cursor: pointer;}*/
+/*.private_letter_write_main>button:hover{background-color: #3ebbce;color: #fff;}*/
+/*查看私信对话列表*/
+#see_private_letter_list{min-height: 620px;}
+#see_private_letter_list>a{float: right;margin-right: 50px;margin-top: -30px;}
+.private_letter_list_dialog{}
+.private_letter_list_dialog>ul{margin-top: 20px;margin-bottom: 50px;}
+.private_letter_list_dialog>ul>li{width: 650px;height: 94px;margin-top: 10px;margin-left: 50px;}
+.other_man{font-size: 14px;position: absolute;margin-top:25px;}
+.mine{font-size: 14px;float: right;margin-top: -30px;}
+.other_man>img,.mine>img{width: 40px;height: 40px;border-radius: 50%;}
+.arrow{top:24px;left:-11px;position: relative;margin-top: -11px;border: 11px solid transparent;display: block;border-left-width: 0;z-index: 99;width: 0;height: 0;}
+.private_letter_list_dialog_content{margin-left: 60px;}
+.private_letter_list_dialog_content>div{width: 513px;height: 69px;border: 1px solid #ddd;border-radius: 5px;margin-top: 0px;}
+.private_letter_list_dialog_content>div>a{font-size: 14px;font-weight: bold;padding-left: 20px;line-height: 30px;}
+.private_letter_list_dialog_content>div>span{font-size:14px;}
+.private_letter_list_dialog_content>div>label{font-size:12px;padding-left: 20px;opacity: 0.8;}
+
+
+/*通知页面*/
+.notice_main{}
+.notice_page{margin-top: 30px;}
+.notice_page_list{width: 654px;height: 59px;border-bottom: 1px solid #ddd;margin-left: 50px;margin-top: 10px;}
+.notice_page_list>a,.notice_page_list>span{font-size: 14px;}
+.notice_page_list>a{color: #428bca;}
+.notice_page_list>span{}
+.notice_page_list>p{font-size: 12px;opacity: 0.8;padding-top: 5px;}
+.notice_topic{font-weight: bold;}
+
+
+
+/*.footer*/

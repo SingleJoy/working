@@ -1,0 +1,68 @@
+
+
+
+
+
+
+
+//搜索内容布局定位
+$(function(){
+    var sumWidth =0;
+    var width = document.body.clientWidth;
+
+    var myWidth=(width-1000)/2;
+
+
+    $(".main_top div").css("margin-left",myWidth+"px");
+    $(".main_content").css("margin-left",myWidth+"px");
+
+});
+
+
+
+
+$(function(){
+    $(".main_content_sum ul li").click(function(){
+        $(this).addClass("curr").siblings().removeClass("curr");
+        $(".main_content_sum ul li a").css("color","#000000");
+        $(this).find("a").css("color","#3ebbce");
+    });
+});
+
+
+
+
+
+
+$(function(){
+    var sumWidth =0;
+    var width = document.body.clientWidth;
+    $(".nav_content").find("li").each(function(){
+
+        sumWidth += $(this).width();
+
+    });
+    var myWidth=(width-sumWidth)/2;
+
+    $(".nav_content").css("margin-left",myWidth-140+"px");
+
+});
+
+
+
+
+
+
+//footer居中
+$(function(){
+    var sumWidth =0;
+    var width = document.body.clientWidth;
+    $(".footer_content_ul").find("li").each(function(){
+
+        sumWidth += $(this).width();
+
+    });
+    var myWidth=(width-sumWidth)/2;
+
+    $(".footer_content_ul li:first").css("margin-left",myWidth+"px");
+});

@@ -1,0 +1,150 @@
+package cn.bnsr.edu_yun.backstage.base.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.mapper.AuthMapper;
+import cn.bnsr.edu_yun.backstage.base.mapper.RoleAuthMapper;
+import cn.bnsr.edu_yun.backstage.base.mapper.RoleMapper;
+import cn.bnsr.edu_yun.backstage.base.mapper.UserRoleMapper;
+import cn.bnsr.edu_yun.backstage.base.po.Role;
+import cn.bnsr.edu_yun.backstage.base.po.RoleAuth;
+import cn.bnsr.edu_yun.backstage.base.po.UserRole;
+import cn.bnsr.edu_yun.backstage.base.service.RoleService;
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.RoleView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class RoleServiceImpl implements RoleService{
+	@Autowired 
+	private RoleMapper roleMapper;
+	
+	@Autowired 
+	private RoleAuthMapper roleauthMapper;
+	@Autowired 
+	private UserRoleMapper userRoleMapper;
+	@Autowired 
+	private AuthMapper authMapper;
+	
+	public DataGrid datagrid(RoleView roleView) {
+		DataGrid j = new DataGrid();
+		roleView.setPage(NumUtil.startingNum(roleView.getPage(),roleView.getRows()));
+		j.setRows(changeModel(find(roleView)));
+		j.setTotal(total(roleView));
+		return j;
+	}
+
+	private List<RoleView> changeModel(List<Role> roleList) {
+		List<RoleView> roles = new ArrayList<RoleView>();
+		if (roleList != null && roleList.size() > 0) {
+			for (Role tu : roleList) {
+				RoleView u = new RoleView();
+				BeanUtils.copyProperties(tu, u);
+				
+				List<RoleAuth> roleAuthList = roleauthMapper.getByRoleId(tu.getId());
+				
+				String authIds = "";
+				String authNames = "";
+				boolean b = false;
+				if (roleAuthList != null && roleAuthList.size() > 0) {
+					for (RoleAuth ra : roleAuthList) {
+						if(ra !=null ){
+							if (b) {
+								authIds += ",";
+								authNames += ",";
+							}
+							authIds += ra.getAuth_id();
+							authNames += authMapper.selectByPrimaryKey(ra.getAuth_id()).getName();
+							b = true;
+						}
+					}
+				}
+				u.setAuthIds(authIds);
+				u.setAuthNames(authNames);
+
+				roles.add(u);
+			}
+		}
+		return roles;
+	}
+
+	private List<Role> find(RoleView roleView) {
+		return roleMapper.find(roleView);
+	}
+
+	private Long total(RoleView roleView) {
+		return roleMapper.count(roleView);
+	}
+	
+	
+	@Override
+	public void save(RoleView roleView) {
+		Role r = new Role();
+		BeanUtils.copyProperties(roleView, r);
+		roleMapper.insertSelective(r);
+		
+		this.saveRoleAuth(roleView, r);
+	}
+
+	/**
+	 * 保存用户和权限的关系
+	 * role_auth关联表
+	 */
+	private void saveRoleAuth(RoleView roleView, Role role) {
+		List<RoleAuth> roleAuth = roleauthMapper.getByRoleId(role.getId());
+		if(roleAuth!=null && roleAuth.size()>0){
+			//根据角色id删除关联权限
+			for(RoleAuth r:roleAuth){
+				roleauthMapper.deleteByPrimaryKey(r.getId());
+			}
+		}
+		if (roleView.getAuthIds() != null) {
+			for (String id : roleView.getAuthIds().split(",")) {
+				RoleAuth roletauth = new RoleAuth();
+				roletauth.setAuth_id(Long.parseLong(id.trim()));
+				roletauth.setRole_id(role.getId());
+				roleauthMapper.insertSelective(roletauth);
+			}
+		}
+	}
+
+	@Override
+	public void update(RoleView roleView) {
+		Role r = new Role();
+		BeanUtils.copyProperties(roleView, r);
+		roleMapper.updateByPrimaryKeySelective(r);
+		
+		this.saveRoleAuth(roleView, r);
+	}
+
+	@Override
+	public void delete(String ids) {
+		if (ids != null) {
+			for (String id : ids.split(",")) {
+				Long roleId = Long.parseLong(id.trim());
+				roleMapper.deleteByPrimaryKey(roleId);
+				List<RoleAuth> roleAuth = roleauthMapper.getByRoleId(roleId);
+				if(roleAuth!=null && roleAuth.size()>0){
+					for(RoleAuth r:roleAuth){
+						roleauthMapper.deleteByPrimaryKey(r.getId());
+					}
+				}
+				List<UserRole> userRole = userRoleMapper.getByRoleId(roleId);
+				if(userRole!=null && userRole.size()>0){
+					for(UserRole u:userRole){
+						userRoleMapper.deleteByPrimaryKey(u.getId());
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public List<Role> combobox() {
+		return roleMapper.selectAll();
+	}
+
+}

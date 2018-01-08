@@ -1,0 +1,144 @@
+package cn.bnsr.edu_yun.backstage.base.view;
+
+import java.util.Date;
+import java.util.List;
+
+public class StudyTimeView extends PageBase{
+
+	private String course_title;
+	private String course_hour_title;
+	private Date start_time;
+	private long study_time;
+	private long user_id;
+	private String days;//日期
+	private String endTime;
+	private String startTime;
+	
+	private String group;//1,按时 2,按天
+	private long course_id;
+	private long class_id;
+	private int timeType;//
+	private int user_count;
+	private int count;
+	private int user_avg;
+	private double avg;
+	private String hours;
+	private String weeks;
+	private	String studyTimeViews;
+	
+	public int getUser_count() {
+		return user_count;
+	}
+	public void setUser_count(int user_count) {
+		this.user_count = user_count;
+	}
+	public int getUser_avg() {
+		return user_avg;
+	}
+	public void setUser_avg(int user_avg) {
+		this.user_avg = user_avg;
+	}
+	public double getAvg() {
+		return avg;
+	}
+	public void setAvg(double d) {
+		this.avg = d;
+	}
+	public String getHours() {
+		return hours;
+	}
+	public void setHours(String hours) {
+		this.hours = hours;
+	}
+	public String getGroup() {
+		return group;
+	}
+	public void setGroup(String group) {
+		this.group = group;
+	}
+	public long getCourse_id() {
+		return course_id;
+	}
+	public void setCourse_id(long course_id) {
+		this.course_id = course_id;
+	}
+	public long getClass_id() {
+		return class_id;
+	}
+	public void setClass_id(long class_id) {
+		this.class_id = class_id;
+	}
+	public int getTimeType() {
+		return timeType;
+	}
+	public void setTimeType(int timeType) {
+		this.timeType = timeType;
+	}
+	public String getCourse_title() {
+		return course_title;
+	}
+	public void setCourse_title(String course_title) {
+		this.course_title = course_title;
+	}
+	public String getCourse_hour_title() {
+		return course_hour_title;
+	}
+	public void setCourse_hour_title(String course_hour_title) {
+		this.course_hour_title = course_hour_title;
+	}
+	public Date getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(Date start_time) {
+		this.start_time = start_time;
+	}
+	public long getStudy_time() {
+		return study_time;
+	}
+	public void setStudy_time(long study_time) {
+		this.study_time = study_time;
+	}
+	public long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
+	}
+	public String getDays() {
+		return days;
+	}
+	public void setDays(String days) {
+		this.days = days;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public String getWeeks() {
+		return weeks;
+	}
+	public void setWeeks(String weeks) {
+		this.weeks = weeks;
+	}
+	public String getStudyTimeViews() {
+		return studyTimeViews;
+	}
+	public void setStudyTimeViews(String studyTimeViews) {
+		this.studyTimeViews = studyTimeViews;
+	}
+	
+}

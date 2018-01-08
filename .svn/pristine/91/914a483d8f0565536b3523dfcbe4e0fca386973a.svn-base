@@ -1,0 +1,525 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<%--<link href="${pageContext.request.contextPath}/frontstage/css/resource-list.css" rel="stylesheet" type="text/css">--%>
+<style>
+	/*评分显示样式 */
+	.star1{width: 85px;height:17px;background:url('../images/score_star_icon_black.png') repeat-x left center;}
+	.star2{height:17px;background:url('../images/score_star_icon.png') repeat-x left center;float: left;}
+</style>
+
+<div class="es-wrap">
+
+
+	<div id="content-container" class="container">
+
+		<form  id="searchbox" action="${pageContext.request.contextPath}/search/search.action" class="search_form" method="get"  target="_blank">
+			<input type="hidden" name="pageSize" value="5" >
+			<input type="hidden" name="pageNo" value="0" >
+			<input type="hidden" name="type" value="zh" >
+			<input type="hidden" name="file_attr" checked="checked" value="">
+
+		</form>
+		<div class="row">
+
+			<div class="col-md-3">
+
+				<div class="panel">
+
+					<div class="panel-body" style="position: absolute;z-index: 9999;background-color: #fff;">
+
+						<a href="javascript:void(0);" style="padding-left: 10px;">${resourceView.stage}${resourceView.subject}</a>
+						<span class="">●</span>
+						<a href="javascript:void(0);">${fn:substring(resourceView.edition,0,10)}</a>
+						<a id="nav_content_img" href="javascript:void(0);" style="padding-left:35px;">
+							<i class="es-icon es-icon-mail"></i>
+						</a>
+
+						<form class="form-horizontal" >
+
+							<div class="" id="nav_content_classify" style="display: none;margin-top: 10px;">
+
+								<h4 class="pull-left" style="margin-left: 5px;margin-bottom: 15px;">教材选择</h4>
+
+								<div class="form-group" style="clear: both;margin-top: 20px;">
+									<div class="col-md-4 controls">&nbsp;&nbsp;学段:</div>
+									<div class="col-md-8 controls">
+										<button type="button" id="stage_XX" class="btn btn-sm <c:if test="${resourceView.stageId=='XX'}"> btn-info</c:if>"  onclick="_stage('XX');">小学</button>
+										<button type="button" id="stage_CZ"  class="btn btn-sm <c:if test="${resourceView.stageId=='CZ'}"> btn-info </c:if>" onclick="_stage('CZ');">初中</button>
+										<button type="button" id="stage_GZ"  class="btn btn-sm <c:if test="${resourceView.stageId=='GZ'}"> btn-info</c:if>" onclick="_stage('GZ');">高中</button>
+									</div>
+
+								</div>
+
+								<div class="form-group" style="margin-top: -15px;">
+									<div class="col-md-4 controls">&nbsp;&nbsp;科目</div>
+									<div class="col-md-8 controls">
+										<select id="subject" onchange="_subject(this.options[this.options.selectedIndex].text);" class="form-control">
+											<c:forEach items="${resourceView.subjectList}" var="sub">
+												<c:if test="${resourceView.subjectId == sub.id}">
+													<option selected="selected" value="${sub.id}">${sub.subjectName}</option>
+												</c:if>
+												<c:if test="${resourceView.subjectId != sub.id}">
+													<option value="${sub.id}">${sub.subjectName}</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+
+
+								<div class="form-group" style="margin-top: -15px;">
+									<div class="col-md-4 controls">教材版本</div>
+									<div class="col-md-8 controls">
+										<select id="edition" onchange="_edition(this.options[this.options.selectedIndex].text);" class="form-control">
+											<c:forEach items="${resourceView.editionList}" var="edi">
+												<c:if test="${resourceView.editionId == edi.id}">
+													<option selected="selected"  value="${edi.id}">${edi.versionName}</option>
+												</c:if>
+												<c:if test="${resourceView.editionId != edi.id}">
+													<option  value="${edi.id}">${edi.versionName}</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								<div class="form-group" style="margin-top: -15px;">
+									<div class="col-md-4 controls">&nbsp;&nbsp;年级</div>
+									<div class="col-md-8 controls">
+										<select id="grade" onchange="_grade();" class="form-control">
+											<c:forEach items="${resourceView.gradeList}" var="gra">
+												<c:if test="${resourceView.gradeId == gra.id}">
+													<option  selected="selected" value="${gra.id}">${gra.bookCatelogName}</option>
+												</c:if>
+												<c:if test="${resourceView.gradeId != gra.id}">
+													<option  value="${gra.id}">${gra.bookCatelogName}</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group" style="margin-top: -15px;">
+									<div class="text-center">
+										<button type="button" onclick="_confirm();" class="btn btn-info btn-sm">确定</button>
+									</div>
+								</div>
+							</div>
+
+
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="clear: both;">
+
+			<div class="col-md-3">
+
+				<div class="sidenav locked">
+
+
+					<input type="hidden" value="${resourceView.chapterList.size()}" id="chaCount">
+
+
+					<ul class="list-group" style="margin-top: 30px;">
+						<li class="list-group-heading" >课程信息</li>
+					</ul>
+
+					<c:forEach items="${resourceView.chapterList}" var="cha" varStatus="status">
+
+						<div class="list-group-item " id="all_pinyin${status.index}" style="border: none;">
+							<a href="javascript:void(0);"  class="link-dark" <c:if test="${cha.id!=resourceView.chapterId}"> onclick="_section('${cha.id}',1);"</c:if><c:if test="${cha.id==resourceView.chapterId}"> onclick="_ulShow();" style="color:#46c37b !important;"</c:if> >
+								<span ></span>${fn:substring(cha.bookCatelogName,0,10)}
+							</a>
+						</div>
+					<c:if test="${cha.id==resourceView.chapterId}">
+						<ul class="list-group all_pinyin_content" 
+							id="all_pinyin_content${status.index}">
+							<c:forEach items="${resourceView.sectionList}" var="sec">
+								<li class="list-group-item <c:if test="${sec.id==resourceView.sectionId}">active </c:if>" >
+									<a title="${sec.bookCatelogName}" onclick="_section('${sec.id}');" href="javascript:void(0);">${fn:substring(sec.bookCatelogName,0,10)}</a>
+								</li>
+							</c:forEach>
+						</ul>
+						</c:if>
+					</c:forEach>
+
+
+				</div>
+
+			</div>
+
+
+			<div class="col-md-9" style="margin-top: -20px;">
+
+
+				<div class="panel" style="margin-top: 20px;">
+					<div class="panel-body">
+
+						<form id="resourceForm" action="/edu_yun/resource_list/to_resource_list.action" method="get">
+
+							<input type="hidden" name="type" id="type"  value="${resourceView.type}"/>
+							<input type="hidden" name="page" id="page" value="${resourceView.page}"/>
+							<input type="hidden" name="rows" id="rows" value="${resourceView.rows}"/>
+							<input type="hidden" name="total" id="total" value="${resourceView.total}"/>
+							<input type="hidden" name="totalPage" id="totalPage" value="${resourceView.totalPage}"/>
+							<input type="hidden" name="sort" id="sort" value="${resourceView.sort}"/>
+							<input type="hidden" name="stageId" id="stageId" value="${resourceView.stageId}"/>
+							<input type="hidden" name="subjectId" id="subjectId" value="${resourceView.subjectId}"/>
+							<input type="hidden" name="subject" id="subjectName" value="${resourceView.subject}"/>
+							<input type="hidden" name="edition" id="editionName" value="${resourceView.edition}"/>
+							<input type="hidden" name="editionId" id="editionId" value="${resourceView.editionId}"/>
+							<input type="hidden" name="gradeId" id="gradeId" value="${resourceView.gradeId}"/>
+							<input type="hidden" name="chapterId" id="chapterId" value="${resourceView.chapterId}"/>
+							<input type="hidden" name="sectionId" id="sectionId" value="${resourceView.sectionId}"/>
+
+						</form>
+
+						<div class="es-filter">
+
+							<ul class="nav nav-sort clearfix">
+								<li ><a onclick="_searchSort('1');" href="javascript:void(0);" <c:if test="${resourceView.sort==1}"> class="active"</c:if>>收藏最多</a></li>
+								<li ><a <c:if test="${resourceView.sort==2}"> class="active"</c:if> onclick="_searchSort('2');" href="javascript:void(0);">下载最多</a></li>
+								<li ><a<c:if test="${resourceView.sort==3}"> class="active"</c:if> onclick="_searchSort('3');" href="javascript:void(0);">最新发布</a></li>
+								<li ><a<c:if test="${resourceView.sort==4}"> class="active"</c:if>  onclick="_searchSort('4');" href="javascript:void(0);">好评最多</></li>
+
+
+							</ul>
+
+
+						</div>
+
+
+
+					</div>
+				</div>
+
+				<div class="course-wide-list" style="clear: both;">
+					<input type="hidden" value="${resourceList.size()}" id="num">
+
+					<c:forEach items="${resourceList}" var="resource" varStatus="res">
+
+						<div class="course-item clearfix panel" style="border: none;">
+							<a class="course-picture-link" href="${pageContext.request.contextPath}/read/toRead.action?id=${resource.fileId}" target="_blank">
+								<c:if test="${resource.image == '0'}">
+									<img class="course-picture" src="${pageContext.request.contextPath}/frontstage/images/maitian.jpg"  style="height:133px;width: 210px;margin: 5px;">
+								</c:if>
+								<c:if test="${resource.image != '0' }">
+									<img class="course-picture" src="${pageContext.request.contextPath}/resumeUpload/${resource.image}" style="height:133px;width: 210px;margin: 5px;">
+								</c:if>
+							</a>
+							<div class="course-body">
+
+								<h4 class="mbl" >
+								<c:if test="${resource.file_type==0}">
+									<a href="${pageContext.request.contextPath}/read/toRead.action?id=${resource.fileId}" target="_blank" >${resource.fileName}(资源)</a>
+								</c:if>
+								<c:if test="${resource.file_type==1}">
+									<a href="${pageContext.request.contextPath}/userFile/to_file.action?id=${resource.fileId}" target="_blank" >${resource.fileName}(教案)</a>
+								</c:if>
+								</h4>
+
+								<div class="course-footer ">
+										${resource.downloadNum}  位用户下载 &nbsp;&nbsp;
+										${resource.collectionNum}  位用户收藏 &nbsp;&nbsp;
+										${resource.size}  &nbsp;&nbsp;
+								</div>
+								<br/>
+								<div class="course-footer">
+									格式:${resource.format}&nbsp;&nbsp;
+									评分:${resource.score}&nbsp;&nbsp;
+									上传人:${resource.uploadName} &nbsp;&nbsp;
+									上传时间: ${fn:substring(resource.uploadTime,0,10)}  &nbsp;&nbsp;
+									<c:if test="${resource.value==0}"><span class="price-free">免费</span></c:if>
+									<c:if test="${resource.value!=0}"><span class="price">${resource.value}</span>元</c:if>
+								</div>
+
+
+								<div class="main_content_page_star_img" id="starImg${res.index}"></div>
+							</div>
+
+						</div>
+
+					</c:forEach>
+
+					<c:if test="${empty resourceList }">
+						<div class="empty">暂无数据</div>
+					</c:if>
+
+					<c:if test="${!empty resourceList }">
+
+
+						<div id="test" class="pager" style="margin-top: 30px;"></div>
+
+					</c:if>
+
+				</div>
+
+
+
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+
+
+
+<script type="text/javascript">
+
+	$(function(){
+		var num=$("#num").val();
+
+		for(var i=0;i<num;i++){
+			score = $("#score"+i).val();
+			$("#starImg"+i).append('<div class="star1" ><div class="star2" style="width:'+score*20+'%"></div></div>');
+		}
+	})
+
+
+	function _doOpenClose(index,value){
+		var chaCount = $("#chaCount").val();
+		var sectionId = $("#sectionId").val();
+		$("#chapterId").val(value);
+		if($("#all_pinyin_content"+index).css("display")=="none"){
+			$("#main_left_tab_img"+index).attr("src","${pageContext.request.contextPath}/frontstage/images/menu_down_up.png");
+			$("#all_pinyin_content"+index).hide();
+			$("#all_pinyin_content"+index).show();
+			$("#all_pinyin_content"+index).find("li").remove();
+			$.ajax({
+				url : "${pageContext.request.contextPath}/book_cat/query_book_cat.action?bookId="+value+"&parentId=1",
+				dataType:'json',
+				success : function(json){
+					var a = JSON.stringify(json);
+					var o = eval( "(" + a + ")" );
+					var sec = o[0].sectionList;
+					if(sec.length>0){
+						for(var i in sec){
+							$("#all_pinyin_content"+index).append('<li <c:if test="'+sectionId+'=='+sec[i].id+'}"> class="active"</c:if> ><a onclick="_section(\''+sec[i].id+'\');" href="javascript:void(0);">'+sec[i].bookCatelogName+'</a></li>');
+						}
+					}else{
+						$("#sectionId").val(value);
+						$("#all_pinyin"+index).css("background-color","#e2e2e2");
+						$("#resourceForm").submit();
+					}
+				}
+			});
+			$("#all_pinyin_content"+index).css("border-bottom","1px solid #ddd");
+			for(var i=0;i<chaCount;i++){
+				if(i!=index){
+					$("#all_pinyin"+i).css("background-color","#f5f5f5");
+					$("#all_pinyin_content"+i).hide();
+					$("#all_pinyin"+i+" a img").attr("src","${pageContext.request.contextPath}/frontstage/images/menu_down_black.png");
+					$("#all_pinyin"+index).css("background-color","#fff");
+				}else{
+					$("#all_pinyin"+index).css("background-color","#e2e2e2");
+				}
+			}
+		}else{
+			$("#all_pinyin"+index).css("background-color","#fff");
+			$("#all_pinyin_content"+index).hide();
+			$("#all_pinyin"+index+" a img").attr("src","${pageContext.request.contextPath}/frontstage/images/menu_down_black.png");
+		}
+	}
+	function _section(value,index){
+		$("#sectionId").val(value);
+		if(index==1){
+		$("#chapterId").val(value);
+		}
+		$("#resourceForm").submit();
+	}
+	
+	function _stage(value){
+		if(value=='XX'){
+
+
+			$("#stage_GZ").removeClass("btn-info");
+			$("#stage_CZ").removeClass("btn-info");
+			$("#stage_XX").addClass("btn-info");
+		}else if(value=='GZ'){
+
+
+			$("#stage_XX").removeClass("btn-info");
+			$("#stage_CZ").removeClass("btn-info");
+			$("#stage_GZ").addClass("btn-info");
+		}else{
+
+
+			$("#stage_XX").removeClass("btn-info");
+			$("#stage_GZ").removeClass("btn-info");
+			$("#stage_CZ").addClass("btn-info");
+		}
+		$("#stageId").val(value);
+		$("#subject").find("option").remove();
+		$("#edition").find("option").remove();
+		$("#grade").find("option").remove();
+
+
+		$.ajax({
+			url : "${pageContext.request.contextPath}/subject/query_subject.action?subId="+value,
+			dataType:'json',
+			success : function(json) {
+				var a = JSON.stringify(json);
+				var o = eval( "(" + a + ")" );
+				var sub = o[0].subjectList;
+				var edi = o[0].editionList;
+				var gra = o[0].gradeList;
+				for(var i in sub){
+					$("#subject").append('<option  value='+sub[i].id+' >'+sub[i].subjectName+'</option>');
+				}
+				$("#subjectName").val(sub[0].subjectName);
+				$("#subjectId").val(sub[0].id);
+				$("#subject").val();
+				for(var i in edi){
+					$("#edition").append('<option  value='+edi[i].id+' >'+edi[i].versionName+'</option>');
+				}
+				$("#editionName").val(edi[0].versionName);
+				$("#editionId").val(edi[0].id);
+				for(var i in gra){
+					$("#grade").append('<option value='+gra[i].id+' >'+gra[i].bookCatelogName+'</option>');
+				}
+				$("#gradeId").val(gra[0].id);
+			}
+		});
+	}
+
+	function _subject(text){
+		$("#subjectName").val(text);
+		var  value = $("#subject").val();
+		$("#subjectId").val(value);
+		$("#edition").find("option").remove();
+		$("#grade").find("option").remove();
+
+		$.ajax({
+			url : "${pageContext.request.contextPath}/pubver/query_pubver.action?pubId="+value,
+			dataType:'json',
+			success : function(json){
+				var a = JSON.stringify(json);
+				var o = eval( "(" + a + ")" );
+				var edi = o[0].editionList;
+				var gra = o[0].gradeList;
+				for(var i in edi){
+					$("#edition").append('<option value='+edi[i].id+' >'+edi[i].versionName+'</option>');
+				}
+				$("#editionName").val(edi[0].versionName);
+				$("#editionId").val(edi[0].id);
+				for(var i in gra){
+					$("#grade").append('<option value='+gra[i].id+' >'+gra[i].bookCatelogName+'</option>');
+				}
+				$("#gradeId").val(gra[0].id);
+			}
+		});
+
+	}
+	function _edition(text){
+		$("#editionName").val(text);
+		var  value = $("#edition").val();
+		$.ajax({
+			url : "${pageContext.request.contextPath}/book_cat/query_book_cat.action?bookId="+value+"&parentId=-1",
+			dataType:'json',
+			success : function(json){
+				var a = JSON.stringify(json);
+				var o = eval( "(" + a + ")" );
+				var gra = o[0].gradeList;
+				for(var i in gra){
+					$("#grade").append('<option value='+gra[i].id+' >'+gra[i].bookCatelogName+'</option>');}
+				$("#gradeId").val(gra[0].id);}
+		});
+		$("#editionId").val(value);
+		$("#grade").find("option").remove();
+	}
+	function _grade(){
+		$("#gradeId").val($("#grade").val());}
+	function _confirm(){
+		$("#sectionId").val(null);
+		$("#chapterId").val(null);
+		$("#resourceForm").submit();
+	}
+	function _searchType(value){
+		$("#type").val(value);
+		$("#page").val("0");
+		$("#resourceForm").submit();
+	}
+	function _searchSort(value){
+		$("#sort").val(value);
+		$("#page").val("0");
+		$("#resourceForm").submit();
+	}
+	function _searchFile(value){
+		$("#type").val(value);
+		$("#resourceForm").submit();
+	}
+	function _searchLeft(){
+		var page = $("#page").val();
+		if(page!=0){
+			$("#page").val(page-1);
+			$('#resourceForm').submit();
+		}
+	}
+
+	function _searchRight(){
+		var page =  parseInt($("#page").val())+1;
+		var total = $("#total").val();
+		if(page<total){
+			$("#page").val(page);
+			$('#resourceForm').submit();
+		}
+	}
+
+	$(document).ready(function(){
+		//翻页
+		var total = $("#total").val();
+		var page =  parseInt($("#page").val())+1;
+
+		$("#btn5").on('click', function () {
+			$("#div1").PageChanged(5);
+		});
+
+		$(".pager").pagination({
+			thisPageIndex:page,
+			recordCount: total,       //总记录数
+			pageSize: $("#rows").val(),           //一页记录数
+			onPageChange: function (page) {
+				document.title = page;
+				$("#page").val(page-1);
+				$('#resourceForm').submit();
+
+			}
+		});
+	});
+
+
+	//二级导航栏点击下拉显示
+	$(function(){
+		$("#nav_content_img").click(function(){
+			if($("#nav_content_classify").css("display")=="none"){
+				$("#nav_content_classify").show();
+				$(".nav_content_img").attr("src","${pageContext.request.contextPath}/frontstage/images/menu_top.png");
+			}else{
+				$("#nav_content_classify").hide();
+				$(".nav_content_img").attr("src","${pageContext.request.contextPath}/frontstage/images/menu_down.png");
+			}
+		})
+	});
+function _ulShow() {
+	$(".all_pinyin_content").slideToggle();
+}
+
+	//左边栏二级菜单显示与隐藏
+
+
+</script>
+
+
+

@@ -1,0 +1,113 @@
+package cn.bnsr.edu_yun.backstage.base.service.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.mapper.MenuMapper;
+import cn.bnsr.edu_yun.backstage.base.po.Menu;
+import cn.bnsr.edu_yun.backstage.base.service.MenuService;
+import cn.bnsr.edu_yun.backstage.base.view.TreeNode;
+import cn.bnsr.edu_yun.backstage.base.view.TreeView;
+import cn.bnsr.edu_yun.comparator.MenuComparator;
+
+public class MenuServiceImpl implements MenuService{
+	@Autowired 
+	private MenuMapper menuMapper;
+	
+	@Override
+	public List<TreeNode> tree(Menu menu, Boolean b) {
+		return tree(menu, b, "");
+	}
+	
+	// 重载上面的方法，增加权限判断的功能，使得菜单显示在不同权限的角色登录时不同
+	public List<TreeNode> tree(Menu menu,Boolean b,String authNames) {
+		List<Menu> menuList = menuMapper.queryTree(menu);
+		List<TreeNode> tree = new ArrayList<TreeNode>();
+		for (Menu m : menuList) {
+			if (("," + authNames + ",").indexOf("," + m.getName() + ",") != -1
+				||b|| authNames.equals("0")) {
+				tree.add(this.treeNode(m,b));
+			}
+		}
+		return tree;
+	}
+	
+	private TreeNode treeNode(Menu t, boolean recursive) {
+		TreeNode node = new TreeNode();
+		node.setId(t.getId()+"");
+		node.setText(t.getName());
+		Map<String, Object> attributes = new HashMap<String, Object>();
+		attributes.put("url", t.getUrl());
+		node.setAttributes(attributes);
+		if (t.getIconcls() != null) {
+			node.setIconCls(t.getIconcls());
+		} else {
+			node.setIconCls("");
+		}
+		List<Menu> l = menuMapper.queryTree(t);
+		if (l != null && l.size()>0) {
+			node.setState("closed");
+			if (recursive) {// 递归查询子节点
+				Collections.sort(l, new MenuComparator());// 排序
+				List<TreeNode> children = new ArrayList<TreeNode>();
+				for (Menu r : l) {
+					TreeNode tn = treeNode(r, true);
+					children.add(tn);
+				}
+				node.setChildren(children);
+				if(t.getPid()==null){
+					node.setState("open");
+				}
+			}
+		}
+//		if(!"1".equals(node.getId())){
+//			return node;
+//		}
+		return node;
+		
+	}
+
+	@Override
+	public List<TreeView> treegrid(Menu menu) {
+		List<TreeView> treeList = menuMapper.queryTreeGrid(menu);
+		if (treeList != null && treeList.size() > 0) {
+			for(TreeView mv : treeList){
+				if (countChildren(mv.getId()) > 0) {
+					mv.setState("closed");
+				}
+			}
+		}
+		return treeList;
+	}
+
+	@Override
+	public void save(Menu menu) {
+		if(menu.getPid()==null||menu.getPid().length()==0){
+			menu.setPid("1");
+		}
+		menuMapper.insertSelective(menu);
+	}
+
+	@Override
+	public void delete(Menu menu) {
+		menuMapper.deleteByPrimaryKey(menu.getId());
+	}
+	
+	@Override
+	public void update(Menu menu) {
+		menuMapper.updateByPrimaryKeySelective(menu);
+	}
+	/**
+	 * 统计有多少子节点
+	 */
+	private Long countChildren(String pid) {
+		return menuMapper.countChildren(pid);
+	}
+
+
+}

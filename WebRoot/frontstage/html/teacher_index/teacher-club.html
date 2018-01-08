@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>老师-课程</title>
+    <link href="../../css/author-space.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../../jq/jq.js"></script>
+    <script>
+        //课程类型切换
+        $(function(){
+            $(".teacher_club_type>ul>li").click(function(){
+                $(".teacher_club_type>ul>li").removeClass("curr").find("a").removeClass("curr");
+                $(this).addClass("curr").find("a").addClass("curr");
+                var index=$(this).index();
+                $(".teacher_club_type_tabs").hide().eq(index).show();
+            })
+        });
+
+        $(function(){
+            $(".teacher_club_page:nth-child(3n+1)").css("margin-left","0");
+        })
+    </script>
+</head>
+<body>
+
+<div class="main_teacher">
+
+    <div class="main_teacher_left">
+        <ul>
+            <li ><a href="javascript:return false;">个人简介</a></li>
+            <li ><a href="javascript:return false;"  >课程</a></li>
+            <li ><a href="javascript:return false;">班级</a></li>
+            <li><a href="javascript:return false;">资源</a></li>
+            <li><a href="javascript:return false;">教研</a></li>
+            <li class="curr"><a href="javascript:return false;" class="curr">关注/粉丝</a></li>
+            <li ><a href="javascript:return false;" >加入小组</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main_teacher_right">
+
+
+        <div class="main_right_course_content">
+
+            <div class="teacher_course_type teacher_club_type">
+                <ul>
+                    <li class="curr"><a href="javascript:return false;" class="curr">管理小组</a></li>
+                    <li><a href="javascript:return false;">加入小组</a></li>
+                </ul>
+            </div>
+            <!--管理小组-->
+            <div class="teacher_club_list teacher_club_type_tabs">
+
+                <div class="teacher_club_page">
+                    <a href="javascript:return false;">
+                        <img src="../images/teacher_group.png" class="open_class_img">
+                        <p>管理小组</p><br/>
+                    </a>
+                    <label><span>2人加入</span><span>5条对话</span></label>
+
+
+                </div>
+
+
+
+            </div>
+
+            <!--加入小组-->
+            <div class="teacher_club_list teacher_club_type_tabs" style="display: none;">
+
+                <div class="teacher_club_page">
+                    <a href="javascript:return false;">
+                        <img src="../images/teacher_group.png" class="open_class_img">
+                        <p>加入小组</p><br/>
+                    </a>
+                    <label><span>2人加入</span><span>5条对话</span></label>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

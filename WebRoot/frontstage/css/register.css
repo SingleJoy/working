@@ -1,0 +1,41 @@
+* {
+    margin: 0; padding: 0;  text-decoration: none;
+}
+body {
+    background-color: #f5f5f5;  font-family: "Microsoft YaHei"; color: #6d6d6d; }
+li{list-style:none;}
+a{color: #000000;}
+
+input,button,select,textarea{outline:none;}
+i{font-size: 12px;}
+/*main_top_content*/
+
+
+.main_top_content{width: 100%;line-height: 76px;}
+.main_top_content a{display: block;font-size: 16px;float: left;line-height: 31px;}
+.has_admin{margin-top: 20px;}
+.admin_login{width: 80px;height: 30px;background-color: #3ebbce;color: #ffffff;border-radius: 5px;text-align: center;margin-top: 20px;}
+
+/*注册*/
+.main{width:770px;height:370px;margin-top: 100px;}
+#my_form{margin-top: 20px;}
+label{font-size: 16px;}
+#my_form div{margin-top: 20px;}
+#my_form div input{width:268px;height:30px;margin-left: 40px;border: 1px solid #cbcbcb;padding-left: 10px;border-radius: 10px;}
+.username{margin-left: 45px;}
+.cellphone{margin-left:45px;}
+.email{margin-left: 59px;}
+.password{margin-left: 29px;}
+.password_again{margin-left: 29px;}
+.real_name{margin-left: 29px;}
+.vary_code{margin-left: 45px;}
+.user_register{width: 160px;height:40px;background-color: #3ebcce;border-radius: 10px;margin-left: 135px;margin-top: 20px;color: #ffffff;font-size: 16px;}
+.main_style_span{font-size: 12px;color: #fe9a00;}
+.register_agreement{font-size: 12px;}
+.register_checkbox{width: 12px;height:12px;}
+.check_agreement{margin-left:136px;margin-top: 30px;}
+.main_content ul li {display: inline;}
+.about_us{font-size: 12px;margin-left: 640px;}
+.help_inf{font-size: 12px;}
+
+

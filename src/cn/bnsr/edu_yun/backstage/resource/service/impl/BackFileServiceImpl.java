@@ -1,0 +1,142 @@
+package cn.bnsr.edu_yun.backstage.resource.service.impl;
+
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.resource.service.BackFileService;
+import cn.bnsr.edu_yun.backstage.resource.view.BackFileView;
+import cn.bnsr.edu_yun.backstage.resource.view.FileDetailView;
+import cn.bnsr.edu_yun.frontstage.base.mapper.BookCatMapper;
+import cn.bnsr.edu_yun.frontstage.base.mapper.LabelMapper;
+import cn.bnsr.edu_yun.frontstage.base.po.BookCat;
+import cn.bnsr.edu_yun.frontstage.resource.mapper.File_baseMapper;
+import cn.bnsr.edu_yun.frontstage.resource.mapper.File_catalogMapper;
+import cn.bnsr.edu_yun.frontstage.resource.mapper.File_labelMapper;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_base;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class BackFileServiceImpl implements BackFileService {
+	@Autowired
+	private File_baseMapper fileBaseMapper;
+	@Autowired
+	private LabelMapper labelMapper;
+	@Autowired
+	private File_catalogMapper fileCatalogMapper;
+	@Autowired
+	private BookCatMapper bookCatMapper;
+	@Autowired
+	private File_labelMapper fileLabelMapper;
+
+	@Override
+	public DataGrid datagrid(BackFileView backFileView) {
+		DataGrid j = new DataGrid();
+		backFileView.setPage(NumUtil.startingNum(backFileView.getPage(), backFileView.getRows()));
+		j.setRows(find(backFileView));
+		j.setTotal(total(backFileView));
+		return j;
+	}
+
+	private List<File_base> find(BackFileView backFileView) {
+		return fileBaseMapper.find(backFileView);
+	}
+
+	private Long total(BackFileView backFileView) {
+		return fileBaseMapper.count(backFileView);
+	}
+
+	@Override
+	public void save(BackFileView backFileView) {
+		File_base fileBase = new File_base();
+		BeanUtils.copyProperties(backFileView, fileBase);
+		fileBaseMapper.insertSelective(fileBase);
+	}
+
+	@Override
+	public void update(BackFileView backFileView) {
+		File_base fileBase = new File_base();
+		BeanUtils.copyProperties(backFileView, fileBase);
+		fileBaseMapper.updateByPrimaryKeySelective(fileBase);
+	}
+
+	@Override
+	public void delete(String ids) {
+		if (ids != null) {
+			for (String id : ids.split(",")) {
+				Long fileId = Long.parseLong(id.trim());
+				fileBaseMapper.deleteByPrimaryKey(fileId);
+			}
+		}
+	}
+
+	@Override
+	public void saveReviewFile(BackFileView backFileView) {
+		if (backFileView.getIds() != null) {
+			for (String id : backFileView.getIds().split(",")) {
+				File_base fileBase = fileBaseMapper.selectByPrimaryKey(Long.parseLong(id));
+				fileBase.setStatus(Byte.parseByte(backFileView.getStatus()));
+				fileBase.setReason(backFileView.getReason());
+				fileBaseMapper.updateByPrimaryKeySelective(fileBase);
+			}
+		}
+	}
+
+	@Override
+	public FileDetailView queryFileDetail(String id) {
+		FileDetailView fileDetail = new FileDetailView();
+		// 查询文件信息
+		File_base fileBase = fileBaseMapper.selectByPrimaryKey(Long.parseLong(id));
+		if (fileBase != null) {
+			// 查询文件详细信息
+			if(fileBase.getCatalog_id()!=null&&fileBase.getFile_type()==0){//普通文档
+				fileDetail = fileCatalogMapper.queryFileDetail(fileBase.getCatalog_id());
+				fileDetail.setPrice(fileBase.getValue());
+				fileDetail.setStatus(fileBase.getStatus() + "");
+				fileDetail.setReason(fileBase.getReason());
+				String grade = fileDetail.getGrade();// 年级分类 6级或者5级
+				if (fileDetail.getParentId()!=null&&!fileDetail.getParentId().equals("")) {
+					// 查询分类
+					BookCat bookCat = bookCatMapper.selectByPrimaryKey(fileDetail.getParentId());
+					if (bookCat != null) {
+						grade = bookCat.getBookCatelogName() + ">" + grade;// 4级或者3级
+						if (!bookCat.getParentId().equals("-1")) {// 4级
+							// 查询分类
+							BookCat b = bookCatMapper.selectByPrimaryKey(bookCat.getParent_id());
+							grade = b.getBookCatelogName() + ">" + grade;// 3级
+							bookCat.setParent_id(b.getParent_id());
+						}
+						fileDetail.setGrade(grade);
+						// 根据章节id查询所有上级分类
+						FileDetailView upClassify = bookCatMapper.querAllUpClassify(bookCat.getParent_id());
+						if (upClassify != null) {
+							// 教材版本
+							String version = upClassify.getStageName() + ">" + upClassify.getSubjectName() + ">"
+									+ upClassify.getEditionName();
+							fileDetail.setVersion(version);
+						}
+					}
+				}
+				List<String> labelId = fileLabelMapper.getByFileId(id);
+				if (labelId.size() > 0) {
+					String labelIds = StringUtils.join(labelId, ",");
+					List<String> label = labelMapper.getByIds(labelIds);
+					if (label.size() > 0) {
+						String labels = StringUtils.join(label, " ");
+						fileDetail.setLabels(labels);
+					}
+				}
+			}
+		}
+		return fileDetail;
+	}
+
+	@Override
+	public List<File_base> selectByBack(String str, String sort, String order, long start, long pageSize) {
+
+		return fileBaseMapper.selectByBack(str, sort, order, start, pageSize);
+	}
+
+}

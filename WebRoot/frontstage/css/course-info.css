@@ -1,0 +1,228 @@
+* {margin:0;padding:0;text-decoration:none;}
+body {background-color:#eaeaea;font-family:"Microsoft YaHei";}
+li{list-style:none;}
+input,button,select,textarea td,table{outline:none;box-shadow: none;border-radius: 5px;resize: none;}
+img,button,td{outline:none;box-shadow: none;border: none;}
+button{cursor: pointer;}
+table{border-spacing:0; }
+/*textarea{resize: none;padding-left: 10px;}*/
+.course_png{width: 15px;height: 15px;}
+#cke_1_resizer,#cke_1_path{display: none;}
+
+/*遮罩层*/
+.mask{position:absolute;top:0;filter:alpha(opacity=80);background-color:#000;z-index:998;left: 0;opacity:0.8;-moz-opacity:0.8;}
+/*编辑文本框插件*/
+#cke_1_resizer,#cke_1_path{display: none;}
+
+h4.info,p.state{text-align: center;}
+
+
+
+
+
+.page_content_list div{font-size: 14px;padding-left: 10px;}
+.page_content_list div>a{color: #3ebbce;}
+.page_list{border: 1px solid #ccc;height: 40px;padding-top: 10px;}
+.page_section_01{margin-left: 20px;}
+.page_section_02{margin-left: 45px;}
+.page_section_03{margin-left: 85px;margin-bottom: 20px;}
+.page_section_03>div{margin-top: -30px;padding-top: 10px;}
+
+.page_section_01>div>button,.page_section_03>div>a{display: none;}
+.page_section_01>div>button>i,.page_section_03>div i,.page_section_03>div>a>span{color: #3ebbce;}
+.border_left{border-left:1px solid #ddd;}
+.page_list_curr{background-color: #eaeaea;}
+.page_list p{float: none;border-left:1px solid #ccc;margin-left: 400px;height: 40px;position: relative;margin-top: -40px;}
+.page_list p button{padding: 0 20px;}
+.page_list span{padding: 0 5px;}
+.line{height: 20px;border-left:2px solid #ccc;margin-left: 66px;position: absolute;margin-top: -20px;}
+.line_01{height: 20px;border-left:2px solid #ccc;margin-left: 66px;position: absolute;margin-top: -20px;}
+.line_02{height: 62px;border-left:2px solid #ccc;margin-top: -20px;margin-left:66px;position: absolute;}
+.line_03{width: 20px;border-top:2px solid #ccc;margin-top: 17px;margin-left: 65px;position: absolute;}
+.page_section{width:615px;}
+.add_page_style{position: absolute;margin-left:60%;margin-top: -30px;background-color: #fff;height: 38px;}
+.add_page_style>button{background-color: #fff;font-size: 14px;padding-top: 10px;}
+.add_page_edit{margin-left:76%;margin-top: -30px;}
+.add_page_delete{margin-left: 88%;margin-top: -30px;}
+.add_page_edit_01{margin-left: 50%;position: absolute;margin-top: -40px;height:38px;}
+.add_page_preview{margin-left: 63%;position: absolute;margin-top: -40px;height: 38px;}
+.add_page_read_more{margin-left: 75%;position: absolute;margin-top: -40px;height: 38px;}
+.add_more_ul{width: 140px;border: 1px solid transparent;z-index: 999;position: absolute;background-color: #fff;margin-left: 598px;box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);background-clip: padding-box;}
+.add_more_ul>li{font-size: 14px;line-height: 40px;}
+.add_more_ul>li:hover{background-color: #3ebbce;}
+.add_more_ul>li:hover>a:hover{color: #fff;}
+.add_more_ul>li.divider{height: 1px;margin: 9px 0;overflow: hidden;background-color: #e5e5e5;}
+.add_more_ul>li>a{padding: 10px 20px;color:#616161;clear: both;font-weight: normal;line-height: 1.42857143;font-size: 14px;}
+
+
+.course_file_choose>ul>li,.course_file_choose>ul>li{line-height: 35px;cursor: pointer;}
+
+.upload_video_tabs{display: none;}
+.course_file_choose{background-color: #eaeaea;max-height: 250px;overflow-x: hidden;margin-bottom: 30px;}
+
+.file_name,.file_size ,.file_time{padding: 0 15px;display: inline-block;}
+.file_name{width: 40%;}
+.file_size{width: 16%;}
+.file_time{width: 30%;}
+#file_msg{margin-left: 20px;margin-top: 10px;display: none;min-height: 50px;}
+
+.webuploader-container {
+    position: relative;
+}
+.webuploader-element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+
+
+.webuploader-pick-disable {
+    opacity: 0.6;
+    pointer-events:none;
+}
+
+.balloon-uploader {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.balloon-uploader-heading {
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    display: none;
+}
+
+.balloon-uploader-footer {
+    background-color: #f5f5f5;
+    color: #333;  padding: 10px 15px;
+    border-top: 1px solid #ddd;
+    text-align: right;
+}
+
+.balloon-filelist {
+    width: 100%;
+}
+
+.balloon-filelist-heading {
+    padding: 8px 10px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.balloon-uploader-body {
+    position: relative;
+}
+
+.balloon-filelist .file-name,
+.balloon-filelist .file-size,
+.balloon-filelist .file-status,
+.balloon-filelist .file-manage {
+    position: relative;
+    z-index: 1;
+}
+
+.balloon-filelist .file-name {
+    display: inline-block;
+    width: 40%;
+}
+
+.balloon-filelist .file-size {
+    display: inline-block;
+    width: 20%;
+}
+
+.balloon-filelist .file-status {
+    display: inline-block;
+    width: 18%;
+}
+.balloon-filelist .file-manage {
+    display: inline-block;
+    width: 20%;
+    z-index: 9999;
+    position: absolute;
+}
+
+.balloon-filelist ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-height: 100px;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.balloon-filelist ul li {
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 10px;
+}
+
+.balloon-dnd {
+    visibility: hidden;
+}
+
+.balloon-uploader-none .balloon-uploader-footer,
+.balloon-uploader-none .balloon-uploader-body {
+    visibility: hidden;
+}
+
+.balloon-uploader-none .balloon-dnd {
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.balloon-nofile {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    line-height: 100px;
+    text-align: center;
+    color: #999;
+}
+
+.balloon-uploader .file-pick-btn {
+    display: inline-block;
+}
+
+.balloon-uploader .start-upload-btn {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background: #5bc0de;
+    padding: 5px 10px;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid #46b8da;
+    overflow: hidden;
+}
+
+.balloon-uploader .start-upload-btn:hover {
+    background: #31b0d5;
+    border-color: #269abc;
+}
+
+.balloon-filelist .file-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.balloon-filelist .file-progress-bar {
+    background: rgb(219,242,215);
+    background: rgba(59, 181, 33, 0.18);
+    float: left;
+    height: 100%;
+}

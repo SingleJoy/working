@@ -1,0 +1,95 @@
+* {margin:0;padding:0;text-decoration:none;color:#6d6d6d;}
+body {background-color:#eaeaea;font-family:"Microsoft YaHei";}
+li{list-style:none;}
+
+input,button,select,textarea td{outline:none;box-shadow: none;padding-left: 10px;border-radius: 5px;}
+img,button,td{outline:none;box-shadow: none;border: none;}
+button{cursor: pointer;}
+table{border-spacing:0; }
+#cke_1_resizer,#cke_1_path{display: none;}
+
+
+
+
+/*course_personal_main*/
+
+.course_personal_main{width: 1000px;background-color: #fff;height: 1000px;margin: 20px auto;}
+
+
+.course_personal_tabs{padding-top: 10px;}
+.course_personal_tabs ul{margin-left: 15px;}
+.course_personal_tabs ul li{width: 95px;height: 50px;line-height: 50px;text-align: center;float: left;margin-right: 5px;}
+.course_personal_tabs ul li.curr{border-bottom: 1px solid #3ebbce;}
+.course_personal_tabs ul li.curr_01{border-bottom: 1px solid #3ebbce;}
+.course_personal_tabs ul li a{font-size: 16px;line-height: 50px;}
+.course_personal_tabs ul li a.curr{color: #3ebbce;}
+.course_personal_tabs ul li a.curr_01{color: #3ebbce;}
+
+
+/*在学课程*/
+.studying_course{margin-top: 65px;}
+.studying_course_page{position: relative;width: 970px;height: 130px;margin-left: 15px;border: 1px solid #ddd;border-radius: 5px;margin-top: 20px;}
+.studying_course_page>a{}
+.studying_course_page>span{font-size: 16px;color: #f40;float: right;margin-top: 20px;margin-right: 35px;}
+.studying_course_page>a>img{width: 230px;height:130px;border-radius:5px 0 0 5px;}
+.studying_course_page>a>p{font-size: 16px;font-weight: bolder;margin-left: 240px;margin-top: -120px;position: absolute;}
+.studying_course_page>label{font-size: 14px;margin-top: 50px;position: absolute;margin-left: 10px;}
+.studying_course_page>div{position: relative;margin-left: 240px;margin-top: -50px;}
+.studying_course_page>div>a>img{width: 30px;height: 30px;}
+.studying_course_page>div>a>p{font-size: 12px;margin-left: 40px;margin-top: -30px;}
+.studying_course_page>div>a>span{font-size: 12px;margin-left:40px;}
+.studying_course_page>p{float: right;margin-top: -20px;margin-right: 35px;opacity: 0.8;}
+.studying_course_page>p>img{width: 10px;height: 10px;}
+.studying_course_page>p>span{font-size: 14px;padding: 0 10px;}
+.studying_course_page>p>label{font-size: 14px;}
+
+
+
+
+
+/*关注粉丝*/
+.attention_fans_tabs{margin-top: 65px;}
+.attention_fans_tabs ul{margin-left: 15px;}
+.attention_fans_tabs ul li{width: 78px;height: 32px;line-height: 34px;text-align: center;float: left;margin-right: 10px;border:1px solid #ddd;border-radius: 30px;}
+.attention_fans_tabs ul li.curr{background-color: #3ebbce;}
+.attention_fans_tabs ul li.curr_01{border: 1px solid #3ebbce;}
+.attention_fans_tabs ul li a{font-size: 16px;line-height: 34px;}
+.attention_fans_tabs ul li a.curr{color: #fff;}
+.attention_fans_tabs ul li a.curr_01{color: #3ebbce;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*footer*/

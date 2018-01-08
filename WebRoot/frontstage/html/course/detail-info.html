@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/course-info.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../js/course-info.js"></script>
+    <script type="text/javascript">
+      $(function(){
+          $(".target_population button").mouseover(function(){
+               $(this).addClass("curr");
+          }).mouseout(function(){
+              $(this).removeClass("curr");
+          })
+      })
+    </script>
+
+
+</head>
+<body>
+<div class="course_info_top">
+    <img src="../images/course_img.png" class="course_img">
+    <div class="course_name">111<span class="course_states">未发布</span></div>
+    <div class="course_teacher_name">教师:<span >admin</span></div>
+    <button class="course_preview">预览<span class="triangle_down" ></span></button>
+
+    <ul class="user_states" style="display: none;">
+        <li><a href="javascript:return false;">作为已购买用户</a></li>
+        <li><a href="javascript:return false;">作为未购买用户</a></li>
+    </ul>
+
+    <button class="course_release">发布课程</span></button>
+
+
+
+
+</div>
+
+<div class="course_info_main">
+
+    <div class="course_info_main_left">
+
+        <ul>
+            <li class="course_info">课程信息</li>
+            <li class="curr"><a href="javascript:return false;" class="curr">详细信息</a></li>
+            <li class=""><a href="javascript:return false;">课程图片</a></li>
+            <li class=""><a href="javascript:return false;">课时管理</a></li>
+            <li class=""><a href="javascript:return false;">文件管理</a></li>
+        </ul>
+
+
+        <ul>
+            <li class="course_setting">课程设置</li>
+            <li class=""><a href="javascript:return false;">价格设置</a></li>
+            <li class=""><a href="javascript:return false;">教师设置</a></li>
+            <li class=""><a href="javascript:return false;">学员设置</a></li>
+        </ul>
+
+        <ul>
+            <li class="question_library">题库</li>
+            <li class=""><a href="javascript:return false;">题目管理</a></li>
+            <li class=""><a href="javascript:return false;">试卷管理</a></li>
+            <li class=""><a href="javascript:return false;">试卷批阅</a></li>
+        </ul>
+
+        <ul>
+            <li class="course_operation">课程运营</li>
+            <li class=""><a href="javascript:return false;">课程学习数据</a></li>
+        </ul>
+
+
+
+    </div>
+
+
+    <div class="detail_info_main_right">
+
+        <p>详细信息</p>
+
+        <div class="course_introduction">
+            <label>课程简介</label>
+            <input type="text">
+        </div>
+
+        <div class="target_population">
+            <label>课程目标</label>
+            <input type="text">
+
+        </div>
+
+        <div class="target_population">
+            <label>适应人群</label>
+            <input type="text">
+
+        </div>
+
+        <button class="save_info_button">保存</button>
+</div>
+
+
+
+
+
+
+</body>
+
+</html>

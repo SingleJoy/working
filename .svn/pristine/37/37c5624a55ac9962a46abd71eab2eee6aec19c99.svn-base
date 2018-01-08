@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>培训-班级-列表 </title>
+    <meta name="keywords" content="全部" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+
+
+    <div class="cn-banner">
+        <div class="container">
+            <div class="title">
+                <i class="es-icon es-icon-viewcomfy"></i>
+                班级列表
+            </div>
+            <a class="btn btn-primary btn-lg more" href="">
+                查看课程
+            </a>
+        </div>
+    </div>
+
+
+    <div id="content-container" class="container">
+
+        <div class="cn-tabs">
+
+            <div class="tab-header">
+                <ul class="clearfix">
+                    <li class="active all-list"><a href="javascript:return false;">全部</a></li>
+                    <li class=""><a href="">产品介绍</a></li>
+                    <li class=""><a href="">使用教程</a></li>
+                    <li class="default-list"><a href="">默认分类</a></li>
+                </ul>
+            </div>
+            <div class="tab-body" style="">
+                <ul class="clearfix">
+                    <li class="all active"><a href="">全部</a></li>
+                    <li class=""><a href="">管理员</a></li>
+                    <li class=""><a href="">教师</a></li>
+                    <li class=""><a href="">学员</a></li>
+                </ul>
+            </div>
+
+
+        </div>
+        <div class="es-filter">
+            <ul class="nav nav-sort">
+                <li><a href="" class=" active ">最新</a></li>
+                <li><a href="" class="">最热</a></li>
+                <li><a href="" class="">推荐</a></li>
+            </ul>
+            <div class="filter hidden-xs">
+                <div class="btn-group">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="es-icon es-icon-crown text-warning">
+                        </i>
+                        会员班级
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"class="active "><a href="">全部</a></li>
+                    </ul>
+                </div>
+                <label class="checkbox-inline hidden-xs">
+                    <input type="checkbox"  id="" value=""> 免费班级
+                </label>
+            </div>
+        </div>
+        <div class="class-list row">
+            <div class="col-md-4 col-sm-6">
+                <div class="class-item">
+                    <div class="class-img">
+                        <a href="" target="_blank">
+                            <img src="http://13661239841.test.edusoho.com.cn//assets/img/default/lazyload_class.png?7.0.0" alt="新年第一课" class="img-responsive" data-echo="/assets/img/default/classroom.png?7.0.0" />
+                            <h3>新年第一课</h3>
+                            <div class="image-overlay"></div>
+                        </a>
+                    </div>
+                    <div class="class-serve">
+
+
+                        <ul class="list-unstyled clearfix">
+
+                            <li class=""><a tabindex="0" role="button"  title="24小时内完成作业批改，即时反馈并巩固您的学习效果">练</a></li>
+                            <li class="active"><a tabindex="0" role="button"  title="24小时阅卷点评 ，给予有针对性的点评">试</a></li>
+                            <li class=""><a tabindex="0" role="button" title="提问必答,对于提问做到有问必答，帮您扫清学习过程中的种种障碍">问</a></li>
+                            <li class=""><a tabindex="0" role="button"  data-html="true" title="班级活动 <small class='text-muted'>(暂未提供)</span>" data-content="不定期组织各种线上或线下的班级活动，让学习更加生动有趣，同学关系更为紧密">动</a></li>
+                            <li class=""><a tabindex="0" role="button"  title="一对一在线答疑 ,提供专属的一对一在线答疑，快速答疑解惑">疑</a></li>
+                            <li class=""><a tabindex="0" role="button" title="就业指导 ,完成全部学习后，老师对您的学习成果和能力水平给出评估，并提供专业化的就业指导">业</a></li>
+                        </ul>
+                    </div>
+                    <ul class="class-data clearfix">
+                        <li><i class="es-icon es-icon-book"></i>3</li>
+                        <li><i class="es-icon es-icon-people"></i>1</li>
+                        <li><i class="es-icon es-icon-textsms"></i>0</li>
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+<script>
+    $(function(){
+        $(".all-list").click(function(){
+            $(".tab-body").hide();
+
+        })
+    })
+</script>
+
+
+
+
+
+</body>
+</html>

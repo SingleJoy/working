@@ -1,0 +1,323 @@
+
+$(function(){
+   $(".file-chooser-main>ul>li").click(function(){
+       var index=$(this).index();
+       $(".video_source").hide().eq(index).show();
+       $(".file-chooser-main ul li").removeClass("active");
+       $(this).addClass("active");
+     })
+  });
+
+
+
+
+//预览显示与隐藏
+$(function(){
+    $("#preview_course").click(function(){
+
+        $("#preview_course").siblings("ul").toggle(500);
+    })
+});
+
+
+
+//课程信息添加  course_info_main_left ul li
+$(function(){
+    $(".course_info_main_left ul li").click(function(){
+
+        $(".course_info_main_left ul li").removeClass("curr").find("a").removeClass("curr");
+        $(this).addClass("curr").find("a").addClass("curr");
+
+    })
+
+
+});
+
+// 基本信息录入保存按钮  .course_info_main_right button
+$(function(){
+    $(".upload_course_picture_content>button").mouseover(function(){
+        $(".webuploader-pick").css("color","#fff");
+    }).mouseout(function(){
+        $(".webuploader-pick").css("color","#6d6d6d");
+
+    })
+});
+
+//兼容火狐、IE8
+//显示遮罩层
+function showMask(){
+    $("#mask").css("height",$(document).height());
+    $("#mask").css("width",$(document).width());
+    $("#mask").show();
+};
+//隐藏遮罩层
+function hideMask(){
+    $("#mask").hide();
+};
+
+/*//添加章节
+$(function(){
+    $(".add_chapter").click(function(){
+        if($(".add_chapter").siblings("ul").css("display")=="none"){
+            $(".add_chapter").siblings("ul").show();
+        }else{
+            $(".add_chapter").siblings("ul").hide();
+        }
+    })
+});*/
+
+
+$(function(){
+    $(".add_section").click(function(){
+        if($(".add_section").siblings("ul").css("display")=="none"){
+
+            $(".add_section").siblings("ul").show();
+        } else{
+            $(".add_section").siblings("ul").hide();
+        }
+    })
+});
+
+$(function(){
+    $(".add_chapter_ul>li").mouseover(function(){
+        $(this).addClass("curr").find("a").addClass("curr").find("i").addClass("curr");
+    }).mouseout(function(){
+        $(this).removeClass("curr").find("a").removeClass("curr").find("i").removeClass("curr");
+    })
+});
+
+
+$(function(){
+
+    var width = document.body.clientWidth;
+    var myWidth=(width-900)/2;
+    var myWidth_01=(width-600)/2;
+    $(".add_class_hour_page").css("margin-left",myWidth);
+    $(".file_management_main_right_popup").css("margin-left",myWidth);
+    $(".add_page_edit_course").css("margin-left",myWidth);
+    $(".send_private_messages_popup").css("margin-left",myWidth_01);
+    $(".students_personal_info_popup").css("margin-left",myWidth_01);
+    $(".add_course_students").css("margin-left",myWidth_01);
+    $(".add_page_edit_page").css("margin-left",myWidth_01);
+    $(".add_chapter_edit_content").css("margin-left",myWidth_01);
+    $(".add_section_edit_content").css("margin-left",myWidth_01);
+    $(".student_notes_content").css("margin-left",myWidth_01);
+    $(".add_validity_period_content").css("margin-left",myWidth_01);
+    $(".add_data_content_popup").css("margin-left",myWidth);
+
+});
+
+
+$(function(){
+    var top = ($(window).height() - $(".add_class_hour_page").height())/2;
+    var top1 = ($(window).height() - $(".add_chapter_edit_content").height())/2;
+    var top2 = ($(window).height() - $(".add_page_edit_course").height())/2;
+    $(".add_class_hour_page").css("top",top);
+    $(".add_chapter_edit_content").css("top",top1);
+    $(".add_page_edit_course").css("top",top2);
+
+});
+
+//添加课时
+$(function(){
+    $(".close_page").click(function(){
+        $(".add_class_hour_page").hide();
+        hideMask();
+    })
+});
+
+//视频上传
+$(function(){
+    $(".class_hour_upload_video ul li").click(function(){
+        $(".class_hour_upload_video ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+        $(this).addClass("curr").find("a").addClass("curr");
+        var index=$(this).index();
+        $(".upload_video_tabs").hide().eq(index).show();
+    });
+});
+
+
+$(function(){
+    $(".add_class_hour_content_bottom a").click(function(){
+        $(".add_class_hour_page").hide();
+        hideMask();
+    })
+});
+
+$(function(){
+    $(".add_page_add>button").click(function(){
+        if($(this).siblings("ul").css("display")=="none"){
+            $(".add_page_add>button").siblings("ul").hide();
+            $(this).siblings("ul").show();
+        }else{
+            $(this).siblings("ul").hide();
+        }
+
+    })
+});
+
+
+
+//添加试卷弹窗
+$(function(){
+    $(".add_test_paper").click(function(){
+       $(".add_test_paper_content").show();
+        showMask();
+    })
+});
+
+$(function(){
+    $(".add_test_paper_content div a").click(function(){
+        $(".add_test_paper_content").hide();
+        hideMask();
+    })
+});
+
+$(function(){
+    $(".add_test_paper_content button").click(function(){
+        $(".add_test_paper_content").hide();
+        hideMask();
+    })
+});
+////
+$(function(){
+    $(".add_page_edit_content button").click(function(){
+        $(".add_page_edit_content").hide();
+        hideMask();
+    });
+    $(".add_page_edit_content a").click(function(){
+        $(".add_page_edit_content").hide();
+        hideMask();
+    })
+});
+
+//章编辑弹窗
+$(function(){
+    $(".add_chapter_popup").click(function(){
+        $(".add_chapter_edit_content").show();
+        showMask();
+    });
+
+});
+
+$(function(){
+    $(".add_chapter_edit_content>button").click(function(){
+        $(".add_chapter_edit_content").hide();
+        hideMask();
+    });
+
+});
+$(function(){
+    $(".edit_content_main_bottom a").click(function(){
+        $(".add_chapter_edit_content").hide();
+        hideMask();
+    });
+
+});
+
+//
+
+
+//节编辑弹窗
+$(function(){
+    $(".add_section_popup").click(function(){
+        $(".add_section_edit_content").show();
+        showMask();
+    });
+
+});
+
+$(function(){
+    $(".add_section_edit_content>button").click(function(){
+        $(".add_section_edit_content").hide();
+        hideMask();
+    });
+
+});
+
+$(function(){
+    $(".edit_content_main_bottom a").click(function(){
+        $(".add_section_edit_content").hide();
+        hideMask();
+    });
+
+});
+//
+
+//课时添加
+$(function(){
+    $(".add_class_popup").click(function(){
+        $(".add_class_hour_page").show();
+        showMask();
+    });
+
+});
+//
+
+
+//文件管理
+$(function(){
+    $(".file_management_tabs ul li").click(function(){
+        $(".file_management_tabs ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+        $(this).addClass("curr").find("a").addClass("curr");
+        var index=$(this).index();
+        $(".file_tabs").hide().eq(index).show();
+    })
+});
+$(function(){
+    $(".file_management_main_right_popup>button,.file_management_main_right_bottom>button").click(function(){
+        $(".file_management_main_right_popup").hide();
+        hideMask();
+    })
+});
+
+
+
+//教师设置
+
+$(function(){
+    $(".add_page_edit_course button").click(function(){
+        $(".add_page_edit_course").hide();
+        hideMask();
+    })
+});
+
+$(function(){
+    $(".edit_course_main_bottom a").click(function(){
+        $(".add_page_edit_course").hide();
+        hideMask();
+    })
+});
+
+
+
+
+//更多 添加资料
+$(function(){
+    $(".add_page_read_more>a").click(function(){
+       if($(this).siblings().css("display")=="none"){
+           $(this).siblings().show();
+       }else{
+           $(this).siblings().hide();
+       }
+
+    })
+});
+
+
+
+$(function(){
+    $(".add_page_read_more ul li").mouseover(function(){
+        $(".add_page_read_more ul li").removeClass("curr").find("a").removeClass("curr");
+        $(this).addClass("curr").find("a").addClass("curr");
+    }).mouseout(function(){
+        $(this).removeClass("curr").find("a").removeClass("curr");
+    })
+});
+
+$(function(){
+    $(".add_data_content_popup form>button").click(function(){
+        $(".add_data_content_popup").hide();
+        hideMask();
+    })
+});

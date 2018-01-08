@@ -1,0 +1,45 @@
+* { margin: 0; padding: 0;  text-decoration: none;  }
+body { background-color: #eaeaea;  font-family: "Microsoft YaHei";  }
+li{list-style:none;}
+a{color: #000000;}
+a:hover{color:red}
+input,button,select,textarea{outline:none;}
+/*顶端*/
+.top{  width: 100%;  height: 30px;  background-color:#3ebbce;  position: relative;  }
+.top_txt{width: 1000px;margin: 0 auto;}
+.top_txt li{  float: left;  }
+.top_txt li a{  font-size: 12px;  color: #ffffff;  }
+.admin{  margin-left:2px;margin-top: 4px;}
+.register{  margin-left: 18px;  }
+.myspace{  margin-left: 730px;  }
+.recent_browse{  margin-left: 18px;  }
+.cooper_organization{ margin-left: 18px;  }
+
+/*main_pay*/
+.main_pay{width: 760px;height:480px;border: 1px solid #ddd;margin:78px auto;border-radius: 5px;}
+.main_pay div{font-size: 14px;margin-left: 30px;}
+.admin_NO{margin-top: 30px;}
+.admin_name{padding-left: 10px;}
+.pay_goods{margin-top: 50px;}
+.pay_goods ul{width: 610px;height:80px;background-color: #eaeaea;margin-left: 90px;margin-top: -45px;}
+.pay_goods ul:first-child{padding-top: 25px;padding-left: 15px;}
+.pay_goods ul li{font-size: 12px;line-height: 14px;}
+.pay_goods ul li img{padding-left: 20px;}
+.goods_info{padding-top: 10px;padding-left: 50px;}
+.pay_price{margin-top: 30px;}
+.price_num{padding-left:30px;color:#ff9a00;}
+.pay_price ul li{float: left;width: 98px;height:30px;background-color: #eaeaea;border: 1px solid #ddd;text-align: center;line-height: 30px;}
+.pay_price ul{margin-left: 85px;margin-top: 30px;}
+.pay_method{margin-top: 30px;}
+.pay_method img{width: 100px;height:30px;padding-left: 40px;position: absolute;margin-top: -5px;}
+.pay_now{width: 120px;height:40px;border-radius: 5px;background-color: #ff9a00;font-size: 16px;color: #ffffff;font-weight: bold;margin-left: 120px;margin-top: 15px;}
+
+
+
+
+/*尾部 ---footer*/
+.footer{width:100%; height: 100px;  background-color: #3ebbce;  position: relative; margin-top: 260px;}
+.footer_content{padding-top:42px;}
+.footer_title,.agreement,.proposal{font-size: 14px;color: #ffffff;}
+.footer_content_span{padding-left: 20px;padding-right: 20px;}
+.footer_content_ul li{display: inline;}

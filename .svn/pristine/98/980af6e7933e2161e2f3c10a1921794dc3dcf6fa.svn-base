@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>忠诚度</title>
+    <style>
+
+        *{margin: 0;padding: 0;}
+        table{border-collapse:collapse;   border-spacing:0; }
+        a{text-decoration: none;}
+        li{list-style: none;}
+        body{background-color: #ececec;}
+        .visited_tabs{margin-top: 30px;}
+        .visited_tabs>ul{padding-top: 30px;margin-left: 50px;}
+        .visited_tabs>ul>li{min-width: 100px;display: inline-block;text-align: center;}
+        .visited_tabs>ul>li.active{border-bottom: 2px solid #4aa6fc;}
+
+        .visited_tabs>ul>li>a{color: #616161;line-height: 35px;}
+        .visited_tabs>ul>li.active>a{color:#4aa6fc;}
+        .main_content{}
+        .main_head{font-size: 16px; background-color: #fff; padding: 20px;}
+        .main_head_content{max-width: 1050px;}
+        .main_body{margin: 20px;background-color: #fff;}
+
+        .time>div{float: left;margin-right:10px;}
+
+        .select_time{}
+        .select_time>span>input{width: 100px;}
+        .select_time>span{margin-left: 10px;}
+
+        .choose_date_01>a,.choose_date_02>a{color:#616161;text-decoration: none;margin-right: 5px;}
+        .choose_date_01>a.active{display: inline-block;background-color: #4da7fd;color: #fff;padding:2px;}
+        .choose_date_01>a.inactive{display: inline-block;background-color: #d9d2f0;color: #fff;padding:2px;}
+        .choose_area{margin-right: 15px;}
+
+
+        .user_info{margin: 20px auto;padding-top: 30px;}
+        .user_info>div{float: left;padding: 0 20px;min-width: 180px;text-align: center;}
+        .user_info>div>label{font-size: 20px;text-align: center;color: orange;}
+        .user_info>div>span{font-size:12px;text-align: center;min-width: 60px;}
+        .table_sta{border:1px solid #ddd;border-left: none;border-bottom: none;}
+        .table_sta>thead>tr>th,.table_sta>tbody>tr>td{width: 173px;text-align: center;border-bottom: 1px solid #ddd;
+            border-left: 1px solid #ddd;font-size: 14px;line-height: 30px;}
+        .table_sta>thead>tr>th{background-color: #ececec;padding: 5px 10px;}
+        .compare_info{text-align: center;}
+        .compare_info>span{}
+        .compare_info>div{display: inline-block;}
+
+        #databody>tr>td{font-size: 14px;line-height: 25px;}
+        #compares{text-align: center;}
+
+        .fold_open{background-position: left -725px;background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            -background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            background-repeat: no-repeat;width: 50px;height:30px;cursor: pointer;display: none;}
+        .fold_close{background-position: left -761px;background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            -background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            background-repeat: no-repeat;width: 50px;height:30px;cursor: pointer;margin-top: -70px;}
+        #data_title{display: none;font-size: 18px;margin-top: 20px;}
+
+        .download_data_btn{color: orange;font-size: 16px;margin-left: 60px;}
+
+        .online_title{}
+        .online_title>p{}
+        .online_title>span{}
+
+        .calendar_time{float:left;width: 200px;margin-top: 80px;}
+        .usertrend{float:left;}
+
+    </style>
+
+
+    <style>
+        .data_pic{float: left;width: 45%;margin-right: 20px;}
+    </style>
+</head>
+<body style="">
+<div class="main_content">
+
+    <div class="main_head">
+        <div class="main_head_content">
+            <h3>忠诚度
+            </h3>
+            <form  action="">
+
+                <br>
+                <div class="time">
+                    <div class="choose_date_01">
+                        <span>时间：</span>
+                        <input type="hidden" name="timeType" id="timeType" value="0">
+                        <a class="active" href="javascript:void(0);">今天</a>
+                        <a   href="javascript:void(0);">昨天</a>
+                        <a  href="javascript:void(0);">最近7天</a>
+                        <a  href="javascript:void(0);">最近30天</a>
+                        <select  style="height: 25px;padding:2px;">
+                            <option value="1" selected="">一天</option>
+                            <option value="0">时间段</option>
+                        </select>
+                    </div>
+
+                    <div  class="select_time" style="">
+                        <span>
+                            <input  value="" class="easyui-datebox datebox-f combo-f"  style="width: 100px; display: none;" comboname="days"><span class="combo datebox" style="width: 98px;"><input type="text" class="combo-text validatebox-text" autocomplete="off" readonly="readonly" style="width: 80px;"><span><span class="combo-arrow"></span></span><input type="hidden" class="combo-value" name="days" value="2017-10-31"></span></span>
+                    </div>
+
+                    <div id="duration" class="select_time" style="display: none;">
+                        <span>开始日期：<input id="startTime" class="easyui-datebox datebox-f combo-f" data-options="onSelect:onSelect,editable:false" style="width: 100px; display: none;" comboname="startTime"><span class="combo datebox" style="width: 98px;"><input type="text" class="combo-text validatebox-text" autocomplete="off" readonly="readonly" style="width: 80px;"><span><span class="combo-arrow"></span></span><input type="hidden" class="combo-value" name="startTime" value=""></span></span>
+                        <span>结束日期：<input id="endTime" class="easyui-datebox datebox-f combo-f" data-options="onSelect:onSelect,editable:false" style="width: 100px; display: none;" comboname="endTime"><span class="combo datebox" style="width: 98px;"><input type="text" class="combo-text validatebox-text" autocomplete="off" readonly="readonly" style="width: 80px;"><span><span class="combo-arrow"></span></span><input type="hidden" class="combo-value" name="endTime" value=""></span></span>
+                    </div>
+
+                    <div class="choose_date_01">
+                        <input type="hidden" value="0">
+                        <input type="hidden"  value="0">
+                        <a class="active"  href="javascript:void(0);">按时</a>
+                        <a class="" href="javascript:void(0);">按天</a>
+                        <a class="inactive"  href="javascript:void(0);">按周</a>
+                        <a class="inactive"  href="javascript:void(0);">按月</a>
+                    </div>
+
+                </div>
+                <br>
+                <br>
+
+                <div class="time">
+
+
+                    <div class="choose_date_01 ">
+                        <span>地域：</span>
+                        <span class="choose_area">
+	                    <select style="padding: 2px;height:25px;">
+                            <option value="0">全部</option>
+                        </select>
+	                </span>
+                    </div>
+
+
+                    <div class="choose_date_01">
+                        <span>访客：</span>
+
+                        <a  class="active" href="javascript:void(0);">全部</a>
+                        <a  class="active" href="javascript:void(0);">新访客</a>
+                        <a  class="active" href="javascript:void(0);">老访客</a>
+
+                    </div>
+                </div>
+                <br>
+
+            </form>
+        </div>
+
+    </div>
+
+    <div class="main_body" style="min-height: 600px;">
+
+        <div class="visited_tabs">
+            <ul>
+                <li class="active"><a href="javascript:void(0);">访问页面</a></li>
+                <li><a href="javascript:void(0);">访问深度</a></li>
+                <li><a href="javascript:void(0);">访问时长</a></li>
+                <li><a href="javascript:void(0);">上次访问时间</a></li>
+                <li><a href="javascript:void(0);">访问频次</a></li>
+            </ul>
+        </div>
+
+        <div class="time user_info">
+            <div>
+                <span>访问页数</span><br>
+                <label class="number" >10</label>
+            </div>
+            <div>
+                <span>用户登录时长</span><br>
+                <label class="number" >0</label>
+            </div>
+            <div>
+                <span>用户上次登录时长</span><br>
+                <label class="number" >1</label>
+            </div>
+            <div>
+                <span>用户登录次数</span><br>
+                <label class="number" >00:00:00</label>
+            </div>
+
+        </div>
+        <div style="margin-bottom: 50px;clear: both;margin-left: 120px;margin-top: 150px;" id="data_pic">
+            <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            <div id="usertrend" style="width: 1080px; height: 350px;">
+
+                <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=296224124,4075378774&fm=27&gp=0.jpg">
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        <div class="time" style="clear: both;margin-top: 100px;padding-left: 20px;">
+            <table class="table_sta" style="width: 80%;">
+                <thead>
+                <tr>
+                    <th style="width: 20%;">访问页数</th>
+                    <th style="width: 20%;">访问次数</th>
+                    <th style="width: 20%;">所占比例</th>
+
+                </tr>
+
+                </thead>
+                <tbody >
+                <tr>
+                    <td>10</td>
+                    <td>192</td>
+                    <td>20%</td>
+
+                </tr>
+            </table>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+</div>
+
+
+
+
+</body>
+
+</html>

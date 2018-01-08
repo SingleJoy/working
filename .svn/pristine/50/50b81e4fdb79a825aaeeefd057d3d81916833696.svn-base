@@ -1,0 +1,560 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+        <jsp:include page="/frontstage/base/personalCenter/personal_header.jsp"></jsp:include>
+
+        <div class="row">
+
+            <jsp:include page="/frontstage/base/personalCenter/personal_left.jsp"></jsp:include>
+
+            <div class="col-md-9">
+
+            <div class="panel panel-default" >
+
+                <div class="panel-heading">
+                    申请教师认证
+                </div>
+
+                <div class="panel-body">
+
+
+
+
+                    <form class="form-horizontal "  method="post"  style="clear: both;">
+                <c:if test="${userInfo.certificated==0 }">
+                        <div class="alert alert-success">正在实名认证中，管理员会尽快答复你！</div>
+				</c:if>
+				<c:if test="${userInfo.certificated==1 }">
+                        <div class="alert alert-success">恭喜你，通过了实名认证！</div>
+
+                        <div class="form-group ">
+                            <div class="col-md-2 control-label">真实姓名</div>
+                            <div class="col-md-8 controls">
+                                <input type="text"  name="name"   value="${userInfo.true_name }" class="form-control " disabled>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group ">
+                            <div class="col-md-2 control-label">身份证号</div>
+                            <div class="col-md-8 controls">
+                                <input type="text"  name="name"   value="${userInfo.ID_number }" class="form-control " disabled >
+
+                            </div>
+                        </div>
+</c:if>
+
+                    </form>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function _province(value){
+
+            $("#city").find("option").remove();
+            $("#county").find("option").remove();
+            $("#school").find("option").remove();
+            $("#city").append('<option value=-1 >--请选择！--</option>');
+            $("#county").append('<option value=-1 >--请选择！--</option>');
+            $("#school").append('<option value=-1 >--请选择！--</option>');
+            $.ajax({
+                url:"${pageContext.request.contextPath}/area/showArea.action?parentId="+value,
+                dataType:'json',
+                success:function(json){
+                    var a = JSON.stringify(json);
+                    var o = eval( "(" + a + ")" );
+                    for(var j in o){
+
+                        $("#city").append('<option  value='+o[j].id+' >'+o[j].area_name+'</option>');
+                    }
+
+                }
+
+            });
+
+
+            $.ajax({
+                url:"${pageContext.request.contextPath}/area/showProvinceSchool.action?provinceId="+value,
+                dataType:'json',
+                success:function(json){
+                    var a = JSON.stringify(json);
+                    var o = eval( "(" + a + ")" );
+                    for(var j in o){
+                        $("#school").append('<option  value='+o[j].id+' >'+o[j].schoolName+'</option>');
+                    }
+
+                }
+
+            });
+        }
+        function _city(value){
+
+            $("#county").find("option").remove();
+
+            $("#school").find("option").remove();
+            $("#county").append('<option value=-1 >--请选择！--</option>');
+            $("#school").append('<option value=-1 >--请选择！--</option>');
+            $.ajax({
+                url:"${pageContext.request.contextPath}/area/showArea.action?parentId="+value,
+                dataType:'json',
+                success:function(json){
+                    var a = JSON.stringify(json);
+                    var o = eval( "(" + a + ")" );
+                    for(var j in o){
+                        $("#county").append('<option  value='+o[j].id+' >'+o[j].area_name+'</option>');
+                    }
+
+                }
+
+            });
+
+
+            $.ajax({
+                url:"${pageContext.request.contextPath}/area/showCitySchool.action?cityId="+value,
+                dataType:'json',
+                success:function(json){
+                    var a = JSON.stringify(json);
+                    var o = eval( "(" + a + ")" );
+                    for(var j in o){
+                        $("#school").append('<option  value='+o[j].id+' >'+o[j].schoolName+'</option>');
+                    }
+
+                }
+
+            });
+
+        }
+        function _county(value){
+
+            $("#school").find("option").remove();
+            $("#school").append('<option value=-1 >--请选择！--</option>');
+            $.ajax({
+                url:"${pageContext.request.contextPath}/area/showSchool.action?countyId="+value,
+                dataType:'json',
+                success:function(json){
+                    var a = JSON.stringify(json);
+                    var o = eval( "(" + a + ")" );
+                    for(var j in o){
+                        $("#school").append('<option  value='+o[j].id+' >'+o[j].schoolName+'</option>');
+                    }
+
+                }
+
+            });
+
+
+
+        }
+        //*****************
+ 
+        function _stage(value){
+            //alert(value);
+            $("#subject").find("option").remove();
+            $("#edition").find("option").remove();
+            $("#position").find("option").remove();
+            $("#titles").find("option").remove();
+            //$("#grade").find("option").remove();
+            $.ajax({
+                url : "${pageContext.request.contextPath}/subject/query_subject.action?subId="+value,
+                dataType:'json',
+                success : function(json) {
+                    var a = JSON.stringify(json);
+                    var o = eval( "(" + a + ")" );
+                    var sub = o[0].subjectList;
+                    var edi = o[0].editionList;
+                    var gra = o[0].gradeList;
+                    for(var i in sub){
+                        $("#subject").append('<option   value='+sub[i].id+' >'+sub[i].subjectName+'</option>');
+                    }
+
+
+                    for(var i in edi){
+                        $("#edition").append('<option  value='+edi[i].id+' >'+edi[i].versionName+'</option>');
+                    }
+
+                    /* for(var i in gra){
+                     $("#grade").append('<option value='+gra[i].bookCatelogId+' >'+gra[i].bookCatelogName+'</option>');
+                     }
+                     $("#gradeId").val(gra[0].bookCatelogId); */
+                }
+            });
+            $.ajax({
+                url : "${pageContext.request.contextPath}/certification/query_titles.action?subId="+value,
+                dataType:'json',
+                success : function(json) {
+
+                    var position=json.position;
+                    var titles=json.titles;
+                    $("#position").append('<option   value=-1 >无</option>');
+                    $("#titles").append('<option   value=-1 >无</option>');
+                    for(var i in position){
+                        $("#position").append('<option   value='+position[i].id+' >'+position[i].classify_name+'</option>');
+                    }
+
+
+                    for(var i in titles){
+                        $("#titles").append('<option  value='+titles[i].id+' >'+titles[i].classify_name+'</option>');
+                    }
+
+
+
+                }
+            });
+        }
+        function _subject(value){
+
+            $("#edition").find("option").remove();
+            $.ajax({
+                url : "${pageContext.request.contextPath}/pubver/query_pubver.action?pubId="+value,
+                dataType:'json',
+                success : function(json){
+                    var a = JSON.stringify(json);
+                    var o = eval( "(" + a + ")" );
+                    var edi = o[0].editionList;
+                    var gra = o[0].gradeList;
+                    for(var i in edi){
+                        $("#edition").append('<option  value='+edi[i].id+' >'+edi[i].versionName+'</option>');
+                    }
+                    $("#editionId").val(edi[0].id);
+
+                }
+            });
+        }
+
+        function _grade(){
+		if($("#grade").val()==null||$("#grade").val()==""){
+			$("#nullGrade").remove();
+			$.ajax({
+				url : "${pageContext.request.contextPath}/my_setting/selectGrade.action",
+				dataType:'json',
+				success : function(json){
+					var a = JSON.stringify(json);
+					var o = eval( "(" + a + ")" );
+					for(var i in o){
+						$("#grade").append('<option  value='+o[i].id+' >'+o[i].grade_name+'</option>');
+					}
+				}
+			});
+		}
+
+        }
+        $(function(){
+            var i=1;
+            var uploader = WebUploader.create({
+                auto: true,
+                // swf文件路径
+                swf: '${pageContext.request.contextPath}/frontstage/js/webuploader/Uploader.swf',
+				// 文件接收服务端。
+                server: '${pageContext.request.contextPath}/certification/upload_img.action',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#file',
+
+                // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: false,
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+            /**
+             *上传成功后
+             *file:文件
+             *response:服务器返回
+             */
+            uploader.on( 'uploadSuccess', function( file,response  ) {
+                var hidden=$(
+                    '<input type="hidden" value="'+response.fileName+'" name="picture'+i+'" class="hidden" data-id="'+file.id+'">' );
+                var $form=$("#form1");
+                $form.append(hidden);
+                i++;
+            });
+            $(document).on('click',".tutor_del",function(){
+                var id=$(this).attr("id");
+                //name picture+i移除 data-id =id
+                $("input[data-id='"+id+"']").remove();
+                uploader.removeFile(id);
+                $(this).parent().remove();
+                i--;
+            });
+            // 当有文件添加进来的时候
+            uploader.on( 'fileQueued', function( file ) {
+
+                // <input type="hidden">
+
+                var $img;
+                var $li = $(
+                    '<a href="javascript:void(0);" class="certification_img" data-toggle="modal">'+
+
+                    '<img>' +
+                    '<span class="tutor_del text-danger" id="'+file.id+'">X</span>'+
+
+                    '</a>'
+
+                    ),
+
+                    $img = $li.find('img');
+
+                if (3 ==$('#fileList').find('.file-item').length)
+                    return void alert('上传图片最多不能超过3张');
+                var   $list=$("#fileList");
+
+                // $list为容器jQuery实例
+                $list.append( $li );
+
+
+
+                // 创建缩略图
+                // 如果为非图片文件，可以不用调用此方法。
+                // thumbnailWidth x thumbnailHeight 为 100 x 100
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+
+                    $img.attr( 'src', src );
+                }, 100, 100 );
+            });
+
+            $("#save_btn").click(function(){
+
+
+                var email_reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                var phone_reg=/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}|17[0-9]{9}$/;
+                var isIDCard=/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+                var username=$("#username").val();
+                var email=$("#email1").val();
+                var school=$("#school").val();
+                var stage=$("#stage").val();
+                var subject =$("#subject").val();
+                var edition =$("#edition").val();
+                var grade =$("#grade").val();
+                var ID_number1=$("#ID_number1").val();
+                var certificate_type=  $("#certificate_type").val();
+                //用户名
+                if(username==""){
+                    $("#username").next().show();
+                    return false;
+                }else{
+                    $("#username").next().hide();
+                }
+                //学校
+                if(school=="-1"){
+                    $("#school").next().show();
+                    return false;
+
+                }else{
+                    $("#school").next().hide();
+                }
+                //学段
+                if(stage=="-1"){
+
+                    $("#stage").next().show();
+
+                    return false;
+                }else{
+                    $("#stage").next().hide();
+                }
+                //学科
+                if(subject==-1){
+                    $("#subject").next().show();
+                    return false;
+                }else{
+                    $("#subject").next().hide();
+                }
+                //版本
+                if(edition=="-1"){
+                    $("#edition").next().show();
+                    return false;
+                }else{
+                    $("#edition").next().hide();
+                }
+                //年级
+                if(grade=="-1"){
+                    $("#grade").next().show();
+                    return false;
+                }else{
+                    $("#grade").next().hide();
+                }
+                //身份证号码
+                if(ID_number1==""){
+                    $("#ID_number1").next().show();
+                    return false;
+                }else{
+                    $("#ID_number1").next().hide();
+                }
+                if(!isIDCard.test(ID_number1)){
+                    alert("身份证格式不正确");
+                    return false;
+                }
+                //邮箱
+                if(email==""){
+                    $("#email1").next().show();
+                    return false;
+                }else{
+                    $("#email1").next().hide();
+                }
+                if(!email_reg.test(email)){
+                    alert("邮箱格式不正确");
+                    return false;
+                }
+
+                var i=$('#form1').find('.hidden').length;
+                if(i<1){
+                    alert("请上传图片");
+                    return false;
+                }
+
+
+
+	});
+		
+	});
+	
+	 $(document).ready(function() {
+        $('#form1').bootstrapValidator({
+            message: '此值无效',
+            
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    message: '真实姓名',
+                    validators: { 
+                        notEmpty: {
+                            message: '真实姓名不能为空'
+                        },
+                         stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '真实姓名长度2-10'
+                        },
+                      
+                    }
+                },
+                 email: {
+                    message: '邮箱',
+                    validators: { 
+                        notEmpty: {
+                            message: '邮箱不能为空'
+                        },
+                      emailAddress:{
+                            message: '邮箱格式不正确'
+                        },
+                    }
+                },
+                school: {
+                    message: '学校',
+                    validators: { 
+                        notEmpty: {
+                            message: '学校不能为空'
+                        },
+                    }
+                },
+                stage: {
+                    message: '学段',
+                    validators: { 
+                        notEmpty: {
+                            message: '学段不能为空'
+                        },
+                    }
+                },
+                subject: {
+                    message: '科目',
+                    validators: { 
+                        notEmpty: {
+                            message: '科目不能为空'
+                        },
+                    }
+                },
+                edition: {
+                    message: '版本',
+                    validators: { 
+                        notEmpty: {
+                            message: '版本不能为空'
+                        },
+                    }
+                },
+                grade: {
+                    message: '年级',
+                    validators: { 
+                        notEmpty: {
+                            message: '年级不能为空'
+                        },
+                    }
+                },
+                ID_number: {
+                    message: '身份证号',
+                    validators: { 
+                        notEmpty: {
+                            message: '身份证号不能为空'
+                        },
+                         regexp: {/* 只需加此键值对，包含正则表达式，和提示 */
+                            regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+                            message: '身份证格式不正确'
+                        },
+                    }
+                },
+                    certificate_type: {
+                    message: '类型',
+                    validators: { 
+                        notEmpty: {
+                            message: '类型不能为空'
+                        },
+                    }
+                },
+            
+             
+            }
+        }).on('success.form.bv', function(e) {
+        	
+			 if(e.type){//验证成功
+                //document.getElementById('workshopForm').submit();
+   var i=$('#form1').find('.hidden').length;
+		if(i<3){
+			alert("请上传3张图片");
+			return false;
+		}
+            }else{
+                // 防止表单提交
+                e.preventDefault();
+            }
+        });
+
+});
+// 	   $(document).on('click',".certification_img",function(){
+// 	   var src=$(this).find("img").attr("src");
+// 	  $("#certification_img_modal").find("img").attr("src",src);
+// 	  $("#certification_img_modal").modal("show");
+// 	  });
+</script>
+
+
+
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>

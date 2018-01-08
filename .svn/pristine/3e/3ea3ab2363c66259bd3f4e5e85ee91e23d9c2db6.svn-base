@@ -1,0 +1,309 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.resource.service.File_baseService;
+import cn.bnsr.edu_yun.frontstage.tiku.po.TestPaper;
+import cn.bnsr.edu_yun.frontstage.tiku.service.QuestionService;
+import cn.bnsr.edu_yun.frontstage.tiku.service.TestPaperService;
+import cn.bnsr.edu_yun.frontstage.tiku.view.QuestionView;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseExamStandard;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseFile;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseExamStandardService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseFileService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseInfoService;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseFileView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 课时管理
+ * 
+ * @author fangxiongwei
+ * @date 2016年10月31日
+ */
+@Controller
+@RequestMapping("/course_hour")
+public class CourseHourController {
+	private final Logger log = LoggerFactory.getLogger(CourseHourController.class);
+
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private CourseInfoService courseInfoService;
+	@Autowired
+	private CourseFileService courseFileService;
+	@Autowired
+	private File_baseService fileBaseService;
+	@Autowired
+	private TestPaperService testPaperService;
+	@Autowired
+	private QuestionService questionService;
+	@Autowired
+	private CourseExamStandardService courseExamStandardService;
+
+	/**
+	 * 跳转课时页面
+	 */
+	@RequestMapping("/to_course_hour")
+	public ModelAndView toCourseHour(HttpServletRequest request, CourseView courseView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			User user = (User) request.getSession().getAttribute("currentUser");
+			String sign = courseView.getSign();
+			String flag = courseView.getFlag();
+			if (courseView.getId() != null) {
+				courseView = courseInfoService.queryCourseDetail(courseView.getId());
+			}
+			// 查询该课程所有章节list
+			List<CourseHour> chapterList = courseHourService.queryHourList(courseView.getId(), true);
+			// 查询该课程所有课时list
+			List<CourseHour> hourList = courseHourService.queryHourList(courseView.getId(), false);
+			// 课程文件list
+			List<CourseFileView> courseFileList = courseFileService.queryCourseFile(courseView.getId(),user.getId());
+			// 全部文件
+			List<CourseFileView> fileList = courseFileService.queryCourseFile(0L,user.getId());
+			// li 试卷
+			List<TestPaper> testPaperList = testPaperService.selectByCourseIdPublish(courseView.getId());
+			courseView.setSign(sign);
+			courseView.setFlag(flag);
+			modelAndView.addObject("courseView", courseView);
+			modelAndView.addObject("testPaperList", testPaperList);
+			modelAndView.addObject("chapterList", chapterList);
+			modelAndView.addObject("fileList", fileList);
+			modelAndView.addObject("courseFileList", courseFileList);
+			modelAndView.addObject("hourList", hourList);
+			modelAndView.addObject("head_title", "课时管理");
+			modelAndView.setViewName("frontstage/train/course/course_hour");
+		} catch (Exception e) {
+			log.error("跳转课时页面失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	/**
+	 * 保存课时信息
+	 */
+	@RequestMapping("/save_course_hour")
+	public ModelAndView saveCourseHour(HttpServletRequest request, CourseHour courseHour) {
+		String sign = request.getParameter("sign");
+		String isuse = request.getParameter("course_file_isuse");
+		String[] accordScores = request.getParameterValues("accordScores");
+		User user = (User) request.getSession().getAttribute("currentUser");
+		try {
+			if (courseHour.getId() != null) {
+				courseHourService.updateCourseHour(courseHour);
+			} else {
+				courseHour.setUser_id(user.getId());
+				long id = courseHourService.saveCourseHour(courseHour);
+				if(courseHour.getAttribute_type() == 2) {//课时
+					if(isuse.equals("1")){//没有使用过
+						CourseFile cf = new CourseFile();
+						cf.setId(courseHour.getCourse_file_id());
+						cf.setIs_use(0);//修改为已使用
+						courseFileService.updateCourseFile(cf);
+					}
+				}else if (courseHour.getAttribute_type() == 4) {// 作业
+					// courseHour.setId(Long.parseLong(id+""));不需要进行这一步
+					String questionIds = request.getParameter("question_ids");
+					String questionSeqs = request.getParameter("question_seqs");
+					System.out.println(accordScores);
+					// 保存课时作业
+					testPaperService.saveTask(courseHour, questionIds, questionSeqs, accordScores);
+				} else if (courseHour.getAttribute_type() == 0) {// 试卷
+					String test_paper_id = request.getParameter("test_paper_id");
+					TestPaper testPaper = testPaperService.selectById(Long.parseLong(test_paper_id));
+					testPaper.setCourse_hour_id(id);
+					testPaperService.updateTestPaper(testPaper);
+				}
+			}
+		} catch (Exception e) {
+			log.error("保存课时信息失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return new ModelAndView("redirect:/course_hour/to_course_hour.action?id=" + courseHour.getCourse_id() + "&flag=1&sign=" + sign + "&ver="
+				+ Math.random());
+	}
+
+	/**
+	 * 删除章节、课时
+	 */
+	@RequestMapping("/delete_hour")
+	public ModelAndView deleteHour(HttpServletRequest request) {
+		String courseId = request.getParameter("courseId");
+		String sign = request.getParameter("sign");
+		String id = request.getParameter("id");
+		String attributeType = request.getParameter("AttributeType");
+		String message=null;
+		boolean mflag=false;
+		try {
+			if(attributeType.equals("0") || attributeType.equals("3") 
+					|| attributeType.equals("4")){//考试 ||讨论||作业  
+				//是否是考核标准项
+				CourseExamStandard courseExamStandard = courseExamStandardService.queryExamStandardByCouHourId(Long.parseLong(id));
+				if(courseExamStandard!=null&&(courseExamStandard.getRatio()!=null&&courseExamStandard.getRatio()>0)){
+					mflag=true;
+				}
+			}
+			courseHourService.deleteHour(id, attributeType);
+			if(mflag){
+				message="up";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("删除失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		if(message==null){
+			return new ModelAndView("redirect:/course_hour/to_course_hour.action?id=" + courseId + "&flag=1&sign=" + sign + "&ver=" + Math.random());
+		}else{
+			System.out.println(message+"9999999999999999999");
+			return new ModelAndView("redirect:/course_exam_standard/to_course_exam_standard.action?id=" + courseId + "&flag=2&sign=9&course_id="+courseId+"&examStandardMessage="+message+"&ver=" + Math.random());
+		}
+	}
+
+	@RequestMapping("/search_seq")
+	@ResponseBody
+	public JSONArray searchSeq(HttpServletRequest request) {
+		String courseId = request.getParameter("courseId");
+		String parentId = request.getParameter("parentId");
+		int seq = courseHourService.searchSeq(courseId, parentId);
+		return JSONArray.fromObject((seq + 1));
+	}
+
+	@RequestMapping("/get_hour")
+	@ResponseBody
+	public JSONArray getHour(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		CourseHour courseHour = courseHourService.getHour(id);
+		return JSONArray.fromObject(courseHour);
+	}
+
+	/**
+	 * 跳转添加作业页面
+	 */
+	@RequestMapping("/to_course_hour_task")
+	public ModelAndView toCourseHourTask(HttpServletRequest request, CourseView courseView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			User user = (User) request.getSession().getAttribute("currentUser");
+			String sign = courseView.getSign();
+			String flag = courseView.getFlag();
+			Long course_hour_id = courseView.getCourse_hour_id();
+			if (courseView.getId() != null) {
+				courseView = courseInfoService.queryCourseDetail(courseView.getId());
+			}
+			courseView.setCourse_hour_id(course_hour_id);
+			// 查询该课程所有章节list
+			List<CourseHour> chapterList = courseHourService.queryHourList(courseView.getId(), true);
+			// 查询该课程所有课时list
+			List<CourseHour> hourList = courseHourService.queryHourList(courseView.getId(), false);
+			// 课程文件list
+			List<CourseFileView> courseFileList = courseFileService.queryCourseFile(courseView.getId(),user.getId());
+			List<CourseFileView> fileList = courseFileService.queryCourseFile(0L,user.getId());
+			// 资源list
+			//List<File_base> fileBaseList = fileBaseService.queryByUserId(user.getId());
+			if (courseView.getCourse_hour_id() != null) {
+				CourseHour courseHour = courseHourService.getHour(courseView.getCourse_hour_id() + "");
+				int seq = courseHourService.searchSeq(courseView.getId() + "", courseView.getCourse_hour_id() + "");
+				modelAndView.addObject("courseHour", courseHour);
+				modelAndView.addObject("seq", seq + 1);
+			}
+
+			courseView.setSign(sign);
+			courseView.setFlag(flag);
+			modelAndView.addObject("courseView", courseView);
+			modelAndView.addObject("chapterList", chapterList);
+			modelAndView.addObject("fileList", fileList);
+			modelAndView.addObject("courseFileList", courseFileList);
+			modelAndView.addObject("hourList", hourList);
+			modelAndView.addObject("head_title", "添加作业");
+			modelAndView.setViewName("frontstage/train/course/course_hour_task");
+		} catch (Exception e) {
+			log.error("跳转添加作业页面失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	@RequestMapping("/save_live_course")
+	public void saveLiveCourse(HttpServletRequest request, CourseHour courseHour, HttpServletResponse response) throws Exception {
+		JSONObject result = new JSONObject();
+		User user = (User) request.getSession().getAttribute("currentUser");
+		result.put("msg", true);
+		courseHour.setAttribute_type(5);
+		courseHour.setFile_source(0);
+		if (courseHour.getId() != null) {
+			courseHourService.updateCourseHour(courseHour);
+		} else {
+			courseHour.setUser_id(user.getId());
+			courseHourService.saveCourseHour(courseHour);
+		}
+		ResponseUtil.write(response, result);
+	}
+
+	/**
+	 * 保存课时信息
+	 */
+	@RequestMapping("/save_task_self")
+	public ModelAndView saveTaskSelf(HttpServletRequest request, CourseHour courseHour, QuestionView questionView) {
+		String sign = request.getParameter("sign");
+		String[] accordScores = { "60", "80", "100" };
+		questionView.setDifficulty(1);
+		questionView.setBelong_type(0);
+		questionView.setBelong_to(courseHour.getCourse_id());
+		User user = (User) request.getSession().getAttribute("currentUser");
+		questionView.setUserId(user.getId());
+		questionView.setIs_son(1);
+		questionView.setType(3);
+		questionView.setScore(new Double(100));
+		questionView.setCourseId(courseHour.getCourse_id());
+		questionService.insertJudgeAndQa(questionView);
+		try {
+			if (courseHour.getId() != null) {
+				courseHourService.updateCourseHour(courseHour);
+			} else {
+				courseHour.setUser_id(user.getId());
+				courseHourService.saveCourseHour(courseHour);
+				courseHour.setUser_id(user.getId());
+				String questionIds = questionView.getId() + ",";
+				String questionSeqs = "1,";
+				System.out.println(accordScores);
+				// 保存课时作业
+				testPaperService.saveTask(courseHour, questionIds, questionSeqs, accordScores);
+			}
+		} catch (Exception e) {
+			log.error("保存课时信息失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return new ModelAndView("redirect:/course_hour/to_course_hour.action?id=" + courseHour.getCourse_id() + "&flag=1&sign=" + sign + "&ver="
+				+ Math.random());
+	}
+	
+	@RequestMapping("/sort_course_hour")
+	@ResponseBody
+	public ModelAndView sortCourseHour(HttpServletRequest request){
+		String ids=request.getParameter("ids");
+		String hourSeqs=request.getParameter("hourSeqs");
+		String parent_ids=request.getParameter("parent_ids");
+		courseHourService.sortCourseHour(ids,hourSeqs,parent_ids);
+		return null;
+	}
+
+}

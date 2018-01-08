@@ -1,0 +1,626 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.UserStatsView;
+import cn.bnsr.edu_yun.backstage.content.view.ContentStatiView;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserInfoMapper;
+import cn.bnsr.edu_yun.frontstage.base.po.Notification;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.service.NotificationService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserDetailView;
+import cn.bnsr.edu_yun.frontstage.train.mapper.UserStudyMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.Course;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.po.Train;
+import cn.bnsr.edu_yun.frontstage.train.po.UserClassHour;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudy;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudyRecord;
+import cn.bnsr.edu_yun.frontstage.train.po.UserTrainClass;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainCourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainPhaseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserClassHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyRecordService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserTrainClassService;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.StudyCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.StudyView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainCourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainPhaseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserClassHourView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserStudyView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserTrainClassView;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class UserStudyServiceImpl implements UserStudyService {
+
+	@Autowired
+	private UserStudyMapper userStudyMapper;
+	@Autowired
+	private UserStudyRecordService userStudyRecordService;
+	@Autowired
+	private ClassService classService;
+	@Autowired
+	private NotificationService notificationService;
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private UserClassHourService userClassHourService;
+	@Autowired
+	private TrainCourseService trainCourseService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private UserTrainClassService userTrainClassService;
+	@Autowired
+	private TrainPhaseService trainPhaseService;
+	@Autowired
+	private UserInfoMapper userInfoMapper;
+
+	@Override
+	public void saveOrUpdateStudent(UserStudy userStudy) {
+
+		Long classId = userStudy.getSource_id();
+		Integer classType = userStudy.getSource_type();
+		Long userId = userStudy.getUser_id();
+		Long learnId = userStudy.getLearn_id();
+		if (userStudy.getId() != null) {
+			UserStudy cs = userStudyMapper.selectByPrimaryKey(userStudy.getId());
+			if (!"".equals(userStudy.getRemarks())) {
+				cs.setRemarks(userStudy.getRemarks());
+			}
+			if (userStudy.getStatus() != null) {// 用staus暂时代替延长的天数
+				cs.setValidity_time(TimeUtil.afterNDay(cs.getValidity_time(), userStudy.getStatus()));
+			}
+			if(userStudy.getIs_studyed()!=null){
+				cs.setIs_studyed(userStudy.getIs_studyed());
+			}
+			userStudyMapper.updateByPrimaryKeySelective(cs);
+		} else {//后续优化。UserStudyController joinStudy
+			ClassView classView = new ClassView();
+			if (userStudy.getSource_id() != null) {
+				classView = classService.selectOne(classId,null);
+			}
+			
+			Date date = new Date();
+			userStudy.setAdd_time(date);
+			userStudy.setStatus(0);
+			//li修改,原来为userStudy.setIs_studyed(1);0:未学完，1:学完
+			userStudy.setIs_studyed(0);
+			userStudy.setValidity_time(classView.getClose_time());
+			
+			//学习记录
+			UserStudyRecord record = new UserStudyRecord();
+			record.setUser_id(userId);
+			record.setLearn_id(learnId);//课程或者培训id
+			record.setSource_type(classType);
+			record.setSource_id(classId);//班级id
+			record.setCreate_time(new Date());
+			if(classType==0){
+				record.setMsg("开始学习课程");
+				Course course = courseService.getById(learnId);
+				if(course!=null){
+					record.setSource_name(course.getTitle());
+					record.setType(course.getType());
+				}
+			}else if(classType==1){
+				record.setMsg("开始加入培训");
+				Train train = trainService.getById(learnId);
+				if(train!=null){
+					record.setSource_name(train.getName());
+					record.setType(train.getType());
+				}
+			}
+			userStudyMapper.insertSelective(userStudy);
+			userStudyRecordService.saveUserStudyRecord(record);
+			
+			List<CourseHour> hourList = new ArrayList<CourseHour>();
+			if(classType==0){//是课程班级，那么也要与该课程所有课时相关联
+	    		// 查询该课程所有课时list
+	    		hourList = courseHourService.queryHourList(learnId, false);
+	    	}else if(classType==1){//是培训班级，待续
+	    		//培训课程
+				TrainCourseView tcv = new TrainCourseView();
+				tcv.setSource_id(learnId);
+				tcv.setSource_type(0);//培训
+				tcv.setFlag("1");//培训课程
+				//培训课程列表
+				List<TrainCourseView> trainCourseList = trainCourseService.queryTrainCourse(tcv);
+				List<String> courseIds = new ArrayList<String>();//课程ids
+				for(int i=0;i<trainCourseList.size();i++){
+					Long courseId = trainCourseList.get(i).getCourse_id();
+					courseIds.add(courseId.toString());
+				}
+				hourList = courseHourService.queryAllHour(courseIds,false);
+	    	}
+			if(hourList.size()>0){
+				for (CourseHour hour : hourList) {
+					UserClassHour userClassHour = new UserClassHour();
+					userClassHour.setCourse_id(learnId);
+					userClassHour.setCourse_hour_id(hour.getId());
+					userClassHour.setUser_id(userId);
+					userClassHour.setClass_id(classId);
+					userClassHour.setCreate_time(new Date());
+					userClassHour.setIs_studyed(0);//是否学完 0-否
+					if(userClassHourService.selectByHourId(userClassHour) == null){
+						userClassHourService.insert(userClassHour);
+					}
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public Integer countStudent(UserStudyView userStudyView) {
+		return userStudyMapper.countStudent(userStudyView);
+	}
+
+	@Override
+	public List<UserStudyView> searchStudent(UserStudyView userStudyView) {
+		return userStudyMapper.searchStudent(userStudyView);
+	}
+
+	@Override
+	public void deleteStudent(String id) {
+		userStudyMapper.deleteByPrimaryKey(Long.parseLong(id));
+	}
+
+	@Override
+	public Integer countMyClass(StudyCenterView studyCenterView) {
+		return userStudyMapper.countMyClass(studyCenterView);
+	}
+
+	@Override
+	public Integer countUserSutdy(StudyView studyView) {
+		return userStudyMapper.countUserSutdy(studyView);
+	}
+
+	@Override
+	public List<StudyView> queryUserStudy(StudyView studyView) {
+		List<StudyView> studyList =  userStudyMapper.queryUserStudy(studyView);
+		if(studyView.getIs_studyed()==0){//没有学完
+			//课程
+			if(studyView.getSource_type()==0){
+				for(StudyView st:studyList){
+					UserClassHourView uchv = new UserClassHourView();
+					uchv.setCourse_id(st.getId());//课程id
+					uchv.setUser_id(studyView.getUser_id());
+					uchv.setClass_id(st.getClassId());
+					int isNum = 0;
+					int notNum = 0;
+					//int allNum=0;
+					//if(studyView.getSource_type()==0){
+						uchv.setIs_studyed(0);//未学
+					 notNum = userClassHourService.countIsNotStudy(uchv);
+						uchv.setIs_studyed(1);//已学
+					 isNum = userClassHourService.countIsNotStudy(uchv);
+					 st.setAllNum(isNum+notNum);
+						st.setStudyNum(isNum);
+					//}
+					/*
+					else{
+						UserTrainClass userTrainClass=new UserTrainClass();
+						userTrainClass.setUser_id(studyView.getUser_id());
+						userTrainClass.setUser_study_id(st.getUser_study_id());
+						allNum=userTrainClassService.selectCountByCourseIdAndUserId(userTrainClass);
+					    isNum=userTrainClassService.selectCountByCourseIdAndUserIdStudy(userTrainClass);
+					    st.setAllNum(allNum);
+					    st.setStudyNum(isNum);
+					}
+					*/
+				}
+			}else if(studyView.getSource_type()==1){ //培训
+				UserTrainClassView utcv = null;
+				if(studyList!=null){
+					for(StudyView st:studyList){
+						if(st.getType()==0){ //普通培训
+							utcv = new UserTrainClassView();
+							utcv.setClass_id(st.getClassId());
+							utcv.setUser_id(studyView.getUser_id());
+							utcv.setSource_type(0);
+							utcv.setSource_id(st.getId());
+							List<UserTrainClassView> utcvList = userTrainClassService.queryPerTrainFinCourseCount(utcv);
+							if(utcvList!=null&&utcvList.size()>0){
+								for(int i=0;i<utcvList.size();i++){
+									if(utcvList.get(i).getIs_required()==0){
+										st.setFinishReqHour(utcvList.get(i).getHours_total());
+									}else if(utcvList.get(i).getIs_required()==1){
+										st.setFinishOptHour(utcvList.get(i).getHours_total());
+									}
+								}
+							}
+						}else if(st.getType()==1){ //阶段培训
+							/*
+							TrainView trainView = new TrainView();
+							trainView.setId(st.getId());
+							List<TrainPhaseView> trainPhases = trainPhaseService.queryTrainParseBaseMessage(trainView);
+							int tp_finish_num=0;
+							int tp_num=0;
+							if(trainPhases!=null){
+								UserTrainClassView userTrainClassView = null;
+								for(int i=0;i<trainPhases.size();i++){
+									int tp_c_num=0;
+									userTrainClassView = new UserTrainClassView();
+									userTrainClassView.setSource_id(trainPhases.get(i).getId());
+									userTrainClassView.setUser_id(studyView.getUser_id());
+									UserTrainClassView tmpuserTrainClassView = userTrainClassService.querystudyedPhaseCourseHour(userTrainClassView);
+									if(tmpuserTrainClassView!=null){
+										tp_c_num=tmpuserTrainClassView.getFinish_hours_total();
+									}
+									if(trainPhases.get(i).getHour_require()<=tp_c_num){
+										tp_finish_num++;
+									}
+								}
+								tp_num=trainPhases.size();
+							}
+							st.setAllNum(tp_num);
+							st.setStudyNum(tp_finish_num);
+							*/
+						}
+					}
+				}
+			}
+		}
+		return studyList;
+	}
+
+	//需要优化
+	@Override
+	public boolean joinStudy(ClassView classView, User user) throws Exception {
+		Long userId = user.getId();
+		UserStudyView userStudyView = new UserStudyView();
+		UserStudy userStudy = new UserStudy();
+		if (user != null) {
+			userStudyView.setUserId(userId.toString());
+			userStudy.setUser_id(userId);
+		}
+		Integer classType = classView.getSource_type();
+		Long learnId = classView.getSource_id();
+		Long classId = classView.getId();
+
+		userStudyView.setSourceId(classId+"");
+		userStudyView.setLearnId(learnId.toString());
+		userStudyView.setSourceType(classType.toString());
+
+		
+		// 查询是否购买 多个班级默认第一个
+		List<UserStudy> userStudyList = userStudyMapper.searchIsPay(userStudyView);
+		UserStudy userStudyIsPay = new UserStudy();
+		if(userStudyList.size()>0){
+			userStudyIsPay = userStudyList.get(0);
+		}else{
+			userStudyIsPay = null;
+		}
+		int tc_type=-1;//课程内分类(进阶培训/普通培训)
+		if(classView.getSource_type()==0){// (课程)保留
+			
+		}else if(classView.getSource_type()==1){ //培训
+			Train train = trainService.getById(learnId);
+			tc_type = train.getType();
+		}else{
+			throw new Exception("异常:加入培训/课程班级失败,source_type"+classView.getSource_type());
+		}
+		if(userStudyIsPay == null){//未报名-->报名
+			userStudy.setSource_id(classId);
+			userStudy.setSource_type(classType);
+			userStudy.setLearn_id(learnId);
+			userStudy.setStatus(3);//报名
+			userStudy.setAdd_time(new Date());
+			userStudy.setIs_studyed(0);//0:未学完，1:学完
+			userStudy.setValidity_time(classView.getClose_time());
+			userStudyMapper.insertSelective(userStudy);
+			
+			Long userStudyId = userStudy.getId();//学习id
+			
+			//学习记录
+			UserStudyRecord record = new UserStudyRecord();
+			record.setUser_id(userId);
+			record.setLearn_id(learnId);//课程或者培训id
+			record.setSource_type(classType);
+			record.setSource_id(classId);//班级id
+			record.setCreate_time(new Date());
+			if(classType==0){
+				record.setMsg("加入课程");
+				Course course = courseService.getById(learnId);
+				if(course!=null){
+					record.setSource_name(course.getTitle());
+					record.setType(course.getType());
+				}
+			}else if(classType==1){
+				record.setMsg("加入培训");
+				Train train = trainService.getById(learnId);
+				if(train!=null){
+					record.setSource_name(train.getName());
+					record.setType(train.getType());
+				}
+			}
+			userStudyRecordService.saveUserStudyRecord(record);
+			//通知
+			Notification notification = new Notification();
+			Date date = new Date();
+			Date noticeDate = new Date(classView.getClose_time().getTime() - 86400000);
+			notification.setIs_read(1);
+			notification.setCreate_time(date);
+			notification.setNotice_time(noticeDate);
+			notification.setSource_id(learnId);
+			notification.setSource_type(classType);
+			notification.setUser_id(userId);
+			notification.setNotice_type_id(16);
+			notificationService.insert(notification);
+			
+			List<CourseHour> hourList = new ArrayList<CourseHour>();
+			if(classType==0){//是课程班级，那么也要与该课程所有课时相关联
+	    		// 查询该课程所有课时list
+	    		hourList = courseHourService.queryHourList(learnId, false);
+	    		if(hourList.size()>0){
+					for (CourseHour hour : hourList) {
+						UserClassHour userClassHour = new UserClassHour();
+						userClassHour.setCourse_id(learnId);//课程id
+						userClassHour.setCourse_hour_id(hour.getId());
+						userClassHour.setUser_id(userId);
+						userClassHour.setClass_id(classId);
+						userClassHour.setCreate_time(new Date());
+						userClassHour.setIs_studyed(0);//是否学完 0-否
+						userClassHourService.insert(userClassHour);
+					}
+	    		}
+	    	}else if(classType==1){//是培训班级
+	    		
+	    		if(tc_type==1){//阶段培训班级
+	    			TrainView trainView = new TrainView();
+	    			trainView.setId(learnId);
+	    			trainView.setType(tc_type);
+	    			//获取本培训的阶段
+	    			List<TrainPhaseView> tps = trainPhaseService.queryTrainParseBaseMessage(trainView);
+	    			for(int i=0;tps!=null&&i<tps.size();i++){
+	    				List<CourseView> phase_courseViews = trainCourseService.queryPhaseCourse(tps.get(i).getId(),0);
+	    				for(int j=0;phase_courseViews!=null&&phase_courseViews.size()>j;j++){
+	    					CourseView cv = phase_courseViews.get(j);
+	    					joinTrainCourse(classId,1,cv.getId(),userId,tps.get(i).getId(),userStudyId,record,notification);
+	    				  //joinTrainCourse(classId,1,courseId,userId,phaseId,userStudyId,record,notification);
+	    				}
+	    			}
+	    		}else{//普通培训班级
+					TrainCourseView tcv = new TrainCourseView();
+					tcv.setSource_id(learnId);
+					tcv.setSource_type(0);//培训
+					//培训必修课程
+					List<TrainCourseView> tequiredCourseList = trainCourseService.queryRequiredCourse(tcv);
+					for(int i=0;i<tequiredCourseList.size();i++){
+						//课程id
+						Long courseId = tequiredCourseList.get(i).getCourse_id();
+						joinTrainCourse(classId,0,courseId,userId,learnId,userStudyId,record,notification);
+					}
+	    		}
+	    	}
+			
+			return true;
+		}else if (userStudyIsPay.getStatus() == 3) {//已报名-->购买
+			userStudy.setStatus(0);//正常购买
+			userStudy.setId(userStudyIsPay.getId());
+			userStudyMapper.updateByPrimaryKeySelective(userStudy);
+			return true;
+		}else if(userStudyIsPay.getStatus()==2 ){//退学-->重新购买
+			if(classType==1){//培训 状态改为3
+				userStudy.setStatus(3);
+			}else{
+				userStudy.setStatus(0);
+			}
+			userStudy.setId(userStudyIsPay.getId());
+			userStudyMapper.updateByPrimaryKeySelective(userStudy);
+			
+			//优化  记录，通知
+			//学习记录
+			UserStudyRecord record = new UserStudyRecord();
+			record.setUser_id(user.getId());
+			record.setLearn_id(learnId);//课程或者培训id
+			record.setSource_type(classType);
+			record.setSource_id(classId);//班级id
+			record.setCreate_time(new Date());
+			if(classType==0){
+				record.setMsg("重新加入课程");
+				Course course = courseService.getById(learnId);
+				if(course!=null){
+					record.setSource_name(course.getTitle());
+					record.setType(course.getType());
+				}
+			}else if(classType==1){
+				record.setMsg("重新加入培训");
+				Train train = trainService.getById(learnId);
+				if(train!=null){
+					record.setSource_name(train.getName());
+					record.setType(train.getType());
+				}
+			}
+			userStudyRecordService.saveUserStudyRecord(record);
+			//通知
+			Notification notification = new Notification();
+			Date date = new Date();
+			Date noticeDate = new Date(classView.getClose_time().getTime() - 86400000);
+			notification.setIs_read(1);
+			notification.setCreate_time(date);
+			notification.setNotice_time(noticeDate);
+			notification.setSource_id(learnId);
+			notification.setSource_type(classType);
+			notification.setUser_id(userId);
+			notification.setNotice_type_id(16);
+			notificationService.insert(notification);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**加入培训课程*/
+	public void joinTrainCourse(Long courseClassId,int type,Long courseId,Long userId,Long learnId,Long userStudyId,UserStudyRecord record,Notification notification){
+		//我的培训课程班级
+		UserTrainClass userTrainClass = new UserTrainClass();
+		userTrainClass.setClass_id(courseClassId);
+		userTrainClass.setIs_studyed(0);;//没有学完
+		userTrainClass.setUser_id(userId);
+		userTrainClass.setSource_id(learnId);
+		userTrainClass.setSource_type(type);//0-培训;1-培训项目
+		userTrainClass.setCourse_id(courseId);
+		userTrainClass.setUser_study_id(userStudyId);
+		userTrainClassService.saveOrUpdate(userTrainClass);
+		
+		UserClassHourView userClassHourView = new UserClassHourView();
+		userClassHourView.setUser_id(userId);
+		userClassHourView.setClass_id(courseClassId);
+		userClassHourView.setCourse_id(courseId);
+		//查询用户是否学习该课程
+		int isNotStudy = userClassHourService.queryIsNotStudy(userClassHourView);
+		if(isNotStudy == 0){//没有学习
+			//没有学习课程的课时
+			List<CourseHour> courseHourList = courseHourService.queryHourList(courseId, false);
+    		if(courseHourList.size()>0){
+				for (CourseHour hour : courseHourList) {
+					UserClassHour userClassHour = new UserClassHour();
+					userClassHour.setCourse_id(courseId);//课程id
+					userClassHour.setCourse_hour_id(hour.getId());
+					userClassHour.setUser_id(userId);
+					userClassHour.setClass_id(courseClassId);
+					userClassHour.setCreate_time(new Date());
+					userClassHour.setIs_studyed(0);//是否学完 0-否
+					userClassHourService.insert(userClassHour);
+				}
+    		}
+    		
+    		//学习记录
+			record.setLearn_id(courseId);//
+			record.setSource_type(1);
+			record.setType(type);
+			record.setSource_id(courseClassId);//班级id
+			record.setMsg("加入课程");
+			Course course = courseService.getById(courseId);
+			if(course!=null){
+				record.setSource_name(course.getTitle());
+			}
+			userStudyRecordService.saveUserStudyRecord(record);
+			//通知
+			notification.setSource_id(courseId);
+			notification.setSource_type(0);
+			notificationService.insert(notification);
+		}
+	}
+
+	@Override
+	public List<UserStudy> searchUserStudy(UserStudyView userStudyView) {
+		return userStudyMapper.searchUserStudy(userStudyView);
+	}
+
+	@Override
+	public UserStudy getById(long id) {
+		return userStudyMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void updateUserStudy(UserStudy userStudy) {
+		userStudyMapper.updateByPrimaryKeySelective(userStudy);
+	}
+
+	@Override
+	public List<UserStudy> searchIsPay(UserStudyView userStudyView) {
+		return userStudyMapper.searchIsPay(userStudyView);
+	}
+
+
+	@Override
+	public void joinOptionCourse(Long courseId,Long userId,Long trainId, String phaseId,Long userStudyId) {
+		//学习记录
+		UserStudyRecord record = new UserStudyRecord();
+		record.setUser_id(userId);
+		record.setCreate_time(new Date());
+		
+		//通知
+		//TODO 后续优化通知
+		Notification notification = new Notification();
+		Date date = new Date();
+		//Date noticeDate = new Date(classView.getClose_time().getTime() - 86400000);
+		notification.setIs_read(1);
+		notification.setCreate_time(date);
+		//notification.setNotice_time(noticeDate);
+		notification.setUser_id(userId);
+		notification.setNotice_type_id(16);
+		notificationService.insert(notification);
+		UserStudy userStudy=getById(userStudyId);
+		Long class_id=userStudy.getSource_id();
+		if(courseId==0){//阶段培训
+			if(!phaseId.equals("")){//阶段培训班级
+    			String[] strs = phaseId.split(",");
+    			for (String str : strs) {
+    				if (str != null && !str.equals("")) {
+    					Long phase_Id = Long.parseLong(str.split("-")[0]);
+    					Long course_Id = Long.parseLong(str.split("-")[1]);
+    					joinTrainCourse(class_id, 1,course_Id,userId,phase_Id,userStudyId,record,notification);
+    				}
+    			}
+				
+			}
+		}else{//普通培训
+			joinTrainCourse(class_id,0,courseId,userId,trainId,userStudyId,record,notification);	
+		}
+	}
+
+	@Override
+	public UserDetailView selectUserDetail(UserStudy userStudy) {
+		UserDetailView user = userStudyMapper.selectUserDetail(userStudy);
+		if(user!=null){
+			if(user.getUserType().equals("1")){//学生
+				user.setUserType("学生");
+			}else if(user.getUserType().equals("2")){//管理
+				user.setUserType("管理");
+			}else if(user.getUserType().equals("3")){//老师
+				user.setUserType("老师");
+			}
+			if(user.getSex()==null){
+				user.setSex("未知");
+			}else if(user.getSex().equals("0")){//女
+				user.setSex("女");
+			}else if(user.getSex().equals("1")){//男
+				user.setSex("男");
+			}else{
+				user.setSex("未知");
+			}
+		}
+		return user;
+	}
+
+	@Override
+	public List<ContentStatiView> userStudyContentStati(
+			ContentStatiView contentStatiView) {
+		return userStudyMapper.userStudyContentStati(contentStatiView);
+	}
+
+	@Override
+	public List<UserStatsView> queryStuArea(UserStatsView condition) {
+		return userStudyMapper.queryStuArea(condition);
+	}
+
+	@Override
+	public List<UserStatsView> queryAgeByStu(UserStatsView condition) {
+		List<UserStatsView> list= userInfoMapper.queryAgeByStu(condition);
+		for(UserStatsView u :list){
+			if("55".equals(u.getAgeInterval())){
+				u.setAgeInterval("55以上");
+				break;
+			}
+		}
+		return list;
+	}
+
+}

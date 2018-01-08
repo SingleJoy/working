@@ -1,0 +1,133 @@
+* {margin:0;padding:0;text-decoration:none;color:#6d6d6d;}
+body {background-color:#eaeaea;font-family:"Microsoft YaHei";}
+li{list-style:none;}
+
+input,button,select,textarea td,table{outline:none;box-shadow: none;padding-left: 10px;border-radius: 5px;}
+img,button,td{outline:none;box-shadow: none;border: none;}
+button{cursor: pointer;}
+table{border-spacing:0; }
+#cke_1_resizer,#cke_1_path{display: none;}
+
+
+/*course_list_main*/
+.course_list_main{width: 1000px;margin: 20px auto;}
+
+
+
+/*course_list_main_left*/
+.course_list_main_left{width: 250px;height: 375px;background-color: #fff;border-radius: 5px;float: left;}
+.course_list_main_left>p{width: 250px;font-size: 14px;opacity: 0.8;line-height: 40px;padding-left: 15px;padding-top: 10px;}
+.course_list_main_left>a{font-size: 14px;display: block;line-height: 40px;padding-left: 25px;width: 190px;margin-left: 15px;}
+.course_list_main_left>a.curr{color: #3ebbce;background-color:#f5f5f5;border-left:3px solid #3ebbce;}
+.course_list_main_left>a:hover{background-color:#f5f5f5;}
+
+
+
+/*course_list_main_right*/
+.course_list_main_right{width: 730px;height: 405px;background-color: #fff;border-radius: 5px;margin-left: 270px;}
+
+/*我的课程*/
+.my_course>p,.my_living>p,.my_question>p,.my_topic>p,.my_notes>p,.my_test>p,.my_learning_group>p{margin-left:20px;font-size: 14px;border-bottom: 1px solid #ddd;padding: 15px 0;width: 690px;font-weight: bolder;}
+.my_course>ul{margin-top: 15px;}
+.my_course>ul>li{width:90px;height: 32px;border: 1px solid #ddd;text-align: center;line-height: 34px;float: left;border-radius: 30px;margin-left: 15px;}
+.my_course>ul>li.curr{background-color: #3ebbce;}
+.my_course>ul>li.curr_01{border: 1px solid #3ebbce}
+.my_course>ul>li>a{font-size: 14px;}
+.my_course>ul>li>a.curr{color: #fff;}
+.my_course>ul>li>a.curr_01{color: #3ebbce;}
+
+.my_course_content{margin-top: 5px;}
+.my_course_content>ul{}
+.my_course_content>ul>li{float:left;margin-left: 20px;width: 215px;height: 300px;border: 1px solid #ddd;border-radius: 5px;}
+.my_course_content>ul>li>a{}
+.my_course_content>ul>li>a>img{width: 215px;height: 140px;border-radius: 5px;}
+.my_course_content>ul>li>a>p{font-size: 12px;font-weight: bolder;padding: 10px 10px;}
+.my_course_content>ul>li>a>div{background-color: #3ebbce;height: 20px;width: 195px;margin-left: 10px;}
+.my_course_content>ul>li>p{position: relative;margin-left: 60px;margin-top: 20px;}
+.my_course_content>ul>li>p>a{width: 84px;height: 28px;border: 1px solid #ddd;border-radius: 30px;font-size: 14px;line-height: 28px;display: block;text-align: center;}
+.my_course_content>ul>li>p>a:hover{border: 1px solid #3ebbce;color: #3ebbce;}
+.learning_status{font-size: 14px;margin-left: 10px;margin-top: 10px;font-weight: normal;}
+.collect_course{width: 215px;height: 50px;border-top:1px solid #ddd;border-bottom: 1px solid #ddd;margin-top: 10px;}
+.collect_course>span{float: left;display: block;width: 71px;text-align: center;}
+.collect_course>span>span{text-align: center;line-height:25px;}
+.price{font-size: 12px;}
+.price_num{font-size: 14px;color:#e57259;}
+.evaluate{font-size: 12px;}
+.evaluate_num img{width:10px;height: 10px;}
+.course_students{font-size: 12px;}
+.course_students_num{font-size: 12px;}
+.course_teacher{}
+.course_teacher img{width: 30px;height: 30px;margin: 10px;}
+.course_teacher p{font-size: 12px;margin-left: 40px;margin-top: -45px;}
+.course_teacher span{font-size: 12px;margin-left: 40px;}
+
+/*我的直播表*/
+.my_living{}
+
+
+
+
+/*我的问答*/
+.my_question{}
+.my_question>div{}
+.my_question>ul{margin-left: 15px;margin-top: 10px;}
+.my_question>ul>li{width: 700px;height: 65px;border-bottom: 1px solid #ddd;margin-top: 10px;}
+.my_question>ul>li>div>p{padding-bottom: 5px;}
+.my_question>ul>li>p{width:20px;height: 20px;font-size: 12px;background-color:#e0e0e0;border-radius: 50%;float: right;text-align: center;line-height: 20px;color: #fff;margin-top: -30px;}
+.my_question>ul>li>div>p>a{font-size: 14px;color: #3ebbce;font-weight: bolder;padding-left: 10px;}
+.my_question>ul>li>div>p>span{background-color:#39aef1;font-size: 12px;padding: 2px 5px;color: #fff;}
+.my_question>ul>li>div>span{font-size: 12px;opacity: 0.8;}
+.my_question>ul>li>div>span>a{font-size: 12px;padding: 0 5px;}
+.my_question>ul>li>div>span>span{padding: 0 5px;}
+
+
+/*我的话题*/
+.my_topic_tabs{}
+.my_topic_tabs ul{margin-left: 15px;}
+.my_topic_tabs ul li{width: 95px;height: 50px;line-height: 50px;float: left;text-align: center;margin-right: 15px;}
+.my_topic_tabs ul li.curr{border-bottom:1px solid #3ebbce;}
+.my_topic_tabs ul li.curr_01{border-bottom:1px solid #3ebbce;}
+.my_topic_tabs ul li a{font-size: 16px;}
+.my_topic_tabs ul li a.curr{color: #3ebbce;}
+.my_topic_tabs ul li a.curr_01{color: #3ebbce;}
+
+
+/*我的笔记*/
+.my_notes{}
+.my_notes>ul{margin-top: 10px;margin-left:15px;}
+.my_notes>ul>li{width:700px;height:100px;border-bottom: 1px solid #ddd;margin-top: 10px;}
+.my_notes>ul>li>a{}
+.my_notes>ul>li>a>img{width: 150px;height: 78px;}
+.my_notes>ul>li>a>h4{font-size: 16px;margin-left: 160px;margin-top: -80px;font-weight: normal;}
+.my_notes>ul>li>a>p{margin-left:160px;font-size: 14px;line-height: 24px;}
+.my_notes>ul>li>a>p>span{font-size: 14px;line-height:24px;padding: 0 5px;}
+.view_notes{font-size: 14px;color: #3ebbce;float: right;margin-top: -20px;display: none;}
+
+
+
+/*我的考试*/
+.my_test_tabs{}
+.my_test_tabs ul{margin-left: 15px;}
+.my_test_tabs ul li{width: 95px;height: 50px;line-height: 50px;float: left;text-align: center;margin-right: 15px;}
+.my_test_tabs ul li.curr{border-bottom:1px solid #3ebbce;}
+.my_test_tabs ul li.curr_01{border-bottom:1px solid #3ebbce;}
+.my_test_tabs ul li a{font-size: 16px;}
+.my_test_tabs ul li a.curr{color: #3ebbce;}
+.my_test_tabs ul li a.curr_01{color: #3ebbce;}
+
+.test_records{}
+.test_records table{margin-left: 15px;}
+.test_records table tr{height: 60px;border-top:1px solid #ddd;margin-top: 10px;}
+.test_records table tr:hover{background-color: #f5f5f5;}
+.test_records table tr.curr_01{background-color: #f5f5f5;}
+.test_records table td{padding-left: 10px;}
+.test_records table td div{font-size: 14px;}
+.test_records table td div span{font-size: 14px;color:#8a6d3b;padding: 0 2px;}
+.test_records table td p{font-size: 12px;}
+.test_records table td p span{font-size: 12px;opacity: 0.8;padding: 0 2px;}
+.test_records table td a{font-size: 12px;line-height: 30px;}
+.do_again{border: 1px solid #ddd;width: 84px;height: 28px;border-radius: 30px;text-align: center;display: block;position: absolute;}
+.do_again_curr{border: 1px solid #3ebbce;color: #3ebbce;}
+.view_results{color: #3ebbce;margin-left: 100px;}
+
+/*footer*/

@@ -1,0 +1,143 @@
+package cn.bnsr.edu_yun.backstage.base.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.po.Menu;
+import cn.bnsr.edu_yun.backstage.base.service.MenuService;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.backstage.base.view.SessionInfo;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+
+/**
+ * 菜单管理
+ * @author fangxiongwei
+ * @date 2016年8月28日
+ */
+@Controller
+@RequestMapping("/back_menu")
+public class MenuController extends BaseController{
+	private final Logger log = LoggerFactory.getLogger(MenuController.class);
+	@Autowired
+	private MenuService  menuService;
+	
+	/**
+	 *跳转菜单页面
+	 */
+	@RequestMapping("/to_menu")
+	public ModelAndView toMenu(){
+		return new ModelAndView("backstage/base/menu/menu");
+	}
+	
+	/**
+	 * 跳转菜单添加页面
+	 */
+	@RequestMapping("/to_menu_add")
+	public ModelAndView menuAdd() {
+		return new ModelAndView("backstage/base/menu/menu_add");
+	}
+	
+	/**
+	 * 菜单添加
+	 */
+	@RequestMapping("/save_menu")
+	public void add(HttpServletResponse response,Menu menu){
+		Json j = new Json();
+		try {
+			menuService.save(menu);
+			j.setSuccess(true);
+			j.setMsg("添加成功！");
+		} catch (Exception e) {
+			log.error("菜单添加失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("添加失败！");
+		}
+		super.writeJson(j,response);
+	}
+
+	/**
+	 * 删除一个菜单
+	 */
+	@RequestMapping("/delete_menu") 
+	public void delete(HttpServletResponse response,Menu menu) {
+		Json j = new Json();
+		try {
+			menuService.delete(menu);
+			j.setSuccess(true);
+			j.setMsg("删除成功！");
+			j.setObj(menu.getId());
+		} catch (Exception e) {
+			log.error("菜单删除失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("删除失败！");
+		}
+		super.writeJson(j,response);
+	}
+
+	/**
+	 *跳转菜单编辑页面
+	 */
+	@RequestMapping("/to_menu_edit") 
+	public ModelAndView menuEdit() {
+		return new ModelAndView("backstage/base/menu/menu_edit");
+	}
+
+	/**
+	 * 菜单编辑
+	 */
+	@RequestMapping("/edit_menu") 
+	public void edit(HttpServletResponse response,Menu menu) {
+		Json j = new Json();
+		try {
+			menuService.update(menu);
+			j.setSuccess(true);
+			j.setMsg("编辑成功!");
+		} catch (Exception e) {
+			log.error("菜单编辑失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("编辑失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	
+	/**
+	 * 获得菜单treegrid
+	 */
+	@RequestMapping("/treegrid")
+	public void treegrid(HttpServletResponse response,Menu menu) {
+		super.writeJson(menuService.treegrid(menu),response);
+	}
+	
+	/**
+	 * 首页获得菜单树
+	 */
+	@RequestMapping("/doNotNeedSession_tree")
+	public void doNotNeedSession_tree(HttpServletRequest request,
+			HttpServletResponse response, Menu menu) {
+		String authNames = "";
+		SessionInfo sessionInfo= (SessionInfo) request.getSession().getAttribute("sessionInfo");
+		if(sessionInfo!=null){
+			authNames = sessionInfo.getAuthNames();
+			if (sessionInfo.getUserName().equals("admin")) {
+				//使用admin登录;
+			    authNames = "0";
+			}
+		}
+		super.writeJson(menuService.tree(menu,false,authNames),response);
+	}
+	
+	/**
+	 * 递归查询子节点
+	 */
+	@RequestMapping("/doNotNeedSession_tree_recursive")
+	public void doNotNeedSession_treeRecursive(HttpServletResponse response,Menu menu) {
+		super.writeJson(menuService.tree(menu, true),response);
+	}
+	
+	
+}

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)http://13661239841.test.edusoho.com.cn/course/33/manage/testpaper/create -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>创建试卷</title>
+  
+    <link href="./edusoho/bootstrap.css" rel="stylesheet">
+  <link href="./edusoho/es-question.css" rel="stylesheet">
+  <link href="./edusoho/nouislider.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+  <script type="text/javascript" src="./edusoho/nouislider.js"></script>
+  
+</head>
+<body>
+
+<div class="es-wrap">    
+    <div id="content-container" class="container">
+        <div class="row">
+          <div class="col-md-3">
+                <div class="sidenav locked">
+                <ul class="list-group">
+                <li class="list-group-heading">课程信息</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>基本信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>详细信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程图片
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课时管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>录播管理</a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程文件
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程设置</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>价格设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>教师设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>学员管理
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">题库</li>
+                <li class="list-group-item">
+                <a href="">
+                <span></span>题目管理
+                </a>
+                </li>
+
+                <li class="list-group-item active">
+                <a href="">
+                <span></span>试卷管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>试卷批阅</a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>作业批改</a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程运营</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程学习数据</a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href=""><span></span>课程订单查询</a>
+                </li>
+                </ul>
+                </div>
+          </div>
+          <div class="col-md-9">
+              <div class="panel panel-default panel-col test-creator">
+                <div class="panel-heading clearfix">创建试卷</div>
+                <div class="panel-body">
+
+                  <ol class="breadcrumb">
+                    <li><a href="">试卷管理</a></li>
+                    <li class="active">创建试卷</li>
+                  </ol>
+
+                  <form class="form-horizontal" method="post">
+                            
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label for="testpaper-name-field">试卷名称</label></div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control" value="" name="name" id="testpaper-name-field" >
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label for="testpaper-description-field">试卷说明</label></div>
+                      <div class="col-md-8 controls">
+                        <textarea class="form-control" style="height: 180px;" ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label for="testpaper-limitedTime-field">时间限制</label></div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control width-input width-input-large" name="limitedTime" value="0" > 分钟
+                          <div class="help-block">0分钟，表示无限制</div>
+                      </div>
+                    </div> 
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label for="testpaper-percentage-field">生成方式</label></div>
+                      <div class="col-md-8 controls radios">
+                          <label><input type="radio" name="mode" data="1"> 随机生成</label>
+                          <label><input type="radio" name="mode" data="2" checked="checked"> 按难易程度</label>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group difficulty-form-group slider-div">
+                      <div class="col-md-2 control-label">
+                          <label for="testpaper-percentage-field">试卷难度</label>
+                      </div>
+                      <div class="col-md-8 controls form-control-static">
+                          <div  id="slider">
+                            
+                          </div>
+                          <div class="help-block">
+                              <span class="simple-percentage-text">简单30%</span>
+                              <span class="normal-percentage-text">一般40%</span>
+                              <span class="difficulty-percentage-text">困难30%</span>
+                              <br><span class="text-info">如果某个难度的题目数不够，将会随机选择题目来补充。</span>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                          <label for="testpaper-range-field">出题范围</label>
+                      </div>
+                      <div class="col-md-8 controls radios">
+                          <label><input type="radio" name="range" data="1"> 整个课程</label>
+                          <label><input type="radio" name="range" data="2" checked="checked"> 按课时范围</label>
+                           
+                          <div class="select-range" style="margin-top: 8px;">
+                             <select class="form-control width-input width-input-large">
+                               <option value="course-33/lesson-214">课时1： 111</option>
+                               <option value="course-33/lesson-214">课时1： 222</option>
+                             </select>
+                             <span class="text-muted mrs">到</span>
+                             <select class="form-control width-input width-input-large">
+                               <option value="course-33/lesson-214">课时1： 111</option>
+                               <option value="course-33/lesson-214">课时1： 222</option>
+                             </select>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <style>.testpaper-question-option-item{margin-left:-12px;margin-bottom:5px;}</style>
+                      <div class="col-md-2 control-label"><label>题目设置</label></div>
+                      <div class="col-md-10 controls" id="testpaper-question-options">
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;">单选题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="counts[single_choice]" value="0">/
+                              <span class="text-info question-num" role="questionNum" type="single_choice">0</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scores[single_choice]" value="2">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;">多选题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="counts[choice]" value="0">/
+                              <span class="text-info question-num" role="questionNum" type="choice">0</span>
+
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scores[choice]" value="2">
+
+                              <span class="mlm">漏选分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-miss-score" name="missScores[choice]" value="0">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;_display:inline;">不定项选择题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="counts[uncertain_choice]" value="0">/
+                              <span class="text-info question-num" role="questionNum" type="uncertain_choice">0</span>
+
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scores[uncertain_choice]" value="2">
+
+                              <span class="mlm">漏选分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-miss-score" name="missScores[uncertain_choice]" value="0">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;_display:inline;">填空题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="counts[fill]" value="0">/
+                              <span class="text-info question-num" role="questionNum" type="fill">0</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scores[fill]" value="2">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;">判断题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="counts[determine]" value="0">/
+                              <span class="text-info question-num" role="questionNum" type="determine">0</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scores[determine]" value="2">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;">问答题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="counts[essay]" value="0">/
+                              <span class="text-info question-num" role="questionNum" type="essay">0</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scores[essay]" value="2">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;_display:inline;">材料题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="counts[material]" value="0">/
+                              <span class="text-info question-num" role="questionNum" type="material">0</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scores[material]" value="2">
+                           </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group mbm">
+                      <div class="col-md-8 col-md-offset-2 controls">
+                        <button type="submit" class="btn btn-primary">保存，下一步</button>
+                        <a href="" class="btn btn-link  ">返回</a>
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(e){
+      // 滑块
+      var slider = document.getElementById('slider');
+      noUiSlider.create(slider, {
+        start: [20, 80],
+        connect: true,
+        range: {
+          'min': 0,
+          'max': 100
+        }
+      });
+      //难易程度
+      $("input[name=mode]").click(function(){
+          $(this).prop("checked");
+          var num = $(this).attr('data');
+          if (num == 1) {
+              $('.slider-div').hide();
+          }else if (num ==2) {
+              $('.slider-div').show();
+          }
+      })
+      // 出题范围
+      $("input[name=range]").click(function(){
+          $(this).prop("checked");
+          var num = $(this).attr('data');
+          if (num == 1) {
+              $('.select-range').hide();
+          }else if (num ==2) {
+              $('.select-range').show();
+          }
+      })
+  })
+</script>
+</body>
+</html>

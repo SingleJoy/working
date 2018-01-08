@@ -1,0 +1,274 @@
+<%@ page language="java" import="java.util.*,cn.bnsr.edu_yun.frontstage.base.po.User" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<% User user = (User)request.getSession().getAttribute("currentUser");%>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+        <jsp:include page="class_header.jsp"></jsp:include>
+        <div class="row">
+            <jsp:include page="class_left.jsp"></jsp:include>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading" style="min-height: 50px;">${examView.name}
+                        <div class="panel-bar pull-right" >
+
+                            <a class="btn btn-default dropdown-toggle btn-sm" <c:if test="${empty class_type }">href="${pageContext.request.contextPath}/class/to_class_scores_manage.action?id=${classView.id}&flag=2&sign=7&exam_type=${examView.exam_type}&source_id=${classView.source_id}&source_type=${classView.source_type}"</c:if>
+                                                                              <c:if test="${empty commonTrain&&!empty class_type }">href="${pageContext.request.contextPath}/class/to_train_course_exam.action?required=${required}&id=${classView.id}&flag=2&sign=7&exam_type=${examView.exam_type}&source_id=${examView.courseId}&source_type=${classView.source_type}"</c:if>
+                                                                              <c:if test="${!empty commonTrain}">href="${pageContext.request.contextPath}/class/to_train_course_exam.action?commonTrain=1&required=${required}&id=${classView.id}&flag=2&sign=7&exam_type=${examView.exam_type}&source_id=${classView.courseId}&source_type=${classView.source_type}"</c:if>>返回</a>
+                            <a href="${pageContext.request.contextPath}/class/export_exam.action?source_id=${classView.id}&source_type=${classView.source_type}&exam_type=${examView.exam_type}&course_hour_id=${examView.course_hour_id}" data-toggle="modal"  class="btn btn-info btn-sm mhs">
+                                <i class="glyphicon glyphicon-export"></i> 导出成绩
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs mbl">
+                            <li class="active" <c:if test="${examView.exam_type!=0}">style="display:none"</c:if>><a href="javascript:void(0);">考试成绩</a></li>
+                            <li class="active" <c:if test="${examView.exam_type!=1}">style="display:none"</c:if>><a href="javascript:void(0);">作业成绩</a></li>
+                            <li class="active" <c:if test="${examView.exam_type!=2}">style="display:none"</c:if>><a href="javascript:void(0);">研讨成绩</a></li>
+                        </ul>
+                        <form id="examForm" class="form-inline well well-sm " action="${pageContext.request.contextPath}/class/to_class_student_scores_manage.action?id=${classView.id}&flag=2&sign=7&exam_type=${examView.exam_type}&source_id=${classView.source_id}&source_type=${classView.source_type}&course_hour_id=${examView.course_hour_id}" method="post" novalidate="">
+                            <div class="form-group col-md-7">
+                                <input type="hidden" name="page" id="page" value="${examView.page}" />
+                                <input type="hidden" name="rows" id="rows" value="${examView.rows}" />
+                                <input type="hidden" name="total" id="total" value="${examView.total}" />
+                                <input type="hidden" name="totalPage" id="totalPage" value="${examView.totalPage}" />
+                                <input class="form-control " style="width:45%" type="text" id="student_" name="search_info" placeholder="请输入用户名"  value="${examView.search_info}">
+                                <button class="btn btn-primary" >搜索</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                        <c:if test="${examView.exam_type != 2}">
+                        <div class="form-group">
+                            <div class="col-md-12 controls ">
+                                <table class="table table-hover">
+                                    <thead>
+                                <tr>
+                                    <th width="30%">学员</th>
+                                    <th width="10%">成绩</th>
+                                    <!--若成绩为作业成绩和研讨成绩,考试时间变为提交时间-->
+                                    <th width="15%"><c:if test="${examView.exam_type == 0}">考试时间</c:if>
+                                        <c:if test="${examView.exam_type == 1}">提交时间</c:if></th>
+                                    <th width="15%">批改时间</th>
+                                    <th width="20%">操作</th>
+                                </tr>
+                                </thead>
+                                    <tbody>
+                                    <c:forEach items="${examList }" var="exam">
+                                        <tr>
+                                            <td class="media">
+                                                <a class="pull-left js-user-card" href="javascript:void(0);" title="">
+                                                    <img class="avatar-sm" src="${pageContext.request.contextPath}${exam.user_icon}">
+                                                </a>
+                                                <a target="_blank" href="javascript:void(0);">${exam.username }</a>
+                                                <div class="text-muted text-sm">加入时间：${exam.join_time}</div>
+                                            </td>
+                                            <td>${exam.score }</td>
+                                            <td>
+                                                <c:if test="${examView.exam_type==0}">${exam.start_time}</c:if>
+                                                <c:if test="${examView.exam_type==1}">${exam.submit_time}</c:if>
+                                            </td>
+                                            <td>${exam.marking_time }</td>
+                                            <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#private-modal"  onclick="send_private_messages(${exam.user_id },'${exam.username }')">发私信</button>
+                                                <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#look-info" onclick="searchInfo(${exam.user_id});">查看资料</button>
+                                                <!-- <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">管理
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu pull-right">
+                                                  <li><a class="" href="" data-toggle="modal" data-target="#remark-students" >备注</a></li>
+                                                 <li><a class="student-remove" href="javascript:;">移除</a></li>
+                                             </ul> -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        </c:if>
+                        <c:if test="${examView.exam_type == 2}">
+
+                        <div class="form-group">
+                            <div class="col-md-12 controls ">
+                                <table class="table table-hover">
+                                    <thead>
+                                <tr>
+                                    <th width="30%">学员</th>
+                                    <th width="10%">参与次数</th>
+                                    <th width="20%">操作</th>
+                                </tr>
+                                </thead>
+                                    <tbody>
+                                    <c:forEach items="${examList }" var="exam">
+                                        <tr>
+                                            <td class="media">
+                                                <a class="pull-left js-user-card" href="javascript:void(0);" >
+                                                    <img class="avatar-sm" src="${pageContext.request.contextPath}${exam.user_icon}">
+                                                </a>
+                                                <a target="_blank" href="javascript:void(0);">${exam.username }</a>
+                                                <div class="text-muted text-sm">加入时间：${exam.join_time}</div>
+                                            </td>
+                                            <td>${exam.grade }</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal">发私信</button>
+                                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#look-info" onclick="searchInfo(${exam.user_id});">查看资料</button>
+                                                <!-- <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">管理
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu pull-right">
+                                                  <li><a class="" href="" data-toggle="modal" data-target="#remark-students" >备注</a></li>
+                                                 <li><a class="student-remove" href="javascript:;">移除</a></li>
+                                             </ul> -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </c:if>
+                        <c:if test="${empty examList && examView.exam_type==0 }"><div class="empty">还没有学生进行考试</div> </c:if>
+                        <c:if test="${empty examList && examView.exam_type==1 }"><div class="empty">还没有学生做作业</div> </c:if>
+                        <c:if test="${empty examList && examView.exam_type==2 }"><div class="empty">还没有学生参与研讨</div> </c:if>
+
+                        <c:if test="${!empty examList }">
+                            <div id="test" class="pager" style="clear: both;"></div>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+
+
+<!-- 查看资料弹窗 -->
+<div id="look-info" class="modal " aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">个人详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-condenseda table-bordered">
+                    <tbody id="userInfo">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 学员备注弹窗 -->
+<div id="remark-students" class="modal" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">学员备注</h4>
+            </div>
+            <div class="modal-body">
+                <form id="student-remark-form" method="post" action="" novalidate="novalidate">
+                    <div class="form-group">
+                        <div class="controls">
+                            <input class="form-control" name="remark" value="">
+                            <div class="help-block" id="id1">请填写学员的备注信息</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary pull-right">保存</button>
+                <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function(){
+        //翻页
+        var total = $("#total").val();
+        var page =  parseInt($("#page").val())+1;
+
+        $("#btn5").on('click', function () {
+            $("#div1").PageChanged(5);
+        });
+
+        $(".pager").pagination({
+            thisPageIndex:page,
+            recordCount: total,       //总记录数
+            pageSize:  $("#rows").val(),            //一页记录数
+            onPageChange: function (page) {
+                document.title = page;
+                $("#page").val(page-1);
+                $('#examForm').submit();
+
+            }
+        });
+    });
+    function searchInfo(value){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/user/select_user.action",
+            data:{
+                id : value
+            },
+            dataType:"json",
+            success:function(d){
+                var userHtml;
+
+                if(d!=0){
+                    userHtml="<tr>"+
+                    "<th width=\"25%;\">用户名</th>"+
+                    "<td width=\"75%;\"><a class=\"pull-right\" target=\"_blank\" href=\"javascript:void(0);\">个人主页</a>"+d[0].userName+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">Email</th><td width=\"75%;\">"+d[0].email+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">姓名</th><td width=\"75%;\">"+d[0].realName+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">性别</th><td width=\"75%;\">"+d[0].sex+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">财富</th><td width=\"75%;\">"+d[0].wealth+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">积分</th><td width=\"75%;\">"+d[0].score+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">备注</th><td width=\"75%;\">"+d[0].remarks+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">职业</th><td width=\"75%;\">"+d[0].userType+"</td>"+
+                    "</tr><tr>"+
+                    "<th width=\"25%;\">电话</th><td width=\"75%;\">"+d[0].phone+"</td>"+
+                    "</tr>";
+
+                }else{
+                    userHtml="<tr class='empty'>暂无数据！</tr>";
+                }
+                $("#userInfo").empty().append(userHtml);
+
+            }
+        });
+    }
+
+
+</script>
+
+

@@ -1,0 +1,203 @@
+<%@ page language="java" import="java.util.*,cn.bnsr.edu_yun.frontstage.base.po.User" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% User user = (User)request.getSession().getAttribute("currentUser");%>
+
+<ol class="breadcrumb breadcrumb-o" style="clear: both;margin-top: 0">
+    <li>${classView.sourceName}</li>
+    <li>${classView.classes}班</li>
+</ol>
+
+<div class="es-section course-manage-header clearfix" style="border: none;">
+
+    <a href="javascript:void(0);">
+        <img src="${pageContext.request.contextPath}${classView.img}" class="picture" >
+    </a>
+    <h1 class="title">
+     <%--<a href="javascript:void(0);">班级名称：${classView.name}</a>--%>
+         <c:if test=">${classView.status==0}"><span class="label label-success"> 未发布</span></c:if>
+    </h1>
+     <div style="margin-top: -10px;">
+         班级名称：&nbsp;${classView.name}<br/>
+         开班时间：<c:if test="${!empty classView.open_time }"><fmt:formatDate value="${ classView.open_time}" type="date"/></c:if>——<c:if test="${!empty classView.close_time }"><fmt:formatDate value="${ classView.close_time}" type="date"/></c:if><br/>
+         报名截止时间：<c:if test="${!empty classView.end_time }"><fmt:formatDate value="${ classView.end_time}" type="date"/></c:if>
+    </div>
+    <div class="toolbar hidden-xs pull-right">
+        <div class="btn-group">
+            <button <c:if test="${classView.status eq 3}">data-target="#end-course"</c:if> data-toggle="modal" class="btn btn-success btn-sm course-publish-btn" onmouseover="mOver(this)" onmouseout="mOut(this)" onclick="doRelease(this);">
+            <c:choose>
+               <c:when test="${classView.status eq 0}">未发布</c:when>
+               <c:when test="${classView.status eq 1}">已发布</c:when>
+               <c:when test="${classView.status eq 2}">进行中</c:when>
+               <c:when test="${classView.status eq 3}">已完成</c:when>
+               <c:when test="${classView.status eq 4}">已结业</c:when>
+            </c:choose>
+            </button>
+            <button style="margin-left: 10px;" <c:if test="${classView.status eq 3}">data-target="#end-course"</c:if> data-toggle="modal" class="btn btn-success btn-sm course-publish-btn"  onclick="doComplete(${classView.id},${classView.source_type});">结业</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<%--结课--%>
+<div class="modal in" tabindex="-1" role="dialog"  aria-hidden="false" id="end-course">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">结课</h4>
+            </div>
+
+            <div class="modal-body">
+                <form id="complete-form" class="form-horizontal" method="post" >
+
+                    <div class="form-group">
+                        <div class="text-info" style="padding-left: 30px;">提醒：
+                        <c:if test="${classView.source_type==1}">培训结业</c:if>
+                        <c:if test="${classView.source_type==0}">课程结课</c:if>后所有数据将不能进行修改！
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">
+                          <input name="id" type="hidden" value="${classView.id}">
+                          <input name="status" type="hidden" value="4">
+	                      <c:if test="${classView.source_type==1}">培训</c:if>
+	                      <c:if test="${classView.source_type==0}">课程</c:if>后续学习时间
+	                    </div>
+                      
+                        <div class="col-md-8 controls">
+                            <select name="continue_study" class="form-control">
+                                <option value="1">一个月</option>
+                                <option value="2">二个月</option>
+                                <option value="3">三个月</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="text-info">
+                            <div class="text-warning" style="padding-left: 30px;">
+                               <c:if test="${classView.source_type==1}">
+                                   注： *此时间为培训结束之后学员可以继续学习的时间范围；<br/>
+                                       &nbsp; &nbsp; &nbsp; &nbsp;*如不设置，则培训结束后学员不能再查看培训内容
+                            </c:if>
+                                <c:if test="${classView.source_type==0}">
+                                    注：*此时间为课程结束之后学员可以继续学习的时间范围；<br/>
+                                    &nbsp; &nbsp; &nbsp; &nbsp;*如不设置，则课程结束后学员不能再查看课程内容
+                                </c:if>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button id="complete-btn" class="btn btn-danger refund-btn" type="button" data-toggle="form-submit" >确定</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var class_status = "${classView.status}";
+function mOver(ele){
+	if(class_status==0){//未发布
+		ele.innerHTML = "发布"; 
+	}
+	/* else if(class_status==3){//已完成
+		ele.innerHTML = "结业";
+	} */
+  }  
+  function mOut(ele){
+	  if(class_status==0){//未发布
+		  ele.innerHTML = "未发布";
+	  }else if(class_status==3){//已完成
+		  ele.innerHTML = "已完成";
+	  }
+      
+  }
+  function doRelease(){
+	  if(class_status==0){//未发布->发布
+		  var result = confirm('您真的要发布该班级吗？');
+	        if(result){
+	        	 $.ajax({
+	   			  url : '${pageContext.request.contextPath}/class/change_status.action',
+	   			  dataType : 'json',
+	   			  data:{
+	   				  id : '${classView.id}',
+	   				status : 1
+	   	   		  }, 
+	   	   		  success:function(data){
+	   	   			 window.location.reload(true); 
+	   	   		  }
+	        	});
+	        }
+	  }
+	   
+  }
+$('#complete-btn').click(function(){
+	$.ajax({
+        url : "${pageContext.request.contextPath}/class/change_status.action",
+        data : $("#complete-form").serialize(),//将表单数据序列化
+        type : "POST",
+        dataType : "json",
+        /* async: false,  */
+        success:function(result){
+        	window.location.reload(true); 
+        }
+    });
+});
+
+function getTime(date){
+	   var checkTime = "";
+		if(date!=""){
+			var dateArr = date.split("-");
+		    var checkDate = new Date();
+		    checkDate.setFullYear(dateArr[0], dateArr[1]-1, dateArr[2]);
+		    checkTime = checkDate.getTime();
+		}
+		return checkTime;
+}
+
+function doComplete(id,type){
+	$.ajax({
+        url : "${pageContext.request.contextPath}/class/queryComplete.action",
+        data : {
+        	id : id,
+        	source_type : type
+        },
+        type : "POST",
+        dataType : "json",
+        /* async: false,  */
+        success:function(result){
+        	var stuNum = result.num;
+        	var complete = result.complete;
+        	if(stuNum>0){
+        		var nowTime = new Date().getTime();
+        		var closeTime = new Date("${classView.close_time}").getTime();
+        		if(closeTime-nowTime>0){
+        			alert("该班级还未结束")
+        		}else{
+        			$("#end-course").modal();
+        		}
+        		/* if(complete){
+            		$("#end-course").modal();
+            	}else{
+            		alert("您的学员没有完成学习任务！");
+            	} */
+        	}else{
+        		alert("您还没有学员！");
+        	}
+        	
+        	 
+        }
+    });
+}
+</script>

@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>培训主页</title>
+    <meta name="keywords" content="EduSoho安装，EduSoho系统使用，EduSoho功能说明，EduSoho网络课堂，在线教育，在线教学，开源教学软件，网校系统，培训系统，培训网校，培训平台，培训解决方案，培训创业，培训程序，培训建站系统，培训软件，教育系统，教育平台，教育解决方案，教育服务，教育创业，教育程序，教育建站系统，教育软件，教学系统，教学网校，教学平台，教学解决方案，教学建站系统，教学软件，录播系统，录播网校，录播平台，录播解决方案，录播建站系统，点播系统，点播网校，点播平台，点播解决方案，点播课堂，点播程序，点播建站系统，直播系统，直播网校，直播平台，直播解决方案，直播课堂，直播服务，直播创业，直播程序，直播建站系统，直播软件，题库系统，题库平台，题库解决方案，题库服务，题库程序，题库建站系统，题库软件，网校系统，网校平台，网校解决方案，网校课堂，网校程序，网校建站系统，网校软件，课堂系统，课堂平台，课堂解决方案，课堂程序，课堂建站系统，课堂软件，题库系统，题库解决方案，题库程序，题库建站系统，题库软件">
+    <meta name="description" content="气球鱼学院是EduSoho网络课堂官方开办的在线教育培训网校，是在线教育从业者学习交流平台以及网校系统开发者社区。气球鱼学院的主要课程有EduSoho安装教程、使用教程、开发课程以及网校运营课程，帮助网校用户由浅入深的懂得EduSoho网校系统以及在线教育。">
+    <meta content="Sqx6qipk9NH8dJTUxLAkpVGuO1y2RgO4S2i6Uxuqq-4" name="csrf-token">
+    <meta content="1" name="is-login">
+    <meta content="0" name="is-open">
+    <meta property="qc:admins" content="2420731625611115156375">
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.12" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="../../css/bootstrap/main.css">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.12">
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.12">
+    <link href="../../css/bootstrap/main-blue-light.css" rel="stylesheet">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.12" rel="stylesheet">
+
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+
+        //轮播图
+        $(document).ready(function() {
+            $('.carousel').carousel({
+                interval: 2000
+            })
+        });
+
+
+
+    </script>
+    <style>
+
+        .subject_classify>div>ul>li>a{font-size: 14px;}
+        .course-list>ul>li>a{font-size: 16px;opacity: 0.6;}
+        .head_list>li>a{font-size: 14px;color: #fff;padding: 20px 30px;}
+        .carousel-inner>div{width: 100%;}
+        .carousel-inner>div>img{max-width: 1160px;margin: 0 auto;}
+        ul.nav-tabs>li.active{border-bottom:2px solid #46c37b;}
+        .lesson_info_text{background-color: #353535;opacity: 0.6;padding: 0 5px;}
+        .lesson_info_text>span{color: #ddd;}
+        .lesson_teacher{padding-left:30px; }
+        .lesson_content>span{width: 33%;float: left;padding: 5px 0;}
+
+        .subject_list>ul>li{display: inline-block;list-style: none;text-align: center;}
+
+        .subject_list>ul>li>a{color: #616161;line-height: 40px;}
+
+        .subject_list>ul>li.active>a{color: #5295e3;}
+        .school_lesson_list>div{margin-bottom: 20px;}
+
+    </style>
+</head>
+<body >
+
+<div  style="background-color: #fff;">
+
+    <header class="es-header navbar">
+
+        <div class="navbar-header">
+            <a href="/edu_yun" class="navbar-brand">
+                <img src="/edu_yun/frontstage/images/qiuzi_index.png">
+            </a>
+        </div>
+        <nav class="collapse navbar-collapse">
+
+            <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+
+                <li class="nav-hover">
+                    <a href="/edu_yun">首页 </a>
+
+                </li>
+
+                <li>
+                    <a href="/edu_yun/community/to_community_center.action?stamp=0&amp;state=0&amp;sign=0" target="_blank">个人中心</a>
+                </li>
+
+                <li><a href="/edu_yun/train/to_train_home.action" target="_blank">培训主页</a></li>
+
+
+                <li><a href="/edu_yun/lesson_main/to_lesson_main.action" target="_blank">教研主页</a></li>
+                <li>
+                    <a href="/edu_yun/user/resource_home.action" target="_blank">资源主页 </a>
+                </li>
+                <li><a href="javascript:void(0);" target="_blank">社区主页</a></li>
+                <li><a href="javascript:void(0);" target="_blank">工作坊主页</a></li>
+            </ul>
+
+            <div class="navbar-user ">
+
+                <ul class="nav user-nav">
+                    <li class="user-avatar-li nav-hover">
+                        <a href="javascript:void (0);" class="dropdown-toggle" id="my_pic">
+                            <img class="avatar-xs" src="/edu_yun/picture/userImages/140Y126315b10-1509314973439181222.jpg">
+
+                        </a>
+                        <ul class="dropdown-menu" role="menu" id="header_mine">
+                            <li role="presentation" class="dropdown-header">ceshi</li>
+                            <li><a href="/edu_yun/teacher_center/to_teacher_center.action?user_id=28" target="_blank"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                            <li><a href="/edu_yun/private_letter/to_letter.action" target="_blank"><i class="es-icon es-icon-setting"></i>私信</a></li>
+                            <li class="hidden-lg">
+                                <a href="/edu_yun/notice/queryNotice.action?page=0&amp;type=0">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-notificationson"></i>
+                                    通知</a>
+                            </li>
+                            <li class="hidden-lg">
+                                <a href="/edu_yun/private_letter/to_letter.action">
+                                    <span class="pull-right num">0</span><i class="es-icon es-icon-mail"></i>私信
+                                </a>
+                            </li>
+                            <li><a href="/edu_yun/user/ajaxLogout.action" class="sign_out" onclick="return false"><i class="es-icon es-icon-power"></i>退出登录</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="visible-lg nav-hover">
+
+                        <a href="javascript:return false;" id="header_icon_mail">
+
+                            <i class="es-icon es-icon-mail"></i>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu" id="header_notes">
+                            <li>
+                                <a href="/edu_yun/notice/queryNotice.action?page=0&amp;type=0">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-notificationson"></i>通知
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/edu_yun/private_letter/to_letter.action">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-mail"></i>私信
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+        </nav>
+    </header>
+
+    <!--导航栏-->
+    <div style="background-color:#5396e3;">
+
+        <nav class="collapse navbar-collapse container" style="max-width: 1120px;margin: 0 auto;">
+
+            <ul class="nav navbar-nav clearfix hidden-xs pull-right">
+                <li><a href="javascript:void(0);" style="color: #fff;">首页</a></li>
+                <li><a href="javascript:void(0);" style="color: #fff;">课例</a></li>
+                <li><a href="javascript:void(0);" style="color: #fff;">名校</a></li>
+                <li><a href="javascript:void(0);" style="color: #fff;">名师</a></li>
+            </ul>
+
+        </nav>
+
+    </div>
+    <!-- js轮播图 -->
+    <section class="es-poster swiper-container">
+
+        <div id="myCarousel" class="carousel slide">
+
+            <!-- 轮播（Carousel）指标 -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0"  data-interval="3000" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"  data-interval="3000"></li>
+                <li data-target="#myCarousel" data-slide-to="2"  data-interval="3000"></li>
+                <li data-target="#myCarousel" data-slide-to="3"  data-interval="3000"></li>
+            </ol>
+
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active" style="background-color:#0ac895;">
+                    <img class="img-responsive" src="../../images/train_flash_01.png">
+                </div>
+                <div class="item" style="background-color: #2677e3">
+                    <img class="img-responsive" src="../../images/train_flash_02.png">
+                </div>
+                <div class="item" style="background-color: #00b68c;">
+                    <img class="img-responsive" src="../../images/train_flash_03.png">
+                </div>
+                <div class="item" style="background-color: #ff9c00;">
+                    <img class="img-responsive" src="../../images/train_flash_04.png">
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--精品推荐-->
+    <section class="lesson-list-section-subject ">
+
+        <div class="container" >
+
+            <div class="text-line">
+                <h5>
+                    <span>精品推荐</span>
+                    <div class="line"></div>
+                </h5>
+                <!--<div class="subtitle">精选热门课程，满足你的学习兴趣。</div>-->
+            </div>
+
+
+            <div  style="clear: both;" class="subject_list">
+
+                <ul class="col-lg-4 col-md-12 " >
+
+                    <li class="col-lg-4 col-md-4 active" >
+                        <a href="javascript:void(0);">
+                            <img src="../../images/chinese.png" ><br/>
+                            <span>语文</span>
+                        </a>
+                    </li>
+
+                    <li class="col-lg-4 col-md-4">
+                        <a href="javascript:void(0);">
+                            <img src="../../images/math.png"><br/>
+                            <span>数学</span>
+                        </a>
+                    </li>
+
+                    <li class="col-lg-4 col-md-4 ">
+                        <a href="javascript:void(0);">
+                            <img src="../../images/english.png"><br/>
+                            <span>英语</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <ul class="col-lg-4 col-md-12" >
+
+                    <li class="col-lg-4 col-md-4 " >
+                        <a href="javascript:void(0);" class="active">
+                            <img src="../../images/physics.png" ><br/>
+                            <span>物理</span>
+                        </a>
+                    </li>
+
+                    <li class="col-lg-4 col-md-4">
+                        <a href="javascript:void(0);">
+                            <img src="../../images/chemistry.png"><br/>
+                            <span>化学</span>
+                        </a>
+                    </li>
+
+                    <li class="col-lg-4 col-md-4 ">
+                        <a href="javascript:void(0);">
+                            <img src="../../images/biology.png"><br/>
+                            <span>生物</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+
+                <ul class="col-lg-4 col-md-12" >
+
+                    <li class="col-lg-4 col-md-4 " >
+                        <a href="javascript:void(0);" class="active">
+                            <img src="../../images/politics.png" ><br/>
+                            <span>政治</span>
+                        </a>
+                    </li>
+
+                    <li class="col-lg-4 col-md-4">
+                        <a href="javascript:void(0);">
+                            <img src="../../images/music_and_sports.png"><br/>
+                            <span>音体类</span>
+                        </a>
+                    </li>
+
+                    <li class="col-lg-4 col-md-4 ">
+                        <a href="javascript:void(0);">
+                            <img src="../../images/other_subject.png"><br/>
+                            <span>其他</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+
+
+        </div>
+
+        <section class="course-list-section " style="background-color: #f4f7fc;margin-top: 50px;">
+
+            <div class="container" style="background-color: #f4f7fc;" >
+
+                <div class="course_page" style="clear: both;margin-top: 30px;">
+
+                    <div class="media">
+                        <a class="pull-left" href="javascript:void(0);">
+                            <img class="media-object" src="http://img.mukewang.com/52e1d29d000161fe06000338-300-170.jpg" alt="..." >
+                        </a>
+                        <div class="media-body" style="padding-left: 10px;">
+                            <h3 class="media-heading">通识课程
+
+                                <span class="pull-right" style="font-size: 14px;padding-right:40px;">
+                                <i class="es-icon es-icon-people" style="font-size: 20px;"></i>
+                                工作坊人数&nbsp;67&nbsp;
+                            </span>
+
+                            </h3>
+                            <h4 style="margin-top:20px;">北京四中 <span style="margin-left: 50px;">坊主:李老师</span></h4>
+                            <div style="margin-top: 20px;width:660px;font-size: 14px;opacity: 0.6;">课程简介:<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人教版语文必修课1阅读鉴赏第一单元主要学习现代诗歌,是个是五四前后出现的,是相对古典诗歌而言的
+                                ,用白话写的,摆脱古典诗词严格规律束缚的,不断接受外来影响并努力融化在名族风格中的一种新诗体,五四之后
+                                对外国诗歌的大量翻译和介绍,出金了中国新诗的发展.
+                            </div>
+                            <div class="js-reviews" style="margin-top:30px;">
+                                <div class="media media-evaluate">
+                                    <div class="media-left">
+                                        <a class=" js-user-card" href="javascript:void(0);"  >
+                                            <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/160532c55741322245.JPG">
+                                        </a>
+
+                                    </div>
+                                    <div class="media-body thread-post">
+                                        <div class="title">
+                                            <a class="link-dark " href="#">张老师</a>
+
+                                            2017-03-07
+                                        </div>
+                                        <div class="score">
+
+                                            <i class="es-icon es-icon-star color-warning"></i>
+                                            <i class="es-icon es-icon-star color-warning"></i>
+                                            <i class="es-icon es-icon-star"></i>
+                                            <i class="es-icon es-icon-star"></i>
+                                            <i class="es-icon es-icon-star"></i>
+
+                                        </div>
+                                        <div class="content">
+                                            <div class="full-content">Good</div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+        <!--全部课例-->
+        <section class="lesson-list-section ">
+
+            <div class="container" >
+
+                <div class="text-line">
+                    <h5>
+                        <span>全部课例</span>
+                        <div class="line"></div>
+                    </h5>
+                    <!--<div class="subtitle">精选热门课程，满足你的学习兴趣。</div>-->
+                </div>
+
+                <div class="subject_classify" >
+
+                    <div class="pull-left">
+
+                        <ul class="nav nav-tabs" style="border: none;">
+
+                            <li class="active"><a href="javascript:void(0);">语文</a></li>
+                            <li ><a href="javascript:void(0);">数学</a></li>
+                            <li ><a href="javascript:void(0);">英语</a></li>
+                            <li ><a href="javascript:void(0);">物理</a></li>
+                            <li ><a href="javascript:void(0);">化学</a></li>
+                            <li ><a href="javascript:void(0);">生物</a></li>
+                            <li ><a href="javascript:void(0);">思想品德</a></li>
+                            <li ><a href="javascript:void(0);">音体类</a></li>
+                            <li ><a href="javascript:void(0);">其他</a></li>
+
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+                <!--全部课例展示-->
+                <div  style="clear: both;">
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+
+                        <div class="course-item" style="border: 1px solid #ddd;padding: 10px;border-radius: 4px;">
+
+                            <div class="course-img">
+                                <a href="#" target="_blank">
+                                    <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="" class="img-responsive" style="height: 160px;">
+                                </a>
+                            </div>
+
+                            <div class="course-info" style="left:0;margin-top: -30px;padding: 10px 0;">
+
+                                <div class="lesson_info_text">
+                                    <span class="lesson_grade">小学语文</span>
+                                    <span class="lesson_teacher pull-right">主讲老师:&nbsp;李云龙</span>
+                                </div>
+
+                                <a class="link-dark" href="#" target="_blank" style="padding-left: 10px;">
+                                    <span class="pull-left">0707</span><span class="pull-right">工作坊&nbsp; aaaads</span>
+                                </a>
+
+
+
+                            </div>
+
+                            <div class="progress" style="max-width: 270px;">
+
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:100%">100%</div>
+                                <span style="float: right;">9/9</span>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="section-more-btn clearfix" style="clear: both;padding-top: 30px;">
+                    <a href="javascript:void (0);" class="btn btn-default btn-lg" >
+                        更多课例 <i class="mrs-o es-icon es-icon-chevronright"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!--名校课例-->
+        <section class="school-lesson-list-section " style="padding-bottom: 50px;">
+
+            <div class="container" >
+
+                <div class="text-line">
+                    <h5>
+                        <span>名校课例</span>
+                        <div class="line"></div>
+                    </h5>
+                    <!--<div class="subtitle">精选热门课程，满足你的学习兴趣。</div>-->
+                </div>
+
+                <div class="lesson_main_top" >
+
+                    <div class="pull-left">
+                        <ul class="nav nav-tabs" style="border: none;">
+                            <li class="active"><a href="javascript:void(0);">北京</a></li>
+                            <li ><a href="javascript:void(0);">上海</a></li>
+                            <li ><a href="javascript:void(0);">天津</a></li>
+                            <li ><a href="javascript:void(0);">四川</a></li>
+                            <li ><a href="javascript:void(0);">山东</a></li>
+                            <li ><a href="javascript:void(0);">湖北</a></li>
+                            <li ><a href="javascript:void(0);">浙江</a></li>
+                            <li ><a href="javascript:void(0);">江苏</a></li>
+                            <li ><a href="javascript:void(0);">其他</a></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="row" style="clear: both;">
+
+                    <div class="panel-default index-article">
+
+                        <div class="panel-body clearfix">
+
+                            <div class="col-md-6">
+                                <a class="lesson_content">
+                                    <span class="pull-left text-muted">北京四中</span>
+                                    <span class="text-center text-muted">四年级数学</span>
+                                    <span class="pull-right text-muted" >《反比例函数的应用》</span>
+                                </a>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <a class="lesson_content">
+                                    <span class="pull-left text-muted">北京四中</span>
+                                    <span class="text-center text-muted">四年级数学</span>
+                                    <span class="pull-right text-muted" >《反比例函数的应用》</span>
+                                </a>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <a class="lesson_content">
+                                    <span class="pull-left text-muted">北京四中</span>
+                                    <span class="text-center text-muted">四年级数学</span>
+                                    <span class="pull-right text-muted" >《反比例函数的应用》</span>
+                                </a>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <a class="lesson_content">
+                                    <span class="pull-left text-muted">北京四中</span>
+                                    <span class="text-center text-muted">四年级数学</span>
+                                    <span class="pull-right text-muted" >《反比例函数的应用》</span>
+                                </a>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--各学校课例展示-->
+                <div  class="school_lesson_list row" style="padding-top: 50px;clear: both;">
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+
+                        <div class="course-item">
+
+                            <div class="course-img">
+                                <a href="#" target="_blank">
+                                    <img src="../../images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+
+                        <div class="course-item">
+
+                            <div class="course-img">
+                                <a href="#" target="_blank">
+                                    <img src="../../images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+
+                        <div class="course-item">
+
+                            <div class="course-img">
+                                <a href="#" target="_blank">
+                                    <img src="../../images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+
+                        <div class="course-item">
+
+                            <div class="course-img">
+                                <a href="#" target="_blank">
+                                    <img src="../../images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+</div>
+
+
+
+
+</body>
+
+</html>

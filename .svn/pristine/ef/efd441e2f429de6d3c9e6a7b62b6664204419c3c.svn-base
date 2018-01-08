@@ -1,0 +1,133 @@
+package cn.bnsr.edu_yun.backstage.train.view;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+public class UserAppraiseView extends PageBase{
+
+    private Long id;
+    private Long course_id;
+    private Long user_id;
+    private String ids;
+    private String states;
+    
+    private Integer status;
+    private Byte score;//评价分数
+    private String appraise_time;//评价时间
+    private String appraise_content;//评价内容
+    
+    private String authorName;//作者(用户名称)
+    private String courseName;//课程名称
+    
+    public Long getId() {
+        return id;
+    }
+
+   
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
+    public Long getCourse_id() {
+        return course_id;
+    }
+
+   
+    public void setCourse_id(Long course_id) {
+        this.course_id = course_id;
+    }
+
+   
+    public Long getUser_id() {
+        return user_id;
+    }
+
+   
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
+    }
+
+   
+    public String getIds() {
+		return ids;
+	}
+
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	
+
+	public String getStates() {
+		return states;
+	}
+
+
+	public void setStates(String states) {
+		this.states = states;
+	}
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+
+	public Byte getScore() {
+        return score;
+    }
+
+    
+    public void setScore(Byte score) {
+        this.score = score;
+    }
+
+   
+    public String getAppraise_time() {
+        return appraise_time;
+    }
+
+    
+    public void setAppraise_time(String appraise_time) {
+        this.appraise_time = appraise_time;
+    }
+
+   
+    public String getAppraise_content() {
+        return appraise_content;
+    }
+
+    
+    public void setAppraise_content(String appraise_content) {
+        this.appraise_content = appraise_content;
+    }
+
+
+	public String getAuthorName() {
+		return authorName;
+	}
+
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+
+
+}

@@ -1,0 +1,102 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.train.service.TrainPhaseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainPhaseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+
+/**
+ * 培训阶段
+ * @author fangxiongwei
+ * @date 2017年3月20日
+ */
+@Controller
+@RequestMapping("/train_phase")
+public class TrainPhaseController {
+	private final Logger log = LoggerFactory.getLogger(TrainController.class);
+	
+	@Autowired
+	private TrainPhaseService trainPhaseService;
+	@Autowired
+	private TrainService trainService;
+	
+	
+	/**
+	 * 跳转培训内容设置页面
+	 * @author fangxiongwei
+	 * @date 2017年3月20日
+	 */
+	@RequestMapping("/to_train_phase")
+	public ModelAndView toTrainPhase(HttpServletRequest request,TrainPhaseView trainPhaseView){
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			Long trainId = trainPhaseView.getTrain_id();
+			List<TrainPhaseView>  trainPhaseList = trainPhaseService.queryTrainPhase(trainId,null);
+			//培训信息
+			TrainView trainView = new TrainView();
+			trainView.setId(trainId);
+			trainView = trainService.getByTrain(trainView);
+			trainView.setSign(trainPhaseView.getSign());
+			trainView.setFlag(trainPhaseView.getFlag());
+			modelAndView.addObject("trainView",trainView);	
+			modelAndView.addObject("trainPhaseList",trainPhaseList);	
+			modelAndView.setViewName("frontstage/train/train/train_phase");
+			modelAndView.addObject("head_title", "培训项目内容");
+		} catch (Exception e) {
+			log.error("跳转培训内容设置失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		
+		return modelAndView;
+	}
+	
+	
+	/**
+	 * 保存培训阶段
+	 * @author fangxiongwei
+	 * @date 2017年3月21日
+	 */
+	@RequestMapping("/save_train_phase")
+	public ModelAndView saveTrainPase(HttpServletRequest request,TrainPhaseView trainPhaseView){
+		try {
+			trainPhaseService.saveTrainPhase(trainPhaseView);
+		} catch (Exception e) {
+			log.error("保存培训阶段失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return new ModelAndView(
+				"redirect:/train_phase/to_train_phase.action?train_id="
+					+ trainPhaseView.getTrain_id() + "&flag=" + trainPhaseView.getFlag() + "&sign="
+					+ trainPhaseView.getSign());
+	}
+	
+	/**
+	 * 删除培训阶段
+	 * @author fangxiongwei
+	 * @date 2017年3月21日
+	 */
+	@RequestMapping("/delete_train_phase")
+	public ModelAndView deleteTrainPhase(HttpServletRequest request,TrainPhaseView trainPhaseView){
+		try {
+			trainPhaseService.deleteTrainPhase(trainPhaseView.getId());
+		} catch (Exception e) {
+			log.error("删除培训阶段失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return new ModelAndView(
+				"redirect:/train_phase/to_train_phase.action?train_id="
+				+ trainPhaseView.getTrain_id() + "&flag=" + trainPhaseView.getFlag() + "&sign="
+				+ trainPhaseView.getSign());
+	}
+
+
+}

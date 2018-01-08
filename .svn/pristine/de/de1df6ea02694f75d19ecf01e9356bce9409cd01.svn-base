@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>班级管理-班级统计</title>
+
+
+
+    <style>
+        *{margin: 0;padding: 0;list-style: none;text-decoration: none;color: rgb(102, 102, 102);}
+       .class_main{margin-left: 20px;}
+       .class_content_tabs{}
+       .class_content_tabs>ul{margin: 20px;}
+       .class_content_tabs>ul>li{display: inline-block;margin-right: 20px;padding-bottom: 15px;}
+       .class_content_tabs>ul>li.active>a{color: #3ebbce;}
+       .class_content_tabs>ul>li.active{border-bottom: 2px solid #3ebbce;}
+       .class_content_tabs>ul>li>a{font-size: 14px;}
+
+
+    </style>
+
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            $(".class_content_tabs>ul>li").click(function () {
+
+                $(this).addClass("active").siblings().removeClass("active");
+                var index=$(this).index();
+                 $(".course_content_tabs").hide().eq(index).show()
+
+
+            })
+        })
+    </script>
+
+</head>
+<body>
+
+<div class="class_main">
+
+    <div class="class_content_tabs">
+        <ul>
+            <li class="active"><a href="javascript:void(0);">课程学习统计</a></li>
+            <li><a href="javascript:void(0);">课程讨论统计</a></li>
+        </ul>
+    </div>
+
+    <div class="course_content_tabs">
+        课程学习统计内容区域
+    </div>
+
+    <div class="course_content_tabs" style="display: none;">
+        课程讨论统计内容区域
+
+</div>
+
+</body>
+</html>

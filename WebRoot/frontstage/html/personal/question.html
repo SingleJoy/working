@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+			
+		<!--kindeditor start-->  
+	<link rel="stylesheet" type="text/css" href="kindeditor-4.1.10/themes/default/default.css" />
+	<script type="text/javascript" src="kindeditor-4.1.10/kindeditor-min.js"></script>
+	<script type="text/javascript" src="kindeditor-4.1.10/lang/zh_CN.js"></script>
+	<!-- kindeditor end -->
+	<style>
+		.write_question{width:289px;height: 33px;border: 1px solid #3ebbce;border-radius: 3px;margin-top: 30px;margin-bottom: 10px;padding-left: 15px;color: #616161;font-size: 14px;}
+
+
+		.ke-icon-link{display: none;}
+
+	</style>
+	</head>
+	<body >
+
+		<table style="width: 320px;height:700px;overflow-x: hidden;">
+			
+			<tr>
+
+				<td style="padding: 0;"><input type="text" placeholder="我要提问:" class="write_question"><textarea id="basicContent" name="entity.basicContent" style="height: 300px; visibility: hidden;resize: none;"> </textarea></td>
+				<td ><span id="basicContentTip" style="width:280px"></span></td>
+
+			</tr>
+			<tr>
+				    <td >
+                         <span class="maroon" style="color:red;"></span><span class="help-inline"></span>
+					</td>
+				</tr>				
+			</table>
+	
+	
+</body>
+	<script>
+		var editor;
+		KindEditor.ready(function(K) {
+			editor = K.create('textarea[name="entity.basicContent"]',{
+				cssPath : 'kindeditor-4.1.10/plugins/code/prettify.css',
+				uploadJson : '${pageContext.request.contextPath}/resource!uploadImg.action',
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'image', 'link'],
+				afterCreate: function () {
+					this.sync();
+				},
+				afterBlur: function () {
+					this.sync();
+				}
+			});
+		});
+		$(function(){
+			$(".ke-container-default").css("width","330px");
+			$(".ke-input-text").css("width","88px");
+			$(".ke-upload-button").show();
+
+		})
+	</script>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/qiuzi_ico.ico" media="screen" />
+    <link type="text/css" rel="stylesheet" href="../css/private-letter.css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        $("#private_letter_main>a").click(function(){
+            $("#private_letter_main").hide();
+            $("#see_private_letter_list").hide();
+            $("#private_letter_write_main").show();
+        });
+
+        $("#private_letter_write_main>a").click(function(){
+            $("#private_letter_main").show();
+            $("#see_private_letter_list").hide();
+            $("#private_letter_write_main").hide();
+        });
+
+
+        $(".private_letter_look").click(function(){
+            $("#private_letter_main").hide();
+            $("#see_private_letter_list").show();
+            $("#private_letter_write_main").hide();
+        })
+
+    });
+    $(function(){
+        $(".private_letter_main_content>ul>li").mouseover(function(){
+            $(this).find("label").find("a").show();
+        }).mouseout(function(){
+            $(this).find("label").find("a").hide();
+
+        })
+    });
+
+    </script>
+
+</head>
+<body>
+ <!--私信-->
+<div class="private_letter_main"  id="private_letter_main" >
+       <h2>私信</h2>
+       <a href="javascript:return false;">写私信</a>
+
+
+    <div class="private_letter_main_content">
+
+       <ul>
+
+           <li>
+               <label><a href="javascript:return false;">删除<span>|</span></a>共10条</label>
+               <a href="javascript:return false;" ><img src="../images/dog.jpg"></a>
+               <p><a href="javascript:return false;">发给&nbsp;xxxx</a><label class="private_letter_look">&nbsp;:&nbsp;你好吗？</label><span>(4条未读)</span></p>
+               <span>1小时前</span>
+           </li>
+       </ul>
+
+    </div>
+
+</div>
+
+<!--写私信-->
+<div class="private_letter_main private_letter_write_main" id="private_letter_write_main" style="display: none;">
+    <h2>写私信</h2>
+    <a href="javascript:return false;" style="margin-left: 440px;" class="back_my_letter">返回我的私信</a>
+    <input type="text" placeholder="收信人昵称"><br/>
+
+    <!--<span>请输入收信人昵称</span>-->
+    <textarea placeholder="想要说的话" rows="5"></textarea>
+    <!--<span>请输入想要说的话</span>-->
+
+    <button type="button">发送</button>
+
+
+</div>
+
+<!--查看对话列表-->
+ <div class="private_letter_main see_private_letter_list private_letter_write_main" id="see_private_letter_list" style="display: none;">
+
+     <h2>与xxxx的私信对话</h2>
+     <a href="javascript:return false;" style="margin-left: 340px;" class="back_my_letter">返回我的私信</a>
+     <input type="text" placeholder="请输入私信内容"><br/>
+     <button type="button">发送</button>
+
+     <div class="private_letter_list_dialog">
+          <ul>
+             <!--私信对方-->
+              <li>
+                  <a href="javascript:return false;" class="other_man"><img src="../images/dog.jpg"></a>
+                  <div class="private_letter_list_dialog_content">
+                      <span class="arrow"></span>
+                      <div>
+                          <a href="javascript:return false;">xxxx&nbsp;:&nbsp</a><span>你好吗？</span><br/>
+                          <label>1小时前</label>
+                      </div>
+                  </div>
+              </li><br/>
+
+              <!--我的对话-->
+              <li>
+                  <a href="javascript:return false;" class="mine"><img src="../images/laoshi.jpg"></a>
+                  <div class="private_letter_list_dialog_content">
+                      <span class="arrow"></span>
+                      <div>
+                          <a href="javascript:return false;">我&nbsp;:&nbsp</a><span>你好吗？</span><br/>
+                          <label>1小时前</label>
+                      </div>
+                  </div>
+              </li>
+
+
+          </ul>
+     </div>
+
+
+ </div>
+
+
+</body>
+</html>

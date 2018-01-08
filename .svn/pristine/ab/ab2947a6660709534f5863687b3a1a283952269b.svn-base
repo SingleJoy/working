@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>全组完成情况</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+     <style>
+         .stage-circle{width: 70px;height: 70px;border-radius: 50%;}
+         .stage-num{margin-top: -45px;font-size: 16px;position: absolute;margin-left: 30px;}
+         .stage-pros{width: 100%;height: 10px;margin-top: -40px;margin-left: 70px;}
+         .stage-text{position: relative;margin-top: 35px;}
+     </style>
+</head>
+<body class="homepage">
+
+<div id="content-container" class="container">
+    <div class="row row-10">
+        <div class="col-md-10 col-md-offset-1">
+
+            <div class="panel panel-default panel-page"  id="private_letter_main">
+
+                <div class="panel-heading">
+                    <h2>申请认证用户</h2>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="text-center" style="margin-left: 120px;">
+
+                        <div class="step col-md-4">
+                            <div class="stage-circle" style="background-color: #3ebbce;"></div>
+
+                            <div class="stage-num" style="color: #fff;">1</div>
+
+                            <div class="stage-pros" style="background-color: #3ebbce;"></div>
+                            <div class="stage-text pull-left" >注册账户</div>
+
+                        </div>
+                        <div class="step col-md-4">
+                            <div class="stage-circle" style="background-color: #3ebbce;"></div>
+
+                            <div class="stage-num" style="color: #fff;">2</div>
+                            <div class="stage-pros" style="background-color: #ddd;"></div>
+                            <div class="stage-text pull-left" >填写认证信息</div>
+
+                        </div>
+                        <div class="step col-md-4">
+                            <div class="stage-circle" style="background-color: #ddd;"></div>
+
+                            <div class="stage-num">3</div>
+                            <div class="stage-pros"></div>
+                            <div class="stage-text pull-left" >申请提交成功</div>
+
+                        </div>
+                    </div>
+
+                    <ul class="nav nav-tabs col-md-7 col-md-offset-4" style="margin-top: 50px;">
+                        <li class="active"><a href="javascript:void(0);">教师认证  ?</a></li>
+                        <li class=""><a href="javascript:void(0);">管理员认证  ?</a></li>
+
+                    </ul>
+
+                    <h3 class="col-md-4 col-md-offset-5" style="margin-bottom: 50px;">填写实名认证信息</h3>
+
+
+                    <form class="form-horizontal clearfix"  method="post"  style="clear: both;">
+
+                        <div class="form-group ">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>真实姓名:</div>
+                            <div class="col-md-8 controls">
+                                <input type="text"  name="name"   value="" class="form-control" >
+                                <div class="text-warning" style="display: none;">请输入真实姓名</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group" >
+
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>省:</div>
+                            <div class="col-md-1 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">北京</option>
+                                    <option  value="1">上海</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>市:</div>
+                            <div class="col-md-1 controls" style="margin-left: -15px;">
+                                <select class="form-control width-input ">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">北京</option>
+                                    <option  value="1">上海</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>县:</div>
+                            <div class="col-md-1 controls">
+                                <select  class="form-control width-input" style="margin-left: -15px;">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">北京</option>
+                                    <option  value="1">上海</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>类型:</div>
+                            <div class="col-md-8 controls">
+
+                                <select class="form-control">
+                                    <option value="-1" selected="selected">--请选择--</option>
+                                    <option value="0">教师</option>
+                                    <option value="1">教研员</option>
+                                    <option value="other">其他</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>学校:</div>
+                            <div class="col-md-8 controls">
+
+                                <select class="form-control">
+                                    <option value="-1" selected="selected">--请选择--</option>
+                                    <option value="0">学校01</option>
+                                    <option value="1">学校01</option>
+                                    <option value="other">其他</option>
+                                </select>
+                                <textarea class="form-control" name="" placeholder="请输入您的学校" style="margin-top: 10px;display: none;"></textarea>
+                                <span class="text-danger warnning" style="display: none;">学校不可为空</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>学段:</div>
+                            <div class="col-md-1 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">学段01</option>
+                                    <option  value="1">学段02</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>科目:</div>
+                            <div class="col-md-1 controls" style="margin-left: -15px;">
+                                <select class="form-control width-input ">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">科目01</option>
+                                    <option  value="1">科目02</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>年级:</div>
+                            <div class="col-md-1 controls">
+                                <select  class="form-control width-input" style="margin-left: -15px;">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">年级01</option>
+                                    <option  value="1">年级02</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>职位:</div>
+                            <div class="col-md-3 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">职位01</option>
+                                    <option  value="1">职位02</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label col-md-offset-1" style="margin-left: 40px;"> <span class="text-danger">*</span>职称:</div>
+                            <div class="col-md-3 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">职称01</option>
+                                    <option  value="1">职称02</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>教材版本:</div>
+                            <div class="col-md-8 controls">
+
+                                <select class="form-control">
+                                    <option value="-1" selected="selected">--请选择--</option>
+                                    <option value="0">版本01</option>
+                                    <option value="1">版本02</option>
+                                    <option value="other">其他</option>
+
+                                </select>
+                                <textarea class="form-control" name="" placeholder="请输入您的教材版本" style="margin-top: 10px;display: none;"></textarea>
+                                <span class="text-danger warnning" style="display: none;">教材版本不可为空</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>身份证号:</div>
+                            <div class="col-md-8 controls">
+                                <input type="text"   value="" class="form-control" placeholder="请输入身份证号">
+                                <div class="text-warning" style="display: none;">请输入身份证号</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>性别:</div>
+                            <div class="col-md-10 controls radios">
+                                <label><input type="radio" name="sex" value="serialize" checked> 男</label>
+                                <label><input type="radio" name="sex" value="finished"> 女</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>邮箱:</div>
+                            <div class="col-md-8 controls">
+                                <input type="email"   value="" class="form-control" placeholder="请输入邮箱">
+                                <div class="text-warning" style="display: none;">请输入邮箱</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 150px;">
+                            <div class="col-md-offset-2 col-md-8 controls">
+                                <button class="btn btn-fat btn-primary" id="course-create-btn" type="submit">保存</button>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

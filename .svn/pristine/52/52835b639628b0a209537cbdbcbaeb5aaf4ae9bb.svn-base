@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/teaching-center.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript">
+        //        课程类型切换
+        $(function(){
+            $(".topics_type ul li").click(function(){
+                $(".topics_type ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+                $(this).addClass("curr").find("a").addClass("curr");
+                var index=$(this).index();
+
+                $(".topics_type_tabs").hide().eq(index).show();
+
+            }).mouseover(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).addClass("curr_01").find("a").addClass("curr_01");
+                }
+
+            }).mouseout(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+                }
+
+            })
+        });
+
+
+        $(function(){
+            $(".triangle").click(function(){
+                if($(this).siblings("ul").css("display")=="none"){
+                    $(this).siblings("ul").show();
+                    $(this).addClass("click_style").find("span").addClass("click_style_01");
+                }else{
+                    $(this).siblings("ul").hide();
+                    $(".triangle").removeClass("click_style").find("span").removeClass("click_style_01");
+
+                }
+            })
+        })
+
+        $(function(){
+
+            var width = document.body.clientWidth;
+
+            var myWidth=(width-1000)/2;
+
+
+            $(".teaching_center_main_right").css("margin-left",myWidth+220+"px");
+
+        });
+    </script>
+
+
+
+
+</head>
+<body>
+
+
+
+
+
+
+
+
+    <div class="teaching_center_main_right">
+
+        <p>学员话题</p>
+
+           <div class="topics_type">
+               <ul>
+                   <li class="curr"><a href="javascript:return false;" class="curr">课程学员话题</a></li>
+                   <li><a href="javascript:return false;">班级学员话题</a></li>
+               </ul>
+           </div>
+
+
+          <!--课程学员话题-->
+          <div class="course_students_topic topics_type_tabs">
+
+              <div class="students_question_main_content">
+                  <ul>
+                      <li>
+                          <span class="question_num">2</span>
+                          <a href="javascript:return false;" class="question_title">测试001</a><br/>
+                          <p>发表于<a href="javascript:return false;" class="question_title_from">测试</a><span class="point">•</span>最后回复<a href="javascript:return false;" class="question_answer">admin</a> ,23小时前<span class="point">•</span>10浏览</p>
+                      </li>
+                      <li>
+                          <span class="question_num">2</span>
+                          <a href="javascript:return false;" class="question_title">测试001</a><br/>
+                          <p>发表于<a href="javascript:return false;" class="question_title_from">测试</a><span class="point">•</span>最后回复<a href="javascript:return false;" class="question_answer">admin</a> ,23小时前<span class="point">•</span>10浏览</p>
+                      </li>
+                  </ul>
+              </div>
+
+          </div>
+
+
+        <!--班级学员话题-->
+        <div class="class_students_topic topics_type_tabs" style="display: none;">
+
+        </div>
+
+
+       </div>
+
+
+
+    </div>
+
+
+
+
+
+
+</body>
+</html>

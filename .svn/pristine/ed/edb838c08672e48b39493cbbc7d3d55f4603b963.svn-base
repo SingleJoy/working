@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>价格设置</title>
+
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <header class="es-header navbar">
+        <div class="navbar-header">
+            <div class="visible-xs  navbar-mobile">
+                <a href="javascript:;" class="navbar-more js-navbar-more">
+                    <i class="es-icon es-icon-menu"></i>
+                </a>
+                <div class="html-mask"></div>
+                <div class="nav-mobile">
+                    <form class="navbar-form" action="/search" method="get">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="搜索" name="q">
+                            <button class="button es-icon es-icon-search"></button>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav">
+
+                        <li class="nav-hover">
+                            <a href="/course/explore" >课程  <b class="caret"></b></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href=""  >全部课程</a></li>
+                                <li><a href=""  >产品介绍</a></li>
+                                <li><a href=""  >使用帮助</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/open/course/explore" >公开课 </a>
+                        </li>
+                        <li class="">
+                            <a href="/classroom/explore" >班级 </a>
+                        </li>
+                        <li class="nav-hover">
+                            <a href="/article" >资讯  <b class="caret"></b></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/article"  >全部资讯</a></li>
+                                <li><a href="/article/category/news"  >EduSoho</a></li>
+                                <li><a href="/article/category/news"  >行业资讯</a></li>
+                                <li><a href="/article/category/default"  >默认分类</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/mobile" >移动端 </a>
+                        </li>
+                        <li class="">
+                            <a href="/group" >小组 </a>
+                        </li>
+                        <li class="">
+                            <a href="/page/aboutus" >关于我们 </a>
+                        </li>          </ul>
+                </div>
+            </div>
+            <a href="/" class="navbar-brand">
+                <img src="http://edusoho-demo.b0.upaiyun.com/files/system/2015/06-10/1419291db01f365270.png">
+            </a>
+        </div>
+        <nav class="collapse navbar-collapse">
+            <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+
+                <li class="nav-hover">
+                    <a href="/course/explore" >课程  <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/course/explore"  >全部课程</a></li>
+                        <li><a href="/course/explore/intro"  >产品介绍</a></li>
+                        <li><a href="/course/explore/fuction"  >使用帮助</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="/open/course/explore" >公开课 </a>
+                </li>
+                <li class="">
+                    <a href="/classroom/explore" >班级 </a>
+                </li>
+                <li class="nav-hover">
+                    <a href="/article" >资讯  <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/article"  >全部资讯</a></li>
+                        <li><a href="/article/category/news"  >EduSoho</a></li>
+                        <li><a href="/article/category/news"  >行业资讯</a></li>
+                        <li><a href="/article/category/default"  >默认分类</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="/mobile" >移动端 </a>
+                </li>          <li class="nav-more nav-hover">
+                <a class="more">
+                    <i class="es-icon es-icon-morehoriz"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+
+                    <li class="">
+                        <a href="/group" >小组 </a>
+                    </li>
+                    <li class="">
+                        <a href="/page/aboutus" >关于我们 </a>
+                    </li>              </ul>
+            </li>
+
+
+            </ul>
+            <div class="navbar-user  left ">
+                <ul class="nav user-nav">
+                    <li class="user-avatar-li nav-hover">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <img class="avatar-xs" src="/files/user/2016/11-16/15524912997a998442.JPG?7.0.0">
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" class="dropdown-header">体验管理员1</li>
+                            <li><a href="/user/14"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                            <li><a href="/settings/"><i class="es-icon es-icon-setting"></i>个人设置</a></li>
+                            <li class="hidden-lg">
+                                <a href="/my">
+                                    <i class="es-icon es-icon-eventnote"></i>我的教学              </a>
+                            </li>
+                            <li><a href="/my/bill"><i class="es-icon es-icon-accountwallet"></i>账户中心</a></li>
+                            <li><a href="/admin/"><i class="es-icon es-icon-dashboard"></i>管理后台</a></li>
+
+                            <li class="hidden-lg"><a href="/notification"><span class="pull-right num"></span><i class="es-icon es-icon-notificationson"></i>通知</a></li>
+                            <li class="hidden-lg"><a href="/message/"><span class="pull-right num"></span><i class="es-icon es-icon-mail"></i>私信</a></li>
+                            <li><a href="/logout"><i class="es-icon es-icon-power"></i>退出登录</a></li>
+                        </ul>
+                    </li>
+                    <li class="visible-lg">
+                        <a href="">
+                            我的教学
+                        </a>
+                    </li>
+                    <li class="visible-lg nav-hover">
+
+                        <a><i class="es-icon es-icon-mail"></i></a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="/message/">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-mail"></i>私信
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right hidden-xs hidden-sm" action="" method="get">
+                    <div class="form-group">
+                        <input class="form-control js-search" name="q" placeholder="搜索">
+                        <button class="button es-icon es-icon-search"></button>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div id="content-container" class="container">
+
+
+        <div class="cn-section course-manage-header clearfix">
+            <img class="picture" src="/files/course/2016/11-24/1353244e4a05862944.jpg?7.0.0">
+            <h1 class="title"><a href="/classroom/5">ceshi001</a>
+                <span class="label label-success"> 已发布</span>
+            </h1>
+
+            <div class="toolbar hidden-xs">
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle btn-sm" href="">返回班级主页</a>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                        预览 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="" target="blank">作为未购买用户</a></li>
+                        <li><a href="" target="blank">作为旁听生</a></li>
+                        <li><a href="" target="_blank">作为正式学员</a></li>
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级设置</li>
+                        <li class="list-group-item ">
+                            <a href="class-basic-info.html">
+                                <span></span>基本信息
+                            </a>
+                        </li>
+
+                        <li class="list-group-item active">
+                            <a href="class-price-setting.html">
+                                <span></span>价格设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-cover-photo.html">
+                                <span></span>封面图片
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-service-setting.html">
+                                <span></span>服务设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-headmaster.html">
+                                <span></span>班主任设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-teacher-setting.html">
+                                <span></span>教师设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-assistant.html">
+                                <span></span>助教设置
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级管理</li>
+                        <li class="list-group-item ">
+                            <a href="class-course-management.html">
+                                <span></span>课程管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="class_student_manage.html">
+                                <span></span>学员管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="class_scores_manage.html">
+                                <span></span>成绩管理
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">题库</li>
+                        <li class="list-group-item">
+                            <a href="">
+                                <span></span>题目管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>试卷管理
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class_mark.html">
+                                <span></span>试卷批阅
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class_task.html"><span></span>作业批改
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">价格设置</div>
+                    <div class="panel-body">
+
+                        <form class="form-horizontal" method="post" id="classroom-set-form" novalidate>
+
+                            <div class="row form-group">
+                                <div class="col-md-2 control-label">
+                                    <label >价格(元)</label>
+                                </div>
+                                <div class="controls col-md-8">
+                                    <input  type="text"  id="price" class="form-control" value="0.00"/>
+                                    <div class="help-block">当前共有 2 个课程，原价共计 0 元。</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label">
+                                    <label for="price">会员免费学</label>
+                                </div>
+                                <div class="col-md-8 controls">
+                                    <select  class="form-control width-input width-input-large">
+                                        <option value="0">不支持</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-2 control-label"></div>
+                                <div class="controls col-md-8">
+                                    <button type="submit" class="btn btn-primary" >提交</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

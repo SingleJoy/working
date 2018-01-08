@@ -1,0 +1,320 @@
+package cn.bnsr.edu_yun.backstage.base.service.impl;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.mapper.RoleMapper;
+import cn.bnsr.edu_yun.backstage.base.mapper.SysLogMapper;
+import cn.bnsr.edu_yun.backstage.base.mapper.UserRoleMapper;
+import cn.bnsr.edu_yun.backstage.base.po.UserRole;
+import cn.bnsr.edu_yun.backstage.base.service.BackUserService;
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.UserStatsView;
+import cn.bnsr.edu_yun.backstage.base.view.UserView;
+import cn.bnsr.edu_yun.comparator.UserStatsComparator;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserInfoMapper;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserMapper;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserPropertyMapper;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.po.UserProperty;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class BackUserServiceImpl implements BackUserService{
+	@Autowired
+	private UserMapper userMapper;
+	
+	@Autowired
+	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private RoleMapper roleMapper;
+	@Autowired
+	private UserPropertyMapper userPropertyMapper;
+	@Autowired
+	private UserInfoMapper userInfoMapper;
+	@Autowired
+	private  SysLogMapper sysLogMapper;
+	@Override
+	public DataGrid datagrid(UserView userView) {
+		DataGrid j = new DataGrid();
+		userView.setPage(NumUtil.startingNum(userView.getPage(),userView.getRows()));
+		j.setRows(changeModel(find(userView)));
+		j.setTotal(total(userView));
+		return j;
+	}
+
+	private List<UserView> changeModel(List<User> userList) {
+		List<UserView> users = new ArrayList<UserView>();
+		if (userList != null && userList.size() > 0) {
+			for (User u : userList) {
+				UserView uv = new UserView();
+				BeanUtils.copyProperties(u, uv);
+				
+				List<UserRole> userRoleList = userRoleMapper.getByUserId(u.getId());
+				
+				String roleIds = "";
+				String roleNames = "";
+				boolean b = false;
+				if (userRoleList != null && userRoleList.size() > 0) {
+					for (UserRole ur : userRoleList) {
+						if(ur !=null ){
+							if (b) {
+								roleIds += ",";
+								roleNames += ",";
+							}
+							roleIds += ur.getRole_id();
+							roleNames += roleMapper.selectByPrimaryKey(ur.getRole_id()).getName();
+							b = true;
+						}
+					}
+				}
+				uv.setRoleIds(roleIds);
+				uv.setRoleNames(roleNames);
+				uv.setStatusType(u.getStatus());
+				users.add(uv);
+			}
+		}
+		return users;
+	}
+
+	private List<User> find(UserView userView) {
+		return userMapper.find(userView);
+	}
+
+	private Long total(UserView userView) {
+		return userMapper.count(userView);
+	}
+	
+	@Override
+	public void save(UserView userView) {
+		//创建用户关联信息
+		UserProperty userProperty=new UserProperty();
+		userProperty.setAttent_count(0);
+		userProperty.setIs_attented_count(0);
+		userProperty.setUpload_count(0);
+		userProperty.setPrivate_file_count(0);
+		userProperty.setPublic_file_count(0);
+		userPropertyMapper.insertSelective(userProperty);
+		
+		User user = new User();
+		BeanUtils.copyProperties(userView, user);
+		user.setProperty_id(userProperty.getId());
+		user.setCreate_time(new Date());
+		userMapper.insertSelective(user);
+		if(userView.getUser_type().equals("1")){//网站用户
+			//创建老师信息
+			UserInfo teach=new UserInfo();
+			teach.setUser_id(user.getId());
+			userInfoMapper.insertSelective(teach);
+		}
+		
+		this.saveUserRole(userView, user);
+	}
+	
+	/**
+	 * 保存用户和角色的关系
+	 * user_role关联表
+	 */
+	private void saveUserRole(UserView userView, User user) {
+		List<UserRole> userRoleList = userRoleMapper.getByUserId(user.getId());
+		if(userRoleList!=null && userRoleList.size()>0){
+			//根据用户id删除关联角色
+			for(UserRole ur:userRoleList){
+				userRoleMapper.deleteByPrimaryKey(ur.getId());
+			}
+		}
+		if (userView.getRoleIds() != null) {
+			for (String id : userView.getRoleIds().split(",")) {
+				UserRole userRole = new UserRole();
+				userRole.setRole_id(Long.parseLong(id.trim()));
+				userRole.setUser_id(user.getId());
+				userRoleMapper.insertSelective(userRole);
+			}
+		}
+	}
+
+	@Override
+	public void update(UserView userView) {
+		User u = new User();
+		BeanUtils.copyProperties(userView, u);
+		userMapper.updateByPrimaryKeySelective(u);
+		
+		this.saveUserRole(userView, u);
+	}
+
+	@Override
+	public void delete(String ids) {
+		if (ids != null) {
+			for (String id : ids.split(",")) {
+				User user = userMapper.selectByPrimaryKey(Long.parseLong(id.trim()));
+				user.setStatus("3");//逻辑删除
+				userMapper.updateByPrimaryKeySelective(user);
+			}
+		}
+	}
+	
+	@Override
+	public User login(User user) {
+		return userMapper.selectByUsernameAndPassword(user.getUsername(),user.getPassword());
+	}
+
+	@Override
+	public String checkExis(UserView userView) {
+		User user = new User();
+		System.out.println("------------------------oooooooooo--"+userView.getId());
+		if(userView.getUsername()!=null && !userView.getUsername().trim().equals("")) {
+			user =userMapper.selectByUsername(userView.getUsername());
+		}
+		if(userView.getEmail()!=null && !userView.getEmail().trim().equals("")) {
+			user =userMapper.selectByEmail(userView.getEmail());
+		}
+		if(userView.getPhone()!=null && !userView.getPhone().trim().equals("")) {
+			user =userMapper.selectByPhone(userView.getPhone());
+		}
+		if(user.getId()!=null){
+			return "1";//已存在
+		}else{
+			return "2";//未存在
+		}
+	}
+
+	@Override
+	public void doChangeStatus(UserView userView) {
+		User user = userMapper.selectByPrimaryKey(userView.getId());
+		user.setStatus(userView.getStatus());
+		userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public void saveRoleEdit(UserView userView) {
+		if (userView.getIds() != null) {
+			for (String id : userView.getIds().split(",")) {
+				User user = userMapper.selectByPrimaryKey(Long.parseLong(id));
+				this.saveUserRole(userView, user);
+			}
+		}
+	}
+	
+	@Override
+	public List<UserStatsView> queryUserStats(UserStatsView userStats) throws ParseException {
+		Date date = new Date();
+		List<String> list = new ArrayList<String>();
+		if(userStats.getYear().equals("")){//年月没选
+			//获的当前年月
+			userStats.setDays(TimeUtil.getDate());
+			date = TimeUtil.stringFormatDate(userStats.getDays());
+			list = TimeUtil.getAllTheDateOftheMonth(date);
+		}else{
+			if(userStats.getMonth().equals("")){//只选年
+				for(int i=1;i<=12;i++){
+					String month = i>=10?i+"":"0"+i;
+					list.add(userStats.getYear()+"-"+month);
+				}
+				userStats.setDays(userStats.getYear());
+			}else{//年月都选
+				userStats.setDays(userStats.getYear()+"-"+userStats.getMonth());
+				date = TimeUtil.stringFormatDate(userStats.getDays());
+				list = TimeUtil.getAllTheDateOftheMonth(date);
+			}
+		}
+		
+		List<UserStatsView> userStatsList = userMapper.queryUserStats(userStats);
+		if(userStatsList.size()!=list.size()){//如果不相等，证明有缺少日期
+			List<String> userList = new ArrayList<String>();
+			for(UserStatsView u : userStatsList){
+				userList.add(u.getDays());
+			}
+			list.removeAll(userList);//差集
+			for(int i=0;i<list.size();i++){//补全当前月日期
+				UserStatsView user = new UserStatsView();
+				user.setDays(list.get(i));
+				user.setFrontNum(0);
+				userStatsList.add(user);
+			}
+		}
+		
+		Collections.sort(userStatsList, new UserStatsComparator());// 排序
+		
+		return userStatsList;
+	}
+
+	@Override
+	public void resetPassword(Long id) {
+		User user = userMapper.selectByPrimaryKey(id);
+		user.setPassword(user.getPhone());
+		userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public List<UserStatsView> queryUserStats1(UserStatsView userStats) throws ParseException {
+		Date date = new Date();
+		List<String> list = new ArrayList<String>();
+	    int timeType = userStats.getTimeType();
+	    if(timeType==0){//本月
+	    	// 获的当前年月
+	    	userStats.setDays(TimeUtil.getDate());
+	    }else if(timeType==1){//上月
+	    	userStats.setDays(TimeUtil.getLastDate());
+	    }else if(timeType==2){//近三月
+	    	userStats.setStartTime(TimeUtil.getBeforeMarch1());
+	    	userStats.setEndTime(TimeUtil.dateToString2(new Date()));
+	    }else if(timeType==4){//某一天
+	    	userStats.setDays(TimeUtil.dateToString1(TimeUtil.stringFormatDate1(userStats.getOneDay())));
+	    }
+	    if(timeType==0||timeType==1){// 本月、上月
+	    	date = TimeUtil.stringFormatDate(userStats.getDays());
+			list = TimeUtil.getAllTheDateOftheMonth(date);
+	    }else if(timeType==4){
+	    	list = TimeUtil.getAllTheHourOfTheDay();
+	    }else{// 近三月、起止时间、本周
+	    	list = TimeUtil.getBetweenDates(TimeUtil.stringFormatDate1(userStats.getStartTime()),
+					TimeUtil.stringFormatDate1(userStats.getEndTime()));
+	    	userStats.setStartTime(userStats.getStartTime());
+	    	userStats.setEndTime(userStats.getEndTime());
+	    }
+	    List<UserStatsView> userStatsList = new ArrayList<UserStatsView>();
+	    if(userStats.getLogType()==0){//注册用户
+	    	if(timeType==4){//按小时
+	    		userStatsList = userMapper.queryUserStats2(userStats);
+	    	}else{//按天
+	    		userStatsList = userMapper.queryUserStats1(userStats);
+	    	}
+	    }else if(userStats.getLogType()==1){//登录用户
+	    	if(timeType==4){//按小时
+	    		
+	    	}else{
+	    		userStatsList = sysLogMapper.queryloginStats(userStats);
+	    	}
+	    }
+	    
+	    if (userStatsList.size() != list.size()) {// 如果不相等，证明有缺少日期
+			int countNum = 0;
+			// 有数据日期
+			List<String> dataList = new ArrayList<String>();
+			for (int i = 0; i < userStatsList.size(); i++) {
+				dataList.add(userStatsList.get(i).getDays());
+				if (i == 0) {
+					countNum = userStatsList.get(i).getCountNum();
+				}
+			}
+			list.removeAll(dataList);// 差集
+			for (int i = 0; i < list.size(); i++) {// 补全当前月日期
+				UserStatsView userStat = new UserStatsView();
+				userStat.setDays(list.get(i));
+				userStat.setNewNum(0);
+				userStat.setCountNum(countNum);
+				userStat.setTimeType(timeType);
+				userStatsList.add(userStat);
+			}
+		}
+	    Collections.sort(userStatsList, new UserStatsComparator());// 排序
+		return userStatsList;
+	}
+}

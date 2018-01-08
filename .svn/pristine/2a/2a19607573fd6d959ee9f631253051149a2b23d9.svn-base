@@ -1,0 +1,66 @@
+*{margin: 0;padding: 0;}
+table{border-collapse:collapse;   border-spacing:0; }
+a{text-decoration: none;}
+body{background-color: #ececec;}
+.main_content{}
+.main_head{font-size: 16px; background-color: #fff; padding: 20px;}
+.main_head_content{max-width: 1050px;}
+.main_body{margin: 20px;background-color: #fff;}
+
+.time>div{float: left;margin-right:10px;}
+
+.number{font-size: 20px;font-weight: bold;color: #e83d2c}
+
+.select_time{}
+.select_time>span>input{width: 100px;}
+.select_time>span{margin-left: 10px;}
+
+.choose_date_01>a,.choose_date_02>a{color:#616161;text-decoration: none;margin-right: 5px;}
+.choose_date_01>a.active{display: inline-block;background-color: #4da7fd;color: #fff;padding:2px;}
+.choose_date_01>a.inactive{display: inline-block;background-color: #d9d2f0;color: #fff;padding:2px;}
+.choose_area{margin-right: 15px;}
+
+.user_info{margin: 20px auto;padding-top: 30px;}
+.user_info>div{float: left;padding: 0 20px;min-width: 180px;text-align: center;}
+.user_info>div>label{font-size: 20px;text-align: center;color: orange;}
+.user_info>div>span{font-size:12px;text-align: center;min-width: 60px;}
+
+.table_sta{border:1px solid #ddd;border-left: none;border-bottom: none;margin-left: 20px;max-width: 900px;}
+.table_sta>thead>tr>th,.table_sta>tbody>tr>td{width: 173px;text-align: center;border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;line-height: 30px;}
+.table_sta>thead>tr>th{background-color: #ececec;padding: 5px 10px;font-size: 14px;}
+.table_sta>tbody>tr>td{font-size: 12px;}
+.compare_info{text-align: center;}
+.compare_info>span{}
+.compare_info>div{display: inline-block;}
+
+.compares{text-align: center;}
+.fold_open{background-position: left -725px;background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");;
+    background-repeat: no-repeat;width: 50px;height:30px;cursor: pointer;display: none;}
+.fold_close{background-position: left -761px;background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+    background-repeat: no-repeat;width: 50px;height:30px;cursor: pointer;margin-top: -70px;}
+#data_title{display: none;font-size: 18px;margin-top: 20px;}
+.download_data_btn{color: orange;font-size: 16px;margin-left: 60px;}
+
+.online_title{}
+.online_title>p{}
+.online_title>span{}
+
+.calendar_time{float:left;width: 200px;margin-top: 140px;font-size: 16px;}
+.calendar_time>div{text-align: center;}
+.usertrend{float:left;}
+
+.visited_tabs{margin-top: 30px;}
+.visited_tabs>ul{padding-top: 30px;margin-left: 50px;}
+.visited_tabs>ul>li{min-width: 100px;display: inline-block;text-align: center;padding: 5px 15px;}
+.visited_tabs>ul>li.active{border-bottom: 2px solid #4aa6fc;}
+.visited_tabs>ul>li>a{color: #616161;line-height: 35px;}
+.visited_tabs>ul>li.active>a{color:#4aa6fc;}
+
+.table_sta_area>thead>tr>th{font-size: 14px;line-height: 30px;background-color: #eaeaea;}
+.table_sta_area>tbody>tr>td{border-top: 1px solid #ddd;font-size: 12px;line-height: 30px;text-align: center;}
+.table_sta_area>tbody>tr>td:nth-child(2){text-align: left;}
+.table_sta_area{border: 1px solid #ddd;}
+
+
+.data_pic{float: left;width: 45%;margin-right: 20px;}

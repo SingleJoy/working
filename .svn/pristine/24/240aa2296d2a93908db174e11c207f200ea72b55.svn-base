@@ -1,0 +1,61 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import java.util.Date;
+
+/**
+ * 用户学习日志视图
+ * @author heliwei
+ *
+ */
+public class UserStudyLogView {
+	private Long id;
+	private Long user_id;
+	private Long source_id;
+	private Integer source_type;
+	private Long class_id;
+	private Date create_time;
+	private String create_time_model;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+	public Long getSource_id() {
+		return source_id;
+	}
+	public void setSource_id(Long source_id) {
+		this.source_id = source_id;
+	}
+	public Integer getSource_type() {
+		return source_type;
+	}
+	public void setSource_type(Integer source_type) {
+		this.source_type = source_type;
+	}
+	public Long getClass_id() {
+		return class_id;
+	}
+	public void setClass_id(Long class_id) {
+		this.class_id = class_id;
+	}
+	public Date getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
+	}
+	public String getCreate_time_model() {
+		return create_time_model;
+	}
+	public void setCreate_time_model(String create_time_model) {
+		this.create_time_model = create_time_model;
+	}
+	
+}

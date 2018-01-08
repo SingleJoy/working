@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>班级学员管理</title>
+	<link href="./edusoho/bootstrap.css" rel="stylesheet">
+	<link href="./edusoho/es-question.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body class="modal-open">
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidenav">
+                    <ul class="list-group">
+                        <li class="list-group-item ">
+                        <a target="_blank" href="./class_manage.html">管理首页</a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级管理</li>
+                        <li class="list-group-item active">
+                        <a target="_blank" href="./class_student_manage.html">学员管理</a>
+                        </li>
+                        <li class="list-group-item ">
+                        <a target="_blank" href="./class_mark.html">试卷批阅</a>
+                        </li>
+                        <li class="list-group-item ">
+                        <a target="_blank" href="./class_task.html">作业批改</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">学员管理
+                        <div class="panel-bar">
+                            <button class="btn btn-info btn-sm mhs show_pop">
+                                <i class="glyphicon glyphicon-plus"></i> 添加学员
+                            </button>
+                            <a href="javascript:;" class="btn btn-info btn-sm mhs import_student" ><i class="glyphicon glyphicon-import"></i> 批量导入</a>
+                            <a href="javascript:;" class="btn btn-info btn-sm mhs" href=""><i class="glyphicon glyphicon-export"></i> 导出学员</a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs mbl">
+                            <li class="active">
+                                <a href="">正式学员</a>
+                            </li>
+                            <li class="highlight" style="left: 0px; width: 124px;"></li>
+                        </ul>
+                        <form class="form-inline well well-sm " action="" method="get" novalidate="">
+                            <div class="form-group col-md-7">
+                                <input class="form-control " style="width:45%" type="text" placeholder="请输入用户名/邮箱/手机号" name="keyword" value="">
+
+                                <button class="btn btn-primary">搜索</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="40%">学员</th>
+                                    <th width="30%">学习进度</th>
+                                    <th width="30%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="media" style="vertical-align: middle;">
+                                        <a class="pull-left js-user-card" href="" title="">
+                                            <img class="avatar-sm" src="./edusoho/090621d7eec5090928.jpg">
+                                        </a>
+                                        <a target="_blank" href="/user/15">ceshi001</a>
+                                        <div class="text-muted text-sm">加入时间：2016-12-14 09:22</div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="progress mvm" title="">
+                                            <div class="progress-bar" style="width: 30%"></div>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="btn-group">
+                                                <button class="btn btn-default btn-sm letter_send">发私信</button>
+                                                <button class="btn btn-default btn-sm check_data">查看资料</button>
+                                                <a href="javascript:;" type="button" class="btn btn-default btn-sm dropdown-toggle" >管理
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li><a class="remark_member" href="javascript:;" >备注</a></li>
+                                                    <li><a class="student-remove" href="javascript:;" >移除</a></li>
+                                                </ul>
+                                        </div>
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <td class="media" style="vertical-align: middle;">
+                                        <a class="pull-left js-user-card" href="" title="">
+                                            <img class="avatar-sm" src="./edusoho/090621d7eec5090928.jpg">
+                                        </a>
+                                        <a target="_blank" href="/user/15">ceshi001</a>
+                                        <div class="text-muted text-sm">加入时间：2016-12-14 09:22</div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="progress mvm" title="">
+                                            <div class="progress-bar" style="width: 20%"></div>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="btn-group">
+                                                <button class="btn btn-default btn-sm letter_send">发私信</button>
+                                                <button class="btn btn-default btn-sm check_data">查看资料</button>
+                                                <a href="javascript:;" type="button" class="btn btn-default btn-sm dropdown-toggle" >管理
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li><a class="remark_member" href="javascript:;" >备注</a></li>
+                                                    <li><a class="student-remove" href="javascript:;" >移除</a></li>
+                                                </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="media" style="vertical-align: middle;">
+                                        <a class="pull-left js-user-card" href="" title="">
+                                            <img class="avatar-sm" src="./edusoho/090621d7eec5090928.jpg">
+                                        </a>
+                                        <a target="_blank" href="/user/15">ceshi001</a>
+                                        <div class="text-muted text-sm">加入时间：2016-12-14 09:22</div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="progress mvm" title="">
+                                            <div class="progress-bar" style="width: 10%"></div>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="btn-group">
+                                                <button class="btn btn-default btn-sm letter_send">发私信</button>
+                                                <button class="btn btn-default btn-sm check_data">查看资料</button>
+                                                <a href="javascript:;" type="button" class="btn btn-default btn-sm dropdown-toggle" >管理
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li><a class="remark_member" href="javascript:;" >备注</a></li>
+                                                    <li><a class="student-remove" href="javascript:;" >移除</a></li>
+                                                </ul>
+                                        </div>
+                                    </td>
+                                </tr>        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+</div>
+<!-- 添加学员弹窗 -->
+<div id="modal" class="modal in" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close pop_close" >×</button>
+            <h4 class="modal-title">添加学员</h4>
+        </div>
+        <div class="modal-body">
+            <form  class="form-horizontal" method="post" action="" novalidate="novalidate">
+                <div class="row form-group">
+                    <div class="col-md-2 control-label">
+                        <label for="student-nickname">学员</label>
+                    </div>
+                    <div class="col-md-7 controls">
+                        <input type="text" name="queryfield" class="form-control" placeholder="邮箱/手机/用户名">
+                        <div class="help-block">只能添加系统中已注册的用户</div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2 control-label">
+                        <label for="buy-price">购买价格</label>
+                    </div>
+                    <div class="col-md-7 controls">
+                        <div class="input-group">
+                            <input type="text" id="buy-price" name="price" value="0.00" class="form-control">
+                            <div class="input-group-addon">元</div>
+                        </div>
+                        <div class="help-block">本班级的价格为0.00元</div>
+                    </div>
+                </div> 
+                <div class="row form-group">
+                    <div class="col-md-2 control-label">
+                        <label for="student-remark">备注</label>
+                    </div>
+                    <div class="col-md-7 controls">
+                        <input type="text" id="student-remark" name="remark" class="form-control">
+                        <div class="help-block">选填</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">      
+            <button type="submit" class="btn btn-primary pull-right">保存</button>
+            <button type="button" class="btn btn-link pull-right pop_close" >取消</button>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- 导入学员弹窗 -->
+<div id="import_modal" class="modal in" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close pop_close" >×</button>
+            <h4 class="modal-title">添加学员</h4>
+        </div>
+        <div class="modal-body">  
+            <div>
+                <div class="page-header clearfix">
+                    <h1 class="pull-left">步骤1</h1>
+                </div>
+                <div class="row">
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal" action="" novalidate="novalidate">
+                        <div class="form-group" id="teachers-form-group">
+                            <label class="col-md-3 col-md-offset-1">
+                                选择要导入的文件
+                            </label>
+                            <div class="col-md-8 controls">
+                                <div class="uploader blue">
+                                    <input type="text" class="filename" readonly="readonly">
+                                    <input type="button" name="excel" class=" button" value="浏览...">
+                                    <input type="file" size="30" name="excel">
+                                </div>
+                                &nbsp;&nbsp;<a href="">点击下载示例说明文件</a>
+                                <br>
+                                支持从Excel文件导入
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-1">
+                                <label for="buy-price">购买价格</label>
+                            </div>
+                            <div class="col-md-4 controls">
+                                <div class="input-group">
+                                    <input type="text" id="buy-price" name="price" value="0.00" class="form-control" >
+                                    <div class="input-group-addon">元</div>
+                                </div>
+                                <div class="help-block">本班级的价格为0.00元</div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3 col-md-offset-1">
+                                <label for="student-remark">备注</label>
+                            </div>
+                            <div class="col-md-4 controls">
+                                <input type="text" name="remark" class="form-control">
+                                <div class="help-block">选填</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-1"></div>
+                            <div class="col-md-8 controls">
+                                <button type="submit" class="btn btn-primary" id="start-import-btn">开始校验数据</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">      
+            
+        </div>
+    </div>
+    </div>
+</div>
+<!-- 发私信弹窗 -->
+<div id="letter_modal" class="modal in" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pop_close">×</button>
+                <h4 class="modal-title">发送私信</h4>
+            </div>
+            <div class="modal-body">  
+                <form class="form-horizontal" method="post" action="/message/create/15" novalidate="novalidate">
+                <div class="form-group">
+                    <div class="col-md-2 control-label">
+                        <label for="message_receiver" class="required">收件人</label>
+                    </div>
+                    <div class="col-md-8 controls">
+                        <input type="text" name="message[receiver]" required="required" class="form-control" rows="1" value="ceshi001">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 control-label">
+                        <label for="message_content" class="required">内容</label>
+                    </div>
+                    <div class="col-md-8 controls">
+                        <textarea name="message[content]" required="required" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8 controls">
+                        <button class="btn btn-primary" type="submit">发送</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 查看资料弹窗 -->
+<div id="data_modal" class="modal in" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pop_close">×</button>
+                <h4 class="modal-title">个人详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-condenseda table-bordered">
+                <tbody>
+                    <tr>
+                        <th width="25%">用户名</th>
+                        <td width="75%">
+                            <a class="pull-right" href="" target="_blank">个人主页</a>
+                            ceshi001
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>modszhang@163.com</td>
+                    </tr>
+                    <tr>
+                        <th>姓名</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>性别</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>公司</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>职业</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>头衔</th>
+                        <td>啊</td>
+                    </tr>
+                    <tr>
+                        <th>电话</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>个人签名</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>自我介绍</th>
+                        <td>
+                            <div class="editor-text">
+                                <p>啊啊啊</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>个人网站</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>微博</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>微信</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>QQ</th>
+                        <td>暂无</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">    
+                <button type="button" class="btn btn-primary">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 备注弹窗 -->
+<div id="remark_modal" class="modal in" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pop_close">×</button>
+                <h4 class="modal-title">学员备注</h4>
+            </div>
+            <div class="modal-body">
+                <form id="student-remark-form" method="post" action="" novalidate="novalidate">
+                    <div class="form-group">
+                        <div class="controls">
+                            <input class="form-control" name="remark" value="">
+                            <div class="help-block">请填写学员的备注信息</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">  
+                <button type="submit" class="btn btn-primary pull-right">保存</button>
+                <button type="button" class="btn btn-link pull-right pop_close">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal-backdrop  in"></div> -->
+<style>
+        .page-header {
+            padding-bottom: 12px;
+            margin: 0 0 20px 0;
+            padding: 0;
+            border-bottom-width: 2px;
+        }
+        .uploader {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            cursor: default;
+            padding: 0px;
+            margin: 0px 0px;
+            -moz-box-shadow: 0px 0px 5px #ddd;
+            -webkit-box-shadow: 0px 0px 5px #ddd;
+            box-shadow: 0px 0px 5px #ddd;
+
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        .filename {
+            float: left;
+            display: inline-block;
+            outline: 0 none;
+            height: 32px;
+            width: 180px;
+            margin: 0;
+            padding: 8px 10px;
+            overflow: hidden;
+            cursor: default;
+            border: 1px solid;
+            border-right: 0;
+            font: 9pt/100% Arial, Helvetica, sans-serif;
+            color: #777;
+            text-shadow: 1px 1px 0px #fff;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            -moz-border-radius: 5px 0px 0px 5px;
+            -webkit-border-radius: 5px 0px 0px 5px;
+            border-radius: 5px 0px 0px 5px;
+
+            background: #f5f5f5;
+            background: -moz-linear-gradient(top, #fafafa 0%, #eee 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fafafa), color-stop(100%, #f5f5f5));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#f5f5f5', GradientType=0);
+            border-color: #ccc;
+
+            -moz-box-shadow: 0px 0px 1px #fff inset;
+            -webkit-box-shadow: 0px 0px 1px #fff inset;
+            box-shadow: 0px 0px 1px #fff inset;
+
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .button {
+            float: left;
+            height: 32px;
+            display: inline-block;
+            outline: 0 none;
+            padding: 8px 12px;
+            margin: 0;
+            cursor: pointer;
+            border: 1px solid;
+            font: bold 9pt/100% Arial, Helvetica, sans-serif;
+
+            -moz-border-radius: 0px 5px 5px 0px;
+            -webkit-border-radius: 0px 5px 5px 0px;
+            border-radius: 0px 5px 5px 0px;
+
+            -moz-box-shadow: 0px 0px 1px #fff inset;
+            -webkit-box-shadow: 0px 0px 1px #fff inset;
+            box-shadow: 0px 0px 1px #fff inset;
+        }
+
+        .uploader input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            height: 30px;
+            cursor: pointer;
+            filter: alpha(opacity=0);
+            -moz-opacity: 0;
+            -khtml-opacity: 0;
+            opacity: 0;
+        }
+
+        input[type=button]::-moz-focus-inner {
+            padding: 0;
+            border: 0 none;
+            -moz-box-sizing: content-box;
+        }
+
+        input[type=button]::-webkit-focus-inner {
+            padding: 0;
+            border: 0 none;
+            -webkit-box-sizing: content-box;
+        }
+
+        input[type=text]::-moz-focus-inner {
+            padding: 0;
+            border: 0 none;
+            -moz-box-sizing: content-box;
+        }
+
+        input[type=text]::-webkit-focus-inner {
+            padding: 0;
+            border: 0 none;
+            -webkit-box-sizing: content-box;
+        }
+
+        .blue .button {
+            color: #fff;
+            text-shadow: 1px 1px 0px #09365f;
+            background: #064884;
+            background: -moz-linear-gradient(top, #3b75b4 0%, #064884 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3b75b4), color-stop(100%, #064884));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3b75b4', endColorstr='#064884', GradientType=0);
+            border-color: #09365f;
+        }
+
+        .blue:hover .button {
+            background: #3b75b4;
+            background: -moz-linear-gradient(top, #064884 0%, #3b75b4 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #064884), color-stop(100%, #3b75b4));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#064884', endColorstr='#3b75b4', GradientType=0);
+        }
+    </style>
+<script type="text/javascript">
+  $(document).ready(function(e){
+    // 添加学员
+    $(".show_pop").on("click",function(){
+        $('#modal').show();
+        $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+    })
+    // 关闭弹窗
+    $('.pop_close').click(function(){
+        $('#modal').hide();
+        $('#import_modal').hide();
+        $('#letter_modal').hide();
+        $('#data_modal').hide();
+        $('#remark_modal').hide();
+        $('.modal-backdrop').remove();
+    })
+    //  批量导入学员
+    $(".import_student").on("click",function(){
+        $('#import_modal').show();
+        $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+    })
+    // 发私信
+    $(".letter_send").on("click",function(){
+        $('#letter_modal').show();
+        $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+    })
+    //  查看资料
+    $(".check_data").on("click",function(){
+        $('#data_modal').show();
+        $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+    })
+    // 备注
+    $(".remark_member").on("click",function(){
+        $('#remark_modal').show();
+        $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+    })
+    // 移除
+    $('.student-remove').click(function(){
+        $(this).parent().parent().parent().parent().parent().remove();
+    })
+    //点击下拉框
+    $('.btn-group .dropdown-toggle').click(function(e){
+        e.stopPropagation();
+        if ($(this).siblings(".dropdown-menu").css("display") == "none") {
+            $(".dropdown-menu").hide();
+            $(this).siblings(".dropdown-menu").show();
+        }else{
+            $(".dropdown-menu").hide();
+        }
+    })
+    $(document).click(function(){
+        $(".dropdown-menu").hide();
+    })
+  })
+</script>
+</body>
+</html>

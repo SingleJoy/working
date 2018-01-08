@@ -1,0 +1,33 @@
+//分类选择
+$(function(){
+
+    $(".open_class_classify_list ul li a").click(function(){
+
+        $(this).addClass("unlimited").css("color","#ffffff").siblings().css("color","#6d6d6d").removeClass("unlimited");
+
+    })
+})
+
+//排序
+
+
+//分类选择
+$(function(){
+
+    $(".sort_content span").click(function(){
+
+        $(this).css.("background-color","#3ebbce").siblings().css("background-color","#cdcdcd");
+
+    })
+})
+
+
+$(function(){
+
+    $(".sort_content span").click(function(){
+
+        $(this).css.("background-color","#3ebbce").siblings().css("background-color","#cdcdcd");
+
+    })
+})
+

@@ -1,0 +1,376 @@
+<><!DOCTYPE html>
+<!-- saved from url=(0072)http://13661239841.test.edusoho.com.cn/course/33/manage/testpaper/create -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>创建课程班级</title>
+  
+    <link href="./edusoho/bootstrap.css" rel="stylesheet">
+  <link href="./edusoho/es-question.css" rel="stylesheet">
+  <link href="./edusoho/nouislider.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+  <script type="text/javascript" src="./edusoho/nouislider.js"></script>
+  
+</head>
+<body class="modal_tutor">
+<style type="text/css">
+label{    font-weight: normal;}
+</style>
+<div class="es-wrap">    
+    <div id="content-container" class="container">
+        <div class="row">
+          <div class="col-md-3">
+                <div class="sidenav locked">
+                <ul class="list-group">
+                <li class="list-group-heading">课程信息</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>基本信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>详细信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程图片
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课时管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>录播管理</a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程文件
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程设置</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>价格设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>教师设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>学员管理
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">题库</li>
+                <li class="list-group-item">
+                <a href="">
+                <span></span>题目管理
+                </a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>试卷管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>试卷批阅</a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>作业批改</a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                    <li class="list-group-heading">班级</li>
+                    <li class="list-group-item active">
+                        <a href="">
+                            <span></span>班级管理
+                        </a>
+                    </li>
+                </ul>
+                </div>
+            </div>
+          <div class="col-md-9">
+              <div class="panel panel-default panel-col test-creator">
+                <div class="panel-heading clearfix" style="font-size: 16px;">创建课程班级</div>
+                <div class="panel-body">
+
+                  <!-- <ol class="breadcrumb">
+                    <li><a href="">返回课程管理</a></li>
+                  </ol> -->
+                  <div class="panel-heading" style="font-size: 16px;">
+                        <label>开班信息</label>
+                  </div>
+                  <form class="form-horizontal" method="post">
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>班次</label>
+                      </div>
+                      <div class="col-md-8 controls" style="padding-top:7px;">
+                          011
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>班级名称</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control" value="" name="name" >
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label>开班时间</label></div>
+                      <div class="col-md-8 controls">
+                        <input class="form-control" value="" name="name" >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label>结束时间</label></div>
+                      <div class="col-md-8 controls">
+                        <input class="form-control" value="" name="name" >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>助教：</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                        <ul class="nav nav-pills clearfix tutor_list">
+                            <li class="active"><a href="javascript:;">王助教1 &nbsp;&nbsp;<span class="tutor_del">X</span></a></li>
+                            <li style="float:right;"><a href="javascript:;" class="tutor_add" style="background-color: #f5f5f5;margin-left:30px;">添加</a></li>
+                        </ul>
+                      </div>
+                    </div> 
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label>学分</label></div>
+                      <div class="col-md-8 controls">
+                        <input class="form-control width-input width-input-large" name="" value="0" > 分
+                      </div>
+                    </div>
+
+                    <div class="panel-heading" style="font-size: 16px;">
+                        <label >报名方式</label>
+                    </div>
+                    <div class="form-group" style="margin-bottom:10px;">
+                      <div class="col-md-2 control-label">
+                        <label><input type="radio" name="range"></label>
+                        <label >自主报名</label>
+                      </div>
+                    </div> 
+                    <div class="form-group" style="margin-bottom:10px;">
+                      <div class="col-md-2 control-label">
+                        <label>学员上限：</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control width-input width-input" name="" value="" >&nbsp;&nbsp;人&nbsp;&nbsp;  <label style="    color: gray;">  不设置学员上限则默认为无人数限制</label>
+                      </div>
+                    </div> 
+                    <div class="form-group" style="margin-bottom:10px;">
+                      <div class="col-md-2 control-label">
+                        <label>截止日期：</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control width-input width-input" name="" value="" > <label style="    color: gray;">不设置报名截止日期则默认为开班结束时间内均可报名</label>
+                      </div>
+                    </div> 
+                    <div class="form-group" style="margin-bottom:10px;">
+                      <div class="col-md-2 control-label">
+                        <label>允许放弃：</label>
+                      </div>
+                      <div class="col-md-8 controls" style="margin-top:7px;">
+                          <label><input type="radio" name="allow"> 是,此培训课程在报名后可以随时放弃</label><br />
+                          <label><input type="radio" name="allow"> 否,此培训课程在报名后不能放弃</label><br />
+                          <label><input type="radio" name="allow"> 此课程在报名时间内可以放弃</label>
+                      </div>
+                    </div> 
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>退款条件：</label>
+                      </div>
+                      <div class="col-md-8 controls" style="margin-top:7px;">
+                          <label><input type="radio" name="allow"> 不允许退款 </label><br />
+                          <label><input type="radio" name="allow"> 放弃报名后退款 </label>
+                      </div>
+                    </div> 
+                    <div class="form-group" style="margin-bottom:10px;">
+                      <div class="col-md-2 control-label">
+                        <label><input type="radio" name="range"></label>
+                        <label >密码学习</label>
+                      </div>
+                    </div> 
+                    <div class="form-group" style="margin-bottom:10px;">
+                      <div class="col-md-2 control-label">
+                        <label>密码数量：</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control width-input width-input" name="" value="" >&nbsp;&nbsp;个&nbsp;&nbsp; 
+                      </div>
+                    </div> 
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>密码有效期：</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control width-input width-input" name="" value="" >&nbsp;&nbsp;  <label style="    color: gray;">不设置密码有效期则默认为开班结束时间内密码均有效</label>
+                      </div>
+                    </div> 
+      
+                    <div class="panel-heading" style="font-size: 16px;">
+                        <label >开班范围</label>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>开班范围：</label>
+                      </div>
+                      <div class="col-md-8 controls class_range" style="    padding-top: 5px;">
+                        <!-- <ul class="nav nav-pills clearfix">
+                            <li class="active"><a href="javascript:;">大平台</a></li>
+                            <li><a href="javascript:;">校本平台</a></li>
+                            <li><a href="javascript:;">工作坊</a></li>
+                        </ul> -->
+                        <label><input type="radio" name="allow1"> 大平台 </label>
+                        <label><input type="radio" name="allow1"> 校本平台 </label>
+                        <label><input type="radio" name="allow1"> 工作坊 </label>
+                      </div>
+                    </div> 
+                    <!-- <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>课程目录：</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                        <a href="javascript:;" style="    color: #fff;transition: all 0.3s ease;padding: 10px 15px;background: #46c37b;">大平台目录</a>&nbsp;&nbsp;
+                        <label style="    color: gray;">第二次开班时显示第一次已选择的目录，不能再次选择</label>
+                      </div>
+                    </div> 
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                        <label>课程价格：</label>
+                      </div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control width-input width-input" name="" value="" > <label style="    color: gray;">不设置价格则默认为免费课程</label>
+                      </div>
+                    </div>  -->
+
+                    <div class="form-group mbm">
+                      <div class="col-md-8 col-md-offset-2 controls">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <!-- <a href="" class="btn btn-link  ">返回</a> -->
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- 弹窗 -->
+<div id="modal" class="modal in" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pop_close">×</button>
+          <h4 class="modal-title">课程班级添加助教</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-inline well well-sm" action="">
+            <div class="form-group">
+              <input type="text" id="keyword" name="keyword" class="form-control" value="" placeholder="关键词">
+            </div>
+            <button class="btn btn-primary btn-sm">搜索</button>
+            <div class="form-group">
+              <select class="form-control" name="target" style="width:200px;height:32px;">
+                <option value="">--按星级查询--</option>
+                <option value="">一星专家</option>
+                <option value="">二星专家</option>
+                <option value="">三星专家</option>
+                <option value="">四星专家</option>
+                <option value="">五星专家</option> 
+              </select>
+            </div>
+          </form>
+          <table class="table table-condensed">
+            <thead>
+            <tr>
+              <th></th>
+              <th width="25%">姓名</th>
+              <th>其他信息</th>
+              <th>其他信息</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" name="tutor[]" data-name="李助教1"></td>
+                <td>李助教1</td>
+                <td>其他信息</td>
+                <td>其他信息</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="tutor[]" data-name="李助教2"></td>
+                <td>李助教2</td>
+                <td>其他信息</td>
+                <td>其他信息</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">    
+            <button type="button" class="btn btn-default pull-right tutor_confirm" >确定</button>
+        </div>
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(e){
+      //添加助教
+      $(".tutor_add").on("click",function(){
+          $('#modal').show();
+          $('.modal_tutor').append('<div class="modal-backdrop  in"></div>');
+      })
+      // 关闭弹窗
+      $('.pop_close').click(function(){
+          $('#modal').hide();
+          $('.modal-backdrop').remove();
+      })
+      //确定助教
+      $('.tutor_confirm').on('click',function(){
+          $('input[type="checkbox"]:checked').each(function(){
+              // console.log($(this).attr("data-name"));
+              var tutor_name = $(this).attr('data-name');
+              var str = '<li class="active"><a href="javascript:;">'+tutor_name+' &nbsp;&nbsp;<span class="tutor_del">X</span></a></li>';
+              $('.tutor_list').append(str);
+          })
+          $('#modal').hide();
+          $('.modal-backdrop').remove();
+      })
+      //移除助教
+      $('.tutor_del').on("click",function(){
+          $(this).parent().parent().remove();
+      })
+      $('.class_range .nav-pills li').on("click",function(){
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+      })
+  })
+</script>
+</body>
+</html></>

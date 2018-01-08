@@ -1,0 +1,1145 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>制定新计划 </title>
+
+    <link rel="shortcut icon" href="////scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+
+
+    <link href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="////scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="////scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <script type="text/javascript"
+            src="../../js/My97DatePicker/WdatePicker.js"></script>
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+
+        $(function(){
+            $("#all-task").click(function(){
+                $(this).addClass("task1");
+                $("#my-task").removeClass("task2");
+                $(".all-task").show();
+                $(".my-task").hide();
+            });
+
+            $("#my-task").click(function(){
+                $(this).addClass("task2");
+                $("#all-task").removeClass("task1");
+                $(".my-task").show();
+                $(".all-task").hide();
+            });
+        });
+        $(function(){
+            $(".task-list>a").click(function(){
+                $(".task-list").find("ul").find("li").hide();
+                $(this).siblings("ul").show().find("li").toggle();
+            })
+        });
+        $(function(){
+            $("#lesson_pic,.choose_pic,.mask").mouseover(function(){
+                $(".mask,.choose_pic").show()
+
+            }).mouseout(function(){
+                $(".mask,.choose_pic").hide()
+            });
+        })
+    </script>
+    <style>
+        .table-bordered>tbody>tr>td>a>span{cursor: pointer;}
+        #lesson_pic{cursor: pointer;}
+        .mask{width:190px;height:110px;background-color: #313131;position: absolute;opacity: 0.8;cursor: pointer;}
+        .learning-data-table>tbody>tr>td:nth-child(2){width: 73%;}
+        .task1,.task2{color: #fff;}
+        .task1{background:url("../../images/task_right.png") 20px no-repeat; }
+        .task2{background:url("../../images/task_left.png") 10px no-repeat; }
+        .task-list>ul>li>a>span{padding-left: 30px;}
+        .learning-data-table>tbody>tr>td:nth-child(2){width:75%;}
+        .learning-data-table>tbody>tr>td:nth-child(1){vertical-align: middle;text-align: center;}
+        .plan_lesson{background:url("../../images/plan_lesson.png") 30px no-repeat;}
+        .prepare_lesson{background:url("../../images/prepare_lesson.png") 30px no-repeat;}
+        .having_lesson{background:url("../../images/having_lesson.png") 30px no-repeat;}
+        .evaluation_lesson{background:url("../../images/evaluation_lesson.png") 30px no-repeat;}
+        .rethink{background:url("../../images/rethink_lesson.png") 30px no-repeat;}
+        .task-list{line-height: 25px;}
+        .task-list>a>span{padding-right: 40px;}
+
+    </style>
+</head>
+<body class="course-dashboard-page">
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+
+        <section class="course-detail-header after">
+            <div class="container">
+
+                <ol class="breadcrumb breadcrumb-o">
+                    <li><a href="#">北京市</a></li>
+                    <li><a href="#">东城区 </a></li>
+                    <li><a href="#">北京四中语文一组</a></li>
+                    <li><a href="#">丑小鸭</a></li>
+                </ol>
+
+                <div class="es-section clearfix ">
+
+
+                    <div class="course-header-top clearfix">
+
+                        <div class="course-img">
+
+                            <img class="img-responsive" src="////scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531709b0380930.png" alt="如何创建课程？">
+                            <div class="tags"></div>
+                        </div>
+
+
+                        <div class="course-info">
+                            <h2 class="title">
+                                丑小鸭
+                            </h2>
+                            <div class="metas">
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+
+                                    <i class="es-icon es-icon-starhalf color-warning"></i>
+
+
+                                    <span>(8 评论)</span>
+                                </div>
+
+
+                            </div>
+                            <div class="mates">
+                                成员<span class="mrm">140</span><span class="mlm mrm">｜</span>
+                                浏览数<span class="mrm">8000</span><span class="mlm mrm">｜</span>
+                                问题研讨<span class="mrm">25</span><span class="mlm mrm">｜</span>
+                                文章资源<span class="mrm">25</span><span class="mlm mrm">｜</span><br/>
+                                完成任务/总数<span class="mrm">&nbsp;25/50</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="course-operation">
+                            <div class="student-num hidden-xs">
+                                <i class="es-icon es-icon-people"></i>140人
+                            </div>
+
+                            <ul class="course-data clearfix two-col">
+                                <li id="unfavorite-btn" data-url="/course/22/unfavorite" style="display:none;">
+                                    <a href="javascript:;" class="color-primary">
+                                        <p><i class="es-icon es-icon-bookmark"></i></p>
+                                        <p>已收藏</p>
+                                    </a>
+                                </li>
+
+
+                                <li id="favorite-btn" data-url="/course/22/favorite" >
+                                    <a href="javascript:;">
+                                        <p><i class="es-icon es-icon-bookmarkoutline"></i></p>
+                                        <p>收藏</p>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <span class="es-share top">
+                                        <a class="dropdown-toggle" href="" data-toggle="dropdown">
+                                            <p><i class="es-icon es-icon-share"></i></p>
+                                            <p>分享</p>
+                                        </a>
+
+                                        <div class="dropdown-menu  js-social-share-params" data-title="如何创建课程？" data-summary="本课程意在指导用户快速了解如何创建一个具有吸引力的课程，本课不仅介绍了功能的使用，更讲解了如何更好的..." data-message="我正在学习《如何创建课程？》，收获巨大哦，一起来学习吧！快点加入吧~~~~" data-url="http://www.qiqiuyu.com/course/22" data-picture="////scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531709b0380930.png">
+
+                                            <a href="javascript:;" class="js-social-share" data-cmd="weixin" title="分享到微信" data-share="weixin" data-qrcode-url="/common/qrcode?text=http%3A//www.qiqiuyu.com/course/22"><i class="es-icon es-icon-weixin"></i></a>
+                                            <a href="javascript:;" class="js-social-share" data-cmd="tsina" title="分享到新浪微博" data-share="weibo"><i class="es-icon es-icon-weibo"></i></a>
+                                            <a href="javascript:;" class="js-social-share" data-cmd="qq" title="分享到QQ好友" data-share="qq"><i class="es-icon es-icon-qq"></i></a>
+                                            <a href="javascript:;" class="js-social-share" data-cmd="qzone" title="分享到QQ空间" data-share="qzone"><i class="es-icon es-icon-qzone"></i></a>
+
+                                        </div>
+
+
+                                    </span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </section>
+
+        <div class="course-detail row" style="margin-top: 20px;margin-left: 0;">
+
+            <div class="col-lg-3 col-md-4  course-sidebar " >
+
+                <div class="sidenav locked">
+
+                    <div class="controls" style="margin: 10px;">
+                        <div class="row text-center">
+                            <div class="col-md-5 task1" id="all-task" style="padding: 5px 15px;cursor: pointer;">
+                                全部任务
+                            </div>
+
+                            <div class="col-md-5" id="my-task" style="padding: 5px 15px;cursor: pointer;">
+                                我的任务
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--全部任务-->
+                    <ul class="list-group all-task task" >
+                        <!--环节一-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);" class="plan_lesson">
+                                <span ></span>计划
+                            </a>
+                            <ul class="list-group" >
+                                <li class="list-group-item active">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:制定计划
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务2:提交教学设计与课件
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务3:问题研讨
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+                        <!--环节二-->
+                        <li class="list-group-item task-list " >
+                            <a href="javascript:void(0); " class="prepare_lesson">
+                                <span ></span>备课
+                            </a>
+                            <ul class="list-group" style="display: none;" >
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:初始教学设计协同修该
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务2:提交教学设计与课件
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span ></span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务4:提交修改后的教学设计
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+                        <!--环节三-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);" class="having_lesson">
+                                <span ></span>上课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:观课准备会会议纪要
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务2:观课量表
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务4:提交上课实录
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+                        <!--环节四-->
+                        <li class="list-group-item task-list ">
+                            <a href="javascript:void(0);" class="evaluation_lesson">
+                                <span ></span>评课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务1:观课报告
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务2:课后评议会议纪要
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:问题研讨
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li >
+                        <!--环节五-->
+                        <li class="list-group-item task-list" >
+                            <a href="javascript:void(0);" class="rethink">
+                                <span></span>反思
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务1:反思心得
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务2:提交实践反思后教学设计及课件
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:自我总结
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                    <!--我的任务-->
+                    <ul class="list-group my-task " style="display: none;">
+
+                        <!--环节一-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);" class="plan_lesson">
+                                <span ></span>计划
+                            </a>
+                            <ul class="list-group" >
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务1:制定计划
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务2:提交教学设计与课件
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务3:问题研讨
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+                        <!--环节二-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);" class="prepare_lesson">
+                                <span></span>备课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务1:初始教学设计协同修该
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务2:备课研讨会会议纪要
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务4:提交修改后的教学设计
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <!--环节三-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);" class="having_lesson">
+                                <span ></span>上课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span class="text-danger">*</span>任务1:观看准备会议纪要
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务2:观课量表
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务4:提交上课实录
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">
+                            课例组情况
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span  ></span>全组完成情况
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span  ></span>成员统计
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span  ></span>课例评价
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+
+                </div>
+                <!--指导老师-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> <i class="es-icon es-icon-assignmentind"></i>
+                            指导教师
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media media-default">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/10385829878d755245.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body">
+                                <div class="title">
+                                    <a class="link-dark link-light" href="/user/2487">李老师</a>
+
+                                </div>
+                                <div class="content">北京四中 特级教师</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--教研组-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="es-icon es-icon-personadd"></i>
+                            第一教研组
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media media-default">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/10385829878d755245.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body">
+                                <div class="title">
+                                    <a class="link-dark link-light" href="javascript:void(0);">组长:张静秋</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media media-default">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/10385829878d755245.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body">
+                                <div class="title">
+                                    <a class="link-dark link-light" href="javascript:void(0);">副组长:刘明远</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--学员-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="es-icon es-icon-personadd"></i>
+                            组员
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="user-avatar-list clearfix">
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-09/223208892e43082214.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);">
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-24/104148c6f7f9809663.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-09/141612c267d3837531.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2016/08-10/114338a5a4b2009923.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-07/015405db7f77725048.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);"  >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/153701d199ea704872.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-07/1335324e9a82904161.jpg">
+
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);"  >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-04/031138a01cbd218375.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-03/10532669a685005747.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);">
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-28/122811b39a26813121.jpg">
+
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-24/1429255015f5048599.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/user/2017/02-24/132010ab4042642756.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-28/230429d8e0d6463377.jpg">
+                                </a>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div >
+
+            <div class="col-lg-9 col-md-8  course-detail-main">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">修改/制定计划</div>
+                    <div class="panel-body">
+
+                        <form  action="" method="post" class="form-horizontal">
+
+                            <div class="" style="margin-left: 620px;position: absolute;margin-top: -50px;" >
+                                <div class="mask" style="display: none;"></div>
+                                <div class="controls" style="z-index: -1;" id="lesson_pic">
+                                    <img class="img-responsive" src="http://13661239841.test.edusoho.com.cn/files/course/2017/02-20/1506179b615d284323.jpg?7.0.0" >
+                                </div>
+
+                                <div class="controls choose_pic" style="margin-top: -70px;margin-left: 40px;display: none;">
+                                    <a class="btn btn-fat btn-primary webuploader-container" href="#" >
+                                        <div class="webuploader-pick">选择图片</div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="form-group " style="margin-top: 70px;">
+                                <div class="col-md-2 control-label"><label><span class="text-danger">*</span>课例名称:</label></div>
+                                <div class="col-md-6 controls">
+                                    <input type="text"  name="" value="" class="form-control" placeholder="不超过30个字">
+                                    <div class="text-warning" style="display: none;">请输入课例名称</div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group" >
+                                <div class="col-md-2 control-label"> <label><span class="text-danger">*</span>学段:</label></div>
+                                <div class="col-md-4 controls">
+                                    <select class="form-control width-input width-input-large">
+                                        <option selected="selected" >小学</option>
+                                        <option>初中</option>
+                                        <option>高中</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择学段</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="position: absolute;margin-left: 414px;margin-top: -65px;">
+                                <div class="col-md-4 control-label"> <label><span class="text-danger">*</span>学科:</label></div>
+                                <div class="col-md-5 controls">
+                                    <select  class="form-control width-input width-input-large">
+                                        <option selected="selected" >语文</option>
+                                        <option>数学</option>
+                                        <option>外语</option>
+                                        <option>政治</option>
+                                        <option>历史</option>
+                                        <option>物理</option>
+                                        <option>化学</option>
+                                        <option>生物</option>
+                                        <option>地理</option>
+                                        <option>体育</option>
+                                        <option>其他</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择学科</div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group form-line">
+                                <div class="col-md-2 control-label"> <label><span class="text-danger">*</span>年级:</label></div>
+                                <div class="col-md-6 controls">
+                                    <select  class="form-control width-input width-input-large">
+                                        <option selected="selected" >一年级</option>
+                                        <option>二年级</option>
+                                        <option>三年级</option>
+                                        <option>四年级</option>
+                                        <option>五年级</option>
+                                        <option>六年级</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择年级</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="position: absolute;margin-left: 400px;margin-top: -65px;">
+                                <div class="col-md-4 control-label"> <label><span class="text-danger">*</span>教材出版社:</label></div>
+                                <div class="col-md-5 controls">
+                                    <select  class="form-control width-input width-input-large">
+                                        <option selected="selected" >人教版</option>
+                                        <option>苏教版</option>
+                                        <option>新课改</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择年级</div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group" >
+                                <label class="col-md-2 control-label"><span class="text-danger">*</span>研究目标:</label>
+                                <div class="col-md-8 controls">
+                                    <textarea   class="form-control" placeholder="（本课题研究对象对教师教学行为改进的预期结果）"></textarea>
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><span class="text-danger">*</span>关键词:</label>
+                                <div class="col-md-8 controls">
+                                    <input type="text"  class="form-control">
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><span class="text-danger">*</span>研究问题:</label>
+                                <div class="col-md-8 controls">
+                                    <input type="text"  class="form-control" placeholder="计划环节问题研讨">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-8 controls">
+                                    <input type="text"  class="form-control"  placeholder="备课环节问题研讨">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-8 controls">
+                                    <input type="text"  class="form-control"  placeholder="上课环节问题研讨">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: -20px;">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-8 controls">
+                                    <input type="text"  class="form-control"  placeholder="评课环节问题研讨">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><span class="text-danger">*</span>研究措施</label>
+                                <div class="col-md-8 controls">
+                                    <textarea   class="form-control" placeholder="（为解决教学行为问题和实现课例研究目标，研修组拟采取的研究措施与主要活动）"></textarea>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <div class="col-md-2 control-label">
+                                    <label><span class="text-danger">*</span>上课老师</label>
+                                </div>
+                                <div class="col-md-4 controls">
+                                    <ul class="nav nav-pills clearfix tutor_list">
+
+                                        <li class="active" >
+                                            <a href="javascript:return false;">李老师&nbsp;&nbsp;
+                                                <span class="tutor_del" >X</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="active" >
+                                            <a href="javascript:;">王老师&nbsp;&nbsp;
+                                                <span class="tutor_del">X</span></a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="col-md-4 controls col-md-offset-2">
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#add-teachers" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>添加
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!--计划环节   -->
+                            <div class="form-group clearfix" style="margin-top: 80px;">
+                                <div class="col-md-2 control-label">
+                                    <label><span class="text-danger">*</span>计划环节</label>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>开始时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control"  onClick="WdatePicker()">
+                                    <div  class="help-block"></div>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>结束时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control" onClick="WdatePicker()" >
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered " style="margin: -25px 0 60px 0;" >
+                                <tbody>
+                                <tr>
+                                    <td class="active">1.制定计划</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">2.提交教学设计及课件</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">3.问题研讨</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+
+
+                                </tbody>
+                            </table>
+
+
+                            <!--备课环节   -->
+                            <div class="form-group clearfix" >
+                                <div class="col-md-2 control-label">
+                                    <label><span class="text-danger">*</span>备课环节</label>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>开始时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control"  onClick="WdatePicker()">
+                                    <div  class="help-block"></div>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>结束时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control"  onClick="WdatePicker()">
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered" style="margin: -25px 0 60px 0;">
+                                <tbody>
+                                <tr>
+                                    <td class="active">1.初始教学设计协同修改</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">2.备课研讨会会议纪要</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">3.问题研讨</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">4.提交修改后的教学设计</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+
+
+                            <!--上课环节   -->
+                            <div class="form-group clearfix" >
+                                <div class="col-md-2 control-label">
+                                    <label><span class="text-danger">*</span>上课环节</label>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>开始时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control" onClick="WdatePicker()" >
+                                    <div  class="help-block"></div>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>结束时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control" onClick="WdatePicker()" >
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered" style="margin: -25px 0 60px 0;">
+                                <tbody>
+                                <tr>
+                                    <td class="active">1.观课准备会会议纪要</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">2.观课量表</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">3.问题研讨</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">4.提交上课实录</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+
+                            <!--评课环节   -->
+                            <div class="form-group clearfix" >
+                                <div class="col-md-2 control-label">
+                                    <label><span class="text-danger">*</span>评课环节</label>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>开始时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control"  onClick="WdatePicker()">
+                                    <div  class="help-block"></div>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>结束时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control"  onClick="WdatePicker()">
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered" style="margin: -25px 0 60px 0;">
+                                <tbody>
+                                <tr>
+                                    <td class="active">1.观课报告</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active"> 2.课后评议会会议纪要</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">3.问题研讨</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+
+                            <!--反思环节   -->
+                            <div class="form-group clearfix" >
+                                <div class="col-md-2 control-label">
+                                    <label><span class="text-danger">*</span>反思环节</label>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>开始时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control"  onClick="WdatePicker()">
+                                    <div  class="help-block"></div>
+                                </div>
+                                <div class="col-md-2 control-label">
+                                    <label>结束时间</label>
+                                </div>
+                                <div class="col-md-3 controls">
+                                    <input  type="text"  class="form-control"  onClick="WdatePicker()">
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered" style="margin: -25px 0 60px 0;">
+
+                                <tbody>
+
+                                <tr>
+                                    <td class="active">1.反思心得</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active"> 2.提交实践反思后教学设计及课件</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">3.自评总结</td>
+                                    <td style="width:68%">
+                                        <a href="javascript:void(0)" class="pull-right" data-toggle="modal" data-target="#add-teachers">
+                                            <span class="text-warning pull-right">分配任务&nbsp;&gt;</span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-1 col-md-2 controls ">
+                                    <button type="button"  class="btn btn-fat btn-primary">保存</button>
+                                </div>
+                                <div class="col-md-2 controls ">
+                                    <a class="btn btn-fat btn-warning" href="javascript:void(0);">取消</a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- 添加老师弹窗 -->
+<div id="add-teachers" class="modal" data-toggle="modal" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">添加上课老师</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" >
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary pull-right" data-dismiss="modal" >保存</button>
+                <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

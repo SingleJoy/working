@@ -1,0 +1,53 @@
+package cn.bnsr.edu_yun.interceptor;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import cn.bnsr.edu_yun.frontstage.base.service.AreaService;
+import cn.bnsr.edu_yun.util.AddressUtils;
+import cn.bnsr.edu_yun.util.IpUtil;
+
+public class AreaInterceptor extends HandlerInterceptorAdapter {
+
+	private final Logger log = LoggerFactory.getLogger(AreaInterceptor.class);
+
+	@Autowired
+	private AreaService areaService;
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		log.info("===========AreaInterceptor.preHandle============");
+		// 地理位置 省市
+		String address = "";
+		// 获取用户登录的外网IP
+		String networkIp = IpUtil.getIpAddr(request);
+		networkIp = StringUtils.isBlank(networkIp) ? "" : networkIp;
+		if (!"".equals(networkIp)) {
+			Map<String, String> addressMap = AddressUtils.getAddress(networkIp, "utf-8");
+			if (addressMap != null && (addressMap.get("region") != null)) {
+				address = addressMap.get("region");
+			}
+		}
+		if (address!=""&&address!="内网IP") {
+			String areas = areaService.selectCloseArea();
+			if(areas.indexOf(address)>0){//存在关闭的省份
+				log.info("Interceptor："+address+"还未开放，敬请期待！");  
+	 			request.setAttribute("msg", "<p style='font-size:12px;'>"+address+"还未开放，敬请期待！</p>");
+	 			request.getRequestDispatcher("../area_close.jsp").forward(request, response);  
+	 			return false;
+			}
+
+		}
+		return true;
+	}
+
+}

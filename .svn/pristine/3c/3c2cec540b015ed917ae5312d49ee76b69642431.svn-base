@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>教学资料库</title>
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+
+        $(function(){
+            $(".js-manage-batch-btn").click(function(){
+                $("#material-lib-batch-btn-bar").toggle();
+                $(".batch-item").toggle();
+            })
+        })
+    </script>
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+
+        <div class="row row-3-9">
+
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <input type="hidden" id="stamp" value="0">
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_0">社区中心</li>
+                        <li class="list-group-item "><a href="#">我的社区</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/workshop/to_workshop_center.action?stamp=0&amp;state=1&amp;sign=0">我的工作坊</a></li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_8">校本教研</li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/lesson/to_lesson.action?state=30">
+                                课例管理
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/lesson/to_my_lesson.action?state=31&amp;status=0">
+                                <span></span>我的课例
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- 教师 -->
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_1">教学中心</li>
+                        <li class="list-group-item  "><a href="/edu_yun/course/to_course.action?&amp;stamp=1&amp;state=12&amp;sign=1&amp;type=0&amp;status=-1">在教课程</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/train/to_train.action?&amp;stamp=1&amp;state=13&amp;sign=1&amp;type=0">培训管理</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/topic_question/query_question.action?&amp;stamp=1&amp;state=14"><span></span>学员问答</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/class/to_tutor_class.action?&amp;stamp=1&amp;state=15&amp;sourceType=0"><span></span>助教班级</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/cert_model/to_cert_model_manager.action?stamp=1&amp;state=29"><span></span>证书管理</a></li>
+                    </ul>
+
+
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_3">我的学习</li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=22&amp;is_studyed=0&amp;source_type=0">
+                                <span></span>我的课程
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=23&amp;is_studyed=0&amp;source_type=1">
+                                <span></span>我的培训
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/user_collect/to_user_collect.action?stamp=2&amp;state=20">
+                                <span></span>我的收藏
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/topic_question/user_question.action?stamp=2&amp;state=24">
+                                <span></span>我的问答
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span></span>我的话题
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/course_note/to_my_notes.action?stamp=2&amp;state=26">
+                                <span></span>我的笔记
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/exam/to_my_exam.action?stamp=2&amp;state=27">
+                                <span></span>我的考试
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/exam/to_my_homework.action?stamp=2&amp;state=28">
+                                <span></span>我的作业
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span></span>我的小组
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/user_certificate/to_user_certificate.action?stamp=2&amp;state=30&amp;source_type=0">
+                                <span></span>我的证书
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="javascript:void(0);">
+                                <span></span>我的资料库
+                            </a>
+                        </li>
+                    </ul>
+
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" >关注中心</li>
+                        <li class="list-group-item  "><a href=""><span></span>我关注的人</a></li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_7">设置</li>
+                        <li class="list-group-item  "><a href="/edu_yun/my_setting/showMySetting.action?state=10&amp;stamp=7"><span></span>个人设置</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/user/resetPassword.action?state=11&amp;stamp=7"><span></span>密码修改</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+
+                    <div class="panel-heading">
+                        教学资料库
+                    </div>
+
+                    <div class="panel-body material-body">
+
+                        <form  class="form-inline" action="" method="get">
+
+                            <div class="source-btn" role="group" aria-label="...">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" ><a href="javascript:;" class="js-source-btn">我的资料</a></li>
+                                   
+
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" value="" placeholder="请输入关键词">
+                                <input type="button" class="btn btn-primary btn-sm" value="搜索" >
+                            </div>
+                            <div class="material-search-list material-tabs">
+                                <span class="all">类型：</span>
+                                <ul class="js-material-tabs right-content  clearfix">
+                                    <li class="js-type-btn" data-value="">
+                                        <a href="javascript:;">全部</a>
+                                    </li>
+                                    <li class="js-type-btn" data-value="video">
+                                        <a href="javascript:;">视频</a>
+                                    </li>
+                                    <li class="js-type-btn" data-value="flash">
+                                        <a href="javascript:;">flash</a>
+                                    </li>
+                                    <li class="js-type-btn" data-value="audio">
+                                        <a href="javascript:;">音频</a>
+                                    </li>
+                                    <li class="js-type-btn" data-value="image">
+                                        <a href="javascript:;">图片</a>
+                                    </li>
+                                    <li class="js-type-btn active" data-value="document">
+                                        <a href="javascript:;">文档</a>
+                                    </li>
+                                    <li class="js-type-btn" data-value="ppt">
+                                        <a href="javascript:;">PPT</a>
+                                    </li>
+                                    <li class="js-type-btn" data-value="other">
+                                        <a href="javascript:;">其它</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="material-search-list bottom">
+                                <span class="all">筛选：</span>
+                                <div class="right-content ">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input class="form-control input-time" type="text" id="startDate" name="startDate" value="" placeholder="起始时间"><span class="input-space">-</span><input class="form-control input-time" type="text" id="endDate" name="endDate" value="" placeholder="结束时间"></div>
+
+                                        <div class="col-sm-2">
+                                            <select class="form-control js-use-status-select" name="useStatus">
+                                                <option value="">使用状态</option>
+                                                <option value="unused">未使用</option>
+                                                <option value="used">已使用</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="material-lib-items-panel">
+
+                                <a class="btn btn-primary js-upload-file-btn" data-toggle="modal"  data-target="#modal"  title="上传资料" data-placement="bottom">上传资料</a>
+                                <a class="btn btn-info js-manage-batch-btn" href="javascript:;">批量管理</a>
+                                <span id="material-lib-batch-btn-bar" style="display:none;">
+                                <a class="btn btn-info js-batch-tag-btn"  href="#add_tag" data-toggle="modal">添加标签</a>
+                                <a class="btn btn-danger js-batch-delete-btn"  href="javascript:;" >删除</a>
+                                <label class="checkbox-inline" data-role="batch-manage">
+                                    <input type="checkbox" data-role="batch-select"> 全选
+                                </label>
+                            </span>
+
+                                <div class="material-list-container" id="material-item-list" >
+                                    <div class="row">
+                                        <div class="col-lg-3 col-sm-4 col-xs-6 materials-list my-materials-list " >
+                                            <ul class="materials-ul clearfix">
+                                                <li class="img-li" style="position:relative;">
+                                                    <input class="batch-item" value="" type="checkbox"  style="display:none;">
+                                                    <img src="http://ese1a3b0c5d0oo-pub.pub.qiqiuyun.net/materiallib-14/20170615041508-dwboe762bqgock00/5287e3927f0d17df_thumb">
+
+                                                    <div class="mask">
+                                                        <div class="icon-operation">
+                                                            <i class="glyphicon glyphicon-star js-collect-btn left  material-collection " data-toggle="tooltip" data-placement="bottom" data-original-title="收藏"></i>
+                                                            <i  class="glyphicon glyphicon-option-vertical" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a href="javascript:;" class="js-detail-btn" data-toggle="tooltip" data-placement="bottom"  >
+                                                                        <i class="glyphicon glyphicon-pencil prm"></i>编辑
+                                                                    </a>
+                                                                </li>
+
+                                                                <li>
+                                                                    <a href="javascript:;"  class="js-download-btn" data-toggle="tooltip" data-placement="bottom" data-original-title="" title="">
+                                                                        <i class="glyphicon glyphicon-save prm"></i>下载
+                                                                    </a>
+                                                                </li>
+
+
+
+                                                                <li>
+                                                                    <a href="javascript:;" class="js-delete-btn" data-toggle="tooltip" data-placement="bottom" >
+                                                                        <i class="glyphicon glyphicon-trash prm"></i>删除
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="btn-operation">
+                                                            <!-- 选择一种状态 -->
+
+                                                            <a class="btn btn-info" href="#data_look" data-toggle="modal">资料预览</a>
+
+
+                                                        </div>
+                                                        <div class="time">
+                                                            DOC
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="caption">
+                                                    <p class="title text-overflow" data-toggle="tooltip" data-placement="top" >
+                                                        <span class="glyphicon glyphicon-cloud"></span>
+                                                        软件需求说明书.doc</p>
+
+                                                    <p class="status-parent">
+
+                                                        <span class="label label-default">未使用</span>
+                                                    </p>
+                                                    <p class="text-muted text-overflow text-sm mbs" title="2017/06/15 16:15">
+                                                        时间：  2017/06/15 16:15
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--资料预览-->
+<div id="data_look" class="modal in" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><span class="text-muted">资料预览</span></h4>
+            </div>
+            <div class="modal-body">
+                <div  style="height:500px;overflow:hidden;" >
+                    预览资料区域
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="text-muted pull-left" style="font-size:10px">
+                    资源编号：768f790ec3554623aa652d43d1466a02
+                </div>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--标签添加-->
+<div id="add_tag" class="modal in" aria-hidden="false" data-backdrop="static" style="display: none;" >
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">标签设置</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal"  action="" method="post" novalidate="novalidate" >
+                    <div class="form-group" >
+                        <div class="col-md-2 control-label">
+                            <label >标签</label>
+                        </div>
+
+                        <div class="col-md-8 controls">
+
+                            <input type="text" required="required" class="form-control"  >
+                            <div class="help-block">标签来自网校课程标签，由网校管理员统一管理。</div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button  type="submit" class="btn btn-primary" data-toggle="form-submit" >保存</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

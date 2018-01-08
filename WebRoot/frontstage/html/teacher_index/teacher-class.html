@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>老师-课程</title>
+    <link href="../css/author-space.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script>
+
+        $(function(){
+            $(".teacher_class_page_list").mouseover(function(){
+                $(this).find("h4").show();
+                $(this).find(".mask_over").show();
+            }).mouseout(function(){
+                $(this).find("h4").hide();
+                $(this).find(".mask_over").hide();
+            })
+        });
+
+          //班级类型切换
+        $(function(){
+            $(".teacher_class_type>ul>li").click(function(){
+                $(".teacher_course_type>ul>li").removeClass("curr").find("a").removeClass("curr");
+                $(this).addClass("curr").find("a").addClass("curr");
+                var index=$(this).index();
+                $(".teacher_class_type_tabs").hide().eq(index).show();
+            })
+        });
+        $(function(){
+            $(".teacher_class_page_list:nth-child(3n+1)").css("margin-left","0");
+        });
+    </script>
+</head>
+<body>
+
+<div class="main_teacher">
+
+    <div class="main_teacher_left">
+        <ul>
+            <li ><a href="javascript:return false;">个人简介</a></li>
+            <li ><a href="javascript:return false;"  >课程</a></li>
+            <li class="curr"><a href="javascript:return false;" class="curr">班级</a></li>
+            <li><a href="javascript:return false;">资源</a></li>
+            <li><a href="javascript:return false;">教研</a></li>
+            <li ><a href="javascript:return false;" >关注/粉丝</a></li>
+            <li ><a href="javascript:return false;" >加入小组</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main_teacher_right">
+
+        <div class="teacher_course_type teacher_class_type">
+            <ul>
+                <li class="curr"><a href="javascript:return false;" class="curr">在教班级</a></li>
+                <li><a href="javascript:return false;">在学班级</a></li>
+            </ul>
+        </div>
+
+        <div class="main_right_follow_content">
+
+
+            <!--老师主页,在教班级-->
+            <div class="teacher_follow_page teacher_class_page teacher_class_type_tabs">
+
+                <div class="teacher_class_page_list">
+                    <h4><a href="javascript:return false;">立即加入</a></h4>
+                    <div class="teacher_class_page_list_top" >
+                        <a href="javascript:return false;"><img src="../images/flower_01.jpg"></a>
+                    </div>
+
+                    <div class="mask_over"></div>
+                    <div class="teacher_class_page_list_bottom">
+
+                        <a href="javascript:return false;">新学期第一堂课(在教班级)</a>
+                        <p>共2门课程</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--老师主页,在学班级-->
+            <div class="teacher_follow_page teacher_class_page teacher_class_type_tabs" style="display: none;">
+
+                    <div class="teacher_class_page_list">
+                        <h4><a href="javascript:return false;">立即加入</a></h4>
+                        <div class="teacher_class_page_list_top" >
+                            <a href="javascript:return false;"><img src="../images/dog.jpg"></a>
+                        </div>
+
+                        <div class="mask_over"></div>
+                        <div class="teacher_class_page_list_bottom">
+
+                            <a href="javascript:return false;">新学期第一堂课(在教班级)</a>
+                            <p>共2门课程</p>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

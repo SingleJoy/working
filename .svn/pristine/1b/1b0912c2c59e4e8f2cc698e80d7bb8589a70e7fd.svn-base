@@ -1,0 +1,19 @@
+package cn.bnsr.edu_yun.frontstage.train.service;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.frontstage.train.po.CertModelPicture;
+import cn.bnsr.edu_yun.frontstage.train.view.CertModelPictureView;
+
+public interface CertModelPictureService {
+
+	void saveCertModelPicture(CertModelPicture certModelPicture);
+	
+	Integer countCertModelPicture(CertModelPictureView certModelPictureView);
+	
+	List<CertModelPictureView> selectAllPicture(CertModelPictureView certModelPictureView);
+	
+	void deleteCertModelPicture(Long id);
+	
+	CertModelPicture selectOne(Long id);
+}

@@ -1,0 +1,17 @@
+package cn.bnsr.edu_yun.frontstage.base.service;
+
+import cn.bnsr.edu_yun.backstage.base.view.UserStatsView;
+import cn.bnsr.edu_yun.frontstage.base.po.UserDuration;
+
+public interface UserDurationService {
+
+	int insert(UserDuration userDuration);
+
+	int update(UserDuration userDuration);
+
+	UserDuration selectByUserId(UserDuration userDuration);
+	
+    String collectmeanVisitTrend(UserStatsView condition);
+    
+    String collectmeanNewVisitTrend(UserStatsView condition);
+}

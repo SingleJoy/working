@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/upload_file.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../jq/jquery.1.10.2.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+    <!--<link rel="stylesheet" href="../stream/css/stream-v1.css" type="text/css"/>-->
+</head>
+<body>
+
+<div class="top">
+
+    <ul class="top_txt">
+        <li><a class="admin cd-signin" onclick="return false;" href="javascript:void(0);">登录</a></li>
+        <li><a class="register" href="register.html">注册</a></li>
+        <li><a class="myspace" href="#">我的空间</a></li>
+        <li><a class="recent_browse" href="#">最近浏览</a></li>
+        <li><a class="cooper_organization" href="#">合作机构</a></li>
+    </ul>
+
+</div>
+
+<div class="login">
+    <div class="cd-user-modal">
+        <div class="cd-user-modal-container">
+            <div class="login_top_title">教育信息公共服务云平台</div>
+            <img src="../images/login.jpg" class="login_img">
+            <div id="cd-login">
+
+                <form class="cd-form">
+                    <a class="cd-form_login" href="#">账号登录</a>
+                    <a class="cd-form_phone" href="#">手机动态登录</a>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-username" for="signin-username">用户名</label>
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="手机/邮箱/用户名">
+                    </p>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-password" for="signin-password">密码</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="输入密码">
+                    </p>
+
+
+                    <p class="fieldset phone-admin" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-phone" type="text" placeholder="请输入手机号">
+                    </p>
+
+                    <p class="fieldset var-password" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-var-password" type="text"  placeholder="请输入验证码">
+                        <input type="button" class="login_button" value="点击获取验证码">
+                    </p>
+
+
+
+                    <p class="fieldset remember-state">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me" class="remember_state">记住登录状态</label>
+                        <a href="#" class="login_problem">登录遇到问题</a>
+                    </p>
+
+                    <p class="fieldset admin">
+                        <input class="full-width2" type="submit" value="登 录"><br/>
+                        <a class="register_now" href="#">立即注册</a>
+                    </p>
+                </form>
+
+                <div class="login_border"></div>
+
+                <div class="other_login">
+                    <p>可以使用以下方式登录</p>
+                    <a href="#"><img src="../images/wechat.jpg" class="wechat_login"></a>
+                    <a href="#"><img src="../images/qq.jpg" class="qq_login"></a>
+                </div>
+
+            </div>
+            <a href="#" class="cd-close-form">关闭</a>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="main_title">上传文档</div>
+    <div class="upload_progress">
+
+     <div class="choose_file">1
+         <p>选择文档</p>
+         <div class="upload_progress_1"></div>
+     </div>
+
+        <div class="add_inf">2
+            <p>补充信息</p>
+            <div class="upload_progress_2"></div>
+        </div>
+
+        <div class="success_upload">3
+            <p>上传完成</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="select_file_upload_file_pro_1"  style="display: none;" >
+    <div class="select_file_content" >
+       <div id="i_select_files" align="center" ><img src="../images/upload.png"></div>
+		<div id="i_stream_files_queue" align="center" ></div>
+    </div>
+</div>
+
+<div class="select_file_upload_file_pro_1 file3" style="display: none;" >
+    <div class="select_file_content" >
+        <div class="upload_file_success">
+            <p>恭喜文档上传成功</p>
+            <div><button class="add_more_btn_success">继续添加</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="add_some_info" >
+
+      <div class="upload_file_pro_2">
+         <p class="upload_file_advice">一篇文档上传完毕!请填写文档后点击“确认上传”</p>
+         <button class="add_more_btn" onclick="javascript:openBrowse();">继续添加</button>
+         <button class="sure_for_upload">确认上传</button>
+    </div>
+    <div class="upload_list">
+        <br/>
+        <div class="upload_list_page">
+            <div class="upload_list_page_num">1</div>
+            <img src="../images/PPT_03.png">
+            <p class="page_title">春天在哪里</p>
+            <div class="pick_up">展开</div>
+            <a class="delete" href="javascript:;">删除</a>
+        </div>
+    </div>
+<div class="add_some_info_main" >
+    <div class="add_content">
+        <span>标题:</span><input type="text"><br/>
+        <div>
+            <span>简介:</span>
+            <textarea></textarea>
+        </div>
+    </div>
+
+    <div class="upload_columns">
+        <span>分栏:</span>
+    </div>
+
+    <div class="upload_tags">标签:
+        <input id="kw" type="text" value="" placeholder="请选择标签,可手动添加,请不要重复添加."><br/>
+        <a href="javascript:void(0)" onClick="selectTag('数学 ')">数学</a>
+        <a href="javascript:void(0)" onClick="selectTag('语文 ')">语文</a>
+        <a href="javascript:void(0)" onClick="selectTag('外语 ')">外语</a>
+        <a href="javascript:void(0)" onClick="selectTag('小学 ')">小学</a>
+        <a href="javascript:void(0)" onClick="selectTag('初中 ')">初中</a>
+        <a href="javascript:void(0)" onClick="selectTag('高中 ')">高中</a>
+        <a href="javascript:void(0)" onClick="selectTag('物理 ')">物理</a>
+        <a href="javascript:void(0)" onClick="selectTag('化学 ')">化学</a>
+        <a href="javascript:void(0)" onClick="selectTag('生物 ')">生物</a>
+        <a href="javascript:void(0)" onClick="selectTag('地理 ')">地理</a>
+    </div>
+
+
+
+    <div class="upload_classify">
+        <span>分类:</span>
+        <select>
+        <option>同步课件</option>
+        <option>数学</option>
+        <option>英语</option>
+       </select>
+    </div>
+
+
+    <div class="border_mid"></div>
+
+    <div class="add_some_info_right">
+
+            <form action="" method="get"><p>类型</p>
+                <span><img src="../images/ico_radio_nocheck.png">&nbsp;付费文档</span><p class="form_style_span">付费才可以下载</p><br/><br/>
+                <span><img src="../images/ico_radio_nocheck.png">&nbsp;共有文档</span><p class="form_style_span">任何人都可以查看和下载</p><br/><br/>
+                <span><img src="../images/ico_radio_nocheck.png">&nbsp;私有文档</span><p class="form_style_span">仅自己可见</p>
+            </form>
+
+    </div>
+
+    <div class="upload_file_saving">
+        <span>保存至:</span>
+        <select>
+            <option>我的文档</option>
+            <option>我的空间</option>
+            <option>其他</option>
+        </select>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<div class="footer">
+    <div class="footer_content">
+        <ul class="footer_content_ul">
+            <li><a class="footer_title">北京市百年树人远程教育有限公司<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="agreement">协议<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="proposal">建议</a></li>
+        </ul>
+    </div>
+</div>
+
+ <script type="text/javascript" src="../stream/js/stream-v1.js"></script>
+<script type="text/javascript">
+	/**
+	 * 配置文件（如果没有默认字样，说明默认值就是注释下的值）
+	 * 但是，on*（onSelect， onMaxSizeExceed...）等函数的默认行为
+	 * 是在ID为i_stream_message_container的页面元素中写日志
+	 */
+
+	var config = {
+		enabled: true, /** 是否启用文件选择，默认是true */
+		customered: true,
+		multipleFiles: true, /** 是否允许同时选择多个文件，默认是false */
+		autoUploading: true, /** 当选择完文件是否自动上传，默认是true */
+		fileFieldName: "FileData", /** 相当于指定<input type="file" name="FileData">，默认是FileData */
+		maxSize: 2147483648, /** 当_t.bStreaming = false 时（也就是Flash上传时），2G就是最大的文件上传大小！所以一般需要 */
+		simLimit: 2, /** 允许同时选择文件上传的个数（包含已经上传过的） */
+		extFilters: [".txt", ".gz"], /** 默认是全部允许，即 [] */
+		dragAndDropArea: "i_select_files",
+		browseFileId : "i_select_files", /** 选择文件的ID, 默认: i_select_files */
+		browseFileBtn : "<div>请选择文件</div>", /** 显示选择文件的样式, 默认: `<div>请选择文件</div>` */
+		filesQueueId : "i_stream_files_queue", /** 文件上传容器的ID, 默认: i_stream_files_queue */
+		filesQueueHeight : 200, /** 文件上传容器的高度（px）, 默认: 450 */
+		tokenURL : "/edu_yun/tk", /** 根据文件名、大小等信息获取Token的URI（用于生成断点续传、跨域的令牌） */
+		uploadURL : "/edu_yun/upload", /** HTML5上传的URI */
+		onSelect: function(files) {
+			for(var i=0; i<files.length; i++) {
+				var tmpl = $("#UploadFileModule").text().trim();
+				var instance = tmpl.replace(/#FILE_ID#/g, files[i].id)
+						.replace(/#FILE_NAME#/g, files[i].name)
+						.replace(/#FILE_SIZE#/g, _t.formatBytes(files[i].size));
+
+				$("#i_select_files").append(instance);
+
+				$("#"+ files[i].id).click(function(e) {
+					e.stopPropagation();
+					if ($(this).hasClass('dz-processing')) {
+						$(this).remove();
+					}
+				});
+			}
+		},
+		onMaxSizeExceed: function(file) {//文件大小超过限制
+			var $module = $("#"+ file.id);
+			$module.addClass("dz-error dz-complete");
+			//console && console.log("-------------onMaxSizeExceed-------------------");
+			//console && console.log(file);
+			$module.find(".dz-error-message span").text("文件[name="+file.name+", size="+file.formatSize+"]超过文件大小限制‵"+file.formatLimitSize+"‵，将不会被上传！");
+			//console && console.log("-------------onMaxSizeExceed-------------------End");
+		},
+		onFileCountExceed : function(selected, limit) {//文件数量超出的响应事件
+			if(selected > limit){
+				alert("同时最多上传<strong>"+limit+"</strong>个文件，但是已选择<strong>"+selected+"</strong>个");
+			}
+		},
+		onExtNameMismatch: function(info) {//文件的扩展名不匹配的响应事件
+			$module.find(".dz-error-message span").text("<strong>"+info.name+"</strong>文件类型不匹配[<strong>"+info.filters.toString() + "</strong>]");
+		},
+		onComplete: function(file) {//单个文件上传完成
+			/** 100% percent */
+			var $bar = $("#"+file.id).find("div.progress-bar");
+			$bar.css("width", file.percent + "%");
+
+			var module = $("#"+file.id);
+			module.addClass("dz-complete dz-success");
+			module.removeClass('dz-processing dz-error');
+		},
+		onAddTask: function(file, dat) {
+			// 图片回显
+			if (dat && dat.file && dat.file.type && dat.file.type.indexOf('image') == 0) {
+				var $module = $("#"+ file.id);
+				$module.addClass('dz-image-preview');
+				$module.removeClass('dz-file-preview');
+
+				var reader = new FileReader();
+				reader.readAsDataURL(dat.file);
+				reader.onload = function(evt) {
+					var img = $('#' + file.id).find('.dz-image img');
+					img.attr('src', reader.result);
+					img.attr('alt', file.name);
+					img.attr('width', '120px');
+				}
+			}
+
+		},
+		onQueueComplete: function(msg) {
+			//data为返回的json字符串，这里转对象
+		    var json = eval("(" + msg + ")");
+			if(json.success){//上传成功
+				$(".add_inf").css("background-color","#3ebbce");
+				$(".upload_progress_1").css("background-color","#3ebbce");
+				$(".select_file_upload_file_pro_1").css("display","none");
+				$(".add_some_info").css("display","block");
+				$(".file3").css("display","none");
+				var filepaths = json.filePaths;//文件地址
+				var filenames = json.fileNames;//文件原始名
+				if(filepaths.indexOf(",")>0){//多文件
+					var arrays = filepaths.split(",");
+				 	for(var i=0;i<arrays.length;i++){
+						$("#div_text").append("<img src=\"../images/PPT_03.png\"/><input type=\"text\" value=\""+filenames.split(",")[i]+"\"/><br/>");
+					}
+				}else{//单文件
+					$("#div_text").append("<img src=\"../images/PPT_03.png\"/><input type=\"text\" value=\""+filenames+"\"/><br/>");
+				}
+			}else{//上传失败
+				
+			}
+		},
+		onUploadError: function(status, msg) {//上传异常
+			alert(msg + ", 状态码:" + status);
+		}
+	};
+	var _t = new Stream(config);
+	/** 不支持拖拽，隐藏拖拽框 */
+	if (!_t.bDraggable) {
+		$("#i_stream_dropzone").hide();
+	}
+	/** Flash最大支持2G */
+	if (!_t.bStreaming) {
+		_t.config.maxSize = 2147483648;
+	}
+
+	if (!_t.bDraggable) {
+		alert('你的浏览器不支持文件上传，换个现代浏览器试试！')
+	}
+	
+	function openBrowse(){ 
+		var ie=navigator.appName=="Microsoft Internet Explorer" ? true : false; 
+		if(ie){ 
+			document.getElementById("i_select_files").click(); 
+		}else{
+			var a=document.createEvent("MouseEvents");//FF的处理 
+			a.initEvent("click", true, true);  
+			document.getElementById("i_select_files").dispatchEvent(a); 
+		} 
+	} 
+</script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.Recommended;
+import cn.bnsr.edu_yun.frontstage.base.po.SubjectList;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.service.RecommendedService;
+import cn.bnsr.edu_yun.frontstage.base.service.SubjectListService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.train.po.StudentRelation;
+import cn.bnsr.edu_yun.frontstage.train.po.Workshop;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityService;
+import cn.bnsr.edu_yun.frontstage.train.service.StudentRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicAnswerService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicQuestionService;
+import cn.bnsr.edu_yun.frontstage.train.service.WorkshopService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityView;
+import cn.bnsr.edu_yun.frontstage.train.view.StudentRelationView;
+import cn.bnsr.edu_yun.frontstage.train.view.TopicAnswerView;
+import cn.bnsr.edu_yun.frontstage.train.view.TopicQuestionView;
+import cn.bnsr.edu_yun.frontstage.train.view.WorkshopView;
+import cn.bnsr.edu_yun.util.ConfigInfo;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 工作坊
+ * 
+ * @author Administrator
+ * 
+ */
+@Controller
+@RequestMapping("/workshop")
+public class WorkshopController {
+
+	private final Logger log = LoggerFactory.getLogger(WorkshopController.class);
+	@Autowired
+	private WorkshopService workshopService;
+	@Autowired
+	private StudentRelationService studentRelationService;
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private SubjectListService subjectListService;
+	@Autowired
+	private TopicQuestionService topicQuestionService;
+	@Autowired
+	private TopicAnswerService topicAnswerService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private RecommendedService recommendedService;
+
+	/**
+	 * 跳转工作坊列表
+	 */
+	@RequestMapping("/to_workshop")
+	public ModelAndView toWorkshop(HttpServletRequest request, WorkshopView workshopView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		CommunityView communityView = communityService.getById(workshopView.getCommunity_id());
+		communityView.setStamp(3);
+		try {
+			if (workshopView.getSearch() != null) {
+				workshopView.setSearch("%" + workshopView.getSearch() + "%");
+			}
+			workshopView.setRows(10);
+			if (workshopView.getPage() == 0) {
+				workshopView.setStartLine(0);
+			} else {
+				workshopView.setStartLine(workshopView.getPage() * workshopView.getRows());
+			}
+			int total = workshopService.queryWorkshopCount(workshopView);// 总数
+			workshopView.setTotal(total);
+			// 分页总页数
+			workshopView.setTotalPage(NumUtil.totalPage(total, 10));
+			List<WorkshopView> workshopViews = workshopService.showWorkshop(workshopView);
+			modelAndView.addObject("workshopViews", workshopViews);
+			modelAndView.addObject("workshopView", workshopView);
+			modelAndView.addObject("communityView", communityView);
+			modelAndView.setViewName("frontstage/train/community/community_workshop");
+			modelAndView.addObject("head_title", "工作坊列表");
+		} catch (Exception e) {
+			log.error("工作坊列表查询失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 跳转添加工作坊
+	 */
+	@RequestMapping("/to_add_workshop")
+	public ModelAndView toAddWorkshop(HttpServletRequest request, WorkshopView workshopView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		CommunityView communityView = new CommunityView();
+		communityView = communityService.getById(workshopView.getCommunity_id());
+		communityView.setStamp(3);
+		try {
+			StudentRelationView student = new StudentRelationView();
+			student.setSource_id(workshopView.getCommunity_id());
+			student.setSource_type(0);
+			List<StudentRelationView> studentRelationViews = studentRelationService.findAll(student);
+			modelAndView.addObject("studentRelationViews", studentRelationViews);
+			modelAndView.addObject("communityView", communityView);
+			modelAndView.addObject("head_title", "添加工作坊");
+			modelAndView.setViewName("frontstage/train/community/community_workshop_create");
+		} catch (Exception e) {
+			log.error("添加工作坊页面跳转失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 添加工作坊
+	 */
+	@RequestMapping("/add_workshop")
+	public ModelAndView addWorkshop(HttpServletRequest request, WorkshopView workshopView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		CommunityView communityView = new CommunityView();
+		communityView = communityService.getById(workshopView.getCommunity_id());
+		communityView.setStamp(3);
+		try {
+			// 保存工作坊信息
+			Workshop workshop = new Workshop();
+			if(workshopView.getImg().equals("")){//没有上传图片
+				workshop.setImg(ConfigInfo.getString("defalutPicture")+"/workshop_index_default.png");
+			}else{
+				workshop.setImg(workshopView.getImg());
+			}
+			workshop.setName(workshopView.getName());
+			workshop.setPeriod(workshopView.getPeriod());
+			workshop.setProfile(workshopView.getProfile());
+			workshop.setSubject(workshopView.getSubject());
+			workshop.setUser_id(user.getId());
+			workshop.setStatus(1);
+			workshop.setCreate_time(new Date());
+			workshop.setCommunity_id(workshopView.getCommunity_id());
+			workshopService.addWorkshop(workshop);
+			for(String idS:workshopView.getWorkshop_user_ids().split(",")){
+				if(idS.trim().equals("")){
+					continue;
+				}
+				System.out.println(idS);
+				workshopView.setWorkshop_user_id(Long.parseLong(idS));
+				StudentRelation student = new StudentRelation();
+				student.setSource_type(1);
+				student.setSource_id(workshop.getId());
+				student.setUser_id(workshopView.getWorkshop_user_id());
+				student.setRole_type(3);
+				studentRelationService.saveStudentRelation(student);
+			}
+		
+			modelAndView.addObject("communityView", communityView);
+			modelAndView.setViewName("redirect:/workshop/to_workshop.action?source_type=0&community_id=" + workshopView.getCommunity_id());
+		} catch (Exception e) {
+			log.error("添加工作坊失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 修改工作坊
+	 */
+	@RequestMapping("/update_workshop")
+	public ModelAndView updateWorkshop(HttpServletRequest request, WorkshopView workshopView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			// 保存工作坊信息
+			Workshop workshop = workshopService.getOne(workshopView.getId());
+			workshop.setImg(workshopView.getImg());
+			workshop.setName(workshopView.getName());
+			workshop.setPeriod(workshopView.getPeriod());
+			workshop.setProfile(workshopView.getProfile());
+			workshop.setSubject(workshopView.getSubject());
+			workshopService.updateWorkshop(workshop);
+			workshopView = workshopService.showWorkshop(workshopView).get(0);
+			workshopView.setStamp(11);
+			modelAndView.addObject("workshopView", workshopView);
+			modelAndView.setViewName("redirect:/workshop/to_workshop_main.action?id=" + workshopView.getId());
+		} catch (Exception e) {
+			log.error("添加工作坊失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 保存图片
+	 */
+	@RequestMapping("/upload_img")
+	public void upload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		String path = request.getSession().getServletContext().getRealPath(ConfigInfo.getString("lessonPicture"));
+		Date date = new Date();
+		long time = date.getTime();
+		String fileName = "img" + time;
+		String format = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		Random ra = new Random();
+		fileName = fileName + ra.nextInt(10) + format;
+		File targetFile = new File(path, fileName);
+		if (!targetFile.exists()) {
+			targetFile.mkdirs();
+		}
+		// 保存
+		try {
+			file.transferTo(targetFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JSONObject result = new JSONObject();
+		result.put("fileName", ConfigInfo.getString("lessonPicture") + "/" + fileName);
+		ResponseUtil.write(response, result);
+
+	}
+
+	/**
+	 * 开启关闭
+	 */
+	@RequestMapping("/openOrClose")
+	public void openOrClose(HttpServletRequest request, HttpServletResponse response, WorkshopView workshopView) throws Exception {
+
+		String[] ids = workshopView.getIds().split(",");
+
+		for (String id : ids) {
+			Workshop workshop = new Workshop();
+			workshop.setId(Long.parseLong(id));
+			workshop.setStatus(workshopView.getStatus());
+			workshopService.updateWorkshop(workshop);
+		}
+
+		JSONObject result = new JSONObject();
+
+		ResponseUtil.write(response, result);
+
+	}
+
+	/**
+	 * 跳转工作坊主页
+	 */
+	@RequestMapping("/to_workshop_main")
+	public ModelAndView toWorkshopMain(HttpServletRequest request, WorkshopView workshopView) {
+
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			workshopView = workshopService.showWorkshopById(workshopView.getId());
+			List<SubjectList> subjectList = subjectListService.querySubject(workshopView.getPeriod());
+			workshopView.setStamp(11);
+			modelAndView.addObject("workshopView", workshopView);
+			modelAndView.addObject("subjectList", subjectList);
+			modelAndView.setViewName("frontstage/train/community/community_workshop_create");
+			modelAndView.addObject("head_title", "基础信息");
+		} catch (Exception e) {
+			log.error("添加工作坊页面跳转失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 跳转社区主页页面
+	 */
+	@RequestMapping("/to_workshop_center")
+	public ModelAndView toWorkshopCenter(HttpServletRequest request, WorkshopView workshopView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			workshopView.setWorkshop_user_id(user.getId());
+			if (workshopView.getRows() == 0) {
+				workshopView.setRows(12);
+			} else {
+				workshopView.setRows(12 + workshopView.getRows());
+			}
+			workshopView.setStartLine(0);
+
+			List<WorkshopView> workshopViewList = workshopService.queryMyWorkshop(workshopView);
+			int total = workshopService.queryMyWorkshopCount(workshopView);// communityService.queryTotalCommunity(communityView);//
+																			// 社区总数
+			workshopView.setTotal(total);
+			// 分页总页数
+			workshopView.setTotalPage(NumUtil.totalPage(total, workshopView.getRows()));
+			
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			//个人中心统计数据  
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+			
+			request.setAttribute("user", user);
+			request.setAttribute("state", state);
+			request.setAttribute("stamp", stamp);
+			modelAndView.addObject("workshopViewList", workshopViewList);
+			modelAndView.addObject("workshopView", workshopView);
+			modelAndView.setViewName("frontstage/train/personalCenter/workshop_center");
+			if (workshopView.getSign() == 3) {
+				TopicQuestionView topicQuestionView = new TopicQuestionView();
+				topicQuestionView.setUser_id(user.getId());
+				topicQuestionView.setSource_type(3);
+				topicQuestionView.setStartLine(workshopView.getStartLine());
+				topicQuestionView.setRows(workshopView.getRows()-7);
+				List<TopicQuestionView> topicQuestionViews = topicQuestionService.queryTopic(topicQuestionView);
+				modelAndView.addObject("topicQuestionViews", topicQuestionViews);
+				cn.bnsr.edu_yun.frontstage.train.view.TopicAnswerView topicAnswerView = new cn.bnsr.edu_yun.frontstage.train.view.TopicAnswerView();
+				topicAnswerView.setUser_id(user.getId());
+				topicAnswerView.setSource_type(2);
+				topicAnswerView.setStartLine(workshopView.getStartLine());
+				topicAnswerView.setRows(3);
+				List<TopicAnswerView> topicAnswerViews = topicAnswerService.queryMyTopicAnswer(topicAnswerView);
+				modelAndView.addObject("topicAnswerViews", topicAnswerViews);
+			}
+			if (workshopView.getSign() == 0) {
+				modelAndView.addObject("head_title", "我的工作坊");
+			}
+			else	if (workshopView.getSign() == 1) {
+				modelAndView.addObject("head_title", "我是坊员");
+			}
+			else	if (workshopView.getSign() == 2) {
+				modelAndView.addObject("head_title", "我是坊主");
+			}
+			else if (workshopView.getSign() == 3) {
+				modelAndView.addObject("head_title", "我发起的话题");
+			}
+		} catch (Exception e) {
+			log.error("工作坊主页查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	/**
+	 * 推荐
+	 * @throws Exception 
+	 */
+	@RequestMapping("/recommended")
+	public void recommended(HttpServletResponse response,HttpServletRequest request, Recommended recommended) throws Exception {
+	
+		int i=recommendedService.selectBySourceIdCount(recommended);
+		if(i==0){
+			recommended.setRecommended_time(new Date());
+		recommendedService.insert(recommended);
+		}
+		JSONObject result = new JSONObject();
+		
+		ResponseUtil.write(response, result);
+		
+	}
+	/**
+	 * 取消推荐
+	 * @throws Exception 
+	 */
+	@RequestMapping("/unrecommended")
+	public void unrecommended(HttpServletResponse response,HttpServletRequest request, Recommended recommended) throws Exception {
+	
+		Long i=recommendedService.selectId(recommended);
+		if(i!=null){
+		recommendedService.delete(i);
+		}
+		JSONObject result = new JSONObject();
+		
+		ResponseUtil.write(response, result);
+		
+	}
+	/**
+	 * 跳转社区主页页面
+	 */
+	@RequestMapping("/to_workshop_home")
+	public ModelAndView toWorkshopHome(HttpServletRequest request, WorkshopView workshopView) {
+	
+		
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			workshopView.setRows(12);
+			//为你推荐
+		 List<WorkshopView> workshops = workshopService.showWorkshop(workshopView);
+			modelAndView.addObject("workshops", workshops);
+			workshopView.setSort("user_count");
+			workshopView.setRows(8);
+			//大家正在关注
+			List<WorkshopView> workshops1 = workshopService.showWorkshop(workshopView);
+			modelAndView.addObject("workshops1", workshops1);
+			modelAndView.addObject("head_title", "工作坊主页");
+			modelAndView.setViewName("frontstage/train/community/workshop_home");
+		} catch (Exception e) {
+			log.error("工作坊主页查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	
+	/**
+	 * 跳转社区主页二级页面
+	 */
+	@RequestMapping("/to_workshop_home_2nd")
+	public ModelAndView toWorkshopHome2(HttpServletRequest request,CommunityCenterView ccv) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			ccv.setRows(20);
+			if (ccv.getPage() == 0) {
+				ccv.setStartLine(0);
+			} else {
+				ccv.setStartLine(ccv.getPage() * ccv.getRows());
+			}
+			int total = workshopService.queryWorkshopCommunityCount(ccv);// 总数
+			List<WorkshopView> workshopViews = workshopService.queryWorkshopCommunity(ccv);
+			ccv.setTotal(total);
+			// 分页总页数
+			ccv.setTotalPage(NumUtil.totalPage(total, ccv.getRows()));
+			List<SubjectList> subjectList = subjectListService.querySubject(ccv.getStage_id());
+			if (ccv.getStage_id() == null || ccv.getStage_id() == "") {
+				subjectList = subjectListService.querySubject("XX");
+			}
+			modelAndView.addObject("subjectList", subjectList);
+			modelAndView.addObject("head_title", "工作坊主页");
+			modelAndView.addObject("workshopViews", workshopViews);
+			modelAndView.addObject("communityCenterView", ccv);
+			modelAndView.addObject("home", true);
+			modelAndView.setViewName("frontstage/train/community_show/community_workshop_show");
+		} catch (Exception e) {
+			log.error("工作坊主页查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	
+	
+	
+}

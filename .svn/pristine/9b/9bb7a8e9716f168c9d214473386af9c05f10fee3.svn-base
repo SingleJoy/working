@@ -1,0 +1,61 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
+<div class="panel panel-col">
+
+	<div class="panel-body">
+		<div class="article-detail row"  style="min-height: 300px;">
+			<c:forEach items="${messageList}" var="message">
+				<div class="col-md-12 article-detail-main">
+					<section class="cn-section article-content">
+
+						<div class="article-metas">
+
+							<div class="pull-left">
+								<div class="date">${message.release_date }<br>
+										${message.release_moon }月
+								</div>
+
+							</div>
+
+							<div class="metas-body">
+								<p><a class="link-light" href="javascript:void (0);">
+									<c:if test="${message.type==0 }">新闻动态</c:if>
+									<c:if test="${message.type==1 }">政策文件</c:if>
+									<c:if test="${message.type==2 }">通知文件</c:if>
+									<c:if test="${message.type==3 }">使用帮助</c:if>
+									<c:if test="${message.type==4 }">简报</c:if>
+								</a></p>
+								<h2 class="title ">${message.title }
+
+									<span class="glyphicon glyphicon-chevron-right pull-right spread_out" style="cursor: pointer;"></span>
+								</h2>
+							</div>
+
+						</div>
+
+						<div class="article-text" style="display: none;">
+							<div>${message.content}
+								<c:if test="${!empty message.file_path }">
+									<a href="${pageContext.request.contextPath}/message/see.action?id=${message.file_id }" title="${message.file_name }" target="_blank" >${message.file_name }</a>
+								</c:if>
+							</div>
+
+						</div>
+
+					</section>
+				</div>
+			</c:forEach>
+			<c:if test="${empty messageList }">
+				<div class="empty">暂无数据</div>
+			</c:if>
+			<c:if test="${!empty messageList }">
+				<div id="test" class="pager" style="clear: both;"></div>
+			</c:if>
+		</div>
+
+	</div>
+</div>

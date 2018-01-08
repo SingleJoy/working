@@ -1,0 +1,68 @@
+
+.table-bordered>tbody>tr>td>a>span{cursor: pointer;}
+#lesson_pic{cursor: pointer;}
+.mask{width:190px;height:110px;background-color: #313131;position: absolute;opacity: 0.8;cursor: pointer;}
+.task1,.task2{color: #fff;}
+.task1{background:url("../images/task_right.png") 6px no-repeat; }
+.task2{background:url("../images/task_left.png") -1px no-repeat; }
+
+.learning-data-table>tbody>tr>td:nth-child(1){width:25%;vertical-align: middle;text-align: center;}
+.learning-data-table>tbody>tr>td{font-size: 14px;}
+#plan_lesson,#my_plan_lesson{background:url("../images/plan_lesson_01.png") 11px no-repeat;padding-left: 30px;}
+#prepare_lesson,#my_prepare_lesson{background:url("../images/prepare_lesson_01.png") 11px no-repeat;}
+#my_prepare_lesson{background:url("../images/prepare_lesson_01.png") 11px no-repeat;}
+#having_lesson,#my_having_lesson{background:url("../images/having_lesson_01.png") 11px no-repeat;}
+#evaluation_lesson,#my_evaluation_lesson{background:url("../images/evaluation_lesson_01.png") 11px no-repeat;}
+#rethink,#my_rethink{background:url("../images/rethink_lesson_01.png") 11px no-repeat;}
+.rethink,.prepare_lesson,.having_lesson,.evaluation_lesson{display: none}
+.task-list{line-height: 25px;}
+.task-list>a>span{padding-right: 10px;}
+.task-list>a{font-size: 16px;}
+li.list-group-item{list-style: none;}
+.lesson_teacher{padding-left:30px; }
+.already_completed,.pending_completion,.to_be_assigned{float: right;}
+#all-task,#my-task{padding: 5px 15px;cursor: pointer;font-size: 16px;display: inline-block;}
+td.active{font-weight: bold;}
+.all-statistics>tbody>tr>td{font-size: 14px;}
+.all-statistics>tbody>tr>td:nth-child(2){width:75%;}
+.all-statistics>tbody>tr>td{font-size: 14px;}
+.member-statistics>tbody>tr>td{font-size: 14px;}
+.mission-accomplished{background: url("../images/task_ok.png") 2px 3px no-repeat;padding: 0 15px;}
+.mission-fail{background: url("../images/task_no.png") 2px 3px no-repeat;padding: 0 15px;}
+#defaultImg{
+    width:190px;height:110px;}
+.file:hover{color: #fff;}
+.webuploader-pick>div>label:hover{color: #fff;}
+.task_pic>div{float: left;display: inline-block;width: 80px;}
+
+/*课例次级界面*/
+.lesson_target{height:40px;overflow: hidden;width: 100%;}
+
+
+/*课例主页*/
+
+ .subject_classify>div>ul>li>a{font-size: 14px;}
+.course-list>ul>li>a{font-size: 16px;opacity: 0.6;}
+.head_list>li>a{font-size: 14px;color: #fff;padding: 20px 30px;}
+.carousel-inner>div{width: 100%;}
+.carousel-inner>div>img{max-width: 1160px;margin: 0 auto;}
+
+.lesson_info_text{padding: 0 5px;}
+
+.lesson_teacher{padding-left:30px; }
+.lesson_content>span{width: 33%;float: left;padding: 5px 0;}
+.subject_list>ul{margin: 15px;}
+
+.subject_list>ul>li>a>img{width: 40px;height: 40px;}
+
+.school_lesson_list>div{margin-bottom: 20px;}
+.lesson_index_banner{background: url("../images/train_ads_banner.jpg") top center no-repeat;}
+.item{margin-bottom: 30px;}
+.popover-content>a{padding: 0 10px;line-height: 30px;}
+.lesson_img{background-color: #ffd54f;border-radius: 4px;}
+.lesson_img>a>img{margin: 15px;}
+.lesson_img>a>span{color: #fff;}
+.lesson_home_banner>li>a{color:#fff;}
+
+.full-content{max-width:85%; }
+.workshop_list{margin-bottom: 20px;}

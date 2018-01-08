@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/qiuzi_ico.ico" media="screen" />
+    <link href="../css/teaching-center.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript">
+        //        课程类型切换
+        $(function(){
+            $(".course_type ul li").click(function(){
+                $(".course_type ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+                $(this).addClass("curr").find("a").addClass("curr");
+                var index=$(this).index();
+                $(".course_type_tabs").hide().eq(index).show();
+
+            }).mouseover(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).addClass("curr_01").find("a").addClass("curr_01");
+                }
+
+            }).mouseout(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+                }
+
+            })
+        });
+    </script>
+</head>
+<body>
+<div class="teaching_center_main">
+
+
+
+    <div class="teaching_center_main_right">
+        <p>我的话题</p>
+
+        <div class="course_type">
+            <ul>
+                <li class="curr"><a href="javascript:return false;" class="curr">课程话题</a></li>
+                <li><a href="javascript:return false;">班级话题</a></li>
+            </ul>
+        </div>
+
+        <!--课程话题-->
+        <div class="course_topic course_type_tabs">
+            <ul>
+                <li>
+                    <a href="javascript:return false;">111</a><br/>
+                    <div>发表于<a href="javascript:return false;">标题111</a><span>•</span>1浏览</div>
+                </li>
+                <li>
+                    <a href="javascript:return false;">111</a><br/>
+                    <div>发表于<a href="javascript:return false;">标题111</a><span>•</span>1浏览</div>
+                </li>
+            </ul>
+        </div>
+
+        <!--班级话题-->
+        <div class="course_have_learn course_type_tabs" style="display: none;">
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

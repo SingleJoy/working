@@ -1,0 +1,690 @@
+package cn.bnsr.edu_yun.backstage.base.service.impl;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.mapper.RoleMapper;
+import cn.bnsr.edu_yun.backstage.base.mapper.SysLogMapper;
+import cn.bnsr.edu_yun.backstage.base.mapper.UserRoleMapper;
+import cn.bnsr.edu_yun.backstage.base.po.UserRole;
+import cn.bnsr.edu_yun.backstage.base.service.BackUserService;
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.UserStatsView;
+import cn.bnsr.edu_yun.backstage.base.view.UserView;
+import cn.bnsr.edu_yun.comparator.UserStatsComparator;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserDurationMapper;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserInfoMapper;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserMapper;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserPropertyMapper;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.po.UserProperty;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class BackUserServiceImpl implements BackUserService {
+	@Autowired
+	private UserMapper userMapper;
+
+	@Autowired
+	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private RoleMapper roleMapper;
+	@Autowired
+	private UserPropertyMapper userPropertyMapper;
+	@Autowired
+	private UserInfoMapper userInfoMapper;
+	@Autowired
+	private SysLogMapper sysLogMapper;
+	@Autowired
+	private UserDurationMapper userDurationMapper;
+
+	@Override
+	public DataGrid datagrid(UserView userView) throws ParseException {
+		DataGrid j = new DataGrid();
+		userView.setPage(NumUtil.startingNum(userView.getPage(), userView.getRows()));
+		j.setRows(changeModel(find(userView)));
+		j.setTotal(total(userView));
+		return j;
+	}
+
+	private List<UserView> changeModel(List<User> userList) {
+		List<UserView> users = new ArrayList<UserView>();
+		if (userList != null && userList.size() > 0) {
+			for (User u : userList) {
+				UserView uv = new UserView();
+				BeanUtils.copyProperties(u, uv);
+
+				List<UserRole> userRoleList = userRoleMapper.getByUserId(u.getId());
+
+				String roleIds = "";
+				String roleNames = "";
+				boolean b = false;
+				if (userRoleList != null && userRoleList.size() > 0) {
+					for (UserRole ur : userRoleList) {
+						if (ur != null) {
+							if (b) {
+								roleIds += ",";
+								roleNames += ",";
+							}
+							roleIds += ur.getRole_id();
+							roleNames += roleMapper.selectByPrimaryKey(ur.getRole_id()).getName();
+							b = true;
+						}
+					}
+				}
+				uv.setRoleIds(roleIds);
+				uv.setRoleNames(roleNames);
+				uv.setStatusType(u.getStatus());
+				users.add(uv);
+			}
+		}
+		return users;
+	}
+
+	private List<User> find(UserView userView) throws ParseException {
+		String timeEnd = userView.getTimeEnd();
+		if (timeEnd != null && timeEnd != "") {
+			userView.setTimeEnd(TimeUtil.afterNDay(timeEnd, 1));
+		}
+
+		return userMapper.find(userView);
+	}
+
+	private Long total(UserView userView) {
+		return userMapper.count(userView);
+	}
+
+	@Override
+	public void save(UserView userView) {
+		// 创建用户关联信息
+		UserProperty userProperty = new UserProperty();
+		userProperty.setAttent_count(0);
+		userProperty.setIs_attented_count(0);
+		userProperty.setUpload_count(0);
+		userProperty.setPrivate_file_count(0);
+		userProperty.setPublic_file_count(0);
+		userPropertyMapper.insertSelective(userProperty);
+
+		User user = new User();
+		BeanUtils.copyProperties(userView, user);
+		user.setProperty_id(userProperty.getId());
+		user.setCreate_time(new Date());
+		userMapper.insertSelective(user);
+		if (userView.getUser_type().equals("1")) {// 网站用户
+			// 创建老师信息
+			UserInfo teach = new UserInfo();
+			teach.setUser_id(user.getId());
+			userInfoMapper.insertSelective(teach);
+		}
+
+		this.saveUserRole(userView, user);
+	}
+
+	/**
+	 * 保存用户和角色的关系 user_role关联表
+	 */
+	private void saveUserRole(UserView userView, User user) {
+		List<UserRole> userRoleList = userRoleMapper.getByUserId(user.getId());
+		if (userRoleList != null && userRoleList.size() > 0) {
+			// 根据用户id删除关联角色
+			for (UserRole ur : userRoleList) {
+				userRoleMapper.deleteByPrimaryKey(ur.getId());
+			}
+		}
+		if (userView.getRoleIds() != null) {
+			for (String id : userView.getRoleIds().split(",")) {
+				UserRole userRole = new UserRole();
+				userRole.setRole_id(Long.parseLong(id.trim()));
+				userRole.setUser_id(user.getId());
+				userRoleMapper.insertSelective(userRole);
+			}
+		}
+	}
+
+	@Override
+	public void update(UserView userView) {
+		User u = new User();
+		BeanUtils.copyProperties(userView, u);
+		userMapper.updateByPrimaryKeySelective(u);
+
+		this.saveUserRole(userView, u);
+	}
+
+	@Override
+	public void delete(String ids) {
+		if (ids != null) {
+			for (String id : ids.split(",")) {
+				User user = userMapper.selectByPrimaryKey(Long.parseLong(id.trim()));
+				user.setStatus("3");// 逻辑删除
+				userMapper.updateByPrimaryKeySelective(user);
+			}
+		}
+	}
+
+	@Override
+	public User login(User user) {
+		return userMapper.selectByUsernameAndPassword(user.getUsername(), user.getPassword());
+	}
+
+	@Override
+	public String checkExis(UserView userView) {
+		User user = new User();
+		if (userView.getUsername() != null && !userView.getUsername().trim().equals("")) {
+			user = userMapper.selectByUsername(userView.getUsername());
+		}
+		if (userView.getEmail() != null && !userView.getEmail().trim().equals("")) {
+			user = userMapper.selectByEmail(userView.getEmail());
+		}
+		if (userView.getPhone() != null && !userView.getPhone().trim().equals("")) {
+			user = userMapper.selectByPhone(userView.getPhone());
+		}
+		if (user.getId() != null) {
+			return "1";// 已存在
+		} else {
+			return "2";// 未存在
+		}
+	}
+
+	@Override
+	public void doChangeStatus(UserView userView) {
+		User user = userMapper.selectByPrimaryKey(userView.getId());
+		user.setStatus(userView.getStatus());
+		userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public void saveRoleEdit(UserView userView) {
+		if (userView.getIds() != null) {
+			for (String id : userView.getIds().split(",")) {
+				User user = userMapper.selectByPrimaryKey(Long.parseLong(id));
+				this.saveUserRole(userView, user);
+			}
+		}
+	}
+
+	@Override
+	public List<UserStatsView> queryUserStats(UserStatsView userStats) throws ParseException {
+		Date date = new Date();
+		List<String> list = new ArrayList<String>();
+		if (userStats.getYear().equals("")) {// 年月没选
+			// 获的当前年月
+			userStats.setDays(TimeUtil.getDate());
+			date = TimeUtil.stringFormatDate(userStats.getDays());
+			list = TimeUtil.getAllTheDateOftheMonth(date);
+		} else {
+			if (userStats.getMonth().equals("")) {// 只选年
+				for (int i = 1; i <= 12; i++) {
+					String month = i >= 10 ? i + "" : "0" + i;
+					list.add(userStats.getYear() + "-" + month);
+				}
+				userStats.setDays(userStats.getYear());
+			} else {// 年月都选
+				userStats.setDays(userStats.getYear() + "-" + userStats.getMonth());
+				date = TimeUtil.stringFormatDate(userStats.getDays());
+				list = TimeUtil.getAllTheDateOftheMonth(date);
+			}
+		}
+
+		List<UserStatsView> userStatsList = userMapper.queryUserStats(userStats);
+		if (userStatsList.size() != list.size()) {// 如果不相等，证明有缺少日期
+			List<String> userList = new ArrayList<String>();
+			for (UserStatsView u : userStatsList) {
+				userList.add(u.getDays());
+			}
+			list.removeAll(userList);// 差集
+			for (int i = 0; i < list.size(); i++) {// 补全当前月日期
+				UserStatsView user = new UserStatsView();
+				user.setDays(list.get(i));
+				user.setFrontNum(0);
+				userStatsList.add(user);
+			}
+		}
+
+		Collections.sort(userStatsList, new UserStatsComparator());// 排序
+
+		return userStatsList;
+	}
+
+	@Override
+	public void resetPassword(Long id) {
+		User user = userMapper.selectByPrimaryKey(id);
+		user.setPassword(user.getPhone());
+		userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public List<UserStatsView> queryRemainStats(UserStatsView userStats) throws ParseException {
+		String year = userStats.getYear();
+		String timeType = userStats.getTimeType();
+		List<String> timelist = new ArrayList<>();
+		List<UserStatsView> userStatsList = new ArrayList<UserStatsView>();
+		if (year != null && year != "") {
+			userStats.setStartTime(TimeUtil.getLastYearDecember(year));
+			userStats.setEndTime(TimeUtil.getYearDecember(year));
+			userStats.setReturnTime(TimeUtil.getYearNovember(year));
+			timelist = TimeUtil.getAllMouths();
+			List<UserStatsView> adduserStatsList = userMapper.queryAddUserStatsByMouths(userStats);
+			List<UserStatsView> activeUserStatsList = sysLogMapper.queryActiveUserByMouth(userStats);
+			List<UserStatsView> returnUserStatsList = sysLogMapper.queryReturnUserByMouth(userStats);
+			for (int i = 1; i < 13; i++) {
+				UserStatsView u = new UserStatsView();
+				if (i < 10) {
+					u.setDays("0" + i);
+				} else {
+					u.setDays(i + "");
+				}
+				u.setNewNum(0);
+				u.setActiveNum(0);
+				u.setReturnNum(0);
+				u.setTimeType(timeType);
+				userStatsList.add(u);
+			}
+			for (UserStatsView u : adduserStatsList) {
+				UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+				stats.setNewNum(u.getNewNum());
+			}
+			for (UserStatsView u : activeUserStatsList) {
+				UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+				stats.setActiveNum(u.getActiveNum());
+			}
+			for (UserStatsView u : returnUserStatsList) {
+				UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+				stats.setReturnNum(u.getReturnNum());
+			}
+		} else {// 非月活跃度用户
+			userStats.setStartTime(TimeUtil.afterNDay(userStats.getDays(), 1));
+			if ("0".equals(timeType)) {// 次日
+				userStats.setEndTime(TimeUtil.afterNDay(userStats.getDays(), 2));
+			} else if ("1".equals(timeType)) {// 三日
+				userStats.setEndTime(TimeUtil.afterNDay(userStats.getDays(), 4));
+			} else if ("2".equals(timeType)) {// 一周
+				userStats.setEndTime(TimeUtil.afterNDay(userStats.getDays(), 8));
+			}
+			timelist = TimeUtil.getBetweenDates(TimeUtil.stringFormatDate1(userStats.getDays()),
+					TimeUtil.stringFormatDate1(userStats.getEndTime()));
+			List<Long> signUserId = userMapper.queryUserId(timelist.get(0));
+			if (signUserId != null && signUserId.size() > 0) {// 起始时间有新用户注册
+				// 跟踪
+				userStats.setRemain_type(1);// 获取single day date
+				userStats.setCountNum(signUserId.size());
+				userStats.setEndTime(TimeUtil.afterNDay(userStats.getEndTime(), -1));
+				userStats.setSort(1);
+				userStatsList = sysLogMapper.queryloginRemain(userStats);
+				// 获取第一天的注册数据
+				UserStatsView signSatas = new UserStatsView();
+				signSatas.setDays(timelist.get(0));
+				signSatas.setTimeType(timeType);
+				signSatas.setNewNum(signUserId.size());
+				signSatas.setSort(1);
+				signSatas.setRemainRatio(100);
+				userStatsList.add(signSatas);
+				if (!"0".equals(timeType)) {// 不是次日
+					userStats.setOneDay(timelist.get(timelist.size() - 1));
+					userStats.setRemain_type(0);// 求最后一天的登录的总和
+					userStats.setEndTime(TimeUtil.afterNDay(userStats.getEndTime(), 1));
+					List<UserStatsView> sumLoginUser = sysLogMapper.queryloginRemain(userStats);
+					if (sumLoginUser.size() > 0) {
+						userStatsList.add(sumLoginUser.get(0));
+					}
+				}
+			}
+		}
+		if (userStatsList.size() != timelist.size()) {// 如果不相等，证明有缺少日期
+			// 有数据日期
+			List<String> dataList = new ArrayList<String>();
+			for (int i = 0; i < userStatsList.size(); i++) {
+				dataList.add(userStatsList.get(i).getDays());
+			}
+			timelist.removeAll(dataList);// 差集
+			for (int i = 0; i < timelist.size(); i++) {// 补全当前月日期
+				UserStatsView userStat = new UserStatsView();
+				userStat.setDays(timelist.get(i));
+				userStat.setNewNum(0);
+				userStat.setActiveNum(0);
+				userStat.setReturnNum(0);
+				userStat.setRemainRatio(0);
+				userStat.setTimeType(timeType);
+				if (year == null || year == "") {
+					userStat.setSort(1);
+				}
+				userStatsList.add(userStat);
+			}
+		}
+		Collections.sort(userStatsList, new UserStatsComparator());// 排序
+		return userStatsList;
+
+	}
+
+	@Override
+	public List<UserStatsView> queryUserStats1(UserStatsView userStats) throws ParseException {
+		Date date = new Date();
+		List<String> list = new ArrayList<String>();
+		String timeType = userStats.getTimeType();
+		if ("0".equals(timeType)) {// 本月
+			// 获的当前年月
+			userStats.setDays(TimeUtil.getDate());
+		} else if ("1".equals(timeType)) {// 上月
+			userStats.setDays(TimeUtil.getLastDate());
+		} else if ("2".equals(timeType)) {// 近三月
+			userStats.setStartTime(TimeUtil.getBeforeMarch1());
+			userStats.setEndTime(TimeUtil.dateToString2(new Date()));
+		} else if ("4".equals(timeType)) {// 某一天
+			userStats.setDays(TimeUtil.dateToString1(TimeUtil.stringFormatDate1(userStats.getOneDay())));
+		}
+		if ("0".equals(timeType) || "1".equals(timeType)) {// 本月、上月
+			date = TimeUtil.stringFormatDate(userStats.getDays());
+			list = TimeUtil.getAllTheDateOftheMonth(date);
+		} else if ("4".equals(timeType)) {
+			list = TimeUtil.getAllTheHourOfTheDay();
+		} else {// 近三月、起止时间
+			list = TimeUtil.getBetweenDates(TimeUtil.stringFormatDate1(userStats.getStartTime()),
+					TimeUtil.afterNDay(TimeUtil.stringFormatDate1(userStats.getEndTime()), 1));
+			// userStats.setStartTime(userStats.getStartTime());
+			// userStats.setEndTime(userStats.getEndTime());
+		}
+		List<UserStatsView> userStatsList = new ArrayList<UserStatsView>();
+		if (userStats.getLogType().indexOf("0") >= 0) {// 注册用户
+			userStatsList = userMapper.queryUserStats1(userStats);
+		} else if (userStats.getLogType().indexOf("1") >= 0) {// 登录用户
+			userStatsList = sysLogMapper.queryloginStats(userStats);
+		}
+		if (userStatsList.size() != list.size()) {// 如果不相等，证明有缺少日期
+			int countNum = 0;
+			// 有数据日期
+			List<String> dataList = new ArrayList<String>();
+			for (int i = 0; i < userStatsList.size(); i++) {
+				dataList.add(userStatsList.get(i).getDays());
+				if (i == 0) {
+					countNum = userStatsList.get(i).getCountNum();
+				}
+			}
+			list.removeAll(dataList);// 差集
+			for (int i = 0; i < list.size(); i++) {// 补全当前月日期
+				UserStatsView userStat = new UserStatsView();
+				userStat.setDays(list.get(i));
+				userStat.setNewNum(0);
+				userStat.setCountNum(countNum);
+				userStat.setTimeType(timeType);
+				userStatsList.add(userStat);
+			}
+		}
+		Collections.sort(userStatsList, new UserStatsComparator());// 排序
+		return userStatsList;
+	}
+
+	@Override
+	public List<UserStatsView> queryUserTrend(UserStatsView userStats) throws ParseException {
+		List<UserStatsView> userStatsList = new ArrayList<UserStatsView>();
+		List<String> timelist = new ArrayList<String>();
+		List<String> alldays = new ArrayList<String>();
+		int timeUnit = userStats.getTimeUnit();
+		String logType = userStats.getLogType();
+		Integer compare = userStats.getCompare();
+		if (timeUnit == 0) {// 按时
+			String[] hourlist = TimeUtil.getHourList();
+			for (int i = 0; i < hourlist.length; i++) {
+				UserStatsView userStats1 = new UserStatsView();
+				userStats1.setDays(hourlist[i]);
+				userStatsList.add(userStats1);
+			}
+		} else if (timeUnit == 1) {// 按天
+			// 选择某一天和一段时间一定分开
+			if (userStats.getDays() != null && userStats.getDays() != "") {// 某一天
+				UserStatsView userStats1 = new UserStatsView();
+				userStats1.setDays(userStats.getDays());
+				userStats1.setSort(1);// 按天排序
+				userStatsList.add(userStats1);
+			}
+		}
+		if (userStats.getStartTime() != null && userStats.getEndTime() != null && userStats.getStartTime() != ""
+				&& userStats.getEndTime() != "") {// 一段时间
+			if (timeUnit != 0) {// 不是按时，timelist才有意义
+				alldays = TimeUtil.getBetweenDates(TimeUtil.stringFormatDate1(userStats.getStartTime()),
+						TimeUtil.afterNDay(TimeUtil.stringFormatDate1(userStats.getEndTime()), 1));
+			}
+			if (timeUnit == 1) {// 按天
+				// 选择某一天和一段时间一定分开
+				timelist = alldays;
+			} else if (timeUnit == 2) {// 按周
+				timelist = TimeUtil.getMonday(alldays);// 获取所有日期所在的星期一的日期
+			} else if (timeUnit == 3) {// 按月
+				timelist = TimeUtil.getFirstdayofmouth(userStats.getStartTime(), userStats.getEndTime());// 获取时间段内的每月的第一天
+			}
+			if (timeUnit != 0) {// 小时的list和date的list已不同
+				timelist.set(0, userStats.getStartTime());// 默认初始时间是起始时间
+				for (int i = 0; i < timelist.size(); i++) {
+					UserStatsView userStats1 = new UserStatsView();
+					userStats1.setDays(timelist.get(i));
+					userStats1.setSort(1);// 按天排序
+					userStatsList.add(userStats1);
+				}
+			}
+			userStats.setEndTime(TimeUtil.afterNDay(userStats.getEndTime(), 1));
+		}
+		List<UserStatsView> userStatsAddList = sysLogMapper.queryUserAddTrend(userStats);
+		if (userStatsAddList.size()>0&&(timeUnit == 2 || timeUnit == 3)) {// 按周或按月
+			userStatsAddList.get(0).setDays(userStats.getStartTime());
+		}
+		List<UserStatsView> userStatsloginList = sysLogMapper.queryUserloginTrend(userStats);
+		if (userStatsloginList.size()>0&&(timeUnit == 2 || timeUnit == 3)) {// 按周或按月
+			userStatsloginList.get(0).setDays(userStats.getStartTime());
+		}
+		List<UserStatsView> userStatsVisitList = userDurationMapper.meanVisitTrend(userStats);
+		if (userStatsVisitList.size()>0&&(timeUnit == 2 || timeUnit == 3)) {// 按周或按月
+			userStatsVisitList.get(0).setDays(userStats.getStartTime());
+		}
+		List<UserStatsView> userStatsnewVisitList = userDurationMapper.meanNewVisitTrend(userStats);
+		if (userStatsnewVisitList.size()>0&&(timeUnit == 2 || timeUnit == 3)) {// 按周或按月
+			userStatsnewVisitList.get(0).setDays(userStats.getStartTime());
+		}
+		List<UserStatsView> userStatsCompareList = new ArrayList<UserStatsView>();
+		if (compare != null&&logType.length()==1) {
+			if (compare == 0) {// 对比前一日
+				userStats.setDays(TimeUtil.afterNDay(userStats.getDays(), -1));
+			} else if (compare == 1) {// 对比上一周期
+				userStats.setDays(TimeUtil.afterNDay(userStats.getDays(), -7));
+			}
+			if("0".equals(logType)){//比较新增用户
+				userStatsCompareList = sysLogMapper.queryUserAddTrend(userStats);
+			}else if("1".equals(logType)){//比较登录用户
+				userStatsCompareList = sysLogMapper.queryUserloginTrend(userStats);
+			}else if("2".equals(logType)){//比较平均访问时长
+				userStatsCompareList = userDurationMapper.meanVisitTrend(userStats);
+			}else if("3".equals(logType)){//比较新用户平均访问时长
+				userStatsCompareList = userDurationMapper.meanNewVisitTrend(userStats);
+			}
+		}
+		//组装
+		//新增用户 0
+		for (UserStatsView u : userStatsAddList) {
+			for (UserStatsView u1 : userStatsList) {
+				if (u1.getDays().equals(u.getDays())) {
+					u1.setNewNum(u.getNewNum());
+					if(logType.charAt(0) == '0'){//包含只有一个指标或两个指标第一个是0
+						u1.setNewNum1(u.getNewNum());
+					}
+				}
+			}
+		}
+		//登录用户 1
+		for (UserStatsView u : userStatsloginList) {
+			for (UserStatsView u1 : userStatsList) {
+				if (u1.getDays().equals(u.getDays())) {
+					u1.setLoginNum(u.getNewNum());
+					if(logType.charAt(0) == '1'){//包含只有一个指标或两个指标第一个是1
+						u1.setNewNum1(u.getNewNum());
+					}
+					if(logType.length()==3&&logType.charAt(2) == '1'){//第二个指标是1
+						u1.setNewNum2(u.getNewNum());
+					}
+				}
+			}
+		}
+		//平均访问时长 2
+		for(UserStatsView u: userStatsVisitList){
+			for (UserStatsView u1 : userStatsList) {
+				if (u1.getDays().equals(u.getDays())) {
+					u1.setMeanVisitTime(u.getInterval1());
+					if(logType.charAt(0) == '2'){//包含只有一个指标或两个指标第一个是2
+						u1.setInterval1(u.getInterval1());
+					}
+					if(logType.length()==3&&logType.charAt(2) == '2'){//第二个指标是2
+						u1.setInterval2(u.getInterval1());
+					}
+				}
+			}
+		}
+		//新用户平均访问时长 3
+		for(UserStatsView u: userStatsnewVisitList){
+			for (UserStatsView u1 : userStatsList) {
+				if (u1.getDays().equals(u.getDays())) {
+					u1.setNewMeanVisitTime(u.getInterval1());
+					if(logType.charAt(0) == '3'){//包含只有一个指标或两个指标第一个是3
+						u1.setInterval1(u.getInterval1());
+					}
+					if(logType.length()==3&&logType.charAt(2) == '3'){//第二个指标是3
+						u1.setInterval2(u.getInterval1());
+					}
+				}
+			}
+		}
+		//比较
+		if (compare != null) {// 有比较 一般都是对某一天某一个指标进行比较，所以days不会相等，都是一个数据
+			for (UserStatsView u : userStatsCompareList) {//一定是某一天才可以比较
+				for (UserStatsView u1 : userStatsList) {
+					if (u1.getDays().equals(u.getDays())) {
+						if("0".equals(logType)||"1".equals(logType)){
+							u1.setNewNum2(u.getNewNum());
+						}else if("2".equals(logType)||"3".equals(logType)){
+							u1.setInterval2(u.getInterval1());
+						}
+					}
+				}
+			}
+		}
+		//组装
+		// 只有一个指标
+//		if (logType.length() == 1) {// 只有一个指标，可能会有比较 把查到的内容进行组装！
+//			if (timeUnit == 0) {// 按时
+//				for (UserStatsView u : userStatsAddList) {
+//					UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+//					stats.setNewNum(u.getNewNum());
+//					if(logType.equals("0")){
+//						stats.setNewNum1(u.getNewNum());
+//					}
+//				}
+//				for (UserStatsView u : userStatsloginList) {
+//					UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+//					stats.setLoginNum(u.getNewNum());
+//					if (logType.equals("1")){
+//						stats.setNewNum1(u.getNewNum());
+//					}
+//				}
+//				if (compare != null) {// 有比较
+//					for (UserStatsView u : userStatsCompareList) {
+//						UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+//						stats.setNewNum2(u.getNewNum());
+//					}
+//				}
+//			} else {// 按日，按周，按月，按日可能会有比较
+//				for (UserStatsView u : userStatsAddList) {
+//					for (UserStatsView u1 : userStatsList) {
+//						if (u1.getDays().equals(u.getDays())) {
+//							u1.setNewNum(u.getNewNum());
+//							if (logType.equals("0")) {// 指标是新增用户数
+//								u1.setNewNum1(u.getNewNum());
+//							}
+//						}
+//					}
+//				}
+//				for (UserStatsView u : userStatsloginList) {
+//					for (UserStatsView u1 : userStatsList) {
+//						if (u1.getDays().equals(u.getDays())) {
+//							u1.setLoginNum(u.getNewNum());
+//							if (logType.equals("1")) {// 指标是登录用户数
+//								u1.setNewNum1(u.getNewNum());
+//							}
+//						}
+//					}
+//				}
+//				if (compare != null) {// 有比较 一般都是对某一天进行比较，所以days不会相等，都是一个数据
+//					for (UserStatsView u : userStatsCompareList) {//一定是某一天才可以比较
+//						for (UserStatsView u1 : userStatsList) {
+//							u1.setNewNum2(u.getNewNum());
+//						}
+//					}
+//				}
+//			}
+//		} else if (logType.length() == 3) {// 两个指标0，1等，没有比较，需要确定顺序（页面确定）
+//			if (timeUnit == 0) {// 按时
+//				if (logType.charAt(0) == '0') {// 第一位是注册用户 0
+//					for (UserStatsView u : userStatsAddList) {
+//						UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+//						stats.setNewNum1(u.getNewNum());
+//					}
+//				} else if (logType.charAt(0) == '1') {// 第一位是登录用户 1
+//					for (UserStatsView u : userStatsloginList) {
+//						UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+//						stats.setNewNum1(u.getNewNum());
+//					}
+//				} else if (logType.charAt(0) == '2') {// 第一位是平均访问时长 2
+//
+//				}
+//				if (logType.charAt(2) == '1') {// 第二位是登录用户 1
+//					for (UserStatsView u : userStatsloginList) {
+//						UserStatsView stats = userStatsList.get(Integer.parseInt(u.getDays()) - 1);
+//						stats.setNewNum2(u.getNewNum());
+//					}
+//				} else if (logType.charAt(2) == '2') {// 第二位是平均访问时长 2
+//
+//				} else if (logType.charAt(2) == '3') {// 第二位是新用户平均访问时长 3
+//
+//				}
+//			} else {// 按日，按周，按月
+//				if (logType.charAt(0) == '0') {// 第一位是注册用户 0
+//					for (UserStatsView u : userStatsAddList) {
+//						for (UserStatsView u1 : userStatsList) {
+//							if (u1.getDays().equals(u.getDays())) {
+//								u1.setNewNum1(u.getNewNum());
+//							}
+//						}
+//					}
+//				} else if (logType.charAt(0) == '1') {// 第一位是登录用户 1
+//					for (UserStatsView u : userStatsloginList) {
+//						for (UserStatsView u1 : userStatsList) {
+//							if (u1.getDays().equals(u.getDays())) {
+//								u1.setNewNum1(u.getNewNum());
+//							}
+//						}
+//					}
+//				} else if (logType.charAt(0) == '2') {// 第一位是平均访问时长 2
+//
+//				}
+//				if (logType.charAt(2) == '1') {// 第二位是登录用户 1
+//					for (UserStatsView u : userStatsloginList) {
+//						for (UserStatsView u1 : userStatsList) {
+//							if (u1.getDays().equals(u.getDays())) {
+//								u1.setNewNum2(u.getNewNum());
+//							}
+//						}
+//					}
+//				} else if (logType.charAt(2) == '2') {// 第二位是平均访问时长 2
+//
+//				} else if (logType.charAt(2) == '3') {// 第二位是新用户平均访问时长 3
+//
+//				}
+//
+//			}
+//		}
+		
+		Collections.sort(userStatsList, new UserStatsComparator());// 排序
+		return userStatsList;
+	}
+}

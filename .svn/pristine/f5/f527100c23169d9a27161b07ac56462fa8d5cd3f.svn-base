@@ -1,0 +1,335 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<link href="${pageContext.request.contextPath}/frontstage/css/nouislider.css" rel="stylesheet">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/nouislider.js"></script>
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+<%-- 
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/JMEditor.js"></script>
+--%>
+<style>
+#defaultImg{
+width:540px;height:270px;}
+.file:hover{color: #fff;}
+.webuploader-pick>div>label:hover{color: #fff;}
+.testpaper-question-option-item{margin-left:-12px;margin-bottom:5px;}
+</style>
+<div class="cn-wrap">
+
+	<div id="content-container" class="container">
+		 <jsp:include page="/frontstage/train/course/course_header.jsp"></jsp:include>
+
+		<div class="row">
+			<jsp:include page="/frontstage/train/course/course_left.jsp"></jsp:include>
+		<div class="col-md-9">
+              <div class="panel panel-default panel-col test-creator">
+                <div class="panel-heading clearfix">创建试卷</div>
+                <div class="panel-body">
+
+                  <ol class="breadcrumb">
+                    <li><a href="javascript:void(0);">试卷管理</a></li>
+                    <li class="active">重新生成试卷题目</li>
+                  </ol>
+
+                  <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/testPaper/testPaper_return.action?courseId=${courseView.id}&flag=0&sign=11" id="form-horizontal">
+                           <input type="hidden" name="id" value="${testPaper.id }">      
+                          <div class="form-group">
+                      <div class="col-md-2 control-label"><label>生成方式</label></div>
+                      <div class="col-md-8 controls radios">
+                          <label><input type="radio" name="mode" value="0"  checked="checked"> 随机生成</label>
+                          <label><input type="radio" name="mode" value="1"> 按难易程度</label>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group difficulty-form-group slider-div" style="display: none">
+                      <div class="col-md-2 control-label">
+                          <label >试卷难度</label>
+                      </div>
+                      <div class="col-md-8 controls form-control-static">
+                          <div  id="slider">
+                            
+                          </div>
+                          <div class="help-block">
+                              <span class="simple-percentage-text">简单30%</span>
+                              <span class="normal-percentage-text">一般40%</span>
+                              <span class="difficulty-percentage-text">困难30%</span>
+                              <br><span class="text-info">如果某个难度的题目数不够，将会随机选择题目来补充。</span>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label">
+                          <label >出题范围</label>
+                      </div>
+                      <div class="col-md-8 controls radios">
+                          <label><input type="radio" name="range" value="0" checked="checked" class="range"> 整个课程</label>
+                          <label><input type="radio" name="range" value="1" class="range"> 按课时范围</label>
+                           
+                          <div class="select-range" style="margin-top: 8px;display: none">
+                             <select id="testpaper-range-start" class="form-control width-input width-input-large" name="chapterListStart">
+                              <c:forEach items="${chapterList}" var="chapter" varStatus="status1">
+                                  <option value="${chapter.id}"  <c:if test="${chapter.id==question.belong_to&&question.belong_type==1}">selected="selected"</c:if>>第${status1.index+1}章：${chapter.hour_title}</option>
+                              </c:forEach>
+                             </select>
+                             <span class="text-muted mrs">到</span>
+                             <select id="testpaper-range-end" class="form-control width-input width-input-large" name="chapterListEnd">
+                               <c:forEach items="${chapterList}" var="chapter" varStatus="status1">
+                                  <option value="${chapter.id}"  <c:if test="${chapter.id==question.belong_to&&question.belong_type==1}">selected="selected"</c:if>>第${status1.index+1}章：${chapter.hour_title}</option>
+                              </c:forEach>
+                             </select>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+
+                      <div class="col-md-2 control-label"><label>题目设置</label></div>
+                      <div class="col-md-10 controls" id="testpaper-question-options">
+                          
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;">选择题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="countsChoice" value="0" id="countsChoice">/
+                              <span class="text-info question-num" role="questionNum" type="choice" id="selectQuestion">${questionView.selectQuestion }</span>
+
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scoresChoice" value="2">
+
+                             
+                          </div>
+                          
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;_display:inline;">填空题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="countsFill" value="0" id="countsFill">/
+                              <span class="text-info question-num" role="questionNum" type="fill" id="fillQuestion">${questionView.fillQuestion }</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scoresFill" value="2">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;">判断题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="countsJudge" value="0" id="countsJudge">/
+                              <span class="text-info question-num" role="questionNum" type="determine" id="judgeQuestion">${questionView.judgeQuestion }</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scoresJudge" value="2">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;">问答题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="countsQa" value="0" id="countsQa">/
+                              <span class="text-info question-num" role="questionNum" type="essay" id="qaQuestion">${questionView.qaQuestion }</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scoresQa" value="2">
+                          </div>
+                          <div class="testpaper-question-option-item">
+                              <button type="button" class="btn btn-link testpaper-question-option-item-sort-handler"><span class="glyphicon glyphicon-move"></span></button>
+                              <span style="min-width:85px;display:inline-block;_display:inline;">材料题</span>
+                              <span class="mlm">题目数量:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-number" name="countsScience" value="0" id="countsScience">/
+                              <span class="text-info question-num" role="questionNum" type="material" id="scienceQuestion">${questionView.scienceQuestion}</span>
+                              <span class="mlm">题目分值:</span>
+                              <input type="text" class="form-control width-input width-input-mini input-sm item-score" name="scoresScience" value="2">
+                           </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group mbm">
+                      <div class="col-md-8 col-md-offset-2 controls">
+                        <button type="button" class="btn btn-primary">保存，下一步</button>
+                        <a href="javascript:void(0);" class="btn btn-link  ">返回</a>
+                      </div>
+                    </div>
+                      	<input type="hidden" value="0" name="simple_percentage"  id="simple-percentage">
+ 						 <input type="hidden" value="0" name="normal_percentage"  id="normal-percentage">
+  						<input type="hidden" value="0" name="difficulty_percentage"  id="difficulty-percentage">
+                  </form>
+
+                </div>
+              </div>
+          </div>
+		</div>
+	</div>
+
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+	
+</div>
+<!-- 弹窗 -->
+<div id="modal" class="modal in" style="display: none;" role="dialog" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">题目预览</h4>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(e){
+      // 滑块
+      var slider = document.getElementById('slider');
+    noUiSlider.create(slider, {
+      
+                start: [30, 70],
+                step: 5,
+                 serialization: {
+                    resolution: 1
+                },
+        range: {
+          'min': 0,
+          'max': 100
+        }
+       
+      });
+     slider.noUiSlider.on('update', function( values ) {
+  
+     
+            var simplePercentage=parseInt(values[0]);
+  
+    		var normalPercentage=parseInt(values[1] - values[0]);
+           
+     	    var difficultyPercentage=parseInt(100 - values[1]);
+                      $('.simple-percentage-text').html('简单' + simplePercentage + '%');
+                $('.normal-percentage-text').html('一般' + normalPercentage + '%');
+                $('.difficulty-percentage-text').html('困难' + difficultyPercentage + '%');
+                $("#simple-percentage").val(simplePercentage);
+                $("#normal-percentage").val(normalPercentage);
+                $("#difficulty-percentage").val(difficultyPercentage);
+
+     });
+     
+      //难易程度
+      $("input[name=mode]").click(function(){
+          $(this).prop("checked");
+          var num = $(this).val();
+          if (num == 0) {
+              $('.slider-div').hide();
+          }else if (num ==1) {
+              $('.slider-div').show();
+          }
+      })
+      // 出题范围
+      $("input[name=range]").click(function(){
+          $(this).prop("checked");
+          var num = $(this).val();
+          if (num == 0) {
+              $('.select-range').hide();
+          }else if (num ==1) {
+              $('.select-range').show();
+          }
+      });
+      //出题范围切换
+      $(".range").click(function(){
+     
+         var value=$(this).val();
+       if(value==0){
+       selectQuestionTypeCount();
+       }else{
+        var start=$("#testpaper-range-start").val();
+        var end=$("#testpaper-range-end").val();
+       selectQuestionTypeCount(start,end);
+       }
+     
+      });
+      $("#testpaper-range-start").change(function(){
+      
+   var start=$("#testpaper-range-start").val();
+   var end=$("#testpaper-range-end").val();
+  if(start>=end){
+ $("#testpaper-range-end>option").each(function(){
+     if($(this).val()<start){
+         $(this).remove();
+     }
+ 
+ });
+	}else{
+ $("#testpaper-range-start>option").each(function(){
+     var _this=$(this).clone();
+     if($(this).val()>=start&&$(this).val()<end){
+         $("#testpaper-range-end").prepend(_this);
+     }
+ 
+ });
+
+}
+ start=$("#testpaper-range-start").val();
+  end=$("#testpaper-range-end").val();
+ selectQuestionTypeCount(start,end);
+      });
+      $("#testpaper-range-end").change(function(){
+      
+   var start=$("#testpaper-range-start").val();
+   var end=$("#testpaper-range-end").val();
+   selectQuestionTypeCount(start,end);
+   });
+      $(".btn-primary").click(function(){
+    var countsChoice=$("#countsChoice").val();
+	var countsFill=$("#countsFill").val();
+    var countsJudge=$("#countsJudge").val();
+    var countsQa=$("#countsQa").val();
+    var countsScience=$("#countsScience").val();
+    var selectQuestion=parseInt($("#selectQuestion").html());
+	var fillQuestion=parseInt($("#fillQuestion").html());
+	var judgeQuestion=parseInt($("#judgeQuestion").html());
+	var qaQuestion=parseInt($("#qaQuestion").html());
+	var scienceQuestion=parseInt($("#scienceQuestion").html());
+	var re = /^[0-9]*$/;
+	if(countsChoice==""||countsFill==""||countsJudge==""||countsQa==""||countsScience==""){
+	alert("题目数量不能为空");
+	return false;
+	}
+	if (!re.test(countsChoice)||!re.test(countsFill)||!re.test(countsJudge)||!re.test(countsQa)||!re.test(countsScience)) {
+	alert("题目数量只能输入数字");
+	return false;
+	}if(countsChoice>selectQuestion||countsFill>fillQuestion||countsJudge>judgeQuestion||countsQa>qaQuestion||countsScience>scienceQuestion){
+	alert("选题数超过题库总数");
+	return false;
+	}
+      $("#form-horizontal").submit();
+      });
+      
+      
+  });
+  function selectQuestionTypeCount(start,end){
+  var belong_type=0;
+  if(start!=null){
+  belong_type=1;
+  }else{
+  start=0;
+  end=0;
+  }
+   $.ajax({
+       url : '${pageContext.request.contextPath}/testPaper/ajax_question_count.action',
+       dataType : 'json',
+       data:{
+           belong_type:belong_type, chapterListStart:start,
+			chapterListEnd:end,
+			courseId:'${courseView.id}'
+       },
+       success : function(response) {
+           $("#selectQuestion").html(response.questionView.selectQuestion);
+           $("#fillQuestion").html(response.questionView.fillQuestion);
+			$("#judgeQuestion").html(response.questionView.judgeQuestion);
+			$("#qaQuestion").html(response.questionView.qaQuestion);
+			$("#scienceQuestion").html(response.questionView.scienceQuestion);
+			}
+   });
+  
+  }
+</script>
+

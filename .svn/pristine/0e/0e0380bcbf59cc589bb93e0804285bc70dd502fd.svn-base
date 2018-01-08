@@ -1,0 +1,108 @@
+/*main主内容*/
+.main{width: 1000px;height:100px;position: relative;margin:100px auto;background-color: #fff;}
+.main_title{font-size: 16px;position: absolute;margin-top: -40px;color: #3ebbce;}
+.add_some_info{position: relative;}
+.choose_file,.add_inf,.success_upload{width: 50px;height:50px;border-radius: 50%;font-size: 18px;color:#000;
+text-align: center;line-height: 50px;margin-left: 100px;position: absolute;margin-top: 25px;}
+.choose_file{background-color: #3ebbce;color: #fff;}
+.choose_file p{color: #3ebbce;}
+.choose_file p ,.add_inf p,.success_upload p {font-size: 12px;margin-top: -15px;}
+.upload_progress_1,.upload_progress_2{width:300px;height:2px;margin-top: -60px;margin-left: 50px;}
+.upload_progress_2{margin-top: -60px;}
+.add_inf{margin-left: 450px;}
+.success_upload{margin-left: 800px;}
+.upload_progress{margin-top: -50px;}
+/*选择上传内容*/
+/*#i_select_files{width: 660px;height:180px;position: relative;background-color: #fff;margin-top: -50px;}*/
+/*.upload_file_success{width: 660px;height:180px;position: relative;background-color: #fff;margin-top: 50px;}*/
+/*.upload_file_success p{padding-top:40px;}*/
+
+.select_file_content{width:620px;height:140px;position:relative;}
+/*#i_select_files img{display:inline;position: relative;margin-top:55px;float: left;margin-left: 210px;}*/
+.upload_file_pro_2{width:998px;height:80px;margin:20px auto;border-top:none;}
+.add_more_btn_success{position: relative;width: 100px;height:36px;border-radius: 5px;background-color: #fe9a00;
+    margin-left:auto;color: #fff;margin-top: 10px;}
+.upload_file_success div{position: relative;margin-left: 41%;margin-top: 20px;}
+.upload_file_success p{font-size: 16px;position: relative;margin-top:30px;text-align: center;}
+
+.upload_file_advice{font-size: 14px;line-height: 80px;padding-top: 100px;position: absolute;}
+.add_more_btn,.sure_for_upload{display:inline;width: 100px;height:36px;border-radius: 5px;}
+.add_more_btn{margin-left: 770px;margin-top:125px;position: absolute;background-color: #e7e7e7;}
+.sure_for_upload{margin-left: 890px;margin-top: 125px;position: absolute;color: #fff;background-color: #fe9a00;}
+
+.add_some_info_main{width: 996px;height:auto;margin: 0 auto;position: relative;padding-top: 40px;background-color: #fff;}
+.upload_list{position: relative;width: 998px;height:88px;background-color:#fff;border-bottom: 1px solid #ddd;margin:-0 auto;}
+.add_content{margin-left: 225px;color: #6d6d6d;}
+.add_content input{width: 400px;height:48px;margin-left: 5px;position: relative;border-radius: 5px;border: 1px solid #ddd;}
+.add_content span{line-height: 28px;font-size: 14px;position: relative;padding-left: 44px;}
+.add_content textarea{margin-top:28px;width:400px;height:118px;margin-left: 90px;resize:none;border: 1px solid #ddd; }
+.add_content div span{position: absolute;margin-top: 20px;margin-right: 20px;}
+.school_classify{margin-left: 267px;color: #6d6d6d;font-size: 14px;margin-top: 20px;}
+.school_classify span{color: #6d6d6d;float: left;line-height: 50px; padding-right: 5px;}
+.school_classify a{display: block;float: left;width:130px;height: 50px;text-align: center;margin-left:10px;border-radius: 5px;  line-height: 50px;  }
+.subject{margin-left: 265px;margin-top: 90px;}
+.subject span{font-size: 14px;color:#6d6d6d;}
+.subject select{font-size: 16px;color:#6d6d6d;width: 400px;height: 38px;background-color: #fff;border: 1px solid #ddd;padding-left: 10px;margin-left: 10px;}
+.textbook_version{margin-left: 240px;margin-top: 30px;}
+.textbook_version span{font-size: 14px;color:#6d6d6d;}
+.grade,.unit,.page,.pay{font-size: 16px;color:#6d6d6d;width: 126px;height: 38px;background-color: #fff;border: 1px solid #ddd;margin-left: 10px;margin-top: 30px;}
+.textbook_version_01{font-size: 16px;color:#6d6d6d;width: 400px;height: 38px;background-color: #fff;border: 1px solid #ddd;padding-left: 10px;margin-left: 6px;}
+.pay_num{width:130px;height: 40px;border: 1px solid #ddd; }
+.typeValue,.savefolder{margin-top: 20px;margin-left: 260px;font-size: 14px;margin-bottom: 60px;}
+.typeValue,.savefolder span{font-size: 14px;color: #6d6d6d;}
+.stageClass{background-color: #3ebbce;color: #fff;margin-left: 10px;}
+.changeTest{font-size: 12pt;color: red}
+
+
+.upload_tags{position:relative;margin-top: 60px;margin-left: 255px;width: 400px;font-size: 14px;color: #6d6d6d;}
+.upload_tags input{width: 400px;height:38px;margin-left: 15px;padding-left: 10px;position: absolute;margin-top:-10px;border: 1px solid #ddd;}
+.upload_tags a{width:40px;height:25px;background-color:#3ebbce;color:#fff;
+    display: block;border-radius: 3px;margin-right: 15px;text-align:center;float:left;line-height:25px;margin-top:5px;}
+
+
+.upload_classify{position: relative;margin-top: 20px;margin-left: 260px;}
+.upload_classify select{position: relative;width: 120px;height:38px;margin-left: 10px;font-size: 16px;color: #6d6d6d;padding-left: 10px;border: 1px solid #ddd;}
+.upload_classify span{font-size: 14px;color: #6d6d6d;}
+
+.border_mid{position: absolute;height:440px;border-right:1px solid #ddd;margin-left:50%;margin-top: -500px;}
+
+/*分栏*/
+.column{margin-left: 40px;font-size: 14px;}
+.main_right_resources_page{width:450px;}
+.main_right_resources_page select{width:93px;height: 30px;margin-left: 18px;}
+#grade0{margin-left: 90px;margin-top: 30px;}
+#chapter0{margin-top: 30px;}
+#section0{margin-top: 30px;}
+
+.pick_up{font-size: 12px;width: 40px;float: left;position: relative;margin-left: 260px;padding-top: 20px;cursor: pointer;}
+.delete{font-size: 12px;width: 40px;float: left;padding-top: 20px;}
+.upload_lis_page {margin-top: 20px;position:relative;}
+.upload_list_page img{width: 25px;height: 25px;position: relative;margin-left:34px;margin-top: 10px;float: left;}
+.upload_list_page p{font-size: 14px;float:left;margin-top: 12px;}
+.upload_list_page_num{width: 60px;height:40px;background-color: #3dbcca;line-height: 40px;text-align: center;border-radius: 5px;float: left;}
+.page_title{margin-top: -30px;position: relative;width: 470px;padding-left: 20px;}
+.operation{margin-top: -30px;position: relative;width: 40px;padding-left: 280px;}
+
+.add_some_info_right{margin-top: -425px;position: relative;margin-left: 600px;}
+.add_some_info_right form p{font-size: 14px;display: inline;line-height: 16px;margin-left: -33px;}
+.form_style_span{padding-left: 60px;}
+.add_some_info_right form span{font-size: 14px;}
+.add_some_info_right form span img{font-size: 14px;cursor:pointer;}
+.upload_file_saving{position: relative;margin-top: 100px;margin-left: 560px;}
+.upload_file_saving select{position: relative;width: 100px;height:30px;margin-left: 10px;}
+.upload_file_saving span{font-size: 14px;}
+
+select{background-color: #fff;}
+
+
+
+/*上传资源页面重构 css代码*/
+
+.circle{border-radius: 50%;border: 1px solid #ddd;width: 50px;height: 50px;text-align: center;}
+.circle>span{line-height: 50px;text-align: center;}
+.stage_step>div.active{background-color: #3ebbce;}
+.stage_step>div.active>span{color: #fff}
+.stage_step>span{text-align: center;}
+.stage_step>span.active{color: #3ebbce;}
+.stage_step>p{width:170px;height: 10px;margin-left: 48px;margin-top:-50px;}
+.stage_step>p.active{background-color: #3ebbce;}

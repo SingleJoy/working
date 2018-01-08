@@ -1,0 +1,33 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<div class="es-wrap" >
+    <jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+    <div id="content-container"  class="container">
+
+            <div class="row row-8">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel-default" >
+                        <div class="panel-body">
+
+                            <div id="generImg" class="certificate_info" style="width: 700px;height:600px;margin-left: auto;">
+                                <img src="${pageContext.request.contextPath}${certModel.negative_path}" style="width:700px;height: 600px;">
+
+                                <div id="content" style="position:absolute;margin-top:-500px;width:500px;margin-left:100px;">
+                                       ${certModel.content }
+                                </div>
+                                <div class="certificate_ seal" style="z-index:99;position: absolute;margin-left: 490px;margin-top:-175px;">
+                                    <img src="${pageContext.request.contextPath}${certModel.stamp_path}" style="width: 100px;height: 100px;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>

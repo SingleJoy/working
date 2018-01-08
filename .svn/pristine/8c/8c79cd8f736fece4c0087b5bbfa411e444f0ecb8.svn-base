@@ -1,0 +1,761 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<jsp:include page="/backstage/base/inc.jsp"></jsp:include>
+<script type="text/javascript" src="${pageContext.request.contextPath}/stream/js/stream-v1.js"></script>
+<script type="text/javascript" charset="utf-8">
+   
+
+	var datagrid;
+	$(function() {
+
+		datagrid = $('#datagrid').datagrid({
+			url : '${pageContext.request.contextPath}/back_file/datagrid.action',
+			title : '',
+			iconCls : 'icon-save',
+			pagination : true,
+			pageSize : 10,
+			pageList : [ 10, 20, 30, 40 ],
+			fit : true,
+			fitColumns : true,
+			nowrap : false,
+			border : false,
+			idField : 'id',
+			sortName : 'upload_time',
+			sortOrder : 'desc',
+			checkOnSelect : true,
+			selectOnCheck : true,
+			frozenColumns : [ [ {
+				title : '编号',
+				field : 'id',
+				width : 150,
+				sortable : true,
+				checkbox : true
+			}, {
+				title : '文档名称',
+				field : 'filename',
+				width : 200,
+				formatter:function(value,rowData,rowIndex){
+					var rows = datagrid.datagrid('getRows');
+					var row = rows[rowIndex];
+					var $row = JSON.stringify(row).replace(/\"/g,"'");
+					return '<a href="javascript:void(0);" title="'+value+'" onclick="viewDetails('+row.id+','+$row+')" >'+lencut(value,16)+'</a>';
+				}
+			} ] ],
+			columns : [ [ {
+				title : '路径',
+				field : 'path',
+				width : 100,
+				hidden : true
+			},
+			{
+				title : '类型',
+				field : 'file_type',
+				width : 100,
+				sortable : true,
+				formatter:function(v){
+					if(v=="0"){
+						return '文档';
+					}else if(v=="1"){
+						return '教案';
+					}
+				}
+			}, {
+				title : '长度',
+				field : 'length',
+				width : 100
+			}, {
+				title : '大小',
+				field : 'size',
+				width : 100,
+				sortable : true,
+			}, {
+				title : '格式',
+				field : 'format',
+				width : 100,
+				sortable : true,
+			}, {
+				title : '上传时间',
+				field : 'upload_time',
+				sortable : true,
+				width : 150,
+			}, {
+				title : '上传人',
+				field : 'userName',
+				width : 100,
+			}, {
+				title : '状态',
+				field : 'status',
+				width : 100,
+				sortable : true,
+				formatter:function(v){
+					if(v=="0"){
+						return '正常';
+					}else if(v=="1"){
+						return '未审核';
+					}else if(v=="2"){
+						return "审核不通过";
+					}else if(v=="3"){
+						return "删除";						
+					}
+				}
+			},{
+				title : '操作',
+				field : 'statusType',
+				width : 100,
+				sortable : true,
+				formatter:function(value, rowData, rowIndex){
+					var rows = datagrid.datagrid('getRows');
+					var row = rows[rowIndex];
+					var check = "";
+					if(row.status==1){
+						var $row = JSON.stringify(row).replace(/\"/g,"'");
+						check = '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="check('+row.id+','+$row+');">审核</a>';
+					};
+					return '<a href="${pageContext.request.contextPath}/userFile/to_file.action?id='+row.id+'" target="_blank" >预览</a>'+check;
+				}
+			} ] ],
+			toolbar : [ {
+				text : '删除',
+				iconCls : 'icon-remove',
+				handler : function() {
+					remove();
+				}
+			}, '-', {
+				text : '取消选中',
+				iconCls : 'icon-undo',
+				handler : function() {
+					datagrid.datagrid('unselectAll');
+				}
+			}, '-', {
+				text : '批量审核',
+				iconCls : 'icon-edit',
+				handler : function() {
+					review();
+				}
+			}, '-'],
+			onRowContextMenu : function(e, rowIndex, rowData) {
+				e.preventDefault();
+				$(this).datagrid('unselectAll');
+				$(this).datagrid('selectRow', rowIndex);
+				$('#menu').menu('show', {
+					left : e.pageX,
+					top : e.pageY
+				});
+			}
+		});
+
+	});
+	
+	function check(value,obj){
+		if(obj.file_type==0){
+			var p = parent.sy.dialog({
+				title : '文档审核',
+				href : '${pageContext.request.contextPath}/back_file/to_file_detail.action?file_type='+obj.file_type,
+				width : 530,
+				height : 370,
+				buttons : [ {
+					text : '审核通过',
+					handler : function() {
+						$.ajax({
+							url : '${pageContext.request.contextPath}/back_file/save_review_file.action',
+							data:{
+								ids : value,
+								status : 0
+							},
+							success : function(d) {
+								p.dialog('close');
+								var json = $.parseJSON(d);
+								if (json.success) {
+									datagrid.datagrid('reload');
+								}
+								parent.sy.messagerShow({
+									msg : json.msg,
+									title : '提示'
+								});
+							}
+						});
+					}
+				},{
+					text : '不通过',
+					handler : function() {
+						p.dialog('close');
+						check1(value);
+					}
+				},{
+					text : '取消',
+					handler : function() {
+						p.dialog('close');
+					}
+				}, ],
+				onLoad : function() {
+					var f = p.find('form');
+					$.ajax({
+						url : '${pageContext.request.contextPath}/back_file/query_fileDetail.action',
+						data : {
+							id : value
+						},
+						dataType : 'json',
+						success : function(d) {
+							if(d.success){
+								f.form('load', {
+									title : d.obj.title,
+									profile : d.obj.profile,
+									type : d.obj.type,
+									labels : d.obj.labels,
+									columnName : d.obj.columnName,
+									version : d.obj.version,
+									grade : d.obj.grade,
+									price : d.obj.price,
+									status : d.obj.status,
+									reason : d.obj.reason,
+								});
+							}
+						}
+					});
+				},
+			});
+		}else if(obj.file_type==1){
+			var p = parent.sy.dialog({
+				title : '审核教案',
+				href : '${pageContext.request.contextPath}/back_file/to_file_detail.action?file_type='+obj.file_type,
+				width : 470,
+				height : 170,
+				buttons : [ {
+					text : '审核通过',
+					handler : function() {
+						$.ajax({
+							url : '${pageContext.request.contextPath}/back_file/save_review_file.action',
+							data:{
+								ids : value,
+								status : 0
+							},
+							success : function(d) {
+								p.dialog('close');
+								var json = $.parseJSON(d);
+								if (json.success) {
+									datagrid.datagrid('reload');
+								}
+								parent.sy.messagerShow({
+									msg : json.msg,
+									title : '提示'
+								});
+							}
+						});
+					}
+				},{
+					text : '不通过',
+					handler : function() {
+						p.dialog('close');
+						check1(value);
+					}
+				},{
+					text : '取消',
+					handler : function() {
+						p.dialog('close');
+					}
+				}, ],
+				onLoad : function() {
+					var f = p.find('form');
+					f.form('load', {
+						filename : obj.filename,
+						file_type : "教案",
+						userName : obj.userName,
+						upload_time : obj.upload_time
+					});
+				},
+			});
+		}
+	}
+	function check1(value){
+		var p = parent.sy.dialog({
+			title: '原因',
+			href: '${pageContext.request.contextPath}/back_certification/to_msg1.action',
+			width: 550,
+			height: 320,
+			buttons: [{
+				text: '确定',
+				handler: function() {
+					var reason = p.find("#msg").val();
+					$.ajax({
+						url: "${pageContext.request.contextPath}/back_file/save_review_file.action?status=2&reason="+reason,
+						data: {
+							ids: value
+						},
+						dataType: 'json',
+						success: function(d) {
+							if (d.success) {
+								datagrid.datagrid('reload');
+							}
+							parent.sy.messagerShow({
+								msg: d.msg,
+								title: '提示'
+							});
+						}
+					});
+					p.dialog('close');
+				}
+			}, {
+				text: '取消',
+				handler: function() {
+					p.dialog('close');
+				}
+			}],
+			onLoad: function() {
+
+			}
+		});
+	}
+	function viewDetails(value,obj){
+		if(obj.file_type==0){
+			var p = parent.sy.dialog({
+				title : '文档详情',
+				href : '${pageContext.request.contextPath}/back_file/to_file_detail.action?check=0&file_type='+obj.file_type,
+				width : 530,
+				height : 400,
+				buttons : [ {
+					text : '返回',
+					handler : function() {
+						var f = p.find('form');
+						p.dialog('close');
+					}
+				} ],
+				onLoad : function() {
+					var f = p.find('form');
+					$.ajax({
+						url : '${pageContext.request.contextPath}/back_file/query_fileDetail.action',
+						data : {
+							id : value
+						},
+						dataType : 'json',
+						success : function(d) {
+							if(d.success){
+								f.form('load', {
+									title : d.obj.title,
+									profile : d.obj.profile,
+									type : d.obj.type,
+									labels : d.obj.labels,
+									columnName : d.obj.columnName,
+									version : d.obj.version,
+									grade : d.obj.grade,
+									price : d.obj.price,
+									status : d.obj.status,
+									reason : d.obj.reason,
+								});
+							}
+						}
+					});
+				},
+			});
+		}else if(obj.file_type==1){
+			var p = parent.sy.dialog({
+				title : '教案详情',
+				href : '${pageContext.request.contextPath}/back_file/to_file_detail.action?check=0&file_type='+obj.file_type,
+				width : 530,
+				height :200,
+				buttons : [ {
+					text : '返回',
+					handler : function() {
+						var f = p.find('form');
+						p.dialog('close');
+					}
+				} ],
+				onLoad : function() {
+					var f = p.find('form');
+					f.form('load', {
+						filename : obj.filename,
+						file_type : "教案",
+						userName : obj.userName,
+						status : obj.status,
+						reason : obj.reason,
+						upload_time : obj.upload_time
+					});
+				},
+			});
+		}
+		
+	}
+	
+	function readFile(value){
+		window.location.href = '${pageContext.request.contextPath}/back_file/to_read_file.action?id='+value;
+	}
+	
+	function review(){
+		var rows = datagrid.datagrid('getSelections');
+		var ids = [];
+		if (rows.length > 0) {
+			for ( var i = 0; i < rows.length; i++) {
+				if(rows[i].status==3){
+					parent.sy.messagerAlert('提示', rows[i].filename+'<br/>文档已删除，不能审核', 'error');
+					return false;
+				}else{
+					ids.push(rows[i].id);
+				}
+			}
+			var p = parent.sy.dialog({
+				title : '批量审核文档',
+				href : '${pageContext.request.contextPath}/back_file/to_review_file.action',
+				width : 300,
+				height : 200,
+				buttons : [ {
+					text : '审核',
+					handler : function() {
+						var f = p.find('form');
+						f.form('submit', {
+							url : '${pageContext.request.contextPath}/back_file/save_review_file.action',
+							success : function(d) {
+								var json = $.parseJSON(d);
+								if (json.success) {
+									datagrid.datagrid('reload');
+									p.dialog('close');
+								}
+								parent.sy.messagerShow({
+									msg : json.msg,
+									title : '提示'
+								});
+							}
+						});
+					}
+				} ],
+				onLoad : function() {
+					var f = p.find('form');
+					f.form('load', {
+						ids : ids.join(',')
+					});
+				}
+			});
+		} else {
+			parent.sy.messagerAlert('提示', '请勾选要审核的记录！', 'error');
+		}
+	}
+	function edit() {
+		var rows = datagrid.datagrid('getSelections');
+		if (rows.length == 1) {
+			var p = parent.sy.dialog({
+				title : '编辑文档',
+				href : '${pageContext.request.contextPath}/back_file/to_file_edit.action',
+				width : 420,
+				height : 260,
+				buttons : [ {
+					text : '编辑',
+					handler : function() {
+						var f = p.find('form');
+						f.form('submit', {
+							url : '${pageContext.request.contextPath}/back_file/edit_file.action',
+							success : function(d) {
+								var json = $.parseJSON(d);
+								if (json.success) {
+									datagrid.datagrid('reload');
+									p.dialog('close');
+								}
+								parent.sy.messagerShow({
+									msg : json.msg,
+									title : '提示'
+								});
+							}
+						});
+					}
+				} ],
+				onLoad : function() {
+					var f = p.find('form');
+					var authIds = f.find('input[name=authIds]');
+					var authIdsTree = authIds.combotree({
+						lines : true,
+						url : '${pageContext.request.contextPath}/back_auth/doNotNeedSession_tree_recursive.action',
+						checkbox : true,
+						multiple : true,
+						cascadeCheck:false,
+						onLoadSuccess : function() {
+							parent.$.messager.progress('close');
+						}
+					});
+					f.form('load', {
+						id : rows[0].id,
+						filename : rows[0].filename,
+						remarks : rows[0].remarks,
+						authIds : sy.getList(rows[0].authIds)
+					});
+				}
+			});
+		} else if (rows.length > 1) {
+			parent.sy.messagerAlert('提示', '同一时间只能编辑一条记录！', 'error');
+		} else {
+			parent.sy.messagerAlert('提示', '请勾选要编辑的记录！', 'error');
+		}
+	}
+	function append() {
+		var p = parent.sy.dialog({
+			title : '添加文档',
+			href : '${pageContext.request.contextPath}/back_file/to_file_add.action',
+			width : 420,
+			height : 260,
+			buttons : [ {
+				text : '添加',
+				handler : function() {
+					var f = p.find('form');
+					f.form('submit', {
+						url : '${pageContext.request.contextPath}/back_file/save_file.action',
+						success : function(d) {
+							var json = $.parseJSON(d);
+							if (json.success) {
+								datagrid.datagrid('reload');
+								p.dialog('close');
+							}
+							parent.sy.messagerShow({
+								msg : json.msg,
+								title : '提示'
+							});
+						}
+					});
+				}
+			} ],
+			onLoad : function() {
+				var f = p.find('form');
+				var authIds = f.find('input[name=authIds]');
+				var authIdsTree = authIds.combotree({
+					lines : true,
+					url : '${pageContext.request.contextPath}/back_auth/doNotNeedSession_tree_recursive.action',
+					checkbox : true,
+					multiple : true,
+					cascadeCheck:false
+				});
+			}
+		});
+	}
+	function remove() {
+		var rows = datagrid.datagrid('getChecked');
+		var ids = [];
+		if (rows.length > 0) {
+			parent.sy.messagerConfirm('请确认', '您要删除当前所选项目？', function(r) {
+				if (r) {
+					for ( var i = 0; i < rows.length; i++) {
+						ids.push(rows[i].id);
+					}
+					$.ajax({
+						url : '${pageContext.request.contextPath}/back_file/delete_file.action',
+						data : {
+							ids : ids.join(',')
+						},
+						dataType : 'json',
+						success : function(d) {
+							datagrid.datagrid('load');
+							datagrid.datagrid('unselectAll');
+							parent.sy.messagerShow({
+								title : '提示',
+								msg : d.msg
+							});
+						}
+					});
+				}
+			});
+		} else {
+			parent.sy.messagerAlert('提示', '请勾选要删除的记录！', 'error');
+		}
+	}
+	
+	function _search() {
+		datagrid.datagrid('load', sy.serializeObject($('#searchForm')));
+	}
+	function cleanSearch() {
+		datagrid.datagrid('load', {});
+		$('#searchForm input').val('');
+		$('#searchForm select').val('');
+	}
+</script>
+</head>
+<body class="easyui-layout" data-options="fit:true">
+	<div data-options="region:'north',border:false,title:'过滤条件'" style="height: 160px;overflow: hidden;" align="left">
+		<form id="searchForm" style="width: 100%;height: 100%;">
+			<table class="tableForm datagrid-toolbar" style="width: 100%;height: 100%;">
+				<tr>
+				    
+					
+					<!-- <td><a href="javascript:void(0);" class="" id="i_select_files">上传文件</a></td> -->
+				</tr>
+				<tr>
+				    <th>格式：</th>
+					<td>
+						<select  name="format" style="width:80px;">
+						    <option value="" selected="selected">请选择</option>
+						    <option value="doc">doc</option>
+							<option value="docx">docx</option>
+							<option value="pdf">pdf</option>
+							<option value="ppt">ppt</option>
+							<option value="txt">txt</option>
+							<option value="xlsx">xlsx</option>
+						</select>
+					</td>
+					<th>类型：</th>
+					<td>
+					<select  name="file_type" style="width:80px;">
+					    <option value="" selected="selected">请选择</option>
+					    <option value="0">文档</option>
+						<option value="1">教案</option>
+					</select></td>
+					
+					<th>文&nbsp;&nbsp;&nbsp;&nbsp;档：</th>
+					<td><input name="filename" style="width:207px;" /></td>
+				</tr>
+				<tr>
+				    <th>状态：</th>
+				    <td>
+						<select  name="status" style="width:80px;">
+						    <option value="" selected="selected">请选择</option>
+						    <option value="0">正常</option>
+							<option value="1">未审核</option>
+							<option value="2">不通过</option>
+							<option value="3">删除</option>
+						</select>
+					</td>
+					<th>上传人：</th>
+					<td><input name="userName" style="width:155px;" />
+					<th>上传时间：</th>
+					<td>
+						<input name="timeStart" class="easyui-datebox" data-options="editable:false" style="width: 155px;" />&nbsp;&nbsp;至&nbsp;&nbsp;
+						<input name="timeEnd" class="easyui-datebox" data-options="editable:false" style="width: 155px;" />
+						<a href="javascript:void(0);" class="easyui-linkbutton" onclick="_search();">查询</a>&nbsp;&nbsp;<a href="javascript:void(0);" class="easyui-linkbutton" onclick="cleanSearch();">清空</a>
+					</td>
+				</tr> 
+			</table>
+		</form>
+	</div>
+	<div data-options="region:'center',border:false" style="overflow: hidden;">
+		<table id="datagrid"></table>
+	</div>
+
+	<div id="menu" class="easyui-menu" style="width:120px;display: none;">
+		<div onclick="append();" data-options="iconCls:'icon-add'">增加</div>
+		<div onclick="remove();" data-options="iconCls:'icon-remove'">删除</div>
+		<div onclick="edit();" data-options="iconCls:'icon-edit'">编辑</div>
+	</div>
+	<script type="text/javascript">
+	/**
+     * 配置文件（如果没有默认字样，说明默认值就是注释下的值）
+     * 但是，on*（onSelect， onMaxSizeExceed...）等函数的默认行为
+     * 是在ID为i_stream_message_container的页面元素中写日志
+     */
+
+    var config = {
+        enabled: true, /** 是否启用文件选择，默认是true */
+        customered: true,
+        multipleFiles: true, /** 是否允许同时选择多个文件，默认是false */
+        autoUploading: true, /** 当选择完文件是否自动上传，默认是true */
+        fileFieldName: "FileData", /** 相当于指定<input type="file" name="FileData">，默认是FileData */
+        maxSize: 2147483648, /** 当_t.bStreaming = false 时（也就是Flash上传时），2G就是最大的文件上传大小！所以一般需要 */
+        simLimit: 1, /** 允许同时选择文件上传的个数（包含已经上传过的） */
+        extFilters: [".txt",".doc",".docx",".ppt",".pptx",".xls",".xlsx",".pdf"], /** 默认是全部允许，即 [] */
+        dragAndDropArea: "i_select_files",
+        browseFileId : "i_select_files", /** 选择文件的ID, 默认: i_select_files */
+        browseFileBtn : "<div></div>", /** 显示选择文件的样式, 默认: `<div>请选择文件</div>` */
+        filesQueueId : "i_stream_files_queue", /** 文件上传容器的ID, 默认: i_stream_files_queue */
+        filesQueueHeight : 200, /** 文件上传容器的高度（px）, 默认: 450 */
+        tokenURL : "/edu_yun/tk", /** 根据文件名、大小等信息获取Token的URI（用于生成断点续传、跨域的令牌） */
+        uploadURL : "/edu_yun/upload", /** HTML5上传的URI */
+        onSelect: function(files) {
+            for(var i=0; i<files.length; i++) {
+                if(files[i].size>0){
+                    var tmpl = $("#UploadFileModule").text().trim();
+                    var instance = tmpl.replace(/#FILE_ID#/g, files[i].id)
+                        .replace(/#FILE_NAME#/g, files[i].name)
+                        .replace(/#FILE_SIZE#/g, _t.formatBytes(files[i].size));
+
+                    $("#i_select_files").append(instance);
+
+                    $("#"+ files[i].id).click(function(e) {
+                        e.stopPropagation();
+                        if ($(this).hasClass('dz-processing')) {
+                            $(this).remove();
+                        }
+                    });
+                }else{
+                    alert("文件大小为0请重新选择！");
+                    windows.location="${pageContext.request.contextPath}/my_file_base/to_upload_file.action";
+                }
+            }
+        },
+        onMaxSizeExceed: function(file) {//文件大小超过限制
+            var $module = $("#"+ file.id);
+            $module.addClass("dz-error dz-complete");
+            //console && console.log("-------------onMaxSizeExceed-------------------");
+            //console && console.log(file);
+            $module.find(".dz-error-message span").text("文件[name="+file.name+", size="+file.formatSize+"]超过文件大小限制‵"+file.formatLimitSize+"‵，将不会被上传！");
+            //console && console.log("-------------onMaxSizeExceed-------------------End");
+        },
+        onFileCountExceed : function(selected, limit) {//文件数量超出的响应事件
+            if(selected > limit){
+                alert("一次最多上传"+limit+"个文件，但是已选择"+selected+"个");
+            }
+        },
+        onExtNameMismatch: function(info) {//文件的扩展名不匹配的响应事件
+            $module.find(".dz-error-message span").text("<strong>"+info.name+"</strong>文件类型不匹配[<strong>"+info.filters.toString() + "</strong>]");
+        },
+        onComplete: function(file) {//单个文件上传完成
+            /** 100% percent */
+            var $bar = $("#"+file.id).find("div.progress-bar");
+            $bar.css("width", file.percent + "%");
+
+            var module = $("#"+file.id);
+            module.addClass("dz-complete dz-success");
+            module.removeClass('dz-processing dz-error');
+        },
+        onAddTask: function(file, dat) {
+            // 图片回显
+            if (dat && dat.file && dat.file.type && dat.file.type.indexOf('image') == 0) {
+                var $module = $("#"+ file.id);
+                $module.addClass('dz-image-preview');
+                $module.removeClass('dz-file-preview');
+
+                var reader = new FileReader();
+                reader.readAsDataURL(dat.file);
+                reader.onload = function(evt) {
+                    var img = $('#' + file.id).find('.dz-image img');
+                    img.attr('src', reader.result);
+                    img.attr('alt', file.name);
+                    img.attr('width', '120px');
+                };
+            }
+
+        },
+        onQueueComplete: function(msg) {
+            //data为返回的json字符串，这里转对象
+            var json = eval("(" + msg + ")");
+            if(json.success){//上传成功
+                //清空之前上传的
+              
+
+
+                var filepaths = json.filePaths;//文件地址
+                var filenames = json.fileNames;//文件原始名
+                var filelengths = json.fileLengths;//文件长度
+                var fileimages = json.fileImages;//文件缩略图
+                //$("#name").val(filenames);
+               // $("#path").val(filepaths);
+                //$("#length").val(filelengths);
+               // $("#image").val(fileimages);
+               
+            }else{//上传失败
+
+            }
+        },
+        onUploadError: function(status, msg) {//上传异常
+            alert(msg + ", 状态码:" + status);
+        }
+    };
+    var _t = new Stream(config);
+    /** 不支持拖拽，隐藏拖拽框 */
+    if (!_t.bDraggable) {
+        $("#i_stream_dropzone").hide();
+    }
+    /** Flash最大支持2G */
+    if (!_t.bStreaming) {
+        _t.config.maxSize = 2147483648;
+    }
+
+    if (!_t.bDraggable) {
+        alert('你的浏览器不支持文件上传，换个现代浏览器试试！');
+    }
+	</script>
+</body>
+</html>

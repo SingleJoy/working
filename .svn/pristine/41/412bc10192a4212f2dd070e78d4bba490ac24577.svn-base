@@ -1,0 +1,72 @@
+package cn.bnsr.edu_yun.backstage.workshop.controller;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import cn.bnsr.edu_yun.backstage.base.controller.BaseController;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.frontstage.base.po.Recommended;
+import cn.bnsr.edu_yun.frontstage.base.service.RecommendedService;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+
+@Controller
+@RequestMapping("/back_workshop")
+public class BackWorkShopController extends BaseController {
+	
+	private final Logger log = LoggerFactory.getLogger(BackWorkShopController.class);
+	
+	@Autowired
+	private RecommendedService recommendedService;
+	
+
+	
+	/**
+	 * 推荐
+	 */
+	@RequestMapping("/recommended")
+	public void recommended(HttpServletResponse response, Recommended recommended) {
+		Json j = new Json();
+		try{
+			int i=recommendedService.selectBySourceIdCount(recommended);
+			if(i==0){
+				recommended.setRecommended_time(new Date());
+			    recommendedService.insert(recommended);
+			}
+			j.setSuccess(true);
+			j.setMsg("操作成功！");
+		} catch (Exception e) {
+			log.error("推荐操作失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("操作失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	/**
+	 * 取消推荐
+	 */
+	@RequestMapping("/unrecommended")
+	public void unrecommended(HttpServletResponse response, Recommended recommended) {
+		Json j = new Json();
+		try{
+			Long i=recommendedService.selectId(recommended);
+			if(i!=null){
+			    recommendedService.delete(i);
+			}
+			j.setSuccess(true);
+			j.setMsg("操作成功！");
+		} catch (Exception e) {
+			log.error("推荐操作失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("操作失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+
+}

@@ -1,0 +1,268 @@
+package cn.bnsr.edu_yun.frontstage.base.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserMapper;
+import cn.bnsr.edu_yun.frontstage.base.mapper.UserPropertyMapper;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserProperty;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.base.view.UserDetailView;
+import cn.bnsr.edu_yun.frontstage.resource.mapper.User_fileMapper;
+import cn.bnsr.edu_yun.frontstage.resource.po.User_file;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyService;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.StudyView;
+import cn.bnsr.edu_yun.frontstage.train.view.TeacherRelationView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonService;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonView;
+/**
+ * Userservice实现
+ * @author Administrator
+ *
+ */
+public class UserServiceImpl implements UserService {
+	@Autowired
+	private UserMapper userMapper;
+	
+	@Autowired
+	private UserPropertyMapper userPropertyMapper;
+	@Autowired
+	private User_fileMapper userFileMapper;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private UserStudyService userStudyService;
+	@Autowired
+	private LessonService lessonService;
+	
+	@Override
+	public int insert(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.insertSelective(user);
+	}
+
+	@Override
+	public int insertProperty(UserProperty userProperty) {
+		// TODO Auto-generated method stub
+		return userPropertyMapper.insertSelective(userProperty);
+	}
+
+	
+
+	@Override
+	public boolean selectByUsername(User user) {
+		// TODO Auto-generated method stub
+		if(userMapper.selectByUsername(user.getUsername())!=null){
+			user.setId(userMapper.selectByUsername(user.getUsername()).getId());
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean selectByUsernameAndPassword(String username, String password,User user) {
+		// TODO Auto-generated method stub
+		if((userMapper.selectByUsernameAndPassword(username,password))!=null){
+			
+			long id=userMapper.selectByUsernameAndPassword(username,password).getId();
+	        user.setId(id);
+	        user.setUsername(username);
+	        user.setPassword(password);
+		
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public User selectByUserId(Long id) {
+		// TODO Auto-generated method stub
+		return userMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public UserProperty selectUserPropertyById(Long id) {
+		// TODO Auto-generated method stub
+		return userPropertyMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int insertUserFile(User_file user_file) {
+		// TODO Auto-generated method stub
+		return userFileMapper.insertSelective(user_file);
+	}
+
+	@Override
+	public int updateProperty(UserProperty userProperty) {
+		// TODO Auto-generated method stub
+		return userPropertyMapper.updateByPrimaryKeySelective(userProperty);
+	}
+
+	@Override
+	public UserProperty selectProperty(long id) {
+		// TODO Auto-generated method stub
+		return userPropertyMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public User selectByPrimaryKey(long id) {
+		// TODO Auto-generated method stub
+		return userMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public boolean selectByPhone(String phone) {
+		if(userMapper.selectByPhone(phone)!=null){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public User selectUserByPhone(String phone) {
+		// TODO Auto-generated method stub
+		return userMapper.selectByPhone(phone);
+	}
+
+	@Override
+	public List<User> queryNewAttent(Long userId) {
+		return userMapper.queryNewAttent(userId);
+	}
+
+	@Override
+	public List<User> selectAllNum() {
+		// TODO Auto-generated method stub
+		return userMapper.selectAllNum();
+	}
+
+	@Override
+	public int updateUser(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public TeacherRelationView searchUser(String username, String usertype) {
+		if(usertype.equals("all")){//手机号、用户名、邮箱查询用户
+			TeacherRelationView ctv_name = userMapper.searchUser(username,usertype,"0");
+			if(ctv_name==null){
+				TeacherRelationView ctv_phone = userMapper.searchUser(username,usertype,"1");
+				if(ctv_phone==null){
+					TeacherRelationView ctv_email = userMapper.searchUser(username,usertype,"2");
+					if(ctv_email==null){
+						return null;
+					}else{
+						return ctv_email;
+					}
+				}else{
+					return ctv_phone;
+				}
+			}else{
+				return ctv_name;
+			}
+		}else{
+			return userMapper.searchUser(username,usertype,"0");
+		}
+	}
+
+	@Override
+	public UserDetailView selectUserDetail(String id) {
+		UserDetailView user = userMapper.selectUserDetail(id);
+		if(user!=null){
+			if(user.getUserType().equals("1")){//学生
+				user.setUserType("学生");
+			}else if(user.getUserType().equals("2")){//管理
+				user.setUserType("管理");
+			}else if(user.getUserType().equals("3")){//老师
+				user.setUserType("老师");
+			}
+			if(user.getSex()==null){
+				user.setSex("未知");
+			}else if(user.getSex().equals("0")){//女
+				user.setSex("女");
+			}else if(user.getSex().equals("1")){//男
+				user.setSex("男");
+			}else{
+				user.setSex("未知");
+			}
+		}
+		return user;
+	}
+
+	@Override
+	public User queryUser(User user) {
+		return userMapper.queryUser(user);
+	}
+
+	@Override
+	public TeacherRelationView searchUser0(String username, String usertype) {
+		if(usertype.equals("all")){//手机号、用户名、邮箱查询用户
+			TeacherRelationView ctv_name = userMapper.searchUser0(username,usertype,"0");
+			if(ctv_name==null){
+				TeacherRelationView ctv_phone = userMapper.searchUser0(username,usertype,"1");
+				if(ctv_phone==null){
+					TeacherRelationView ctv_email = userMapper.searchUser0(username,usertype,"2");
+					if(ctv_email==null){
+						return null;
+					}else{
+						return ctv_email;
+					}
+				}else{
+					return ctv_phone;
+				}
+			}else{
+				return ctv_name;
+			}
+		}else{
+			return userMapper.searchUser0(username,usertype,"0");
+		}
+	}
+
+	@Override
+	public UserCenterView queryUserCenter(Long userId) {
+		UserCenterView userCenter = new UserCenterView();
+		
+		CourseView courseView = new CourseView();
+		courseView.setUserId(userId);
+		courseView.setType("-1");//全部类型
+		courseView.setStatus("1");
+		int teachingCourse = courseService.queryTotalCourse(courseView);//课程总数
+		userCenter.setTeachingCourse(teachingCourse);
+		
+		TrainView trainView = new TrainView();
+		trainView.setUser_id(userId);
+		trainView.setType(-1);//全部类型
+		int teachingTrain = trainService.queryTotalTrain(trainView);//培训总数
+		userCenter.setTeachingTrain(teachingTrain);
+		
+		StudyView studyView = new StudyView();
+		studyView.setUser_id(userId);
+		studyView.setIs_studyed(0);
+		studyView.setSource_type(0);//课程
+		int studyCourse = userStudyService.countUserSutdy(studyView);
+		userCenter.setStudyCourse(studyCourse);
+		studyView.setSource_type(1);//培训
+		int studyTrain = userStudyService.countUserSutdy(studyView);
+		userCenter.setStudyTrain(studyTrain);
+		
+		LessonView lessonView = new LessonView();
+		lessonView.setUser_id(userId);
+		lessonView.setStatus(-1);//全部状态
+		int createLesson = lessonService.countUserLesson(lessonView);// 我的课程总数
+		userCenter.setCreateLesson(createLesson);
+		
+		return userCenter;
+	}
+	
+}
+	
+

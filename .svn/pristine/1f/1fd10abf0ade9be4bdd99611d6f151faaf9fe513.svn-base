@@ -1,0 +1,858 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.train.view.CourseNoteView;
+import cn.bnsr.edu_yun.backstage.train.view.TopicAnswerView;
+import cn.bnsr.edu_yun.frontstage.base.po.Classify;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.service.ClassifyService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicAnswer;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicQuestion;
+import cn.bnsr.edu_yun.frontstage.train.po.UserAppraise;
+import cn.bnsr.edu_yun.frontstage.train.po.UserCollect;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudy;
+import cn.bnsr.edu_yun.frontstage.train.service.CertificateService;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseNoteService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.MessageService;
+import cn.bnsr.edu_yun.frontstage.train.service.TeacherRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicAnswerService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicQuestionService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainCourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainExamStandardService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainPhaseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserAppraiseService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserClassHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserCollectService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyRecordService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserTrainClassService;
+import cn.bnsr.edu_yun.frontstage.train.view.CertificatesView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.MessageView;
+import cn.bnsr.edu_yun.frontstage.train.view.TeacherRelationView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainCourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainDetailView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainExamStandardView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainPhaseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserAppraisView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserClassHourView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserStudyView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserTrainClassView;
+import cn.bnsr.edu_yun.util.ConfigInfo;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 培训
+ * @author fangxiongwei
+ * @date 2017年01月03日
+ */
+@Controller
+@RequestMapping("/train")
+public class TrainController {
+	private final Logger log = LoggerFactory.getLogger(TrainController.class);
+	
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private ClassifyService classifyService;
+	@Autowired
+	private TrainCourseService trainCourseService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private UserAppraiseService userAppraiseService;
+	@Autowired
+	private CourseNoteService courseNoteService;
+	@Autowired
+	private TeacherRelationService teacherRelationService;
+	@Autowired
+	private ClassService classService;
+	@Autowired
+	private UserStudyService userStudyService;
+	@Autowired
+	private TopicQuestionService topicQuestionService;
+	@Autowired
+	private TopicAnswerService topicAnswerService;
+	@Autowired
+	private UserStudyRecordService userStudyRecordService;
+	@Autowired
+	private UserCollectService userCollectService;
+	@Autowired
+	private TrainExamStandardService trainExamStandardService;
+	@Autowired
+	private CertificateService certificateService;
+	@Autowired
+	private TrainPhaseService trainPhaseService;
+	@Autowired
+	private UserTrainClassService userTrainClassService;
+	@Autowired
+	private UserClassHourService userClassHourService;
+	@Autowired
+	private MessageService messageService;
+	
+	/**
+	 * 跳转培训管理页面
+	 * @author fangxiongwei
+	 * @date 2017年01月03日
+	 */
+	@RequestMapping("/to_train")
+	public ModelAndView toTrain(HttpServletRequest request,TrainView trainView){
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			trainView.setUser_id(user.getId());
+			trainView.setRows(10);
+			if(trainView.getPage()==0){
+				trainView.setStartLine(0);
+			}else{
+				trainView.setStartLine(trainView.getPage()*trainView.getRows());
+			}
+			System.out.println(trainView.getType()+"xxxxxxx");
+			List<TrainView> trainList = trainService.queryTrain(trainView);
+			int total = trainService.queryTotalTrain(trainView);//培训总数
+			trainView.setTotal(total);
+			System.out.println(total+"xxxxxxx");
+			//分页总页数
+			trainView.setTotalPage(NumUtil.totalPage(total,trainView.getRows()));
+			
+			modelAndView.addObject("trainList",trainList);
+			modelAndView.addObject("trainView",trainView);
+			
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			//个人中心统计数据  
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+			
+			request.setAttribute("state", trainView.getState());
+			request.setAttribute("stamp", trainView.getStamp());
+			modelAndView.addObject("head_title", "培训管理");
+			modelAndView.setViewName("frontstage/train/train/train");
+		} catch (Exception e) {
+			log.error("培训列表查询失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	
+	/**
+	 * 跳转创建培训页面
+	 * @author fangxiongwei
+	 * @date 2017年01月03日
+	 */
+	@RequestMapping("/to_create_train")
+	public ModelAndView toCreateTrain(HttpServletRequest request){
+		request.setAttribute("head_title", "创建培训");
+		return new ModelAndView("frontstage/train/train/create_train");
+	}
+	
+	/**
+	 * 保存培训
+	 * @author fangxiongwei
+	 * @date 2017年01月03日
+	 */
+	@RequestMapping("/save_train")
+	public ModelAndView saveTrain(HttpServletRequest request,TrainView trainView){
+		User user = (User) request.getSession().getAttribute("currentUser");
+		Long trainId = null;
+		try {
+			trainView.setUser_id(user.getId());
+			trainId = trainService.saveTrain(trainView);
+		} catch (Exception e) {
+			log.error("保存培训失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		String redirectStr = "";
+		if(trainView.getSign().equals("10")){//班级管理
+			redirectStr += "redirect:/class/to_class.action?id="+ trainId + "&source_id="+ trainId + "&source_type=1" ; ;
+		}else if(trainView.getSign().equals("3")){//课程管理
+			redirectStr += "redirect:/train_course/to_train_course.action?source_id="+ trainId + "&source_type=0" ;
+		}else if(trainView.getSign().equals("5")){//阶段项目内容
+			redirectStr += "redirect:/train_phase/to_train_phase.action?train_id="+ trainId;
+		}else if(trainView.getSign().equals("9")){//考核标准
+			redirectStr += "redirect:/train_exam_standard/to_train_exam_standard.action?id="+ trainId;
+		}else{
+			redirectStr += "redirect:/train/to_train_info.action?id="+ trainId;
+		}
+		redirectStr +="&flag="+trainView.getFlag()+"&sign="+trainView.getSign();
+		return new ModelAndView(redirectStr);
+	}
+	
+	/**
+	 * 跳转培训信息页面
+	 * @author fangxiongwei
+	 * @date 2017年01月03日
+	 */
+	@RequestMapping("/to_train_info")
+	public ModelAndView toCourseInfo(HttpServletRequest request,TrainView trainView){
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = trainView.getSign();
+		    String flag = trainView.getFlag();
+			if(trainView.getId()!=null){
+				trainView = trainService.getByTrain(trainView);
+			}
+			trainView.setSign(sign);
+			trainView.setFlag(flag);
+			modelAndView.addObject("trainView",trainView);	
+			if(sign.equals("1")){//基本信息
+				List<Classify> classifyList = classifyService.queryByParentId(51l);//培训分类
+				modelAndView.addObject("classifyList",classifyList);	
+				modelAndView.setViewName("frontstage/train/train/train_info");
+				modelAndView.addObject("head_title", "基本信息");
+			}else if(sign.equals("2")){//图片
+				modelAndView.setViewName("frontstage/train/train/train_picture");
+				modelAndView.addObject("head_title", "培训图片");
+			}else if(sign.equals("4")){//价格
+				modelAndView.setViewName("frontstage/train/train/train_price");
+				modelAndView.addObject("head_title", "价格设置");
+			}
+		} catch (Exception e) {
+			log.error("跳转培训信息页面失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		
+		return modelAndView;
+	}
+	
+	/**
+	 * 保存培训图片
+	 * @author fangxiongwei
+	 * @date 2017年01月03日
+	 */
+	 @RequestMapping("/upload_img")
+	public void upload(
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		 
+		 String path = request.getSession().getServletContext().getRealPath(ConfigInfo.getString("trainPicture"));
+		 Date date=new Date();
+		 long time=date.getTime();
+	     String fileName = "img"+time;
+		 String format=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+	     Random ra =new Random();
+	     fileName = fileName+ ra.nextInt(10) + format;
+		 File targetFile = new File(path, fileName);  
+         if(!targetFile.exists()){  
+             targetFile.mkdirs();  
+         }  
+         //保存  
+         try {  
+             file.transferTo(targetFile);  
+         } catch (Exception e) {  
+             e.printStackTrace();  
+         }  
+		 JSONObject result=new JSONObject();
+		 result.put("fileName", ConfigInfo.getString("trainPicture")+"/"+fileName);
+		 ResponseUtil.write(response, result);
+		 
+	 }
+	 
+	/**
+	 * 培训中心
+	 * @author fangxiongwei
+	 * @date 2017年01月13日
+	 */
+	 @RequestMapping("/to_train_center")
+	public ModelAndView toTrainCenter(HttpServletRequest request,TrainView trainView){
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			trainView.setRows(20);
+			if(trainView.getPage()==0){
+				trainView.setStartLine(0);
+			}else{
+				trainView.setStartLine(trainView.getPage()*trainView.getRows());
+			}
+			List<TrainView> trainList = trainService.queryTrainCenter(trainView);
+			int total = trainService.queryTotalTrainCenter(trainView);//培训总数
+			trainView.setTotal(total);
+			//分页总页数
+			trainView.setTotalPage(NumUtil.totalPage(total,trainView.getRows()));
+			
+			List<Classify> classifyList = classifyService.queryByParentId(51l);//培训分类
+			
+			modelAndView.addObject("classifyList",classifyList);	
+			modelAndView.addObject("trainList",trainList);
+			modelAndView.addObject("trainView",trainView);
+			modelAndView.addObject("head_title", "培训中心");
+			modelAndView.setViewName("frontstage/train/train_show/train_center");
+		} catch (Exception e) {
+			log.error("培训中心查询失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		
+		return modelAndView;
+	}
+	 
+	/**
+	 * 培训展示
+	 * @author fangxiongwei
+	 * @date 2017年01月13日
+	 */
+	 @RequestMapping("/to_train_detail")
+	public ModelAndView toTrainDetail(HttpServletRequest request,
+			TrainView trainView, TrainDetailView trainDetailView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			User user = (User) request.getSession().getAttribute("currentUser");
+			Long userId = null;
+			if(user!=null){
+				userId = user.getId();
+			}
+			String sign = trainView.getSign();
+			int elite = trainView.getElite();
+			String sortName = trainView.getSort_name();
+			Long changeClassId = trainView.getClassId();//选中班级id
+			Long classId = null ;//班级id
+			trainView.setFlag("2");//展示培训详细
+			int jumpType = trainView.getJumpType();
+			Long jumpId = trainView.getJumpId();
+			Integer userStudyStatus1= trainView.getUserStudyStatus();//用于老师已购买者或未购买者预览
+			if(trainView.getId()!=null){
+				trainView = trainService.getByTrain(trainView);
+			}
+			int type = trainView.getType();//0普通培训；1-复杂培训
+			//判断用户购买移到上面，已购买的用户进入直接去课程，不去介绍
+			//培训班级
+			List<cn.bnsr.edu_yun.frontstage.train.po.Class> classList = classService.queryClass(trainView);
+			
+			//用户是否购买
+			String userStudyStatus = "-1";//用户学习状态，默认没有报名
+			boolean isFlag = false;//
+			if (user != null) {
+				UserStudyView userStudyView = new UserStudyView();
+				userStudyView.setSourceType("1");
+				userStudyView.setPaging("0");
+				if(trainView.getClassId()!=0){
+					userStudyView.setSourceId(trainView.getClassId()+"");
+				}
+				userStudyView.setLearnId(trainView.getId().toString());//培训id
+				userStudyView.setUserId(userId.toString());
+				// 查询是否购买 多个班级默认第一个
+				List<UserStudy> userStudyList = userStudyService.searchIsPay(userStudyView);
+				UserStudy userStudyIsPay = null;
+				if(userStudyList.size()>0){
+					userStudyIsPay = userStudyList.get(0);
+				}
+				if (userStudyIsPay == null) {//未报名，未购买
+					isFlag = true;
+			/*	}else if(userStudyIsPay.getStatus()==0){//正常
+					userStudyStatus = "0";
+					//根据课程id、来源类型、学员id，查询已购买班级id
+					userStudyView.setIs_direct("1");//培训加入的
+					UserStudy userStudy = userStudyService.searchUserStudy(userStudyView);
+					userStudyView.setId(userStudy.getId().toString());
+					classId = userStudy.getSource_id();
+					modelAndView.addObject("userStudyView",userStudyView);*/
+				}else if(userStudyIsPay.getStatus()==1){//删除
+					isFlag = true;
+				}else if(userStudyIsPay.getStatus()==2){//退学
+					isFlag = true;
+				}else if(userStudyIsPay.getStatus()==3){//报名
+					userStudyStatus = "3";
+					//根据课程id、来源类型、学员id，查询已购买班级id
+					userStudyView.setIs_direct("1");//培训加入的
+					List<UserStudy> usList = userStudyService.searchUserStudy(userStudyView);
+					//默认第一个班级
+					UserStudy userStudy = usList.get(0);
+					userStudyView.setId(userStudy.getId().toString());
+					classId = userStudy.getSource_id();
+					modelAndView.addObject("userStudyView",userStudyView);
+					if(sign.equals("0")){
+						sign="1";
+					}else if(sign.equals("1")){
+						sign="0";
+					}
+				}
+			}else{//未登陆
+				isFlag = true;
+			}
+			
+			if(isFlag){
+				if(classList.size()>0){//有班级
+					classId = classList.get(0).getId();//默认第一个班级
+				}
+			}
+			
+			trainView.setClassId(changeClassId);
+			trainView.setSign(sign);
+			trainView.setElite(elite);
+ 			trainView.setSort_name(sortName);
+			trainView.setJumpId(jumpId);
+ 			trainView.setJumpType(jumpType);
+			
+			//培训评价总数
+			long trainTotalAppraise = userAppraiseService.selectCountBySourceId(trainView.getId(),1);
+			//培训评价总分
+			Integer trainTotalScore=userAppraiseService.selectTotalScore(trainView.getId(),1);
+         	trainView.setTrainTotalAppraise(trainTotalAppraise);
+			if (trainTotalAppraise != 0 && trainTotalScore != null){
+				trainView.setTrainTotalScore(Integer.parseInt((trainTotalScore/trainTotalAppraise)+""));
+			}else{
+				trainView.setTrainTotalScore(5);
+			}
+			
+			
+			
+			/**
+			 * 收藏
+			 */
+			if (user != null) {
+				UserCollect userCollect = new UserCollect();
+				userCollect.setLearn_id(trainView.getId());
+				userCollect.setSource_type(1);
+				userCollect.setUser_id(userId);
+				userCollect.setSource_id(classId);
+				userCollect = userCollectService.selectByCourseIdAndUserId(userCollect);
+				modelAndView.addObject("userCollect", userCollect);
+			}
+			
+			if(trainView.getClassId()==0){//第一次查询默认
+				trainView.setClassId(classId);//班级id
+			}
+			
+			
+			//培训课程列表
+			List<TrainCourseView> trainCourseList = new ArrayList<TrainCourseView>();
+			//选中课程列表
+			List<TrainCourseView> selectedCourseList = new ArrayList<TrainCourseView>();
+			List<String> courseIds = new ArrayList<String>();//课程ids
+			//培训阶段
+			List<TrainPhaseView>  trainPhaseList = new ArrayList<TrainPhaseView>();
+			
+			TrainCourseView tcv = new TrainCourseView();
+			tcv.setSource_type(type);//培训
+			tcv.setUserId(userId);
+			
+			if(type==0){//普通培训
+				tcv.setSource_id(trainView.getId());
+				tcv.setFlag("1");//培训课程
+				//培训课程列表
+				trainCourseList = trainCourseService.queryTrainCourse(tcv);
+				//int trainCourseCount = trainCourseService.trainCourseTotal(tcv);
+				//课程总数
+				trainView.setCourseCount(trainCourseList.size());
+				
+				String selectCourseId = "";
+				if(!isFlag && user != null){//买了
+					selectedCourseList = userTrainClassService.searchIsStudy(tcv);
+					for(TrainCourseView tc : selectedCourseList){
+						selectCourseId += tc.getCourse_id()+",";
+					}
+				}
+				for(int i=0;i<trainCourseList.size();i++){
+					String courseId = trainCourseList.get(i).getCourse_id()+"";
+					courseIds.add(courseId);
+					
+					if(!isFlag && user != null){//买了
+						tcv.setCourse_id(Long.parseLong(courseId));
+						//查询是否学完
+						List<TrainCourseView> tcvList = userTrainClassService.searchIsStudy(tcv);
+						if(tcvList.size()>0){
+							trainCourseList.get(i).setIs_studyed(tcvList.get(0).getIs_studyed());
+						}
+						if(selectCourseId.contains(courseId)){//包含，则已加入
+							trainCourseList.get(i).setIs_join(0);
+						}else{
+							trainCourseList.get(i).setIs_join(1);//没有加入
+						}
+					}
+					
+				}
+				
+				//笔记查询
+				if (trainDetailView.getCourseId() != null
+						&& !trainDetailView.getCourseId().equals("")
+						&& !trainDetailView.getCourseId().equals("-1")) {
+					courseIds.removeAll(courseIds);
+					courseIds.add(trainDetailView.getCourseId());
+				}else{
+					trainDetailView.setCourseName("全部课程");
+				}
+				
+				trainDetailView.setCourseIds(courseIds);
+				
+			}else{//培训项目
+				trainPhaseList = trainPhaseService.queryTrainPhase(trainView.getId(),userId);
+				for(TrainPhaseView tp : trainPhaseList){
+					int fch_total=0;//完成课时数
+					int unfch_total=0;//未完成课时数
+					int frc_count=0;//完成必修课程数
+					int rc_count=0;//必修课程数
+					//阶段课程ids
+					List<String> phaseList = new ArrayList<String>();
+					for(CourseView c : tp.getRequiredCourse()){//必修
+						courseIds.add(c.getId().toString());
+						phaseList.add(c.getId().toString());
+						rc_count++;
+						if(!isFlag && user != null){//买了
+							List<UserClassHourView> userClassHourList = userClassHourService.queryCourseStudyed(userId,c.getId(),classId);
+							String ch_s = c.getHours();
+							if(userClassHourList.size()>0){//没有学完
+								c.setIs_studyed(0);
+								if(ch_s!=null&&!"".equals(ch_s.trim())){
+									unfch_total+=Integer.parseInt(ch_s);
+								}
+							}else{//已学完
+								c.setIs_studyed(1);
+								frc_count++;
+								if(ch_s!=null&&!"".equals(ch_s.trim())){
+									fch_total+=Integer.parseInt(ch_s);
+								}
+							}
+						}
+					}
+					List<CourseView> optionCourse = tp.getOptionCourse();
+					tp.setUnOptionCourse(optionCourse);//未选选修课
+					//阶段选修课程ids
+					List<String> optionList = new ArrayList<String>();
+					for(CourseView c : optionCourse){//选修
+						courseIds.add(c.getId().toString());
+						optionList.add(c.getId().toString());
+						phaseList.add(c.getId().toString());
+					}
+					if(!isFlag && user != null){//买了
+						if(optionList.size()>0){//选修不为空
+							List<CourseView> optionCourseList = userTrainClassService.queryTrainCourse(tp.getId(),userId,optionList);
+							tp.getUnOptionCourse().removeAll(optionCourseList);
+							for(CourseView c : optionCourseList){
+								if(!isFlag && user != null){//买了
+									List<UserClassHourView> userClassHourList = userClassHourService.queryCourseStudyed(userId,c.getId(),classId);
+									String ch_s = c.getHours();
+									if(userClassHourList.size()>0){//没有学完
+										c.setIs_studyed(0);
+										if(ch_s!=null&&!"".equals(ch_s.trim())){
+											unfch_total+=Integer.parseInt(ch_s);
+										}
+									}else{//已学完
+										c.setIs_studyed(1);
+										if(ch_s!=null&&!"".equals(ch_s.trim())){
+											fch_total+=Integer.parseInt(ch_s);
+										}
+									}
+								}
+							}
+							tp.setOptionCourseNum(optionCourseList.size());//已选选修课
+							tp.setOptionCourse(optionCourseList);
+							
+							tcv.setList(phaseList);
+							tcv.setSource_id(tp.getId());
+							
+							//查询是否学完
+							List<TrainCourseView> tcvList = userTrainClassService.searchIsStudy(tcv);
+							String phase_is_studyed = "";//阶段是否完成
+							for(TrainCourseView tc : tcvList){
+								phase_is_studyed +=tc.getIs_studyed()+",";
+							}
+							if(phase_is_studyed.contains("0,")){//课程有没有学完的，阶段也没学完
+								tp.setIs_studyed(0);
+							}else{//学完阶段
+								tp.setIs_studyed(1);
+							}
+						}
+					}
+					tp.setFinish_coursehour_total(fch_total);
+					tp.setUnfinish_coursehour_total(unfch_total);
+					tp.setRequiredCount(rc_count);
+					tp.setRequiredFinishCount(frc_count);
+				}
+			}
+			
+			//班级教职人员
+			TeacherRelationView teacherRelationView = new TeacherRelationView();
+			teacherRelationView.setSource_id(classId);
+			teacherRelationView.setSource_type(2);
+			List<TeacherRelationView> classTeacherList = teacherRelationService.queryTeacherOfClass(teacherRelationView);
+			modelAndView.addObject("classTeacherList",classTeacherList);
+			
+			//最新班级公告
+			MessageView messageView=new MessageView();
+			messageView.setRows(5);
+			messageView.setStartLine(0);
+			messageView.setSource_type(3);
+			messageView.setSource_id(classId);
+			List<MessageView> messageList = messageService.queryClassNotices(messageView);
+			modelAndView.addObject("messageList",messageList);
+			
+			if(sign.equals("0")){//介绍
+				CertificatesView certificatesView = new CertificatesView();
+				certificatesView.setSource_id(trainView.getId().toString());
+				certificatesView.setSource_type("0");
+				if(trainView.getType()==0){
+					//fangxiongwei 20170111 根据培训id查询培训信息、必修选修课时数
+					List<TrainExamStandardView> tesvList = trainExamStandardService.queryExamStandard(trainView.getId(),trainView.getType());
+					TrainExamStandardView tesv = new TrainExamStandardView();
+					if(tesvList.size()>0){//有课程
+						tesv = tesvList.get(0);//赋值考核标准		
+						for(int i=0;i<tesvList.size();i++){//赋值学时
+							if(tesvList.get(i).getType()==0){//必修
+								tesv.setRequiredHours(tesvList.get(i).getTotalHours());//必修学时
+								tesv.setRequired_course_total(tesvList.get(i).getCourse_total());//必修课数
+							}else{//选修
+								tesv.setOptionHours(tesvList.get(i).getTotalHours());//选修学时
+								tesv.setElective_course_total(tesvList.get(i).getCourse_total());//选修课数
+							}
+						}
+						//总学时
+						tesv.setTotalHours(tesv.getRequiredHours()+tesv.getOptionHours());
+					}
+					
+					if(tesv.getId()==null){//没有课程 只查询考核标准
+						tesv = trainExamStandardService.queryByTrainId(trainView.getId());
+					}
+					modelAndView.addObject("trainExamStandardView", tesv);
+				}else if(trainView.getType()==1){
+					//根据培训id找出阶段
+					List<TrainPhaseView> tPList = trainPhaseService.queryTrainParseBaseMessage(trainView);
+					for(int i=0;tPList!=null&&i<tPList.size();i++){
+						List<TrainExamStandardView> tevxs = trainExamStandardService.queryTrainParseCountMessage(tPList.get(i).getId(), 1);
+						int r_c=0;//必修课数
+						int o_c=0;//选修课数
+						int r_h_c=0;//必修课时总数
+						int o_h_c=0;//选修课时总数
+						for(int j=0;tevxs!=null&&j<tevxs.size();j++){
+							TrainExamStandardView te = tevxs.get(j);
+							if(te.getIs_required()==0){
+								r_c+=te.getCourse_total();
+								r_h_c+=te.getTotalHours();
+							}else if(te.getIs_required()==1){
+								o_c+=te.getCourse_total();
+								o_h_c+=te.getTotalHours();
+							}
+						}
+						tPList.get(i).setRequiredCount(r_c);
+						tPList.get(i).setOptionCount(o_c);
+						tPList.get(i).setRequiredHours(r_h_c);
+						tPList.get(i).setOptionHours(o_h_c);
+						tPList.get(i).setTotalHourNum(r_h_c+o_h_c);
+					}
+					modelAndView.addObject("tPList", tPList);
+				}
+				modelAndView.addObject("certificatesViews", certificateService.findAll(certificatesView));
+			}else if(sign.equals("1")){//培训课程
+				if(type==0){//普通培训
+					UserTrainClassView userTrainClassView = new UserTrainClassView();
+					if(userId!=null){
+						UserTrainClassView utcv = new UserTrainClassView();
+						utcv.setClass_id(trainView.getClassId());
+						utcv.setSource_id(trainView.getId());
+						utcv.setSource_type(0);
+						utcv.setUser_id(userId);
+						List<UserTrainClassView> utcvList = userTrainClassService.queryUserTrainCourseCount(utcv);
+						if(utcvList!=null&&utcvList.size()>0){
+							int ufh_total=0;
+							int fh_total=0;
+							int c_count=0;
+							for(int i=0;i<utcvList.size();i++){
+								if(utcvList.get(i).getIs_studyed()==0){
+									ufh_total+=utcvList.get(i).getHours_total();
+									c_count+=utcvList.get(i).getCourse_total();
+								}else if(utcvList.get(i).getIs_studyed()==1){
+									fh_total+=utcvList.get(i).getHours_total();
+									c_count+=utcvList.get(i).getCourse_total();
+								}
+							}
+							System.out.println(ufh_total+"-"+fh_total+"-"+c_count);
+							userTrainClassView.setUnfinish_hours_total(ufh_total);
+							userTrainClassView.setFinish_hours_total(fh_total);
+							userTrainClassView.setCourse_total(c_count);
+						}
+					}
+					modelAndView.addObject(userTrainClassView);
+					for(int i=0;i<trainCourseList.size();i++){
+						Long courseId = trainCourseList.get(i).getCourse_id();
+						//课程评价总数
+						long totalAppraise = userAppraiseService.selectCountBySourceId(courseId,0);
+						//课程评价总分
+						Integer totalScore=userAppraiseService.selectTotalScore(courseId,0);
+						if(totalAppraise!=0&&totalScore!=null){
+							trainCourseList.get(i).setCourseScore(totalScore/totalAppraise*20);
+						}else{
+							trainCourseList.get(i).setCourseScore(0L);
+						}
+					}
+					if(courseIds.size()>0){
+						List<CourseHour> chapterList = courseHourService.queryAllHour(courseIds,true);
+						List<CourseHour> hourList = courseHourService.queryAllHour(courseIds,false);
+						//List<Long> countList
+						modelAndView.addObject("chapterList",chapterList);	//培训课程章节信息
+						modelAndView.addObject("hourList",hourList);	//培训课程课时信息
+					}
+					modelAndView.addObject("trainCourseList",trainCourseList);	//培训课程信息
+				}else if(type==1){//复杂培训
+					modelAndView.addObject("trainPhaseList",trainPhaseList);//培训阶段学信息
+				}
+			}else if(sign.equals("2")){//培训评价
+				int pageSize = 10;
+				int page = trainView.getPage() + 1;
+				int start = pageSize * (page - 1);
+				long totalAppraise = userAppraiseService.selectCountBySourceId(trainView.getId(),1);
+				Integer totalScore = userAppraiseService.selectTotalScore(trainView.getId(),1);
+				List<UserAppraisView> appraise = userAppraiseService.selectBySourceId(trainView.getId(), start, pageSize,1);
+				modelAndView.addObject("appraise",appraise);
+				
+				if (user != null) {
+					UserAppraise user_appraise = userAppraiseService.selectByCourseIdAndUserId(userId,trainView.getId(),1);
+					modelAndView.addObject("user_appraise",user_appraise);
+				}
+				
+				modelAndView.addObject("totalAppraise", totalAppraise);
+				if (totalAppraise != 0 && totalScore != null){
+					modelAndView.addObject("average", totalScore / totalAppraise);
+				}else{
+					modelAndView.addObject("average", 5);
+				}
+			}else if(sign.equals("3")){//话题提问
+				int pageSize = 10;
+				int page = trainView.getPage() + 1;
+				int start = pageSize * (page - 1);
+				if (trainView.getSort_name() == null) {
+					trainView.setSort_name("question_time");
+				}
+				List<TopicQuestion> question = topicQuestionService.selectByCourseId(trainView.getId(),1,trainView.getElite(), trainView.getSort_name(), start,
+						pageSize);
+				long totalQuestion = topicQuestionService.selectCountByCourseId(trainView.getId(),1, trainView.getElite());
+				modelAndView.addObject("question", question);
+				modelAndView.addObject("totalQuestion", totalQuestion);
+				if (trainView.getSort_name().equals("question_time")) {
+					modelAndView.addObject("q_sort_name", "最新发帖");
+				} else {
+					modelAndView.addObject("q_sort_name", "最后回复");
+				}
+			}else if(sign.equals("4")){//笔记
+				if(trainDetailView.getSort()==null){
+					trainDetailView.setSort("0");//默认时间排序
+				}
+				trainDetailView.setRows(6);
+				if(trainDetailView.getPage()==0){
+					trainDetailView.setStartLine(0);
+				}else{
+					trainDetailView.setStartLine(trainDetailView.getPage()*trainDetailView.getRows());
+				}
+				List<CourseNoteView> courseNoteList = courseNoteService.queryCourseIdsNote(trainDetailView);
+				int total = courseNoteService.queryTotalCourseIdsNote(trainDetailView);
+				trainDetailView.setTotal(total);
+				//分页总页数
+				trainDetailView.setTotalPage(NumUtil.totalPage(total,trainDetailView.getRows()));
+				modelAndView.addObject("courseNoteList",courseNoteList);	//培训基础信息
+				modelAndView.addObject("trainCourseList",trainCourseList);	//培训课程
+			}else if(sign.equals("5")){//师资
+				List<TeacherRelationView> teacherList = teacherRelationService.queryAllTeacher(courseIds);
+				modelAndView.addObject("teacherList",teacherList);//老师list
+			}else if(sign.equals("6")){//话题回答
+				int pageSize = 10;
+				int page = trainView.getPage() + 1;
+				int start = pageSize * (page - 1);
+				List<TopicAnswer> topicAnswers = topicAnswerService
+						.selectAnswerByQuestionId(trainDetailView.getQuestionId(), start,
+								pageSize);
+				TopicAnswerView topicAnswerView=new TopicAnswerView();
+				topicAnswerView.setId(trainDetailView.getQuestionId());
+				long topicAnswersCount=topicAnswerService.count(topicAnswerView);
+				TopicQuestion topicQuestion = topicQuestionService.selectById(trainDetailView.getQuestionId());
+				topicQuestion.setWatch_times(topicQuestion.getWatch_times() + 1);
+				topicQuestionService.update(topicQuestion);
+				
+				//是不是本人
+				if (user != null) {
+					boolean is_self= topicQuestion.getUser_id()==userId;
+					modelAndView.addObject("is_self", is_self);//是不是本人
+				}
+				
+				modelAndView.addObject("topicAnswers",topicAnswers);//问题回答list
+				modelAndView.addObject("topicAnswersCount",topicAnswersCount);//问题回答总数
+				modelAndView.addObject("topicQuestion",topicQuestion);//问题
+				
+			}
+			if(userStudyStatus1!=null){
+				userStudyStatus=userStudyStatus1+"";
+			}
+			modelAndView.addObject("userStudyStatus", userStudyStatus);
+			modelAndView.addObject("trainView",trainView);	//培训基础信息
+			modelAndView.addObject("classList",classList);	//培训班级
+			modelAndView.addObject("trainDetailView",trainDetailView);
+			modelAndView.addObject("head_title", trainView.getName());
+			modelAndView.setViewName("frontstage/train/train_show/train_detail");
+		} catch (Exception e) {
+			log.error("培训详细信息查询失败",ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		
+		return modelAndView;
+	}
+	 
+	/**
+	 * 培训主页 
+	 */
+	@RequestMapping("/to_train_home")
+	public ModelAndView toTrainHome(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			List<Classify> pcList = classifyService.queryByParentId(54l);//课程父分类
+			
+			//一级分类课程
+			List<CourseView> courseList = courseService.queryClassifyCourse();
+			
+			//热门课程 
+			CourseCenterView ccv = new CourseCenterView();
+			ccv.setSortType("2");//热门
+			ccv.setClassifyId(-1l);//全部课程
+			ccv.setRows(4);//前4个
+			ccv.setStartLine(0);
+			List<CourseCenterView> hotCourseList = courseService.queryCourseCenter(ccv);
+			
+			//最新培训
+			TrainView trainView = new TrainView();
+			trainView.setClassify_id(-1l);
+			trainView.setType(0);//普通培训
+			trainView.setRows(4);
+			trainView.setStartLine(0);
+			List<TrainView> trainList = trainService.queryTrainCenter(trainView);
+			modelAndView.addObject("head_title", "培训主页");
+			modelAndView.addObject("pcList", pcList);
+			modelAndView.addObject("courseList", courseList);
+			modelAndView.addObject("hotCourseList", hotCourseList);
+			modelAndView.addObject("trainList", trainList);
+			modelAndView.setViewName("frontstage/train/train_home");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+}

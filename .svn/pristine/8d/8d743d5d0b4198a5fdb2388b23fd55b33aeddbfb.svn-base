@@ -1,0 +1,277 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+<!-- 前台 frontstage -->
+
+<!-- base -->
+
+	<!-- 用户的service -->
+	<bean id="userService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserServiceImpl"/>
+	<!-- 科目管理的service -->
+	<bean id="classification_entryService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.Classification_entryServiceImpl"/>
+	<!-- 分类设置 -->
+	<bean id="classifyService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.ClassifyServiceImpl"/> 
+	<!-- 消费日志的service -->
+	<bean id="businessLogService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.BusinessLogServiceImpl"/>
+	<!-- 我的收藏的service -->
+	<bean id="myCollectService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.MyCollectServiceImpl"/>
+	<!-- 订单service -->
+	<bean id="orderService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.OrderServiceImpl"/>
+	<!-- 我的贡献的service -->
+	<bean id="myContributionSerivce" class="cn.bnsr.edu_yun.frontstage.base.service.impl.MyContributionServiceImpl"/>
+	<!-- 我的下载service -->
+	<bean id="myDownloadSerivce" class="cn.bnsr.edu_yun.frontstage.base.service.impl.MyDownloadServiceImpl"/>
+	<!-- 个人设置 -->
+	<bean id="mySettingService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.MySettingServiceImpl"/>
+	<!-- 用户文件夹service -->
+	<bean id="userFolderService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserFolderServiceImpl"/>
+	<!-- 标签service -->
+	<bean id="labelService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.LabelServiceImpl"/>
+	<!-- 教师主页service -->
+	<bean id="authorSpaceService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.AuthorSpaceServiceImpl"/>
+	<!-- 教师信息service -->
+	<bean id="userInfoService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserInfoServiceImpl"/>
+	<!-- 关注用户service -->
+	<bean id="userAttentService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserAttentServiceImpl"/>
+	<!-- 用户文件操作service -->
+	<bean id="userFileService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserFileServiceImpl"/>
+	<!-- 地区 -->
+	<bean id="areaService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.AreaServiceImpl"/>
+	<!-- 学校 -->
+	<bean id="schoolService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.SchoolServiceImpl"/>
+	<!-- 我关注的人service -->
+	<bean id="myAttentionService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.MyAttentionServiceImpl"/> 
+	<!-- 点赞service -->
+	<bean id="userSupportService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserSupportServiceImpl"/>
+	<!-- 附加属性service -->
+	<bean id="userPropertyService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserPropertyServiceImpl"/>
+	<!-- 我的资源service -->
+	<bean id="myResourcesService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.MyResourcesServiceImpl"/>    
+	<!-- 学段、科目service -->
+	<bean id="subjectListService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.SubjectListServiceImpl"/>    
+	<!-- 版本service -->
+	<bean id="pubverListService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.PubverListServiceImpl"/>    
+	<!-- 年级、章节、小节service -->
+	<bean id="bookCatService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.BookCatServiceImpl"/>
+	<!-- 年级的service -->
+	<bean id="gradeService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.GradeServiceImpl"/>       
+	<!-- 通知的service -->
+	<bean id="noticeService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.NoticeServiceImpl"/>
+	<!-- 私信 -->
+	<bean id="privateLetterService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.PrivateLetterServiceImpl"/>
+	<!-- 通知 -->
+	<bean id="notificationService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.NotificationServiceImpl"/>
+	<!-- 推荐 -->
+	<bean id="recommendedService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.RecommendedServiceImpl"/>
+	 <!-- 推荐 -->
+	<bean id="defaultTextService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.DefaultTextServiceImpl"/>
+	<!-- 推荐 -->
+	<bean id="defaultVarcharService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.DefaultVarcharServiceImpl"/>
+	<!-- 用户在线时长 -->
+	<bean id="userDurationService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserDurationServiceImpl"/>
+    <!-- ip拦截信息-->
+	<bean id="ipInterceptService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.IpInterceptServiceImpl"/>
+	<!-- 用户在线数据拆分-->
+	<bean id="userDurationPartService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UserDurationPartServiceImpl"/>
+    <!-- 用户同时在线数量-->
+	<bean id="onlineNumService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.OnlineNumServiceImpl"/>
+	<!-- 用户同时在线数量-->
+	<bean id="onlineUserService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.OnlineUserServiceImpl"/>
+	<!-- 上传文件(文件管理分类) -->
+	<bean id="uploadFileService" class="cn.bnsr.edu_yun.frontstage.base.service.impl.UploadFileServiceImpl"/>
+<!-- resource -->
+	<!-- 编目的service -->
+	<bean id="file_catalogService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.File_catalogServiceImpl"/>
+	<!-- 文件属性的service -->
+	<bean id="file_baseService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.File_baseServiceImpl"/>
+	<!-- 用户评论 -->
+	<bean id="fileCommentService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.FileCommentServiceImpl"/>
+	<!-- 文件类型service -->
+	<bean id="fileTypeService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.FileTypeServiceImpl"/>
+	<!-- 文件标签关联service -->
+	<bean id="fileLabelService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.FileLabelServiceImpl"/>
+	<!-- 文件附加属性service -->
+	<bean id="filePropertyService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.FilePropertyServiceImpl"/>
+	<!-- 日志的service -->
+	<bean id="logService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.LogServiceImpl"/>
+	<!-- 资源排行service -->
+	<bean id="resourceArrangeService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.ResourceArrangeServiceImpl"/>
+	<!-- 资源列表service -->
+	<bean id="resourceListService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.ResourceListServiceImpl"/>
+	
+<!-- teaching -->
+
+<!-- tiku -->
+
+	<!-- 题目 -->
+	<bean id="questionService" class="cn.bnsr.edu_yun.frontstage.tiku.service.impl.QuestionServiceImpl"/>
+	<!-- 评语 -->
+	<bean id="commentService" class="cn.bnsr.edu_yun.frontstage.tiku.service.impl.CommentServiceImpl"/>
+	<!-- 试卷/作业 -->
+	<bean id="testPaperService" class="cn.bnsr.edu_yun.frontstage.tiku.service.impl.TestPaperServiceImpl"/>
+	<!-- 试卷/作业题目-->
+	<bean id="testQuestionsService" class="cn.bnsr.edu_yun.frontstage.tiku.service.impl.TestQuestionsServiceImpl"/>
+	<!-- 考试/作业-->
+	<bean id="examService" class="cn.bnsr.edu_yun.frontstage.tiku.service.impl.ExamServiceImpl"/>
+	<!-- 作业互评-->
+	<bean id="userHomeworkScoreService" class="cn.bnsr.edu_yun.frontstage.tiku.service.impl.UserHomeworkScoreServiceImpl"/>
+
+<!-- train -->
+	<!-- 证书的service -->
+	<bean id="certificateService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CertificateServiceImpl"/>
+	<!-- 课程 -->
+	<bean id="courseService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseServiceImpl"/> 
+	<!-- 课程详细 -->
+	<bean id="courseInfoService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseInfoServiceImpl"/> 
+	<!-- 课程标签关系 -->
+	<bean id="courseLabelRelationService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseLabelRelationServiceImpl"/> 
+	<!-- 课时 -->
+	<bean id="courseHourService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseHourServiceImpl"/> 
+	<!-- 课时子文件 -->
+	<bean id="courseHourFileService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseHourFileServiceImpl"/> 
+	<!-- 课程文件 -->
+	<bean id="courseFileService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseFileServiceImpl"/> 
+	<!-- 课程学生 
+	<bean id="courseStudentService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseStudentServiceImpl"/> -->
+	<!-- 老师关联 -->																   
+	<bean id="teacherRelationService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.TeacherRelationServiceImpl"/> 
+	<!--课程笔记  -->
+	<bean id="courseNoteService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseNoteServiceImpl"/>
+	<!--课程笔记  -->
+	<bean id="courseNoteAgreeService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseNoteAgreeServiceImpl"/>
+	<!-- 话题问题 -->
+	<bean id="topicQuestionService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.TopicQuestionServiceImpl"/>
+	<!-- 话题回答 -->
+	<bean id="topicAnswerService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.TopicAnswerServiceImpl"/>
+	<!-- 用户收藏 -->
+	<bean id="userCollectService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserCollectServiceImpl"/>
+	<!-- 学员动态
+	<bean id="courseStudyLogService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseStudyLogServiceImpl"/> -->
+	<!-- 课程考核-->
+	<bean id="courseExamStandardService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CourseExamStandardServiceImpl"/>
+	<!-- 班级管理-->
+	<bean id="classService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.ClassServiceImpl"/>
+	<!-- 班级服务设置-->
+	<bean id="classRelationService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.ClassRelationServiceImpl"/>
+	<!-- 班级社区分类 -->
+	<bean id="classBelongsService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.ClassBelongsServiceImpl"/>
+	<!-- 培训 -->
+	<bean id="trainService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.TrainServiceImpl"/>
+	<!-- 培训考核标准 -->
+	<bean id="trainExamStandardService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.TrainExamStandardServiceImpl"/>
+	<!-- 培训课程 -->
+	<bean id="trainCourseService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.TrainCourseServiceImpl"/>
+	<!-- 培训阶段-->
+	<bean id="TrainPhaseService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.TrainPhaseServiceImpl"/>
+	<!-- 学生管理 -->
+	<bean id="userStudyService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserStudyServiceImpl"/>
+	<!-- 学生日志管理 -->
+	<bean id="userStudyRecordService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserStudyRecordServiceImpl"/>
+	<!-- 用户评论相关  -->
+	<bean id="userAppraiseService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserAppraiseServiceImpl"/>
+	<!-- 用户班级课时  -->
+	<bean id="userClassHourService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserClassHourServiceImpl"/>
+	<!-- 用户培训课程班级  -->
+	<bean id="userTrainClassService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserTrainClassServiceImpl"/>
+	<!-- 用户讨论  -->
+	<bean id="userDiscussService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserDiscussServiceImpl"/>
+	<!-- 证书模板图片  -->
+	<bean id="certModelPictureService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CertModelPictureServiceImpl"/>
+	<!-- 证书模板  -->
+	<bean id="certModelService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CertModelServiceImpl"/>
+	<!-- 学习时长  -->
+	<bean id="userStudyTimeService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.UserStudyTimeServiceImpl"/>
+	
+	<!-- 社区 -->
+	<bean id="communityService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CommunityServiceImpl"/>
+	<!-- 社区学段学科 -->
+	<bean id="communityRelationService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.CommunityRelationServiceImpl"/>
+    <!-- 分类 -->
+	<bean id="classifyRelationService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.ClassifyRelationServiceImpl"/>
+	<!-- 学员-->
+	<bean id="studentRelationService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.StudentRelationServiceImpl"/>
+	<!-- 信息-->
+	<bean id="messageService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.MessageServiceImpl"/>
+	<!-- 计划 -->
+	<bean id="planService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.PlanServiceImpl"/>
+	
+	<!-- xbjy -->
+	<!-- 课例的service -->
+	<bean id="lessonService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonServiceImpl"/>
+	<!-- 参与课例人员的service -->
+	<bean id="lessonUserIdentityService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonUserIdentityServiceImpl"/>
+	<!-- 课例研究问题的service -->
+	<bean id="lessonProblemService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonProblemServiceImpl"/>
+	<!-- 课例时间的service -->
+	<bean id="lessonTimeService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonTimeServiceImpl"/>
+	<!-- 课例用户任务的service -->
+	<bean id="lessonUserTaskService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonUserTaskServiceImpl"/>
+	<!-- 课例教学设计的service -->
+	<bean id="lessonDesignService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonDesignServiceImpl"/>
+	<!-- 课例附件的service -->
+	<bean id="lessonAttachmentService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonAttachmentServiceImpl"/>
+	<!-- 课例问题研讨的service -->
+	<bean id="problemStudyService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.ProblemStudyServiceImpl"/>
+	<!-- 课例指导教师评价的service -->
+	<bean id="lessonAssessService" class="cn.bnsr.edu_yun.frontstage.xbjy.service.impl.LessonAssessServiceImpl"/>
+		
+	
+<!-- workshop -->
+	<!-- 工作坊service -->
+	<bean id="workshopService" class="cn.bnsr.edu_yun.frontstage.train.service.impl.WorkshopServiceImpl"/>
+		
+<!-- 后台 backstage-->
+
+<!-- base -->
+
+	<!-- 菜单-->
+	<bean id="menuService" class="cn.bnsr.edu_yun.backstage.base.service.impl.MenuServiceImpl"/> 
+	<!-- 后台用户-->
+	<bean id="backUserService" class="cn.bnsr.edu_yun.backstage.base.service.impl.BackUserServiceImpl"/> 
+	<!-- 权限 -->
+	<bean id="authService" class="cn.bnsr.edu_yun.backstage.base.service.impl.AuthServiceImpl"/> 
+	<!-- 角色 -->
+	<bean id="roleService" class="cn.bnsr.edu_yun.backstage.base.service.impl.RoleServiceImpl"/> 
+	<!-- 学段、科目service -->
+	<bean id="subjectService" class="cn.bnsr.edu_yun.backstage.base.service.impl.SubjectServiceImpl"/>
+	<!-- 系统日志 -->
+	<bean id="sysLogService" class="cn.bnsr.edu_yun.backstage.base.service.impl.SysLogServiceImpl"/>
+	<!-- 用户日志 -->
+	<bean id="userLogService" class="cn.bnsr.edu_yun.backstage.base.service.impl.UserLogServiceImpl"/>
+	
+<!-- resource -->
+	<!-- 资源 -->
+	<bean id="backFileService" class="cn.bnsr.edu_yun.backstage.resource.service.impl.BackFileServiceImpl"/> 
+	<!-- 资源统计 -->
+	<bean id="resourceStatsService" class="cn.bnsr.edu_yun.backstage.resource.service.impl.ResourceStatsServiceImpl"/> 
+	<!-- 金额设置 -->
+	<bean id="fileAmountService" class="cn.bnsr.edu_yun.backstage.resource.service.impl.FileAmountServiceImpl"/>
+	<!-- 教案 -->
+	<bean id="teachingPlanService" class="cn.bnsr.edu_yun.frontstage.resource.service.impl.TeachingPlanServiceImpl"/>
+	 <!-- 资源分析 -->
+	<bean id="backFileAnalyzeService" class="cn.bnsr.edu_yun.backstage.resource.service.impl.BackFileAnalyzeServiceImpl"/> 
+<!-- teaching -->
+	
+
+<!-- tiku -->
+
+<!-- train -->
+
+<!-- workshop -->
+
+	<!-- content -->
+	<bean id="backContentService" class="cn.bnsr.edu_yun.backstage.content.service.impl.BackContentServiceImpl"/>
+ <bean id="getApplicationContext" class="cn.bnsr.edu_yun.listener.GETApplicationContext"></bean>  
+</beans>
+

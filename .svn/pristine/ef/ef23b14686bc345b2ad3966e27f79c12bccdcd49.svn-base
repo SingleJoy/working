@@ -1,0 +1,148 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+        <jsp:include page="/frontstage/train/class/class_header.jsp"></jsp:include>
+
+        <div class="row">
+
+            <jsp:include page="/frontstage/train/class/class_left.jsp"></jsp:include>
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col course-data">
+                    <div class="panel-heading"><c:if test="${classView.type==0 }">课程</c:if><c:if test="${classView.type==1 }">培训</c:if>学习数据</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="learning-data-table" style="word-break:break-all;text-align:center;">
+                                <c:if test="${classView.type==1 }">
+                                <tbody>
+                                <tr class="active">
+                                    <td>培训名</td>
+                                    <td>培训学习人数</td>
+                                    <td>培训完成人数</td>
+                                    <td>必修课程数</td>
+                                    <td>选修课程数</td>
+                                    <td></td>
+
+                                </tr>
+
+                                <tr>
+                                    <td><a data-toggle="modal" data-target="#modal"  href="javascript:">${courseDataView.title }</a></td>
+                                    <td>${courseDataView.studentCount }</td>
+                                    <td>${courseDataView.finishCount }</td>
+                                    <td>${courseDataView.requiredCount }</td>
+                                    <td>${courseDataView.unrequiredCount }</td>
+                                    <td>----</td>
+
+                                </tr>
+
+                                <tr class="active">
+                                    <td width="35%">课程名</td>
+                                    <td>课程学习人数</td>
+                                    <td>课程完成人数</td>
+                                    <td>考试人数</td>
+                                    <td>作业人数</td>
+                                    <td>研讨人数</td>
+
+                                </tr>
+                                <c:forEach items="${courseDataViews }" var="view">
+                                          <tr>
+                                    <td><a data-toggle="modal" data-target="#modal"  href="javascript:">${view.title }</a></td>
+                                    <td>${view.studentCount }</td>
+                                    <td>${view.finishCount }</td>
+                                    <td>${view.examCount }</td>
+                                    <td>${view.homeworkCount }</td>
+                                    <td>${view.discussCount }</td>
+
+                                </tr>
+                                </c:forEach>
+
+                                </tbody>
+                           </c:if>
+                           <c:if test="${classView.type==0 }">
+                                <tbody>
+                                <tr class="active">
+                                    <td>课程名</td>
+                                    <td>课程学习人数</td>
+                                    <td>课程完成人数</td>
+                                    <td>考试人数</td>
+                                    <td>作业人数</td>
+                                    <td>研讨人数</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td><a data-toggle="modal" data-target="#modal"  href="javascript:">${courseDataView.title }</a></td>
+                                    <td>${courseDataView.studentCount }</td>
+                                    <td>${courseDataView.finishCount }</td>
+                                    <td>${courseDataView.examCount }</td>
+                                    <td>${courseDataView.homeworkCount }</td>
+                                    <td>${courseDataView.discussCount }</td>
+
+                                </tr>
+
+                                <tr class="active">
+                                    <td width="35%">课时名</td>
+                                    <td>课时学习人数</td>
+                                    <td>课时完成人数</td>
+                                    <td>考试合格率</td>
+                                    <td>作业合格率</td>
+                                    <td>研讨合格率</td>
+
+                                </tr>
+                                <c:forEach items="${courseDataViews }" var="view">
+                                    <tr>
+                                        <td><a data-toggle="modal" data-target="#modal"  href="javascript:">${view.hour_title }
+                                            <c:if test="${view.attribute_type==0 }">（考试 }）</c:if>
+                                            <c:if test="${view.attribute_type==2 }">（视频）</c:if>
+                                            <c:if test="${view.attribute_type==3 }">（研讨）</c:if>
+                                            <c:if test="${view.attribute_type==4 }">（作业）</c:if>
+                                        </a></td>
+                                        <td>${view.studentHourCount}</td>
+                                        <td>${view.finishHourCount}</td>
+                                        <c:if test="${view.attribute_type==0 }">
+                                            <td>${view.examPer*100}%</td>
+                                        </c:if>
+                                        <c:if test="${view.attribute_type!=0 }">
+                                            <td>----</td>
+                                        </c:if>
+                                        <c:if test="${view.attribute_type==4 }">
+                                            <td>${view.homeworkPer*100}%</td>
+                                        </c:if>
+                                        <c:if test="${view.attribute_type!=4 }">
+                                            <td>----</td>
+                                        </c:if>
+                                        <c:if test="${view.attribute_type==3 }">
+                                            <td>${view.discussPer*100}%</td>
+                                        </c:if>
+                                        <c:if test="${view.attribute_type!=3 }">
+                                            <td>----</td>
+                                        </c:if>
+
+                                    </tr>
+                                </c:forEach>
+
+                                </tbody>
+                           </c:if>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+

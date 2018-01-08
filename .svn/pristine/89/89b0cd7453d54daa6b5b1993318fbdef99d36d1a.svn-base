@@ -1,0 +1,16 @@
+package cn.bnsr.edu_yun.frontstage.train.mapper;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.backstage.content.view.ContentStatiView;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudyLog;
+import cn.bnsr.edu_yun.frontstage.train.view.UserStudyLogView;
+
+public interface UserStudyLogMapper {
+	
+	Long insertSelective(UserStudyLog userStudyLog) ;
+	
+	Long findUserStudyLogByUSLView(UserStudyLogView userStudyLogView);
+	
+	List<ContentStatiView> queryUserStudyLogStati(ContentStatiView contentSatiView);
+}

@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>班级详细页</title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link  href="../../../js/sharejs/dist/css/share.min.css" rel="stylesheet">
+    <script src="../../../js/sharejs/dist/js/jquery.share.min.js"></script>
+
+
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <div id="quit-learning" class="modal" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">退出学习</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="refund-form" class="form-horizontal" method="post" action="" >
+
+                        <div class="form-group">
+                            <div class="col-md-3 control-label">退学原因</div>
+                            <div class="col-md-8 controls">
+
+                                <select class="form-control" >
+                                    <option value="reason" selected="selected">--请选择退学原因--</option>
+                                    <option value="0">课程内容质量差</option>
+                                    <option value="1">老师服务态度不好</option>
+                                    <option value="other">其他</option>
+                                </select>
+                                <textarea class="form-control"  placeholder="请输入您的退学原因" style="margin-top:10px;display:none;"></textarea>
+                                <span class="text-danger warnning"></span>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger refund-btn" type="submit" data-toggle="form-submit" >退出学习</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="es-header navbar">
+        <div class="navbar-header">
+            <div class="visible-xs  navbar-mobile">
+                <a href="javascript:;" class="navbar-more js-navbar-more">
+                    <i class="es-icon es-icon-menu"></i>
+                </a>
+                <div class="html-mask"></div>
+                <div class="nav-mobile">
+                    <form class="navbar-form" action="/search" method="get">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="搜索" name="q">
+                            <button class="button es-icon es-icon-search"></button>
+                        </div>
+                    </form>
+
+                    <ul class="nav navbar-nav">
+
+                        <li class="nav-hover">
+                            <a href="/live" >测试导航  <b class="caret"></b></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="http://s10.edusoho.cn/open/course/explore"  >二级导航</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="http://s10.edusoho.cn/teacher" >推荐老师 </a>
+                        </li>
+                        <li class="">
+                            <a href="/page/aboutus" >关于我们 </a>
+                        </li>
+                        <li class="">
+                            <a href="/mobile" target="_blank">移动端 </a>
+                        </li>
+                        <li class="">
+                            <a href="http://s10.edusoho.cn/article/category/gg" >公告 </a>
+                        </li>
+                        <li class="">
+                            <a href="/article" >资讯 </a>
+                        </li>
+                        <li class="">
+                            <a href="/group" >小组 </a>
+                        </li>
+                        <li class="">
+                            <a href="/page/ceshi" >企业介绍 </a>
+                        </li>          </ul>
+                </div>
+            </div>
+            <a href="/" class="navbar-brand">
+                EduSoho网络课堂功能测试站
+            </a>
+        </div>
+        <nav class="collapse navbar-collapse">
+            <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+
+                <li class="nav-hover">
+                    <a href="/live" >测试导航  <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="http://s10.edusoho.cn/open/course/explore"  >二级导航</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="http://s10.edusoho.cn/teacher" >推荐老师 </a>
+                </li>
+                <li class="">
+                    <a href="/page/aboutus" >关于我们 </a>
+                </li>
+                <li class="">
+                    <a href="/mobile" target="_blank">移动端 </a>
+                </li>
+                <li class="">
+                    <a href="http://s10.edusoho.cn/article/category/gg" >公告 </a>
+                </li>          <li class="nav-more nav-hover">
+                <a class="more">
+                    <i class="es-icon es-icon-morehoriz"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+
+                    <li class="">
+                        <a href="/article" >资讯 </a>
+                    </li>
+                    <li class="">
+                        <a href="/group" >小组 </a>
+                    </li>
+                    <li class="">
+                        <a href="/page/ceshi" >企业介绍</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            </ul>
+            <div class="navbar-user  left ">
+                <ul class="nav user-nav">
+                    <li class="user-avatar-li nav-hover">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <img class="avatar-xs" src="/files/user/2017/01-03/085403bc08a8009498.jpg">
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" class="dropdown-header">百年树人</li>
+                            <li><a href="/user/127"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                            <li><a href="/settings/"><i class="es-icon es-icon-setting"></i>个人设置</a></li>
+                            <li class="hidden-lg">
+                                <a href="/my">
+                                    <i class="es-icon es-icon-eventnote"></i>我的学习
+                                </a>
+                            </li>
+                            <li><a href="/my/coin"><i class="es-icon es-icon-accountwallet"></i>账户中心</a></li>
+
+                            <li><a href="/admin/"><i class="es-icon es-icon-dashboard"></i>管理后台</a></li>
+
+                            <li class="hidden-lg"><a href="/notification"><span class="pull-right num">2</span><i class="es-icon es-icon-notificationson"></i>通知</a></li>
+                            <li class="hidden-lg"><a href="/message/"><span class="pull-right num"></span><i class="es-icon es-icon-mail"></i>私信</a></li>
+                            <li><a href="/logout"><i class="es-icon es-icon-power"></i>退出登录</a></li>
+                        </ul>
+                    </li>
+                    <li class="visible-lg">
+                        <a href="/my">
+                            我的学习
+                        </a>
+                    </li>
+                    <li class="visible-lg nav-hover">
+
+                        <a><i class="es-icon es-icon-mail"></i></a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="/message/">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-mail"></i>私信
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right hidden-xs hidden-sm" action="/search" method="get">
+                    <div class="form-group">
+                        <input class="form-control js-search" name="q" placeholder="搜索">
+                        <button class="button es-icon es-icon-search"></button>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <section class="class-header after ">
+
+        <div class="container">
+
+            <ol class="breadcrumb breadcrumb-o">
+                <li><a href="/">首页</a></li>
+                <li><a href="">使用教程</a></li>
+                <li class="active">EduSoho使用指南</li>
+            </ol>
+
+
+            <div class="class-header-mian">
+
+
+                <div class="class-header-bg clearfix">
+                    <!--class-img宽度为570px是未登录状态-->
+                    <div class="class-img" style="width:570px;">
+                        <a href="/classroom/3">
+                            <!--默认图片是train_detail.png-->
+                            <img src="../../../images/train_detail.png" alt="" >
+                        </a><br/>
+                        <!--未登录显示-->
+                        <form  action="" method="post" class="form-horizontal">
+
+
+                            <div class="row form-group">
+                                <div class="col-md-2 control-label" style="display: inline;">
+                                    <label >班次:</label>
+                                </div>
+                                <div class="controls pull-left" id="class-list" >
+                                    <button type="button"  class="btn btn-primary disabled">1月班</button>
+                                    <button type="button"  class="btn btn-primary">2月班</button>
+                                    <button type="button"  class="btn btn-primary">3月班</button>
+                                </div>
+
+                                <div class="col-md-3 control-label " style="display: inline;">
+                                    <label >开班时间:</label>
+                                </div>
+                                <div class="col-md-3 control-label " style="display: inline;">
+                                    <div class="text-danger">2017-01-01</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                      <!--已登录-->
+                    <div class="class-info"  style="display: none;" >
+
+                        <h2 class="title">
+                            EduSoho使用指南
+                           <span class="es-qrcode top" >
+                              <i class="es-icon es-icon-qrcode"></i>
+                              <span class="qrcode-popover">
+                                 <img src="" alt="">扫二维码继续学习二维码时效为半小时
+                             </span>
+                           </span>
+                        </h2>
+
+                        <div class="metas">
+                            <div class="score">
+
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+                                <span>(0评价)</span>
+                            </div>
+                        </div>
+                        <form  action="" method="post" class="form-horizontal">
+
+
+                          <div class="row form-group">
+                             <div class="col-md-2 control-label">
+                                <label >班次:</label>
+                             </div>
+                             <div class="controls col-md-8" id="class-list">
+                               <button type="button"  class="btn btn-primary disabled">1月班</button>
+                               <button type="button"  class="btn btn-primary">2月班</button>
+                               <button type="button"  class="btn btn-primary">3月班</button>
+                            </div>
+                          </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3 control-label">
+                                    <label >开班时间:</label>
+                                </div>
+                                <div class="col-md-3 control-label ">
+                                    <div class="text-danger">2017-01-01</div>
+                                </div>
+                            </div>
+                       </form>
+
+
+                        <div class="class-serve hidden-sm hidden-xs">
+                            <div class="serve-frame">
+                                承诺服务
+                            </div>
+
+                            <ul class="list-unstyled clearfix">
+
+                                <li class=""><a tabindex="0"  title="24小时内完成作业批改，即时反馈并巩固您的学习效果">练</a></li>
+                                <li class=""><a tabindex="0"  title="24小时内批阅您提交的试卷，给予有针对性的点评">试</a></li>
+                                <li class=""><a tabindex="0"  title="对于提问做到有问必答，帮您扫清学习过程中的种种障碍">问</a></li>
+                                <li class=""><a tabindex="0"  title="不定期组织各种线上或线下的班级活动，让学习更加生动有趣，同学关系更为紧密">动</a></li>
+                                <li class=""><a tabindex="0"  title="提供专属的一对一在线答疑，快速答疑解惑">疑</a></li>
+                                <li class=""><a tabindex="0"  title="完成全部学习后，老师对您的学习成果和能力水平给出评估，并提供专业化的就业指导">业</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!--未登录-->
+                    <div class="class-info" style="width: 550px;">
+                        <h2 class="title">
+                            EduSoho教育云介绍
+                           <span class="es-qrcode top" data-url="/classroom/2/qrcode">
+                               <i class="es-icon es-icon-qrcode"></i>
+                               <span class="qrcode-popover">
+                               <img src="" alt="">
+                                扫二维码继续学习
+                              </span>
+                         </span>
+                        </h2>
+                        <div class="metas">
+                            <div class="score">
+
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+                                <i class="es-icon es-icon-star"></i>
+
+                                <span>(0评价)</span>
+                            </div>
+                            <div class="price">
+                                价格：<span>免费</span>
+                            </div>
+                        </div>
+                        <ul class="class-data hidden-sm clearfix ">
+                            <li>
+                                <p><i class="es-icon es-icon-person"></i></p>
+                                <p>学员(2)</p>
+                            </li>
+                            <li>
+                                <p><i class="es-icon es-icon-book"></i></p>
+                                <p>课程(2)</p>
+                            </li>
+                            <li>
+                               <span class="es-share top">
+                                   <a class="dropdown-toggle" href="" data-toggle="dropdown" >
+                                       <p><i class="es-icon es-icon-share"></i></p>
+                                       <!--<p id="share">分享</p>-->
+                                       <!--<div id="share-2" style="display:none;position: absolute;width: 160px;height: 40px;margin-top: -35px;margin-left: -40px;" class="social-share" data-sites="weibo,qq,qzone,wechat"></div>-->
+                                  </a>
+
+                               </span>
+                            </li>
+                        </ul>
+
+                        <div class="class-serve hidden-sm hidden-xs">
+                            <div  >承诺服务</div>
+
+                            <ul class="list-unstyled clearfix">
+                                <li class=""><a tabindex="0"  title="24小时内完成作业批改，即时反馈并巩固您的学习效果">练</a></li>
+                                <li class=""><a tabindex="0"  title="24小时内批阅您提交的试卷，给予有针对性的点评">试</a></li>
+                                <li class=""><a tabindex="0"  title="对于提问做到有问必答，帮您扫清学习过程中的种种障碍">问</a></li>
+                                <li class=""><a tabindex="0"  title="不定期组织各种线上或线下的班级活动，让学习更加生动有趣，同学关系更为紧密">动</a></li>
+                                <li class=""><a tabindex="0"  title="提供专属的一对一在线答疑，快速答疑解惑">疑</a></li>
+                                <li class=""><a tabindex="0"  title="完成全部学习后，老师对您的学习成果和能力水平给出评估，并提供专业化的就业指导">业</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-buy pull-right">
+                            <a class="btn btn-primary btn-lg">免费加入</a>
+
+                        </div>
+                    </div>
+
+                    <!--登录状态-->
+                    <div class="class-operation"  style="display: none;">
+
+                        <ul class='class-data clearfix two-col'>
+                            <li>
+                                <p><i class="es-icon es-icon-person"></i></p>
+                                <p>学员(2)</p>
+                            </li>
+                            <li>
+                                <div id="share-2" style="display:none;position: absolute;width: 160px;height: 40px;margin-top: -35px;margin-left: 22px;" class="social-share" data-sites="weibo,qq,qzone,wechat"></div>
+                               <span class="es-share top" id="share">
+                                   <a class="dropdown-toggle" href="" data-toggle="dropdown" >
+                                      <p><i class="es-icon es-icon-share"></i></p>
+                                      <p >分享</p>
+                                   </a>
+                               </span>
+
+                            </li>
+                        </ul>
+
+                        <div class="buy" style="text-align: center;">
+                            <a class="btn btn-primary btn-lg" href="" data-toggle="modal" >加入学习</a>
+                        </div>
+                    </div>
+
+
+                     <a href="" class="btn btn-default setting hidden-xs hidden-sm" title="班级管理">
+                        <i class="es-icon es-icon-setting"></i>
+                     </a>
+
+                     <a type="button" class="btn btn-default setting hidden-xs hidden-sm" href="#quit-learning" data-toggle="modal" title="退出学习">
+                        <i class="es-icon es-icon-exit"></i>
+                     </a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <div  class="container" id="content-container">
+
+        <div class="class-detail row" >
+
+            <div class="col-lg-9 col-md-8 class-detail-main">
+
+
+                <section class="es-section">
+
+                    <div class="nav-btn-tab">
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a  href="train_detail_introduce.html">介绍</a></li>
+
+                            <li ><a href="train_detail_list.html">课程 <small class="text-muted">( 3 )</small></a></li>
+
+                            <li ><a href="train_detail_evaluate.html">评价 <small class="text-muted"></small></a></li>
+
+                            <li ><a href="train_detail_topic.html">话题 <small class="text-muted"></small></a></li>
+
+                            <li><a  href="train_detail_notes.html">笔记 <small class="text-muted"></small></a></li>
+
+                            <li><a href="train_detail_teacherList.html">师资</a></li>
+
+                        </ul>
+
+                        <div class="btnbar hidden-xs">
+                            <a href="#modal" data-toggle="modal"  class="btn btn-link">
+                                <i class="es-icon es-icon-anonymous-iconfont"></i>公告
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div class="class-detail-content">
+                        <div class="class-about">
+                            <p>班级（学习圈子）是EduSoho自主研发的国内首个提供了系统化学习、个性化学习、学习目标管理、学习过程跟踪管理的一整套强大的互动学习功能。</p>
+
+                            <p><strong>目前在线教育的问题：</strong></p>
+
+                            <p>现在很多在线学习的网站和产品，仅仅是提供了视频观看、做题、问答等简单的学习功能，但是我们知道想要真正学好某个东西，其实并没有那么简单。
+                                除了课程内容以外，学习还需要引导、需要指导和帮助，学习还会有惰性，需要很好的督促和激励。
+                                EduSoho通过对大量用户、大量在线教育网站的深入调研，不断总结分析和探索，设计研发了班级这一具有极大创新性的学习功能，很好的解决了上述问题。</p>
+
+                            <p>班级希望帮助网校运营者解决</p>
+
+                            <p><strong>1.&nbsp;</strong><strong>帮助学员更好的进行系统化学习</strong></p>
+
+                            <p>首先，班级是一群人围绕一个较长远的学习目标共同学习的地方。班级由一系列课程组成，这些课程是老师根据某个教学目标挑选加入的，
+                                课程之间存在逻辑关系和先后次序。当然，课程也并不是只能用于一个班级，同一门课程（例如某个基础课）是可以加入到多个班级的。
+                            </p>
+
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+            <aside class="col-lg-3 col-md-4 class-sidebar">
+
+
+                <div class="panel panel-default" >
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="es-icon es-icon-assignmentind"></i>班主任
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media media-default">
+                            <div class="media-left">
+                                <a class=" js-user-card" href=""   title="">
+                                    <img class="avatar-md" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/05-22/161605516ca2680139.JPG">
+
+                                </a>
+                            </div>
+
+                            <div class="media-body">
+                                <div class="title">
+                                    <a class="link-dark link-light" href="">Jason</a>
+                                </div>
+                                <div class="content">ES产品总监</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="es-icon es-icon-personadd"></i>新加学员</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="user-avatar-list clearfix">
+                            <li>
+                                <a class=" js-user-card" href="/user/127"  >
+                                    <img class="avatar-sm" src="/files/user/2017/01-03/085403bc08a8009498.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="/user/21" >
+                                    <img class="avatar-sm" src="/files/user/2016/10-24/145627b96f88623399.jpg">
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-default student-dynamic">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="es-icon es-icon-recentactors"></i>学员动态</h3>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="media media-number-o color-gray text-overflow">
+                            <a class="link-dark " href="/user/127">百年树人</a>
+                            加入班级 <a  class="link-dark" href="/classroom/3" title="来自《EduSoho使用指南》">EduSoho使用指南</a>
+                        </div>
+
+                        <div class="media media-number-o color-gray text-overflow">
+                            <a class="link-dark " href="/user/21">zhangrui</a>
+                            开始学习课时 <a class="link-dark" href="/course/30" title="来自《学员在网校》">课时页面的学习工具（目录、问答...</a>
+                        </div>
+
+                        <div class="media media-number-o color-gray text-overflow">
+                            <a class="link-dark " href="/user/21">zhangrui</a>
+                            开始学习课时 <a class="link-dark" href="/course/30" title="来自《学员在网校》">课程讨论区</a>
+                        </div>
+
+                        <div class="media media-number-o color-gray text-overflow">
+                            <a class="link-dark " href="/user/21">zhangrui</a>
+                            加入班级 <a  class="link-dark" href="/classroom/3" title="来自《EduSoho使用指南》">EduSoho使用指南</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </aside>
+
+            <div class="modal access-intercept-modal" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">提示</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4>您尚未成为班级成员，请先成为班级成员。</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/classroom/3/becomeAuditor" class="btn btn-primary">加入旁听生</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    
+</div>
+
+<script >
+
+    //    tab选项卡添加下划线样式
+    $(function(){
+        $(".nav-btn-tab>ul>li.active").css("border-bottom","2px solid #46c37b");
+        $(".nav-btn-tab>ul>li").mouseover(function(){
+            $(".nav-btn-tab>ul>li.active").css("border-bottom","none");
+            $(this).css("border-bottom","2px solid #46c37b");
+        }).mouseout(function(){
+            $(this).css("border","none");
+            $(".nav-btn-tab>ul>li.active").css("border-bottom","2px solid #46c37b");
+        });
+
+    });
+
+    //班次选择
+    $(function(){
+        $("#class-list>button").click(function(){
+            $(this).addClass("disabled").siblings().removeClass("disabled");
+        })
+    });
+
+    // 分享
+    $(function() {
+        $("#share").click(function() {
+           $("#share-2").toggle();
+        })
+    });
+</script>
+</body>
+</html>

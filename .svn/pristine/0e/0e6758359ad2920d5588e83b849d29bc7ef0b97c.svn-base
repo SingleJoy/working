@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>老师-课程</title>
+    <link href="../css/author-space.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script>
+        //课程类型切换
+    $(function(){
+        $(".teacher_course_type>ul>li").click(function(){
+            $(".teacher_course_type>ul>li").removeClass("curr").find("a").removeClass("curr");
+             $(this).addClass("curr").find("a").addClass("curr");
+            var index=$(this).index();
+            $(".teacher_course_type_tabs").hide().eq(index).show();
+        })
+    });
+
+    </script>
+
+</head>
+<body>
+
+<div class="main_teacher">
+
+    <div class="main_teacher_left">
+        <ul>
+            <li ><a href="javascript:return false;">个人简介</a></li>
+            <li class="curr"><a href="javascript:return false;"  class="curr">课程</a></li>
+            <li ><a href="javascript:return false;">班级</a></li>
+            <li><a href="javascript:return false;">资源</a></li>
+            <li><a href="javascript:return false;">教研</a></li>
+            <li><a href="javascript:return false;">关注/粉丝</a></li>
+            <li><a href="javascript:return false;">加入小组</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main_teacher_right">
+
+
+
+        <div class="main_right_course_content">
+
+            <div class="teacher_course_type">
+                <ul>
+                    <li class="curr"><a href="javascript:return false;" class="curr">在教课程</a></li>
+                    <li><a href="javascript:return false;">在学课程</a></li>
+                    <li><a href="javascript:return false;">收藏课程</a></li>
+                </ul>
+            </div>
+
+            <!--在教课程-->
+           <div class="course_sort_list teacher_course_type_tabs">
+
+               <div class="sort_list_page">
+                   <a href="javascript:return false;"><img src="../images/open_class_01.jpg" class="open_class_img"></a>
+                   <span class="open_class_type">更新中</span>
+                   <div class="open_class_theme"><span>最新</span><a href="javascript:return false;">语文系列专题课(一)</a></div>
+                   <p class="applicants_num"><img src="../images/course_admin.png"><span>578</span><label>10人评价</label></p>
+                   <div class="open_class_price">
+                       <span class="open_class_price_num">￥29.9</span>
+                       <!--<span class="open_class_price_free">免费</span>-->
+                   </div>
+
+               </div>
+
+           </div>
+
+
+            <!--在学课程-->
+            <div class="course_sort_list teacher_course_type_tabs" style="display: none;">
+
+                <div class="sort_list_page">
+                    <a href="javascript:return false;"><img src="../images/open_class_01.jpg" class="open_class_img"></a>
+                    <span class="open_class_type">更新中</span>
+                    <div class="open_class_theme"><span>最新</span><a href="javascript:return false;">数学系列专题课(二)</a></div>
+                    <p class="applicants_num"><img src="../images/course_admin.png"><span>578</span><label>10人评价</label></p>
+                    <div class="open_class_price">
+                        <span class="open_class_price_num">￥29.9</span>
+                        <!--<span class="open_class_price_free">免费</span>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!--收藏课程-->
+            <div class="course_sort_list teacher_course_type_tabs" style="display: none;">
+
+                <div class="sort_list_page">
+                    <a href="javascript:return false;"><img src="../images/open_class_01.jpg" class="open_class_img"></a>
+                    <span class="open_class_type">更新中</span>
+                    <div class="open_class_theme"><span>最新</span><a href="javascript:return false;">外语系列专题课(三)</a></div>
+                    <p class="applicants_num"><img src="../images/course_admin.png"><span>578</span><label>10人评价</label></p>
+                    <div class="open_class_price">
+                        <span class="open_class_price_num">￥29.9</span>
+                        <!--<span class="open_class_price_free">免费</span>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

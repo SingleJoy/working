@@ -1,0 +1,107 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<div class="piece-body">
+	<ul class="period-list" id="course-item-list">
+		<%--章--%>
+		<c:forEach items="${chapterList}" var="chapter" varStatus="status1">
+			<li class="chapter clearfix" id="list${chapter.id }">
+				<i class="es-icon es-icon-toc"></i>
+                <span class="title">
+                  	第${status1.index+1}章：${chapter.hour_title}
+                </span>
+               	<span class="period-show">
+					<%--展开--%>
+                    <i class="es-icon es-icon-remove open_up" ></i>
+					<%--收起--%>
+                      <%--<i class="es-icon es-icon-anonymous-iconfont"></i>--%>
+                </span>
+			</li>
+			<c:forEach items="${hourList}" var="hour" varStatus="status">
+				<c:if test="${chapter.id==hour.parent_id}">
+					<li class="period lesson-item " data-num="2" id="hour${status.index+1}list${chapter.id} ">
+						<c:if test="${hour.is_studyed==0 }"><i class="es-icon es-icon-undone color-primary status-icon"></i></c:if>
+						<c:if test="${hour.is_studyed==2 }"><i class="es-icon es-icon-doing color-primary status-icon"></i></c:if>
+						<c:if test="${hour.is_studyed==1 }"><i class="es-icon es-icon-done1 color-primary status-icon"></i></c:if>
+						<a onclick="doStudyHour(${hour.id});" href="javascript:void(0);" title="">${hour.hour_seq}
+							<c:if test="${hour.attribute_type==2}">
+								<span class="title">课时：${hour.hour_title}</span>
+								<span class="course-type">
+									<i class="es-icon es-icon-videoclass" data-toggle="tooltip" title="视频课程"></i>
+								</span>
+							</c:if>
+							<c:if test="${hour.attribute_type==0}">
+								<span class="title">试卷：${hour.hour_title}</span>
+								<span class="course-type">
+                                     <i class="es-icon es-icon-check" data-toggle="tooltip" title="试卷"></i>
+                                 </span>
+							</c:if>
+							<c:if test="${hour.attribute_type==3}">
+								<span class="title">讨论：${hour.hour_title}</span>
+								<span class="course-type">
+                                     <i class="es-icon es-icon-graphicclass" data-toggle="tooltip" title="讨论"></i>
+                                 </span>
+							</c:if>
+							<c:if test="${hour.attribute_type==4}">
+								<span class="title">作业：${hour.hour_title}</span>
+								<span class="course-type">
+                                     <i class="es-icon es-icon-check" data-toggle="tooltip" title="作业"></i>
+                                 </span>
+							</c:if>
+							<c:if test="${hour.attribute_type==5}">
+								<span class="title">直播课时：${hour.hour_title}</span>
+								<span class="course-type">
+                                     <i class="es-icon es-icon-videocam" data-toggle="tooltip" title="直播课时"></i>
+                                 </span>
+							</c:if>
+							<c:if test="${hour.is_free == 0}">
+								<span class="label label-warning mrm">免费</span>
+							</c:if>
+
+						</a>
+					</li>
+				</c:if>
+			</c:forEach>
+		</c:forEach>
+	</ul>
+</div>
+<script type="text/javascript">
+	//学习课时
+	function doStudyHour(hourId){
+		if("${userStudyStatus==-1}"=="true"){
+			alert("请先报名学习！");
+			return false;
+		}else if("${userStudyStatus==3}"=="true"){//已报名
+			alert("请先开始学习！");
+			return false;
+		}else if("${userStudyStatus==0}"=="true"){//已加入学习
+			window.location.href="${pageContext.request.contextPath}/course_study/to_study.action?id="+hourId+"&source_id=${userStudyView.sourceId}&source_type=${userStudyView.sourceType}&learn_id=${userStudyView.learnId}&user_study_id=${userStudyView.id}";
+		}
+	}
+	$(function() {
+		$(".chapter").click(function() {
+			var _this = $(this);
+			var list = $(this).attr("id");
+			var open_up = _this.find(".open_up");
+			if (open_up.is('.es-icon-remove')) {
+				open_up.removeClass("es-icon-remove");
+				open_up.addClass("es-icon-anonymous-iconfont");
+			}
+			else {
+				open_up.removeClass("es-icon-anonymous-iconfont");
+				open_up.addClass("es-icon-remove");
+			}
+			$(".period").each(function() {
+				var section = $(this).attr("id");
+				if (section.indexOf(list) > 0) {
+					if ($(this).css("display") == "none") {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				}
+			});
+		})
+	});
+</script>

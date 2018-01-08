@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+ <classPathEntry
+        location="D:\workspace\web\edu_yun\WebRoot\WEB-INF\lib\mysql-connector-java-5.1.7-bin.jar" />
+    
+  <context id="Mysql" defaultModelType="flat">
+   <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://192.168.10.237:3306/edu_yun"
+                userId="root"
+                password="BnsrBnsr">
+	</jdbcConnection>
+	<!-- 后台 -->
+	<!--  <javaModelGenerator targetPackage="cn.bnsr.edu_yun.backstage.po" targetProject="edu_yun" />
+	    <sqlMapGenerator targetPackage="cn.bnsr.edu_yun.backstage.mapper" targetProject="edu_yun" />
+	    <javaClientGenerator targetPackage="cn.bnsr.edu_yun.backstage.mapper" targetProject="edu_yun" type="XMLMAPPER" />
+	   -->
+    <!-- 前台 -->
+    	<!-- base-->
+	<!--   <javaModelGenerator targetPackage="cn.bnsr.edu_yun.frontstage.base.po" targetProject="edu_yun" />
+	    <sqlMapGenerator targetPackage="cn.bnsr.edu_yun.frontstage.base.mapper" targetProject="edu_yun" />
+	    <javaClientGenerator targetPackage="cn.bnsr.edu_yun.frontstage.base.mapper" targetProject="edu_yun" type="XMLMAPPER" />
+	  -->
+		<!--tiku-->
+<!-- 	  <javaModelGenerator targetPackage="cn.bnsr.edu_yun.frontstage.tiku.po" targetProject="edu_yun" />
+      <sqlMapGenerator targetPackage="cn.bnsr.edu_yun.frontstage.tiku.mapper" targetProject="edu_yun" />
+      <javaClientGenerator targetPackage="cn.bnsr.edu_yun.frontstage.tiku.mapper" targetProject="edu_yun" type="XMLMAPPER" />
+       -->
+      <!--train-->
+	  <javaModelGenerator targetPackage="cn.bnsr.edu_yun.frontstage.train.po" targetProject="edu_yun" />
+      <sqlMapGenerator targetPackage="cn.bnsr.edu_yun.frontstage.train.mapper" targetProject="edu_yun" />
+      <javaClientGenerator targetPackage="cn.bnsr.edu_yun.frontstage.train.mapper" targetProject="edu_yun" type="XMLMAPPER" />
+	    
+      <table schema="general" tableName="classify_relation" domainObjectName="ClassifyRelation"
+		    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+		    enableSelectByExample="false" selectByExampleQueryId="false" >
+         	<property name="useActualColumnNames" value="true"/>
+      		<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true"/> 
+     </table>
+  </context>
+
+</generatorConfiguration>

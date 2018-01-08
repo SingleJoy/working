@@ -1,0 +1,164 @@
+package cn.bnsr.edu_yun.listener;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import cn.bnsr.edu_yun.frontstage.base.po.Area;
+import cn.bnsr.edu_yun.frontstage.base.po.IpIntercept;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserDuration;
+import cn.bnsr.edu_yun.frontstage.base.po.UserDurationPart;
+import cn.bnsr.edu_yun.frontstage.base.service.AreaService;
+import cn.bnsr.edu_yun.frontstage.base.service.IpInterceptService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserDurationPartService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserDurationService;
+import cn.bnsr.edu_yun.frontstage.base.view.IpIntercepterView;
+import cn.bnsr.edu_yun.util.AddressUtils;
+import cn.bnsr.edu_yun.util.HttpRequest;
+import cn.bnsr.edu_yun.util.IpUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class SessionListener implements HttpSessionBindingListener {
+
+	private User currentUser;
+	private ApplicationContext applicationContext = GETApplicationContext.getApplicationContext();
+	private UserDurationPartService userDurationPartService = (UserDurationPartService) applicationContext
+			.getBean("userDurationPartService");
+	private UserDurationService userDurationService = (UserDurationService) applicationContext
+			.getBean("userDurationService");
+	private IpInterceptService ipInterceptService = (IpInterceptService) applicationContext
+			.getBean("ipInterceptService");
+	private AreaService areaService = (AreaService) applicationContext.getBean("areaService");
+
+	public SessionListener(User currentUser) {
+		this.currentUser = currentUser;
+	};
+
+	@Override
+	public void valueBound(HttpSessionBindingEvent arg0) {
+		Date date = new Date();
+		UserDuration userDuration = new UserDuration();
+		userDuration.setUser_id(currentUser.getId());
+		userDuration.setStart_time(date);
+		userDuration.setStatus(0);
+		userDurationService.insert(userDuration);
+	}
+
+	@Override
+	public void valueUnbound(HttpSessionBindingEvent arg0) {
+		Date date = new Date();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+				.getRequest();
+		int device = 0;// PC
+		if (HttpRequest.checkAgentIsMobile(request)) {
+			device = 1;//移动端
+		}
+		// 获取用户登录的外网IP
+		String networkIp = IpUtil.getIpAddr(request);
+		// 地理位置 省市
+		String address = "";
+		// 省id
+		String province_id = "";
+		if ("".equals(networkIp)) {
+			networkIp = request.getRemoteAddr();
+		}
+		networkIp = StringUtils.isBlank(networkIp) ? "" : networkIp;
+		try {
+			if (!"".equals(networkIp) && !"本地".equals(networkIp) && networkIp.indexOf("192.168.10.") == -1) {
+				IpIntercepterView ipIntercept = new IpIntercepterView();
+				ipIntercept.setRemote_ip(networkIp);
+				ipIntercept.setCreate_time(TimeUtil.dateToString1(new Date()));
+				IpIntercept ipIntercept1 = ipInterceptService.queryIpInfoByIp(ipIntercept);
+				if (ipIntercept1 != null) {// 找到之前访问的ip 和地址了
+					if (ipIntercept1.getIs_intercept() == 1) {// 放过的ip
+						address = ipIntercept1.getRegion() + ipIntercept1.getCity();
+						if (ipIntercept1.getRegion().length() > 0) {
+							Area area = areaService.selectByName(ipIntercept1.getRegion());
+							if (area != null) {
+								province_id = area.getId();
+							}
+						}
+					}
+					// else 未知原因，AreaInterceptor记录ip信息却放过关闭的ip
+				} else {// 未知原因，AreaInterceptor没有记录ip 和地址
+					Map<String, String> addressMap = AddressUtils.getAddress(networkIp, "utf-8");
+					if (addressMap != null && (addressMap.get("region") != null || addressMap.get("city") != null)) {
+						address = addressMap.get("region") + addressMap.get("city");
+						if (addressMap.get("region").length() > 0) {
+							Area area = areaService.selectByName(addressMap.get("region"));
+							if (area != null) {
+								province_id = area.getId();
+							}
+						}
+					}
+				}
+			}
+			UserDuration userDuration = new UserDuration();
+			userDuration.setUser_id(currentUser.getId());
+			userDuration = userDurationService.selectByUserId(userDuration);
+			userDuration.setEnd_time(date);
+			userDuration.setStatus(1);
+			Date start = userDuration.getStart_time();
+			userDuration.setDevice(device);
+			userDuration.setAddress(address);
+			userDuration.setProvince_id(province_id);
+			userDuration.setTotal_ms(date.getTime() - start.getTime());
+			userDurationService.update(userDuration);
+			if (TimeUtil.isSameDate(start, date)) {// 同一天，可能不同时刻
+				UserDurationPart part = new UserDurationPart();
+				part.setPart_id(userDuration.getId());
+				part.setDevice(device);
+				part.setStart_time(start);
+				part.setEnd_time(date);
+				part.setTotal_ms(userDuration.getTotal_ms());
+				part.setUser_id(userDuration.getUser_id());
+				part.setProvince_id(userDuration.getProvince_id());
+				part.setAddress(userDuration.getAddress());
+				part.setDevice(userDuration.getDevice());
+				userDurationPartService.insert(part);
+			} else {// 跨天
+				List<String> timeList = TimeUtil.getBetweenDates(start, TimeUtil.afterNDay(date, 1));
+				for(int i=0;i<timeList.size();i++){
+					UserDurationPart part = new UserDurationPart();
+					part.setPart_id(userDuration.getId());
+					part.setUser_id(userDuration.getUser_id());
+					part.setProvince_id(userDuration.getProvince_id());
+					part.setAddress(userDuration.getAddress());
+					part.setDevice(device);
+					if(i==0){
+						part.setStart_time(start);
+						Date end = TimeUtil.stringFormatDate2(TimeUtil.dateToString1(start), false);
+						part.setEnd_time(end);
+						part.setTotal_ms(end.getTime()-start.getTime());
+					}else if(i==timeList.size()-1){
+						part.setEnd_time(date);
+						Date start1 = TimeUtil.stringFormatDate2(TimeUtil.dateToString1(date), true);
+						part.setStart_time(start1);
+						part.setTotal_ms(date.getTime()-start1.getTime());
+					}else {
+						Date start2 = TimeUtil.stringFormatDate2(timeList.get(i), true);
+						Date end2 = TimeUtil.stringFormatDate2(timeList.get(i), false);
+						part.setStart_time(start2);
+						part.setEnd_time(end2);
+						part.setTotal_ms(end2.getTime()-start2.getTime());
+					}
+					userDurationPartService.insert(part);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+}

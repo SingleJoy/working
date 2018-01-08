@@ -1,0 +1,102 @@
+package cn.bnsr.edu_yun.frontstage.resource.service;
+
+
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.frontstage.resource.po.File_base;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_property;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_value;
+import cn.bnsr.edu_yun.frontstage.resource.view.FileView;
+import cn.bnsr.edu_yun.frontstage.resource.view.ResourceView;
+
+public interface File_baseService {
+	
+	/**
+	 * 新增文件
+	 * @param fileBase
+	 * @return
+	 */
+	public int insert(File_base fileBase);
+	/**
+	 * 新增文件附加属性
+	 * @param fileProperty
+	 * @return
+	 */
+	public int insertFileProperty(File_property fileProperty);
+	/**
+	 * 新增文件价值
+	 * @param fileValue
+	 * @return
+	 */
+	public int insertFileValue(File_value fileValue);
+	/**
+	 * 文件属性更改
+	 * @param fileBase
+	 * @return
+	 */
+	public int update(File_base fileBase);
+	/**
+	 * 任意条件查询
+	 * @param file_base
+	 * @return
+	 */
+	public List<File_base> selectAnyOne(File_base file_base);
+	/**
+	 * 按主键查询
+	 * @param id
+	 * @return
+	 */
+	public File_base selectById(long id);
+	
+	/**
+	 * 通过用户id查询文件
+	 * @param UserId
+	 * @return
+	 */
+	public List<File_base> selectByUserId(long userId,long start,long pageSize);
+	/**
+	 * 连表查询所有
+	 * @return
+	 */
+    public List<File_base> selectAll();
+    /** 根据用户id查询教师主页文件*/
+	public List<FileView> queryUserFile(FileView fileView);
+	/** 根据用户id查询教师主页文件总数 */
+	public int getTotalFile(FileView fileView);
+	/** 查询热门文档*/
+	public List<File_base> queryHotFile();
+	/** 查询推荐文档*/
+	public List<ResourceView> queryRecommend();
+	/** 查询资源列表 */
+	public List<ResourceView> queryResource(ResourceView resourceView);
+	/** 查询资源总数*/
+	public int queryTotalResource(ResourceView resourceView);
+	/**
+	 * 查询的总数
+	 * @param str
+	 * @return
+	 */
+	public  List<File_base> selectBySearchCount(String str,String format);
+	/**
+	 * 模糊查询
+	 * @param str
+	 * @param start
+	 * @param pageSize
+	 * @return
+	 */
+	/**
+	 * 删除fileBase
+	 * @param userId
+	 * @return
+	 */
+	public int delete(Long userId);
+	public List<File_base> selectBySearch(String str,String format,long start,long pageSize);
+	public List<File_base> selectBySearchByDownload(String str,String format,long start,long pageSize);
+	public List<File_base> selectBySearchByTime(String str,String format,long start,long pageSize);
+	public List<File_base> selectBySearchByAgree(String str,String format,long start,long pageSize);
+	
+	/**逻辑删除*/
+	public void deleteFile(String id);
+	
+}

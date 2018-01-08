@@ -1,0 +1,355 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
+<c:if test="${communityCenterView.sourceType==0}">
+    <c:set value="社区" var="sourceName"></c:set>
+</c:if>
+<c:if test="${communityCenterView.sourceType==1}">
+    <c:set value="工作坊" var="sourceName"></c:set>
+</c:if>
+
+<!-- 社区课程 -->
+<div class="community-course-container" style="margin-top: -30px;">
+    <div class="course-list">
+        <div class="text-line">
+            <h5>
+                <span >${sourceName}课程</span>
+                <div class="line"></div>
+            </h5>
+            <div class="subtitle" style="opacity: 0.6;">
+                <c:if test="${communityCenterView.sourceType==0}">Community course</c:if>
+                <c:if test="${communityCenterView.sourceType==1}">Workshop course</c:if>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <c:forEach items="${courseList}" var="course">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="${pageContext.request.contextPath}${course.img}" style="width:260px;height:155px;" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info ">
+                            <div class="title text-center">
+                                <a class="link-dark text-center" href="javascript:void(0)" target="_blank">${course.name }</a>
+                            </div>
+                            <div class="metas clearfix text-center">
+                                <span>创建人:${course.username }</span>
+                                <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>${course.studentNum }</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+        <div class="section-more-btn">
+            <a href="javascript:void (0);" class="btn btn-default btn-lg" onclick="doSearchIndex(0);">
+                更多课程 <i class="mrs-o es-icon es-icon-chevronright"></i>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 社区培训 -->
+<div class="community-train-container">
+    <div class="text-line">
+        <h5>
+            <span >${sourceName}培训</span>
+            <div class="line"></div>
+        </h5>
+        <div class="subtitle" style="opacity: 0.6;">
+            <c:if test="${communityCenterView.sourceType==0}">Community train</c:if>
+            <c:if test="${communityCenterView.sourceType==1}">workshop train</c:if>
+        </div>
+
+    </div>
+
+    <div class="course-list">
+
+        <div class="row">
+            <c:forEach items="${trainList}" var="train">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="${pageContext.request.contextPath}${train.img}" style="width:260px;height:155px;"class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info ">
+                            <div class="title text-center">
+                                <a class="link-dark text-center" href="javascript:void(0)" target="_blank">${train.name }</a>
+                            </div>
+                            <div class="metas clearfix text-center">
+                                <span>创建人:${train.username }</span>
+                                <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>${train.studentNum }</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+        <div class="section-more-btn">
+            <a href="javascript:void (0);" class="btn btn-default btn-lg" onclick="doSearchIndex(1);">
+                更多培训 <i class="mrs-o es-icon es-icon-chevronright"></i>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- 社区课例 -->
+<div class="community-lesson-container">
+    <div class="text-line">
+        <h5>
+            <span>${sourceName}课例</span>
+            <div class="line"></div>
+        </h5>
+        <div class="subtitle" style="opacity: 0.6;">
+            <c:if test="${communityCenterView.sourceType==0}">Community lesson</c:if>
+            <c:if test="${communityCenterView.sourceType==1}">Workshop lesson</c:if>
+
+        </div>
+
+    </div>
+
+    <div class="course-list">
+
+        <div class="row">
+            <c:forEach items="${lessonList }" var="l">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img <c:if test="${empty l.lesson_pic}">src="${pageContext.request.contextPath}/frontstage/images/course.png"</c:if>
+                                     <c:if test="${!empty l.lesson_pic}">src="${pageContext.request.contextPath}/${l.lesson_pic}"</c:if>  alt="" style="width:260px;height:155px;"class="img-responsive" >
+                                <c:if test="${l.excellent==1}">
+                                    <div class="tags" style="left: 0;">
+                                        <img src="${pageContext.request.contextPath}/frontstage/images/excellent_teaching_plan.png" title="优秀课例">
+                                    </div>
+                                </c:if>
+                                <div class="progress" style="width: 245px;margin-left: 10px;margin-top: 10px;">
+                                    <c:if test="${l.finish_count/l.all_count>=0.11 }">
+                                        <c:set var="width" value="${l.finish_count/l.all_count }"></c:set>
+                                    </c:if>
+                                    <c:if test="${l.finish_count/l.all_count<0.11 }">
+                                        <c:set var="width" value="0.11"></c:set>
+                                    </c:if>
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:<fmt:formatNumber type="percent" maxFractionDigits="3" value="${width }" />"><fmt:formatNumber type="percent" maxFractionDigits="0" value="${l.finish_count/l.all_count }" /></div>
+                                </div>
+                                <span class="tags">
+                                <span class="course_tags" style="color: #fff;padding-left: 5px;font-size: 12px;">${l.grade }${l.subject }</span>
+                            </span>
+                            </a>
+                        </div>
+                        <div class="course-info text-center" style="margin-top: -20px;">
+                            <div class="title ">
+                                <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                        ${l.name }
+                                </a><br/>
+                                <a class="link-dark" href="javascript:void(0);" target="_blank" style="line-height: 35px;">
+                                        ${l.workshop_name }
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span>组长:${l.lesson_username }</span>
+                                <!--
+                                <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+                                 -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+        <div class="section-more-btn">
+            <a href="javascript:void (0);" class="btn btn-default btn-lg" onclick="doSearchIndex(2);">
+                更多课例 <i class="mrs-o es-icon es-icon-chevronright"></i>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- 工作坊 -->
+<div class="community-workshop-container" <c:if test="${communityCenterView.sourceType==1}">style="display:none;" </c:if>>
+    <div class="text-line">
+        <h5>
+            <span>工作坊</span>
+            <div class="line"></div>
+        </h5>
+        <div class="subtitle" style="opacity: 0.6;">Introduction of workshop</div>
+
+    </div>
+
+    <div class="course-list">
+
+        <div class="row">
+            <c:forEach items="${workshopList}" var="workshopView">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="${pageContext.request.contextPath}${workshopView.img }" style="width:260px;height:155px;"class="img-responsive">
+                                <span class="tags">
+                                <span class="course_tags" style="color: #fff;padding-left: 5px;font-size: 12px;">${workshopView.periodName }${workshopView.subjectName }</span>
+                            </span>
+                            </a>
+                        </div>
+                        <div class="course-info text-center workshop_name">
+                            <div class="title ">
+                                <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                        ${workshopView.name }
+                                </a>
+
+                            </div>
+                            <div class="metas clearfix">
+                                <span>坊主:${workshopView.workshop_user }</span>
+                                <span class="num" style="margin-left: 30px;">
+                                <i class="es-icon es-icon-people"></i>${workshopView.user_count }
+                            </span>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </c:forEach>
+
+        </div>
+
+        <div class="section-more-btn">
+            <a href="javascript:void (0);" class="btn btn-default btn-lg" onclick="doSearchIndex(3);">
+                更多工作坊 <i class="mrs-o es-icon es-icon-chevronright"></i>
+            </a>
+        </div>
+    </div>
+
+</div>
+<%--老师--%>
+<section class="recommend-teacher ">
+    <div class="container">
+        <div class="text-line">
+            <h5>
+                <span>老师</span>
+                <div class="line"></div>
+            </h5>
+            <div class="subtitle">teacher</div>
+        </div>
+        <div class="row">
+            <c:forEach items="${studentList}" var="student">
+                <div class="col-md-3 col-xs-6">
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-lg" src="${pageContext.request.contextPath}${student.icon}" alt="">
+                            </a>
+                            <h3 class="title">
+                                <a class="link-dark" href="#">${student.true_name}</a>
+                            </h3>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                    ${student.course}
+                            </div>
+                            <div class="metas">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;"  >关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;"  style="display:none;">已关注</a>
+                                <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal" data-backdrop="static" >私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+
+        </div>
+        <div class="section-more-btn">
+            <a href="javascript:void(0)" onclick="doSearchIndex(7);" class="btn btn-default btn-lg">
+                更多教师 <i class="mrs-o es-icon es-icon-chevronright"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<div class="dynamic-section-main row">
+
+    <div class="col-md-12">
+        <div class="panel panel-default index-article">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    最新资讯
+                    <a class="more" href="javascript:void(0)" onclick="doSearchIndex(8);">
+                        <i class="es-icon es-icon-morehoriz"></i>
+                    </a>
+                </h3>
+            </div>
+            <div class="panel-body clearfix" >
+                <c:forEach items="${messageList}" var="message">
+                    <div class="col-md-6">
+                        <i class="es-icon es-icon-dot color-primary mrs"></i>
+                        <a class="link-dark" href="javascript:void(0)"  onclick="doSearchIndex(8);" title="${message.title}">${message.title}</a>
+                        <span class="date pull-right">${message.release_time}</span>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<div id="myCarousel" class="carousel slide">
+
+        <!-- 轮播（Carousel）指标 -->
+
+        <ol  class="carousel-indicators" data-interval="3000">
+            <c:forEach items="${messageList }" varStatus="message">
+                <li data-target="#myCarousel" data-interval="3000" data-slide-to="${message.index }"<c:if test="${message.index==0 }"> class="active"</c:if>></li>
+            </c:forEach>
+        </ol>
+
+
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+            <c:forEach items="${messageList}" var="message" varStatus="vsm">
+            <div class="item <c:if test="${vsm.index==0 }"> active</c:if>" >
+
+                <div class="col-md-6">
+                    <i class="es-icon es-icon-dot color-primary mrs"></i>
+                    <a class="link-dark" href="javascript:void(0)"  onclick="doSearchIndex(8);" title="${message.title}">${message.title}</a>
+                    <span class="date pull-right">${message.release_time}</span>
+                </div>
+
+            </div>
+            </c:forEach>
+        </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $('#myCarousel').carousel({
+            interval: 2000
+        });
+    })
+</script>

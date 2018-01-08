@@ -1,0 +1,168 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<%--<link href="${pageContext.request.contextPath}/frontstage/css/my-space.css" rel="stylesheet" type="text/css">--%>
+<%--<link href="${pageContext.request.contextPath}/frontstage/css/teaching-center.css" rel="stylesheet" type="text/css">--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/my-space.js"></script>--%>
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+        <jsp:include page="/frontstage/base/personalCenter/personal_header.jsp"></jsp:include>
+
+        <div class="row row-3-9">
+
+            <jsp:include page="/frontstage/base/personalCenter/personal_left.jsp"></jsp:include>
+
+           <div class="col-md-9"><div class="panel panel-default panel-col">
+
+	<div class="panel-heading">
+		我的考试
+	</div>
+	<div class="panel-body">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#">考试记录</a></li>
+
+        </ul>
+		<br>
+		
+      <table class="table  table-hover">
+    	<tbody>
+<c:forEach items="${examViews }" var="examView">
+    		    			    			    				    			    				<tr>
+  <td width="55%">
+    ${examView.name }
+    <div>
+      <small class="text-muted">来自课程《${examView.title }》</small>
+      <small class="text-muted mhs">•</small>
+      <small class="text-muted" title="交卷时间">${examView.submit_time }</small>
+    </div>
+  </td>
+  <c:if test="${examView.status==0 }">
+	<td>
+	<span class="text-muted">未交卷</span>
+	</td>
+	<td>
+	<a href="to_test.action?id=${examView.test_paper_id}&courseId=${examView.courseId}&class_id=${examView.class_id}&tab=2" class="btn btn-default btn-sm">继续考试</a>
+	</td>
+</c:if>
+<c:if test="${examView.status==1 }">
+<td>
+<span class="text-warning">正在批阅</span>
+
+</td>
+<td>
+<a href="javascript:void(0)" class="btn btn-default btn-sm" id="ask_teacher" data-course="${examView.courseId}">提醒老师批阅</a>
+</td>
+</c:if>
+<c:if test="${examView.status==2 }">
+	<td>
+	<span class="text-muted">得分<strong class="text-warning">${examView.exam_score}</strong>分</span><br>
+	
+	</td>
+	<td>
+	<a href="do_again.action?id=${examView.test_paper_id}&courseId=${examView.courseId}&exam_type=0&class_id=${examView.class_id}" class="btn btn-default btn-sm">再做一次</a>
+	<a href="to_test.action?exam_id=${examView.id}&id=${examView.test_paper_id}&class_id=${examView.class_id}&courseId=${examView.courseId}&tab=5" class="btn btn-link btn-sm" target="_blank">查看结果</a>
+	</td>
+</c:if>	
+</tr>
+</c:forEach>
+    </tbody>
+    </table>
+        <div id="test" class="pager" style="padding-top: 0;margin-bottom: 20px;"></div> 
+  
+
+	</div>
+	
+</div>
+</div>
+    </div>
+    </div>
+ <form id="examForm" action="${pageContext.request.contextPath}/exam/to_my_exam.action" method="post">
+			              <input type="hidden" name="page" id="page" value="${examView.page}"/>
+			              <input type="hidden" name="rows" id="rows" value="${examView.rows}"/>
+			              <input type="hidden" name="total" id="total" value="${examView.total}"/>
+			              <input type="hidden" name="totalPage" id="totalPage" value="${examView.totalPage}"/>
+			              <input type="hidden" name="courseId" value="${courseView.id}">
+			              <input type="hidden" name="flag" value="${courseView.flag}">
+			              <input type="hidden" name="sign" value="${courseView.sign}">
+			              <input type="hidden" name="exam_type" value="${exam_type}">
+			              <input type="hidden" name="stamp" value="${stamp}">
+			              <input type="hidden" name="state" value="${state}">
+			           	 </form>
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+<!-- 弹窗 -->
+<div id="modal" class="modal in" style="display: none;" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">题目预览</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pop_close">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(e){
+              //翻页
+        var total = $("#total").val();
+        var page =  parseInt($("#page").val())+1;
+
+        $("#btn5").on('click', function () {
+            $("#div1").PageChanged(5);
+        });
+
+        $(".pager").pagination({
+            thisPageIndex:page,
+            recordCount: total,       //总记录数
+            pageSize: $("#rows").val(),           //一页记录数
+            onPageChange: function (page) {
+                document.title = page;
+                $("#page").val(page-1);
+                $('#examForm').submit();
+
+            }
+        });
+
+
+    });
+    //tab选项卡添加下划线样式
+    $(function(){
+        $(".nav-btn-tab>ul>li.active").css("border-bottom","2px solid #46c37b");
+        $(".nav-btn-tab>ul>li").mouseenter(function(){
+
+            $(this).addClass("active");
+        }).mouseout(function(){
+            $(this).removeClass("active");
+
+        });
+$("#ask_teacher").click(function(){
+		var course_id=$(this).data("course");
+			$.ajax({
+				type:'get',
+				url : "${pageContext.request.contextPath}/exam/ask_teacher.action?course_id="+course_id,
+				dataType:'json',
+				success : function(response) {
+				alert("提醒成功");
+					
+				},
+				error :function(response) {
+
+				}
+			});
+
+		});
+
+		});
+   
+</script>  
+    
+

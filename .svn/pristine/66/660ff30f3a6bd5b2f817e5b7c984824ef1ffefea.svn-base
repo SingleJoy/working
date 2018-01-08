@@ -1,0 +1,109 @@
+package cn.bnsr.edu_yun.frontstage.resource.view;
+
+import java.util.Date;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+public class SearchView extends PageBase{
+	
+	private int source_type;
+	
+	private  long source_id;
+	
+	private String str;//搜索字段
+	
+	private String img;//图片
+	
+	private String title;
+	
+	private String content;
+	
+	private Date create_time;
+	
+	private String username;
+	
+	private int collect_num;
+	
+	private int appraise_num;
+
+	public int getSource_type() {
+		return source_type;
+	}
+
+	public void setSource_type(int source_type) {
+		this.source_type = source_type;
+	}
+
+	public long getSource_id() {
+		return source_id;
+	}
+
+	public void setSource_id(long source_id) {
+		this.source_id = source_id;
+	}
+
+	public String getStr() {
+		return str;
+	}
+
+	public void setStr(String str) {
+		this.str = str;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Date getCreate_time() {
+		return create_time;
+	}
+
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public int getCollect_num() {
+		return collect_num;
+	}
+
+	public void setCollect_num(int collect_num) {
+		this.collect_num = collect_num;
+	}
+
+	public int getAppraise_num() {
+		return appraise_num;
+	}
+
+	public void setAppraise_num(int appraise_num) {
+		this.appraise_num = appraise_num;
+	}
+
+}

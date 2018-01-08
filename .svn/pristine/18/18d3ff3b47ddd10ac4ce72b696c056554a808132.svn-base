@@ -1,0 +1,298 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<%--<link href="${pageContext.request.contextPath}/frontstage/css/resource-list.css" rel="stylesheet" type="text/css">--%>
+ <script>
+        $(document).ready(function(){
+            $("#myNav").affix({
+                offset: {
+                    top: 220
+                }
+            });
+        });
+        $(function () {
+            $("li.list-group-item").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+            })
+        })
+    </script>
+    <style>
+        .lesson_list{margin-bottom: 20px;}
+        .lesson_classfiy{padding:7px 0;}
+        .lesson_content_title{font-weight:bold;border-left: 3px solid #46c37b;padding-left: 18px;}
+        .lesson_content_page{background-color:#f4f4f4;padding-left: 10px;}
+        .lesson_content_page>label{margin-top: 20px;padding-left: 15px;}
+        .lesson_content_text{padding-left: 20px;line-height: 2;}
+        ul.container-fluid {
+            top: 20px;
+            position: fixed;
+        }
+        .list-group,.list-group-item{width: 258px;}
+        .list-group>li.active{border-left: 2px solid #46c37b;}
+        .course-manage-header{background-color: #fff;}
+        #myNav{top:10px;}
+    </style>
+
+<div class="es-wrap" style="background-color: #eaeaea;">
+
+    <div id="content-container" class="container">
+
+        <div class="section course-manage-header clearfix" style="margin-top:  20px;">
+
+            <div class="row">
+
+                <div class="col-md-2 col-lg-2 text-center">
+
+                    <div class="avatar-wrap pull-left" style="margin: 25px;">
+                        <img class="avatar-lg" src="http://www.qiqiuyu.com/files/user/2016/11-18/13225934624f647224.jpg" alt="">
+                    </div>
+
+
+                </div>
+                <div class="col-md-4 col-lg-4">
+
+                    <div class="lesson_content " style="margin: 35px 0;">
+
+                        <h2 class="lesson_name">${file_base.filename }
+
+                            <div class="metas">
+
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <span>(1 评论)</span>
+                                </div>
+
+
+                            </div>
+                        </h2>
+                        <div class="lesson_classfiy text-muted">${teachingPlanView.stage_name }${teachingPlanView.subject_name }(${teachingPlanView.edition_name }) · ${teachingPlanView.grade_name } <span class="mlm mrm text-muted">｜</span> ${teachingPlanView.unit_name } · ${teachingPlanView.lesson_name }</div>
+                        <div class="lesson_info"> ${teachingPlanView.true_name } <span style="padding: 0 5px;"></span>北京四中语文老师
+                        <c:if test="${userAttent==0 }">
+                            <a href="javascript:void(0);" class="btn btn-warning btn-sm follow-btn" style="margin-left: 20px;" data-user="${teachingPlanView.user_id }"><i class="glyphicon glyphicon-plus"></i>关注</a>
+                        </c:if>
+                        <c:if test="${userAttent==1 }">
+                            <a href="javascript:void(0);" class="btn btn-warning btn-sm " style="margin-left: 20px;" data-user="${teachingPlanView.user_id }"><i class="glyphicon glyphicon-plus"></i>已关注</a>
+                        </c:if>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="pull-right text-center" style="margin-top: 60px;margin-right: 20px;">
+                    <a href="javascript:void(0);" class="btn btn-info" style="padding:6px 30px; "><i class="es-icon es-icon-bookmarkoutline"></i>收藏</a>
+                    <span style="padding: 0 5px;"></span>
+                    <a href="javascript:void(0);" class="btn btn-info"  style="padding:6px 30px; "><i class="es-icon es-icon-download"></i>下载</a>
+                    <div style="margin-top: 20px;">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="text-warning">${file_base.file_property.click_times }</span>次浏览<span class="mlm mrm text-muted">｜</span>
+                        <i class="es-icon es-icon-download"></i>
+                        <span class="text-warning">${file_base.file_property.download_times }</span>次下载
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+
+            <nav class="col-md-3" id="myScrollspy" style="padding-left: 0;">
+
+                <div class="container-fluid" >
+                    <div class="container-fluid sidenav locked" data-spy="affix" data-offset-top="10" id="myNav">
+
+                        <ul class="list-group">
+                            <li class="list-group-item active" >
+                                <a href="#section1" class="link-dark"> 教学准备</a>
+                            </li>
+                            <li class="list-group-item "><a href="#section2"><span style="padding-left: 20px;"></span>教学目标</a></li>
+                            <li class="list-group-item "><a href="#section3"><span style="padding-left: 20px;"></span>教学重难点</a></li>
+
+                            <li class="list-group-item" ><a href="#section4" class="link-dark">教学过程</a></li>
+
+                            <li class="list-group-item" ><a href="#section5" class="link-dark">教学附件</a></li>
+
+                            <li class="list-group-item" ><a href="#section6" class="link-dark">教学评价</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col" >
+
+                    <div class="panel-heading">
+                        ${teachingPlanView.resource_name }
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <!--教学准备-->
+                        <div class="lesson_prepare lesson_list" id="section1">
+                            <h4 class="lesson_content_title ">教学准备</h4>
+                            <div class="lesson_content_page" id="section2">
+                                <label>教学目标</label>
+                                <div class="lesson_content_text text-left">
+                                    ${teachingPlanView.edu_goal }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--教学重难点-->
+                        <div class="lesson_point lesson_list" id="section3">
+
+                            <div class="lesson_content_page">
+                                <label>教学重难点</label>
+                                <div class="lesson_content_text text-left">
+                                    ${teachingPlanView.focus_difficulty }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--教学过程-->
+                        <div class="lesson_process lesson_list" id="section4">
+                            <h4 class="lesson_content_title ">教学过程</h4>
+                            <div class="lesson_content_page">
+
+                                <div class="lesson_content_text text-left">
+                                    ${teachingPlanView.teaching_process }
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--配套资源-->
+                        <div class="lesson_resources lesson_list" id="section5">
+                            <h4 class="lesson_content_title ">配套资源<span class="text-muted">（点击可预览）</span></h4>
+                            <div class="lesson_content_page">
+
+                                <div class="lesson_content_text text-left">
+                                <c:forEach items="${teachingPlanFile }" var="file">
+                                    <a href="${pageContext.request.contextPath}/userFile/see.action?id=${file.id }" title="${file.filename }" style="padding: 0 10px;" target="_blank"> ${file.filename }</a>
+                                   
+								</c:forEach>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--教学评价-->
+                        <div class="lesson_evaluate lesson_list" id="section6">
+                            <h4 class="lesson_content_title ">教学评价</h4>
+                            <!--如果已经评价过.则为重新评价-->
+                            <a class="btn btn-primary btn-sm pull-right" href="#evaluate_modal" data-toggle="modal">我也要评价</a>
+                            <div class="lesson_content_page" style="margin-top: 50px;">
+
+                                <div class="js-reviews">
+                                    <div class="media media-evaluate">
+                                        <div class="media-left">
+                                            <a class=" js-user-card" href="">
+                                                <img class="avatar-sm" src="http://www.qiqiuyu.com/files/user/2016/11-18/13225934624f647224.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="media-body thread-post">
+                                            <div class="title">
+                                                <a class="link-dark" href="">ceshi</a>
+                                                <span>2017-6-23</span>
+                                            </div>
+
+                                            <div class="score">
+
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+
+                                            </div>
+
+                                            <div class="content">
+                                                <div class="short-content">wweweeeeeeeeeee</div>
+                                                <div class="full-content" style="display: none;">wweweeeeeeeeeee</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="empty" style=" margin-top: 30px;display: none;">暂无评价</div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+
+<!--评价-->
+<div id="evaluate_modal" class="modal in" aria-hidden="false" data-backdrop="static" style="display: none;" >
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">评价</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal"  action="" method="post" novalidate="novalidate" >
+                    <div class="evaluation_again_content">
+                        <span>请打分&nbsp;:</span>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+
+                    </div>
+                    <div class="form-group controls col-md-10" style="margin-top: 20px;">
+                        <textarea class="form-control col-md-10 col-md-offset-1" rows="6" ></textarea>
+                        <div class="help-block" style="display:none;"></div>
+                    </div>
+
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button  type="submit" class="btn btn-primary" data-toggle="form-submit" >保存</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+   $(".follow-btn").click(function () {
+        var id=$(this).data("user");
+        send_attent(id);
+      location.reload(); 
+    });
+</script>
+
+
+

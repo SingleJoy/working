@@ -1,0 +1,133 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<style>
+    .index_title{float: left;}
+    .index_title>img{float: left;}
+    .index_title>span{float: left;padding-left: 10px;}
+    .index_title>div{padding-left: 30px;float: left;}
+    .index_title>div>span{color: #e83d2c;padding: 0 5px;}
+    .nav-btn-tab{border: none;}
+    ul.community{clear: both;}
+    ul.community>li{padding-left: 70px;}
+    ul.community>li>a{opacity: 0.6;}
+    ul.community>li>a>span{float: right;}
+    ul.community>li>a>b{font-weight: normal;color: #e83d2c;}
+</style>
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+        <jsp:include page="/frontstage/base/personalCenter/personal_header.jsp"></jsp:include>
+
+        <div class="row">
+
+            <jsp:include page="/frontstage/base/personalCenter/personal_left.jsp"></jsp:include>
+
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col lesson-manage-panel">
+                  <div class="panel-heading">我的研修进度(组长,组员)</div>
+                    <div class="panel-body">
+
+                    <div class="nav-btn-tab">
+                        <div class="pull-left index_title">
+                            <img src="${pageContext.request.contextPath}/frontstage/images/per-course.png"><span>课程</span>
+                            <div>
+                                本学年要求完成<span>80</span>学时的课程学习,您已选择70课时,已经完成<span>20</span>课时
+                            </div>
+                        </div>
+                        <ul class="nav nav-pills nav-stacked community">
+
+                            <li><a href="javascript:void(0);">课程1:《师生沟通艺术》<b>(未完成)</b><span>&gt;&gt;进入课程</span></a></li>
+                            <li><a href="javascript:void(0);">课程2:《如何成为一位合格的中学老师》<b>(未及格)</b><span>&gt;&gt;进入课程</span></a></li>
+                        </ul>
+
+                    </div>
+                        <div class="nav-btn-tab">
+                            <div class="pull-left index_title">
+                                <img src="${pageContext.request.contextPath}/frontstage/images/per-train.png"><span>培训</span>
+                                <div>
+                                    本学年要求完成<span>80</span>培训学习,您已经完成<span>20</span>门课程学习
+                                </div>
+                            </div>
+                            <ul class="nav nav-pills nav-stacked community">
+
+                                <li><a href="javascript:void(0);">培训1:北京四中新教师进阶培训<b>(未完成)</b><span>&gt;&gt;进入培训</span></a></li>
+                                <li><a href="javascript:void(0);">课程2:北京一小新教师进阶培训<b>(未及格)</b><span>&gt;&gt;进入培训</span></a></li>
+
+                            </ul>
+
+                        </div>
+
+
+                        <div class="nav-btn-tab">
+                            <div class="pull-left index_title">
+                                <img src="${pageContext.request.contextPath}/frontstage/images/per-homework.png"><span>作业</span>
+                                <div>
+                                    您需要完成<span>10</span>份作业,你已经完成<span>6</span>份
+                                </div>
+                            </div>
+                            <ul class="nav nav-pills nav-stacked community">
+
+                                <li><a href="javascript:void(0);">课程1:浅谈师生关系<b>(未完成)</b><span>&gt;&gt;进入作业</span></a></li>
+                                <li><a href="javascript:void(0);">课程2:我常用的与学生交流的方式<b>(未及格)</b><span>&gt;&gt;进入作业</span></a></li>
+
+                            </ul>
+
+                        </div>
+                        <div class="nav-btn-tab">
+                            <div class="pull-left index_title">
+                                <img src="${pageContext.request.contextPath}/frontstage/images/per-discuss.png"><span>研讨</span>
+                                <div>
+                                    您需要完成<span>10</span>次主题研讨,你已经完成<span>4</span>次
+                                </div>
+                            </div>
+                            <ul class="nav nav-pills nav-stacked community">
+
+                                <li><a href="javascript:void(0);">课程1:说说班级里的"奇葩学生"<b>(未及格)</b><span>&gt;&gt;进入研讨</span></a></li>
+                                <li><a href="javascript:void(0);">课程2:我常用的与学生交流的方式<b>(未完成)</b><span>&gt;&gt;进入研讨</span></a></li>
+
+                            </ul>
+
+                        </div>
+                        <div class="nav-btn-tab">
+                            <div class="pull-left index_title">
+                                <img src="${pageContext.request.contextPath}/frontstage/images/per-course.png"><span>课例</span>
+                                <div>
+                                   您所在的教研组需要完成<span>2</span>个课例研究工作
+                                </div>
+                            </div>
+                            <ul class="nav nav-pills nav-stacked community">
+
+                                <li><a href="javascript:void(0);">课程1:在山的那一边研讨<span>&gt;&gt;进入课例</span></a></li>
+                                <li><a href="javascript:void(0);">课程2:欣赏古诗词研讨<b>(未完成)</b><span>&gt;&gt;进入课例</span></a></li>
+
+                            </ul>
+
+                        </div>
+                        <div class="nav-btn-tab">
+                            <div class="pull-left index_title">
+                                <img src="${pageContext.request.contextPath}/frontstage/images/per-evaluate.png"><span>互评</span>
+                                <div>
+                                    需要您完成<span>2</span>个课例研究工作
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+            </div>
+
+            </div>
+        </div>
+
+    </div>
+
+ <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>

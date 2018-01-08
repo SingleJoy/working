@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>个人中心-我的社区-我创建的社区</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+     <script>
+         $(function(){
+             $(".teacher_train_community").click(function(){
+                 $(".teacher_train_community_content").slideDown(1500);
+             });
+             $(".ordinary_train_community").click(function(){
+                 $(".teacher_train_community_content").slideUp(1500);
+             });
+         })
+     </script>
+
+</head>
+<body >
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+
+        <div class="col-lg-9 col-md-8  course-detail-main" >
+
+            <div class="panel panel-default panel-col course-data">
+                <div class="panel-heading">创建社区
+
+                </div>
+                <div class="panel-body">
+
+                    <form  method="post" action=""  class="form-horizontal">
+
+                        <div class="form-group">
+
+                            <div class="col-md-2 control-label">
+                                <label><span class="text-danger">*</span>社区名称:</label>
+                            </div>
+                            <div class="col-md-4 controls">
+                                <input type="text"  class="form-control" placeholder="请输入社区名称">
+                                <div class="help-block" style="display: none;"><span class="text-danger">请输入社区名称</span></div>
+                            </div>
+                            <div class="col-md-2 controls">
+                                <a href="javascript:void(0);" class="btn btn-info pull-right btn-sm" data-toggle="modal">
+                                    <i class="glyphicon glyphicon-plus"></i>证书背景图片
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><label>社区头像:</label></div>
+                            <div class="col-md-4 controls">
+                                <a href="javascript:void(0);" class="btn btn-info btn-sm" data-toggle="modal">
+                                    <i class="glyphicon glyphicon-plus"></i>社区头像
+                                </a>
+                                <div class="help-block">请选择jpg,jig格式,小于2M的图片</div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><label>社区背景:</label></div>
+                            <div class="col-md-4 controls">
+                                <a href="javascript:void(0);" class="btn btn-info  btn-sm" data-toggle="modal">
+                                    <i class="glyphicon glyphicon-plus"></i>社区背景
+                                </a>
+
+                                <div class="help-block">请选择jpg,jig格式,小于2M的图片</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">社区类型:</label>
+                            <div class="col-md-8 controls radios community_type">
+                                <label><input type="radio" name="communityType" class="ordinary_train_community" checked> 普通社区</label>
+                                <label><input type="radio" name="communityType" class="teacher_train_community"> 教师培训社区 </label>
+                            </div>
+                        </div>
+
+                        <div class="teacher_train_community_content" style="display: none;">
+                            <div class="form-group clearfix" >
+                                <div class="col-md-2 control-label">
+                                    <label>起止时间:</label>
+                                </div>
+
+                                <div class="col-md-2 controls">
+                                    <input type="text" class="form-control"  onClick="WdatePicker()">
+                                    <div class="help-block" style="display: none;"><span class="text-danger">请输入开始时间</span></div>
+                                </div>
+                                <div class="col-md-1 control-label" style="margin-left: -30px;">
+                                    <div>至</div>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <input type="text" class="form-control"  onClick="WdatePicker()">
+                                    <div class="help-block" style="display: none;"><span class="text-danger">请输入结束时间</span></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>计划人数:</label></div>
+                                <div class="col-md-2 controls">
+                                    <input type="text"  class="form-control" placeholder="请输入人数">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>学分:</label></div>
+                                <div class="col-md-2 controls">
+                                    <input type="text"  class="form-control" placeholder="请输入学分">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>学时:</label></div>
+                                <div class="col-md-2 controls">
+                                    <input type="text"  class="form-control" placeholder="请输入学时">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>学段:</label></div>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option  value="-1">--请选择！--</option>
+                                        <option >小学</option>
+                                        <option >初中</option>
+                                        <option>高中</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择学段</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>学科:</label></div>
+                                <div class="col-md-2 controls">
+                                    <select  class="form-control">
+                                        <option  value="-1">--请选择！--</option>
+                                        <option >语文</option>
+                                        <option >数学</option>
+                                        <option >外语</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择科</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>类型:</label></div>
+                                <div class="col-md-2 controls">
+                                    <select  class="form-control">
+                                        <option  value="-1">--请选择类型！--</option>
+                                        <option >综合素质</option>
+                                        <option >其他</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择类型</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>等级:</label></div>
+                                <div class="col-md-2 controls">
+                                    <select  class="form-control">
+                                        <option  value="-1">--请选择等级！--</option>
+                                        <option >省级</option>
+                                        <option >市级</option>
+                                        <option >县级</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择年级</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <div class="col-md-2 control-label">
+                                    <label>学员管理:</label>
+                                </div>
+
+                                <div class="col-md-8 controls" style="padding-top: 7px;">
+                                    <span>李云龙&nbsp;&nbsp;</span>
+                                    <span>李云龙1&nbsp;&nbsp;</span>
+                                    <span>李云龙2&nbsp;&nbsp;</span>
+
+
+                                </div>
+
+                                <div class="col-md-2 controls">
+                                    <a href="javascript:void(0);"  class="btn btn-info" data-toggle="modal" data-target="#add-students" >
+                                        <span class="glyphicon glyphicon-plus"></span>添加学员
+                                    </a>
+                                </div>
+                                <!--已经添加学员后,若需要修改学员,需要将之前学员重置(清空),重新添加-->
+                                <!--<div class="col-md-2 controls">-->
+                                <!--<a href="javascript:void(0);"  class="btn btn-danger" data-toggle="modal" data-target="#add-students" >-->
+                                <!--<span class="glyphicon glyphicon-plus"></span>重置学员信息-->
+                                <!--</a>-->
+                                <!--</div>-->
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group clearfix" style="margin-top: 80px;">
+                            <div class="col-md-offset-5 col-md-2 controls">
+                                <button class="btn btn-fat btn-primary"  type="button" >保存</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- 添加学员弹窗 -->
+<div id="add-students" class="modal" data-toggle="modal" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">选择学员</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="province">
+                    <h5 >所在省份:</h5>
+                    <div class="area_content">
+                        <ul>
+                            <li class="active"><a class="items nav-link tag" href="javascript:;">北京</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">天津</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">河北</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">辽宁</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">吉林</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">山西</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">湖南</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">安徽</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">江苏</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">贵州</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">重庆</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">浙江</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">黑龙江</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">湖北</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">四川</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">上海</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">福建</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">江西</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">山东</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">河南</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">广东</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">海南</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">云南</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">陕西</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">甘肃</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">陕西</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">青海</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">台湾</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">内蒙古</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">广西</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">宁夏</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">新疆</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">西藏</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div style="margin-top:10px;" class="area_list">
+                    <h5 >省内区域:</h5>
+                    <div class="area_content">
+                        <ul>
+                            <li class="active"><a class="items nav-link tag" href="javascript:;">海淀区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">朝阳区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">东城区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">西城区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">通州</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">昌平区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">顺义区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">密云区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">平谷区</a></li>
+                            <li><a class="items nav-link tag" href="javascript:;">延庆区</a></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="user_list" style="margin-top: 30px;">
+                    <h5>用户列表:</h5>
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <td class="active"><input type="checkbox"></td>
+                            <td class="active">用户名</td>
+                            <td class="active">真实姓名</td>
+                            <td class="active">性别</td>
+                            <td class="active">工作单位</td>
+                            <td class="active">学段学科</td>
+                            <td class="active">手机号</td>
+                        </tr>
+                        </thead>
+                        <tbody >
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>测试</td>
+                            <td>李云龙</td>
+                            <td>男</td>
+                            <td>北京四中</td>
+                            <td>初中语文</td>
+                            <td>13698645822</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info pull-right tutor_confirm" data-dismiss="modal">保存</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

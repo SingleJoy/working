@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>工作坊主页</title>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+
+
+
+</head>
+<body >
+
+<header class="es-header navbar" style="background-color: transparent;">
+
+    <div class="navbar-header">
+        <a href="/edu_yun" class="navbar-brand">
+            <img src="/edu_yun/frontstage/images/qiuzi_index.png">
+        </a>
+    </div>
+    <nav class="collapse navbar-collapse">
+
+        <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+
+            <li class="nav-hover">
+                <a href="/edu_yun">首页 </a>
+
+            </li>
+
+            <li>
+                <a href="/edu_yun/community/to_community_center.action?stamp=0&amp;state=0&amp;sign=0" target="_blank">个人中心</a>
+            </li>
+
+            <li><a href="/edu_yun/train/to_train_home.action" target="_blank">培训主页</a></li>
+
+
+            <li><a href="/edu_yun/lesson_main/to_lesson_main.action" target="_blank">教研主页</a></li>
+            <li>
+                <a href="/edu_yun/user/resource_home.action" target="_blank">资源主页 </a>
+            </li>
+            <li><a href="javascript:void(0);" target="_blank">社区主页</a></li>
+            <li><a href="javascript:void(0);" target="_blank">工作坊主页</a></li>
+        </ul>
+
+        <div class="navbar-user ">
+
+            <ul class="nav user-nav">
+                <li class="user-avatar-li nav-hover">
+                    <a href="javascript:void (0);" class="dropdown-toggle" id="my_pic">
+                        <img class="avatar-xs" src="/edu_yun/picture/userImages/140Y126315b10-1509314973439181222.jpg">
+
+                    </a>
+                    <ul class="dropdown-menu" role="menu" id="header_mine">
+                        <li role="presentation" class="dropdown-header">ceshi</li>
+                        <li><a href="/edu_yun/teacher_center/to_teacher_center.action?user_id=28" target="_blank"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                        <li><a href="/edu_yun/private_letter/to_letter.action" target="_blank"><i class="es-icon es-icon-setting"></i>私信</a></li>
+                        <li class="hidden-lg">
+                            <a href="/edu_yun/notice/queryNotice.action?page=0&amp;type=0">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>
+                                通知</a>
+                        </li>
+                        <li class="hidden-lg">
+                            <a href="/edu_yun/private_letter/to_letter.action">
+                                <span class="pull-right num">0</span><i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+                        <li><a href="/edu_yun/user/ajaxLogout.action" class="sign_out" onclick="return false"><i class="es-icon es-icon-power"></i>退出登录</a></li>
+                    </ul>
+                </li>
+
+                <li class="visible-lg nav-hover">
+
+                    <a href="javascript:return false;" id="header_icon_mail">
+
+                        <i class="es-icon es-icon-mail"></i>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu" id="header_notes">
+                        <li>
+                            <a href="/edu_yun/notice/queryNotice.action?page=0&amp;type=0">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>通知
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/edu_yun/private_letter/to_letter.action">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </nav>
+</header>
+
+<section  style="height:400px;width: 100%;position: relative;margin-top: -50px;">
+
+    <div class="workshop_home_banner" style="height: 400px;">
+
+        <form class="form-horizontal container" >
+
+            <div class="text-center" >
+                <div class="form-group " style="margin-top: 180px;">
+                    <div style="width: 40%;margin-left: 30%;">
+                        <input class="form-control input-lg workshop_home_search" type="text"  placeholder="搜索你喜欢的" >
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+
+</section>
+
+
+
+<div style="background-color:#fff; ">
+
+    <section class="workshop_focus">
+
+        <!--大家正在关注社区-->
+
+        <div class="container">
+
+            <div class="text-line">
+                <h5>
+                    <span>大家正在关注</span>
+                    <div class="line"></div>
+                </h5>
+                <div class="subtitle">精选热门工作坊。</div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="../../../images/lesson_wuhan.jpg" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="../../../images/lesson_wuhan.jpg" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="../../../images/lesson_wuhan.jpg" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="../../../images/lesson_wuhan.jpg" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="../../../images/lesson_wuhan.jpg" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="../../../images/lesson_wuhan.jpg" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="workshop_recommend">
+
+        <div class="container">
+
+            <div class="text-line">
+                <h5>
+                    <span>为你推荐</span>
+                    <div class="line"></div>
+                </h5>
+                <!--<div class="subtitle">精选热门工作坊。</div>-->
+            </div>
+
+            <div class="workshop_recommend_container" style="margin-bottom: 100px;">
+
+                <!--第一排-->
+                <div class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/1.jpg" class="img-responsive workshop_pic" >
+                        <span class="arrow_left"></span>
+                    </a>
+
+                </div>
+
+                <div class="workshop_recommend_list" >
+
+                    <div class="workshop_list_page">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span >初中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span>语文</span>
+                        </a><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span>北京四中</span>
+                        </a>
+                    </div>
+
+                    <div class="workshop_list_page" style="margin-top: 5px;">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span class="pull-right">高中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span class="pull-right">化学</span>
+                        </a><br/><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span class="pull-right">人大附中</span>
+                        </a><br/>
+                    </div>
+
+
+                </div>
+
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/2.jpg" class="img-responsive workshop_pic">
+                        <span class="arrow_right"></span>
+                    </a>
+
+                </div>
+
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/3.jpg" class="img-responsive workshop_pic">
+
+                    </a>
+                    <div  class="workshop_recommend_list_content">
+
+                        <a href="javascript:void(0);" class="recommend_list_subject">语文</a>
+                        <a href="javascript:void(0);" class="recommend_list_name">清华附中</a>
+                        <a href="javascript:void(0);" class="pull-right recommend_list_grade ">初中</a>
+                    </div>
+
+                </div>
+
+
+                <!--第二排-->
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/4.jpg" class="img-responsive workshop_pic">
+
+                    </a>
+                    <div  class="workshop_recommend_list_content">
+
+                        <a href="javascript:void(0);" class="recommend_list_subject">语文</a>
+                        <a href="javascript:void(0);" class="recommend_list_name">清华附中</a>
+                        <a href="javascript:void(0);" class="pull-right recommend_list_grade ">初中</a>
+                    </div>
+
+                </div>
+
+                <div class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/5.jpg" class="img-responsive workshop_pic" >
+                        <span class="arrow_left"></span>
+                    </a>
+
+                </div>
+
+                <div class="workshop_recommend_list" >
+
+                    <div class="workshop_list_page">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span >初中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span>语文</span>
+                        </a><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span>北京四中</span>
+                        </a>
+                    </div>
+
+                    <div class="workshop_list_page" style="margin-top: 5px;">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span class="pull-right">高中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span class="pull-right">化学</span>
+                        </a><br/><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span class="pull-right">人大附中</span>
+                        </a><br/>
+                    </div>
+
+
+                </div>
+
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/6.jpg" class="img-responsive workshop_pic">
+                        <span class="arrow_right"></span>
+                    </a>
+
+                </div>
+
+
+
+                <!--第三排-->
+                <div class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/7.jpg" class="img-responsive workshop_pic" >
+                        <span class="arrow_left"></span>
+                    </a>
+
+                </div>
+
+                <div class="workshop_recommend_list" >
+
+                    <div class="workshop_list_page">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span >初中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span>语文</span>
+                        </a><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span>北京四中</span>
+                        </a>
+                    </div>
+
+                    <div class="workshop_list_page" style="margin-top: 5px;">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span class="pull-right">高中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span class="pull-right">化学</span>
+                        </a><br/><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span class="pull-right">人大附中</span>
+                        </a><br/>
+                    </div>
+
+
+                </div>
+
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/8.jpg" class="img-responsive workshop_pic">
+                        <span class="arrow_right"></span>
+                    </a>
+
+                </div>
+
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/9.jpg" class="img-responsive workshop_pic">
+
+                    </a>
+                    <div  class="workshop_recommend_list_content">
+
+                        <a href="javascript:void(0);" class="recommend_list_subject">语文</a>
+                        <a href="javascript:void(0);" class="recommend_list_name">清华附中</a>
+                        <a href="javascript:void(0);" class="pull-right recommend_list_grade ">初中</a>
+                    </div>
+
+                </div>
+
+
+                <!--第四排-->
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/10.jpg" class="img-responsive workshop_pic">
+
+                    </a>
+                    <div  class="workshop_recommend_list_content">
+
+                        <a href="javascript:void(0);" class="recommend_list_subject">语文</a>
+                        <a href="javascript:void(0);" class="recommend_list_name">清华附中</a>
+                        <a href="javascript:void(0);" class="pull-right recommend_list_grade ">初中</a>
+                    </div>
+
+                </div>
+
+                <div class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/11.jpg" class="img-responsive workshop_pic" >
+                        <span class="arrow_left"></span>
+                    </a>
+
+                </div>
+
+                <div class="workshop_recommend_list" >
+
+                    <div class="workshop_list_page">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span >初中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span>语文</span>
+                        </a><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span>北京四中</span>
+                        </a>
+                    </div>
+
+                    <div class="workshop_list_page" style="margin-top: 5px;">
+
+                        <a href="javascript:void(0);" target="_blank" class="grade text-muted">
+                            <span class="pull-right">高中</span>
+                        </a><br/><br/>
+
+                        <a href="javascript:void(0);" target="_blank" class="subject text-muted" >
+                            <span class="pull-right">化学</span>
+                        </a><br/><br/>
+                        <a href="javascript:void(0);" target="_blank" class="text-muted workshop_list_name" >
+                            <span class="pull-right">人大附中</span>
+                        </a><br/>
+                    </div>
+
+
+                </div>
+
+                <div  class="workshop_recommend_list">
+
+                    <a href="javascript:void(0);" target="_blank" style="position: relative;">
+                        <img  src="../../../images/workshop_home/12.jpeg" class="img-responsive workshop_pic">
+                        <span class="arrow_right"></span>
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+        </div>
+        <div class="section-more-btn" style="padding-top: 50px;">
+            <a href="javascript:void (0);" class="btn btn-default btn-lg" >
+                更多工作坊<i class="mrs-o es-icon es-icon-chevronright"></i>
+            </a>
+        </div>
+    </section>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

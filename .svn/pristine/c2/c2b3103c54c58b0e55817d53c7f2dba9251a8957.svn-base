@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>教学计划展示页</title>
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link href="../../css/upload_file.css" rel="stylesheet" />
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+
+    </script>
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <header style="width: 100%;height: 100px;background-color: #fff;">
+
+        <div class="container" >
+
+            <div class="row">
+                <div class="col-md-3">
+                    <a class="pull-left link-dark" href="javascript:void(0);">
+                        <label style="font-size: 18px;line-height: 88px;">上传资源</label>
+                    </a>
+                </div>
+
+                <div class="upload_progress_all col-md-offset-3" style="margin-top: 20px;">
+
+                    <div class="col-md-3 stage_step">
+                        <div class="circle active" ><span >1</span></div>
+                        <span class="active">选择文档</span>
+                        <div class="stage_step_line" style="background-color: #3ebbce;"></div>
+                    </div>
+
+                    <div class="col-md-3 stage_step">
+                        <div class="circle active" ><span >2</span></div>
+                        <span class="active">补充信息</span>
+                        <div class="stage_step_line" style="background-color: #3ebbce;"></div>
+                    </div>
+
+                    <div class="col-md-3 stage_step">
+                        <div class="circle" ><span >3</span></div>
+                        <span class="">上传完成</span>
+                        <div class="stage_step_line"></div>
+                    </div>
+
+                </div>
+
+                <div class="pull-right" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-default btn-lg">继续添加</button>
+                    <button type="button" class="btn btn-warning btn-lg">确认上传</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </header>
+
+    <div  class="container" style="margin-top: 20px;">
+
+
+        <div class="row col-md-12">
+
+            <div class="panel panel-default panel-col">
+                <div class="panel-heading">
+                    文档名称预览
+                    <a href="upload_teaching_plan.html" type="button" class="btn btn-default btn-lg pull-right">返回修改</a>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered teaching_plan_table">
+                            <tbody>
+                            <tr>
+                                <td class="active" width="20%;">学段 / 学科 / 教材版本</td>
+                                <td>初中 / 化学 / 人教2001课标版</td>
+                            </tr>
+                            <tr>
+                                <td class="active" >年级 / 单元 / 科目</td>
+                                <td>八年级 / 第二单元 / 氧气的性质</td>
+                            </tr>
+                            <tr>
+                                <td class="active" >资源名称</td>
+                                <td>氧气有什么性质呢?</td>
+                            </tr>
+                            <tr>
+                                <td class="active" >资源简介</td>
+                                <td>
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                    氧气有什么性质的简介
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="active" >教学目标</td>
+                                <td>让学生了解氧气(O2)的基本性质</td>
+                            </tr> <tr>
+                                <td class="active" >教学重点/难点</td>
+                                <td>氧气有什么性质的重难点</td>
+                            </tr>
+                            <tr>
+                                <td class="active" >教学用具</td>
+                                <td>制作氧气的化学实验室工具</td>
+                            </tr>
+
+                            <tr>
+                                <td class="active" >教学过程</td>
+                                <td>教学过程的细节描述 </td>
+                            </tr>
+                            <tr>
+                                <td class="active" >板书</td>
+                                <td>教学过程板书内容</td>
+                            </tr>
+                            <tr>
+                                <td class="active" >课堂小结</td>
+                                <td>本节课堂教总结</td>
+                            </tr>
+
+                            <tr>
+                                <td class="active" >课后习题</td>
+                                <td>请描述氧气有什么性质? </td>
+                            </tr>
+                            <tr>
+                                <td class="active" >附件列表</td>
+                                <td>
+                                    <a href="javascript:;">附件01&nbsp;&nbsp;</a>
+                                    <a href="javascript:;">附件02&nbsp;&nbsp;</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="active" >课堂小结</td>
+                                <td>本节课堂教总结</td>
+                            </tr>
+
+                            <tr>
+                                <td class="active" >教学过程</td>
+                                <td>教学过程的细节描述 </td>
+                            </tr>
+                            <tr>
+                                <td class="active" >板书</td>
+                                <td>教学过程板书内容</td>
+                            </tr>
+                            <tr>
+                                <td class="active" >类型</td>
+                                <td>付费资源 <span class="text-danger">(6元)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="active" >发布范围</td>
+                                <td>社区001</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+    </div>
+</div>
+
+<!--资料预览-->
+<div id="data_look" class="modal in" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><span class="text-muted">资料预览</span></h4>
+            </div>
+            <div class="modal-body">
+                <div  style="height:500px;overflow:hidden;" >
+                    预览资料区域
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="text-muted pull-left" style="font-size:10px">
+                    资源编号：768f790ec3554623aa652d43d1466a02
+                </div>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>

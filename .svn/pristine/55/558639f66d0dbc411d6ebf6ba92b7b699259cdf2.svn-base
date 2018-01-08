@@ -1,0 +1,217 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<style>
+	.train_index_banner>ul>li>a{color: #fff;line-height: 50px;}
+</style>
+
+<div class="es-wrap">
+
+
+	<div id="content-container" class="container" style="margin-top: 20px;">
+
+		<div class="tabs-wrapper">
+
+			<div class="tabs-group">
+				<div class="title">分类：</div>
+				<ul class="content list-unstyled list-inline">
+
+					<li class=" <c:if test="${trainView.classify_id == -1}">active</c:if>">
+						<a href="javascript:void(0);" onclick="searchClassify(-1);">全部</a>
+					</li>
+
+					<c:forEach items="${classifyList}" var="classify">
+						<li class="<c:if test="${trainView.classify_id == classify.id}">active </c:if>">
+							<a href="javascript:void(0);" onclick="searchClassify(${classify.id})">${classify.classify_name }</a>
+						</li>
+					</c:forEach>
+
+				</ul>
+
+			</div>
+
+		</div>
+
+
+
+		<div class="es-filter" >
+
+			<ul class="nav nav-sort clearfix">
+				<li><a href="javascript:void(0);" onclick="searchSortType(0);"
+					   <c:if test="${trainView.sortType==0}">class="active"</c:if>>最新</a></li>
+				<li><a href="javascript:void(0);" onclick="searchSortType(1);"
+					   <c:if test="${trainView.sortType==1}">class="active"</c:if>>最热</a></li>
+				<%--<li><a href="javascript:void(0);" onclick="searchSortType(2);"--%>
+				<%--<c:if test="${trainView.sortType==2}">class="active"</c:if>>推荐</a></li>--%>
+
+			</ul>
+
+			<div class="filter hidden-xs pull-right">
+				<label class="checkbox-inline">
+					<input type="checkbox" onclick="doSearch();" name="currSignUp_train" <c:if test="${trainView.currSignUp==1}">checked="true"</c:if> />
+					正在报名
+				</label>
+				<label class="checkbox-inline">
+					<input type="checkbox" onclick="doSimpleTrain();" name="simple_train" <c:if test="${trainView.is_simple_train==1}">checked="true"</c:if>/>
+					专业培训
+				</label>
+				<label class="checkbox-inline">
+					<input type="checkbox" onclick="doComplexTrain();" name="complex_train" <c:if test="${trainView.is_complex_train==1}">checked="true"</c:if> />
+					进阶培训
+				</label>
+			</div>
+
+		</div>
+
+
+		<div class="panel panel-default"  style="margin-top: 20px;">
+			<div class="panel-body">
+				<form id="trainForm" action="${pageContext.request.contextPath}/train/to_train_center.action" method="post">
+					<input type="hidden" name="page" id="page" value="${trainView.page}" />
+					<input type="hidden" name="rows" id="rows" value="${trainView.rows}" />
+					<input type="hidden" name="total" id="total" value="${trainView.total}" />
+					<input type="hidden" name="totalPage" id="totalPage" value="${trainView.totalPage}" />
+					<input type="hidden" name="classify_id" id="classify_id" value="${trainView.classify_id}" />
+					<input type="hidden" name="type" id="type" value="${trainView.type}" />
+					<input type="hidden" name="is_complex_train" id="is_complex_train" value="${trainView.is_complex_train}" />
+					<input type="hidden" name="is_simple_train" id="is_simple_train" value="${trainView.is_simple_train}" />
+					<input type="hidden" name="sortType" id="sortType" value="${trainView.sortType}" />
+					<input type="hidden" name="currSignUp" id="currSignUp" value="${trainView.currSignUp}" />
+					<div class="course-list">
+						<div class="row">
+							<c:forEach items="${trainList}" var="train">
+								<div class="col-lg-3 col-md-4 col-xs-6">
+									<div class="course-item">
+										<div class="course-img">
+											<a href="${pageContext.request.contextPath}/train/to_train_detail.action?id=${train.id}&sign=0"  target="_blank">
+												<img src="${pageContext.request.contextPath}${train.img}" class="img-responsive"  style="height: 160px;"/>
+											</a>
+										</div>
+										<div class="course-info">
+
+											<div class="title">
+												<a class="link-dark" href="javascript:void(0);"
+												   onclick="toCourseDetail(${train.id});">${train.name }
+												</a>
+												<div style="padding: 5px 0;">
+													<span class="teacher pull-left" style="padding-right: 10px;">主办方&nbsp;:&nbsp;${train.sponsor}</span>
+
+												</div>
+											</div>
+
+											<div class="metas clearfix">
+
+												<span class="num "><i class="es-icon es-icon-people"></i>${train.studentNum }人参加</span>
+												<span class="course-price-widget">
+												<span class="price"> 
+													<c:if test="${train.price==0 }">
+														<span class="text-success">免费</span>
+													</c:if>
+											   </span>
+												<c:if test="${train.price!=0 }">
+													<span class="price"> ￥${train.price }</span>
+												</c:if>
+
+												</span>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+
+						</div>
+						<c:if test="${empty trainList }">
+							<div class="empty">暂无数据</div>
+						</c:if>
+						<c:if test="${!empty trainList }">
+							<div id="test" class="pager" ></div>
+						</c:if>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        //翻页
+        var total = $("#total").val();
+        var page =  parseInt($("#page").val())+1;
+
+        $("#btn5").on('click', function () {
+            $("#div1").PageChanged(5);
+        });
+
+        $(".pager").pagination({
+            thisPageIndex:page,
+            recordCount: total,       //总记录数
+            pageSize:  $("#rows").val(),            //一页记录数
+            onPageChange: function (page) {
+                document.title = page;
+                $("#page").val(page-1);
+                $('#trainForm').submit();
+
+            }
+        });
+    });
+
+    function toTrainDetail(value){
+
+        window.location.href="${pageContext.request.contextPath}/train/to_train_detail.action?id="+value+"&sign=0";
+    }
+
+    //培训分类筛选-正在报名
+    function doSearch(){
+        if($("input[name = 'currSignUp_train']").prop("checked")){
+            $("#currSignUp").val(1);
+        }else{
+            $("#currSignUp").val(0);
+        }
+        $("#page").val(0);
+        $('#trainForm').submit();
+    }
+
+    //培训分类筛选-简单培训
+    function doSimpleTrain(){
+        if($("input[name = 'simple_train']").prop("checked")){
+            $("#is_simple_train").val(1);
+        }else{
+            $("#is_simple_train").val(0);
+        }
+        $("#page").val(0);
+        $('#trainForm').submit();
+    }
+
+    //培训分类筛选-复杂培训
+    function doComplexTrain(){
+        if($("input[name = 'complex_train']").prop("checked")){
+            $("#is_complex_train").val(1);
+        }else{
+            $("#is_complex_train").val(0);
+        }
+        $("#page").val(0);
+        $('#trainForm').submit();
+    }
+
+    //分类筛选
+    function searchClassify(value){
+        $("#page").val(0);
+        $("#classify_id").val(value);
+        $("#type").val(-1);
+        $('#trainForm').submit();
+    }
+
+    function searchSortType(value){
+        $("#page").val(0);
+        $("#sortType").val(value);
+        $('#trainForm').submit();
+    }
+</script>

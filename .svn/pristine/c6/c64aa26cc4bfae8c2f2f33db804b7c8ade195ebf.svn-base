@@ -1,0 +1,666 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <title>数据统计</title>
+    <style>
+        .main_head{font-size: 16px;  }
+        .main_body{margin-top: 20px;}
+        .time>div{float: left;margin-right:20px;}
+        /*.time{margin-bottom: 20px;}*/
+        .select_time{}
+        .select_time>span>input{width: 100px;}
+        .select_time>span{margin-left: 10px;}
+        .choose_date_01>a,.choose_date_02>a{color:#616161;text-decoration: none;margin-right: 5px;}
+        .choose_date_01>a.active{display: inline-block;background-color: #4da7fd;color: #fff;padding:2px;}
+        .choose_date_01>a.inactive{display: inline-block;background-color: #E0EEE0;color: #fff;padding:2px;}
+        .choose_area{margin-right: 15px;}
+        .choose_area>select{min-width: 100px;height: 30px;}
+        .number{font-size: 20px;font-weight: bold;}
+        .user_info{}
+        .user_info>div{margin-right: 20px;display: inline-block;}
+        .table_sta>thead>th,.table_sta>tbody>tr>td{width: 150px;text-align: center;}
+        .compare_info{text-align: center;}
+        .compare_info>span{}
+        .compare_info>div{display: inline-block;}
+    </style>
+	<!-- jquery库 -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-1.8.2.min.js" charset="utf-8"></script>
+	<!-- easyui相关库 -->
+	<link id="easyuiTheme" rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/<c:out value="${cookie.easyuiThemeName.value}" default="default"/>/easyui.css" type="text/css"></link>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/icon.css" type="text/css"></link>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/jquery.easyui.min.js?v0.1" charset="utf-8"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/jquery.1.10.2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/echarts.min.js"></script>
+<%-- 	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/walden.project.json.js" charset="utf-8"></script> --%>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+    var options = '<option  value="0">全部</option>';
+    $.ajax({
+		type : 'POST',
+		url : '${pageContext.request.contextPath}/back_area/queryProvince.action',
+		data :{
+			parentId : 1
+		},
+		dataType : 'json',
+		success : function(d) {
+			for(var i=0;i<d.length;i++){
+				if(d[i].id=="${province}"){
+					options += '<option selected="selected" value="'+d[i].id+'">'+d[i].area_name+'</option>';
+				}else{
+					options += '<option value="'+d[i].id+'">'+d[i].area_name+'</option>';
+				}
+				
+			}
+			$("#province").html(options);
+		}
+	});
+
+    
+    </script>
+</head>
+<body>
+   <div class="main_content">
+	    <div class="main_head">用户趋势统计分析</div>
+	
+	    <div class="main_body">
+	        <form id="stupid" action="${pageContext.request.contextPath}/back_user/to_user_trend.action">
+	        <div class="time">
+	            <div class="choose_date_01">
+	                <span>时间：</span>
+	                <input type="hidden" name="timeType" id="timeType" value="${timeType}">
+	                <a onclick="queryTrendByTimeType(0);" class="<c:if test="${timeType=='0'}">active</c:if>" href="javascript:void(0);">今天</a>
+	                <a onclick="queryTrendByTimeType(1);" class="<c:if test="${timeType=='1'}">active</c:if>" href="javascript:void(0);">昨天</a>
+	                <a onclick="queryTrendByTimeType(2);" class="<c:if test="${timeType=='2'}">active</c:if>" href="javascript:void(0);">最近7天</a>
+	                <a onclick="queryTrendByTimeType(3);" class="<c:if test="${timeType=='3'}">active</c:if>" href="javascript:void(0);">最近30天</a>
+	            </div>
+	            <select id="isDuration" name="isDuration" onchange="doDuration(this)"  style="width: 65px;" >
+		            <option value="1" <c:if test="${isDuration!='0'&&timeType!='2'&&timeType!='3'}">selected</c:if> >一天</option>
+		            <option value="0" <c:if test="${isDuration!='1'&&timeType!='0'&&timeType!='1'}">selected</c:if> >时间段</option>
+		        </select>
+	            <div id="single" class="select_time"  style="<c:if test="${isDuration!='1'&&timeType!='0'&&timeType!='1'}">display: none;</c:if>">
+	               <span><input id="days" name="days" <c:if test="${!empty days&&days!='undefined'}">value="${days}"</c:if> class="easyui-datebox" data-options="onSelect:onSelect,editable:false" style="width: 100px;" /></span>
+	            </div>
+	            <div id="duration" class="select_time" style="<c:if test="${isDuration!='0'&&timeType!='2'&&timeType!='3'}">display: none;</c:if>">
+	               <span>开始日期：<input id="startTime" name="startTime" <c:if test="${!empty startTime&&startTime!='undefined'}">value="${startTime}"</c:if> class="easyui-datebox" data-options="onSelect:onSelect,editable:false" style="width: 100px;" /></span>
+	               <span>结束日期：<input id="endTime" name="endTime" <c:if test="${!empty endTime&&endTime!='undefined'}">value="${endTime}"</c:if> class="easyui-datebox" data-options="onSelect:onSelect,editable:false" style="width: 100px;" /></span>
+	            </div>
+	            <div class="choose_date_01">
+	                <input type="hidden" name="timeUnit" id="timeUnit" value="${timeUnit}">
+	                <input type="hidden" name="inactive" id="inactive" value="${inactive}">
+	                <a class="<c:if test="${timeUnit=='0'}">active</c:if>" onclick="queryTrendByTimeUnit(this,'0');" href="javascript:void(0);">按时</a>
+	                <a class="<c:if test="${timeUnit=='1'}">active</c:if>" onclick="queryTrendByTimeUnit(this,'1');" href="javascript:void(0);">按天</a>
+	                <a class="<c:if test="${timeType!='3'&&inactive=='0'}">inactive</c:if><c:if test="${timeUnit=='2'}">active</c:if>" onclick="queryTrendByTimeUnit(this,'2');" href="javascript:void(0);">按周</a>
+	                <a class="<c:if test="${timeType!=''||isDuration=='1'||inactive=='0'||inactive=='1'}">inactive</c:if><c:if test="${timeUnit=='3'}">active</c:if>" onclick="queryTrendByTimeUnit(this,'3');" href="javascript:void(0);">按月</a>
+	            </div>
+	        </div>
+	        <br/>
+	        <br/>
+	
+	        <div class="time">
+	
+	            <c:if test=""></c:if>
+	            <div class="choose_date_01">
+	                <span>来源：</span>
+	                <input type="hidden" name="device" id="device" value="${device}">
+	                <a onclick="queryTrendByDevice('0');" class="<c:if test="${device=='0'}">active</c:if>" href="javascript:void(0);">全部</a>
+	                <a onclick="queryTrendByDevice('1');" class="<c:if test="${device=='1'}">active</c:if>" href="javascript:void(0);">PC端</a>
+	                <a onclick="queryTrendByDevice('2');" class="<c:if test="${device=='2'}">active</c:if>" href="javascript:void(0);">移动端</a>
+	            </div>
+	            <div class="choose_date_01 ">
+	                <span>地域：</span>
+	                <span class="choose_area">省：
+	                    <select id="province" onchange="queryTrendByArea();" name="province">
+	                    </select>
+	                </span>
+	            </div>
+	        </div>
+	        <br/>
+	        <br/>
+	        <div class="time">
+	            <div class="choose_date_01">
+	                <span>指标：</span>
+	                <input type="hidden" name="logType" id="logType" value="${logType}">
+	                <a onclick="queryTrendBylogType('0');" class="<c:if test="${fn:contains(logType,'0')==true}">active</c:if>" href="javascript:void(0);">新增</a>
+	                <a onclick="queryTrendBylogType('1');" class="<c:if test="${fn:contains(logType,'1')==true}">active</c:if>" href="javascript:void(0);">登录</a>
+	            </div>
+	        </div>
+	        <br/>
+	        <br/>
+	        <div class="time">
+
+            <div id="compares" class="choose_date_01 " style="<c:if test="${timeType=='2'||timeType=='3'||isDuration=='0'}">display:none</c:if>">
+                <div class="compare_info">
+                    <span>对比:</span>
+                    <input type="hidden" name="compare" id="compare" value="${compare}">
+                    <div><input type="checkbox" <c:if test="${compare=='0'}">checked="checked"</c:if> onclick="compare0(this);" value="0">&nbsp;&nbsp;前一日</div>
+                    <div><input type="checkbox" <c:if test="${compare=='1'}">checked="checked"</c:if> onclick="compare0(this);" value="1">&nbsp;&nbsp;上一周期</div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+	      </form>
+	      <a href="${pageContext.request.contextPath}/back_user/export_user_trend.action?<c:if test="${isDuration==0}">startTime=${startTime}&endTime=${endTime}&</c:if><c:if test="${isDuration==1}">days=${days}&</c:if>timeUnit=${timeUnit}&device=${device}&province_id=<c:if test="${empty province_id}">0</c:if><c:if test="${!empty province_id}">${province_id}</c:if>&logType=${logType}&compare=${compare}" data-toggle="modal"  class="btn btn-info btn-sm mhs"><i class="glyphicon glyphicon-export"></i> 导出数据</a>
+	        <div class="time user_info">
+	           <div>
+	               新增用户&nbsp;&nbsp;<span class="number" id="addUserNum"></span>个
+	           </div>
+	            <div>
+	               登录数&nbsp;&nbsp;<span class="number" id="loginUserNum"></span>个
+	            </div>
+	            <div>
+	               平均浏览时间&nbsp;&nbsp;<span class="number" id="collectmeanVisit"></span>分钟
+	            </div>
+	            <div>
+	              新用户平均浏览时间 &nbsp;&nbsp;<span class="number" id="collectmeanNewVisit"></span>分钟
+	            </div>
+	        </div><br/><br/>
+	
+	        <div class="time">
+	           <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+               <div id="usertrend" style="width: 1000px;height:470px;margin-top: 30px;"></div>
+	        </div>
+	        <br/>
+	        <br/>
+	        <div class="time">
+	            <table class="table_sta">
+	                <thead>
+	                    <th>日期</th>
+	                    <th >新增数</th>
+	                    <th >登录数</th>
+	                    <th> 平均访问时长</th>
+	                    <th> 新用户平均访问时长</th>
+	                </thead>
+	                <tbody id="databody">
+	                </tbody>
+	            </table>
+	        </div>
+	    </div>
+
+
+
+</div>
+
+<script type="text/javascript">
+	Date.prototype.Format = function (fmt) { //author: meizz 
+	    var o = {
+	        "M+": this.getMonth() + 1, //月份 
+	        "d+": this.getDate(), //日 
+	        "h+": this.getHours(), //小时 
+	        "m+": this.getMinutes(), //分 
+	        "s+": this.getSeconds(), //秒 
+	        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+	        "S": this.getMilliseconds() //毫秒 
+	    };
+	    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	    for (var k in o)
+	    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	    return fmt;
+	}
+	var days = new Array();
+	var newNum1 = new Array();
+	var newNum2 = new Array();
+	var interval1 = new Array();
+	var interval2 = new Array();
+	$(function(){
+		$.ajax({
+			type : 'POST',
+			async :false,
+			url : '${pageContext.request.contextPath}/back_user/query_user_trend.action',
+			data :{
+				timeType : "${timeType}",
+				isDuration : "${isDuration}",
+				days : "${days}",
+				startTime : "${startTime}",
+				endTime : "${endTime}",
+				timeUnit : "${timeUnit}",
+				device : "${device}",
+				province_id : "${province}",
+				logType : "${logType}",
+				compare : "${compare}"
+			},
+			dataType : 'json',
+			success : function(d) {
+				var list = d.userStatsList;
+				var tbody = "";
+				for(var i=0;i<list.length;i++){
+					days[i] = list[i].days;
+					newNum1[i] = list[i].newNum1;
+					newNum2[i] = list[i].newNum2;
+					interval1[i] = list[i].interval1;
+					interval2[i] = list[i].interval2;
+					tbody += '<tr><td>'+list[i].days+'</td><td>'+list[i].newNum+'</td><td>'+list[i].loginNum+'</td><td>'+list[i].meanVisitTime+'</td><td>'+list[i].newMeanVisitTime+'</td></tr>';
+				}
+				tbody += '<tr><td>汇总</td><td>'+d.addUserNum+'</td><td>'+d.loginUserNum+'</td><td>'+d.collectmeanVisit+'</td><td>'+d.collectmeanNewVisit+'</td></tr>';
+				$("#addUserNum").html(d.addUserNum);
+				$("#loginUserNum").html(d.loginUserNum);
+				$("#collectmeanVisit").html(d.collectmeanVisit);
+				$("#collectmeanNewVisit").html(d.collectmeanNewVisit);
+				$("#databody").html(tbody);
+			}
+		});
+	});
+	 //基于准备好的dom，初始化echarts实例
+	var myChart = echarts.init(document.getElementById('usertrend'));
+	if("${compare}".length>0||"${logType}".length>1){//有两条线
+		var trend1 = "";
+		var trend2 = "";
+		//取第一个trend
+		var log1 = "${logType}".charAt(0);
+        if("${compare}".length>0){//比较
+    		var d = new Date("${days}");
+            var compare = "";
+    		if("${compare}"=="0"){//前一天
+    			compare = new Date(d.getFullYear(),d.getMonth(),d.getDate()-1).Format("yyyy-MM-dd");
+    		}else if("${compare}"=="1"){//上一周同期
+    			compare = new Date(d.getFullYear(),d.getMonth(),d.getDate()-7).Format("yyyy-MM-dd");
+    		}
+    		if(log1=="0"){//新增用户
+    			trend1 = "${days}新增用户";
+    			trend2 = compare+"新增用户";
+    		}else if(log1=="1"){//登录用户
+    			trend1 = "${days}登录用户";
+    			trend2 = compare+"登录用户";
+    		}else if(log1=="2"){//平均访问时长
+    			trend1 = "${days}平均访问时长";
+    			trend2 = compare+"平均访问时长";
+    		}else if(log1=="3"){//新用户平均访问时长
+    			trend1 = "${days}新用户平均访问时长";
+    			trend2 = compare+"新用户平均访问时长";
+    		}
+		}
+        if("${logType}".length==3){//两个指标
+        	if(log1=="0"){//新增用户
+    			trend1 = "新增用户";
+    		}else if(log1=="1"){//登录用户
+    			trend1 = "登录用户";
+    		}else if(log1=="2"){//平均访问时长
+    			trend1 = "平均访问时长";
+    		}
+        	//取第二个trend
+    		var log2 = "${logType}".charAt(2);
+    		if(log2=="1"){//登录用户
+    			trend2 = "登录用户";
+    		}else if(log2=="2"){//平均访问时长
+    			trend2 = "平均访问时长";
+    		}else if(log2=="3"){//新用户平均访问时长
+    			trend2 = "新用户平均访问时长";
+    		}
+        }
+        if(trend1!=""&&trend2!=""){
+        	var legendData = [trend1,trend2];
+        	var seriesData = [{
+        	                    name:trend1,
+        	                    type:'line',
+        	                    smooth:true,
+        	                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+        	                    data:[]
+        		             },{
+        		      	        name:trend2,
+        		      	        type:'line',
+        		      	        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+        		      	        data:[]
+        		      	    } ];
+        	option = {
+        	    tooltip : {
+        	        trigger: 'axis'
+        	    },
+        	    legend: {
+        	        data:legendData
+        	    },
+        	    toolbox: {
+        	        show : true,
+        	        feature : {
+        	            mark : {show: true},
+        	            dataView : {show: true, readOnly: false},
+        	            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+        	            restore : {show: true},
+        	            saveAsImage : {show: true}
+        	        }
+        	    },
+        	    calculable : true,
+        	    xAxis : [
+        	        {
+        	            type : 'category',
+        	            boundaryGap : false,
+        	            data : []//横坐标
+        	        }
+        	    ],
+        	    yAxis : [
+        	        {
+        	            type : 'value'
+        	        }
+        	    ],
+        	    series : seriesData
+        	};
+        	
+         	myChart.showLoading(); 
+         	fetchData(function(data) {
+          		myChart.hideLoading();
+          		var seriesFetchData = [{
+        			// 根据名字对应到相应的系列
+        			name : trend1,
+        			data : data.newNum1
+        		} ,{
+        			name : trend2,
+        			data : data.newNum2
+        		} ];
+          		myChart.setOption({
+           			xAxis : {
+           				data : data.days
+           			},
+           			series : seriesFetchData
+           		});
+           	}); 
+           // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            function fetchData(cb) {
+        		// 通过 setTimeout 模拟异步加载
+        		setTimeout(function() {
+        			cb({
+        				days : days,
+        				newNum1 : newNum1 ,
+        				newNum2 : newNum2 
+        			});
+        		}, 1000);
+        	}
+            
+        }
+	}else{
+		/* ------------------------------------------------ */
+		var trend = "";
+		if("${logType}"=="0"){//新增用户
+			trend = "新增用户";
+		}else if("${logType}"=="1"){//登录用户
+			trend = "登录用户";
+		}else if("${logType}"=="2"){//平均访问时长
+			trend = "平均访问时长";
+		}else if("${logType}"=="3"){//新用户平均访问时长
+			trend = "新用户平均访问时长";
+		}
+		var legendData = [trend];
+		var seriesData = [{
+		                    name:trend,
+		                    type:'line',
+		                    smooth:true,
+		                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+		                    data:[]
+			             }];
+		option = {
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:legendData
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            dataView : {show: true, readOnly: false},
+		            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'category',
+		            boundaryGap : false,
+		            data : []//横坐标
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value',
+		            axisLine: {show: false}
+		        },
+		        
+		    ],
+		    series : seriesData
+		};
+		myChart.showLoading(); 
+		if("${logType}"=="0"||"${logType}"=="1"){
+			fetchData(function(data) {
+				myChart.hideLoading();
+				var seriesFetchData = [{
+				// 根据名字对应到相应的系列
+				name : trend,
+				data : data.newNum1
+			}];
+				myChart.setOption({
+					xAxis : {
+						data : data.days
+		
+					},
+					series : seriesFetchData
+				});
+			}); 
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+			function fetchData(cb) {
+				// 通过 setTimeout 模拟异步加载
+				setTimeout(function() {
+					cb({
+						days : days,
+						newNum1 : newNum1
+					});
+				}, 1000);
+			}
+		}else if("${logType}"=="2"||"${logType}"=="3"){
+			fetchData(function(data) {
+				myChart.hideLoading();
+				var seriesFetchData = [{
+				// 根据名字对应到相应的系列
+				name : trend,
+				data : data.interval1
+			}];
+				myChart.setOption({
+					xAxis : {
+						data : data.days
+		
+					},
+					series : seriesFetchData
+				});
+			}); 
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+			function fetchData(cb) {
+				// 通过 setTimeout 模拟异步加载
+				setTimeout(function() {
+					cb({
+						days : days,
+						newNum1 : interval1
+					});
+				}, 1000);
+			}
+		}
+		
+	} 
+	
+function queryTrendByTimeType(value){
+	$("#timeType").val(value);
+	$('input[name="days"]').val("");
+	$('input[name="startTime"]').val("");
+	$('input[name="endTime"]').val("");
+	if(value=="0"||value=="1"){
+		$("#isDuration").val("1");
+	}else if(value=="2"||value=="3"){
+		$("#compare").val("");
+		$("#isDuration").val("0");
+	}
+	if(value!="3"){//无法按周
+		$("#inactive").val("0");
+	}else{//按月时 inactive和active可能冲突
+		var timeUnit = $("#timeUnit").val();
+	    if(timeUnit=="3"){//按月，默认按时
+	    	$("#timeUnit").val("0");
+	    }
+	}
+	$("#stupid").submit();
+}
+function doDuration(obj){
+	isDuration = obj.value;
+	if(isDuration=="0"){//是时间段
+		$("#compare").val("");
+		$("#compares").hide();
+		$("#duration").show();
+		$("#single").hide();
+	}else if(isDuration=="1"){//是单一时间
+		$("#startTime").val("");//没用
+		$("#endTime").val("");//没用
+		$("#compares").show();
+		$("#duration").hide();
+		$("#single").show();
+	}
+}
+function onSelect(date){
+	var isDuration = $("#isDuration").val();
+	if(isDuration=="1"){//single
+	    //直接清空timeType，若是今天或昨天给timeType赋值
+	    $("#timeType").val("");
+		var days = $('input[name="days"]').val();
+	    var today = new Date();
+	    var yesterday = new Date(today - 1000 * 60 * 60 * 24);
+	    var chooseday = new Date(days);
+	    if(chooseday.toDateString() === today.toDateString()){//今天
+	    	$("#timeType").val(0);
+	    }
+	    if (yesterday.getYear() === chooseday.getYear() && yesterday.getMonth() === chooseday.getMonth() && yesterday.getDate() === chooseday.getDate()) {
+	    	$("#timeType").val(1);
+	    }
+		$("#stupid").submit();
+	}else if(isDuration=="0"){
+		var startTime = $('input[name="startTime"]').val();
+		var endTime = $('input[name="endTime"]').val();
+		if(startTime!=""&&endTime!=""){
+			if(startTime<endTime){
+				//直接清空timeType，若是最近7天或最近30天给timeType赋值
+			    $("#timeType").val("");
+				var start = new Date(startTime).getTime();
+				var end = new Date(endTime).getTime();
+				var now = new Date().getTime();
+			    var days1 = parseInt((now-end)/(1000 * 60 * 60 * 24));
+			    var days2 = parseInt((end-start)/(1000 * 60 * 60 * 24));
+		    	if(days2==6){//最近7天
+		    		if(days1==0){
+		    			$("#timeType").val("2");
+				    }
+		    		
+		    	}else if(days2==29){//最近30天
+		    		 if(days1==0){
+		    			 $("#timeType").val("3");	
+					 }
+		    	}
+		    	if(days2<32){//月变灰
+		    		$("#inactive").val("1");
+		    		if(days2<8){//周变灰
+		    			$("#inactive").val("0");
+			    	}
+		    	}else{//月不灰
+		    		$("#inactive").val("");
+		    	}
+				$("#stupid").submit();  
+			}else{
+				parent.sy.messagerShow({
+   					msg : "开始时间必须小于结束时间！！",
+   					title : '提示'
+   				});
+			}
+		}
+	}
+	
+}
+function queryTrendByTimeUnit(obj,value){
+	if(value!=null&&value!=""){
+		var aclass  =  obj.className;
+		if(aclass!="inactive"){//可以点击
+			$("#timeUnit").val(value);
+			var timeType = $("#timeType").val();
+			if(timeType!=""){
+				if(timeType!="3"){//不是最近30天
+					$("#inactive").val("0");
+				}
+			}
+			$("#stupid").submit();
+		}
+	}
+}
+function queryTrendByDevice(value){
+	if(value!=null&&value!=""){
+		$("#device").val(value);
+		var timeType = $("#timeType").val();
+		if(timeType!=""){
+			if(timeType!="3"){//不是最近30天
+				$("#inactive").val("0");
+			}
+		}
+		$("#stupid").submit(); 
+	}
+}
+function queryTrendByArea(){
+	var timeType = $("#timeType").val();
+	if(timeType!=""){
+		if(timeType!="3"){//不是最近30天
+			$("#inactive").val("0");
+		}
+	}
+	$("#stupid").submit(); 
+}
+function queryTrendBylogType(value){
+	if(value!=null&&value!=""){
+		var logTypes = "${logType}".split(",");
+		if(logTypes.indexOf(value) >= 0){//存在-->删除
+			logTypes.splice(logTypes.indexOf(value),1);
+		}else{//不存在-->添加
+			logTypes.push(value);
+		}
+		if(logTypes.length==0){//不能都删掉，至少留一个
+			logTypes.push(value);
+		}
+		if("${compare}"!=""){//compare存在时，只能选一个，
+			if(logTypes.length>1){//有两个指标，选择最后选择的指标
+				logTypes.splice(0,logTypes.length);
+				logTypes.push(value);
+			}
+		}
+		var logType = logTypes.sort().join(",");
+		$("#logType").val(logType);
+		var timeType = $("#timeType").val();
+		if(timeType!=""){
+			if(timeType!="3"){//不是最近30天
+				$("#inactive").val("0");
+			}
+		}
+		$("#stupid").submit();   
+	}
+}
+function compare0(obj){
+	if(obj.checked==true){
+		$("#compare").val(obj.value);
+		var log = $("#logType").val();
+		$("#logType").val(log.substr(0,1));
+	}else{
+		$("#compare").val("");
+	}
+	var timeType = $("#timeType").val();
+	if(timeType!=""){
+		if(timeType!="3"){//不是最近30天
+			$("#inactive").val("0");
+		}
+	}
+	$("#stupid").submit();  
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+    <title>ECharts</title>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link href="../../../css/bootstrap/main.css" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="../../../js/echarts.min.js"></script>
+    <script src="../../../js/china.js"></script>
+    <style>
+
+        #china-map {width:1100px;height: 800px; }
+        .popover-content>a{padding: 0 10px;}
+        .popover{min-width: 300px;}
+
+    </style>
+</head>
+<body>
+
+
+<div class="es-wrap" style="background-color: #f3f3f3;">
+
+   <div id="content-container" class="container">
+
+       <!--绘制地图区域-->
+       <div id="china-map"></div>
+
+
+       <div class="tabs-wrapper">
+
+           <div class="tabs-group">
+               <div class="title" style="max-width: 50px;">区域</div>
+               <ul class="content list-unstyled list-inline" style="margin-left: 10px;">
+
+                   <li class="classify">
+                       <a class="btn btn-link" href="">广东省
+                           <i class="glyphicon glyphicon-remove"></i>
+                       </a>
+                   </li>
+                   <li class="tabs-mark">
+                       <a class="btn btn-link" href="">广州市
+                           <i class="glyphicon glyphicon-remove"></i>
+                       </a>
+                   </li>
+               </ul>
+           </div>
+           <div class="tabs-group">
+               <ul class="content clearfix " style="clear: both;margin-left: 50px;">
+                   <li><a class="items nav-link tag" href="javascript:;">全国</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">北京</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">天津</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">河北</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">辽宁</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">吉林</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">山西</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">湖南</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">安徽</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">江苏</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">贵州</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">重庆</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">浙江</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">黑龙江</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">湖北</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">四川</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">上海</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">福建</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">江西</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">山东</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">河南</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">广东</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">海南</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">云南</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">陕西</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">甘肃</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">陕西</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">青海</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">台湾</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">内蒙古</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">广西</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">宁夏</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">新疆</a></li>
+                   <li><a class="items nav-link tag" href="javascript:;">西藏</a></li>
+               </ul>
+           </div>
+
+       </div>
+
+       <!--社区列表-->
+       <section class="community_list">
+
+           <div class="row">
+               <div class="col-lg-3 col-md-4 col-xs-6">
+                   <div class="course-item">
+                       <div class="course-img">
+                           <a href="" target="_blank">
+                               <img src="http://www.qiqiuyu.com//files/default/2017/07-12/163818a560a6415269.jpg" alt="" class="img-responsive" style="width: 260px; height: 150px;">
+                           </a>
+                       </div>
+                       <div class="course-info">
+                           <div class="title">
+                               <a class="link-dark" href="" target="_blank">
+                                   社区名称
+                               </a>
+                           </div>
+                           <div class="metas clearfix">
+                               <span class="num"><i class="es-icon es-icon-people"></i>24</span>
+                               <span class="comment"><i class="es-icon es-icon-textsms"></i>2</span>
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+
+           </div>
+
+           <div class="section-more-btn">
+               <a href="javascript:void(0);" target="_blank" class="btn btn-default btn-lg">
+                   更多社区 <i class="mrs-o es-icon es-icon-chevronright"></i>
+               </a>
+           </div>
+
+       </section>
+
+
+
+   </div>
+
+</div>
+
+
+<script>
+
+
+
+    var myChart = echarts.init(document.getElementById('china-map'));
+    var option = {
+        tooltip: {
+//                    show: false //不显示提示标签
+            formatter: '{b}', //提示标签格式
+            backgroundColor:"#000",//提示标签背景颜色
+            textStyle:{color:"#e1e1e1"} //提示标签字体颜色
+        },
+        series: [{
+            type: 'map',
+            mapType: 'china',
+            label: {
+                normal: {
+                    show: true,//显示省份标签
+                    textStyle:{color:"#fff"}//省份标签字体颜色
+                },
+                emphasis: {//对应的鼠标悬浮效果
+                    show: true,
+                    textStyle:{color:"#800080"}
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderWidth: .5,//区域边框宽度
+                    borderColor: '#009fe8',//区域边框颜色
+                    areaColor:"#4fc2f8",//区域颜色
+                },
+                emphasis: {
+                    borderWidth: .5,
+                    borderColor: '#4b0082',
+                    areaColor:"#CCEBFA",
+
+                }
+            },
+            data:[
+                {name:'北京', selected:true}//北京为选中状态
+            ]
+        }],
+    };
+
+
+    // 鼠标悬浮事件参考一下链接
+    // http://echarts.baidu.com/tutorial.html#ECharts%20%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%92%8C%E8%A1%8C%E4%B8%BA
+    myChart.on('mouseover', function (params) {    //params为省名称
+
+        var e = event || window.event;
+        var left=e.clientX;
+        var top=e.clientY;
+
+        $(".popover").css("left",left-20);
+        $(".popover").css("top",top+10);
+
+        $(".popover").show();
+    });
+    myChart.on('mouseout', function (params) {    //params为省名称
+
+        $(".popover").hide();
+
+    });
+
+
+    $(function () {
+
+        $(".popover").mouseover(function () {
+            $(this).show();
+        });
+        $(".popover").mouseout(function () {
+            $(".popover").hide();
+        });
+    });
+
+
+    myChart.setOption(option);
+
+</script>
+
+
+
+
+
+<!--鼠标悬浮弹窗事件-->
+<div class="popover fade in" role="tooltip" style="display: none;position: absolute;" id="popover">
+
+    <h2 class="popover-title">
+       XX省各行政市名单
+    </h2>
+    <div class="popover-content">
+        <a href="#">深圳</a>
+        <a href="#">广州</a>
+        <a href="#">东莞</a>
+        <a href="#">惠州</a>
+        <a href="#">汕头</a>
+        <a href="#">潮汕</a>
+        <a href="#">清远</a>
+        <a href="#">珠海</a>
+        <a href="#">中山</a>
+        <a href="#">韶关</a>
+        <a href="#">河源</a>
+        <a href="#">和平</a>
+        <a href="#">江门</a>
+        <a href="#">佛山</a>
+        <a href="#">湛江</a>
+        <a href="#">肇庆</a>
+        <a href="#">罗定</a>
+
+    </div>
+</div>
+
+</body>
+</html>

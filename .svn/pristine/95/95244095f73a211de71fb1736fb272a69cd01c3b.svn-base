@@ -1,0 +1,598 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<link  href="${pageContext.request.contextPath}/frontstage/css/teaching-center.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/frontstage/css/resource-list.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+    $(function(){
+
+        $(".search_input").keyup(function(e){
+            var keycode = e.which;
+            if(keycode==13){
+
+                $(".search_form").submit();
+
+            }
+        });
+
+        $(".search_button").click(function(){
+
+
+            $(".search_form").submit();
+
+        });
+
+
+        var s='${searchView.str}';
+
+        $(".title").each(function(){
+            var str=$(this).attr("title");
+            var strs=str.split(s);
+            var newStr="";
+
+            for(var i=0;i<strs.length;i++){
+
+                if(i==0){
+                    newStr+=strs[i];
+                }else{
+                    newStr+= "<span style='color: red'>"+s+"</span>"+strs[i];
+                }
+
+            }
+            $(this).html(newStr);
+        });
+    });
+
+
+</script>
+<style>
+    .media-left{padding-top: 10px;}
+</style>
+
+<div class="cn-wrap">
+
+
+    <section class="search-banner cn-live-poster swiper-container ">
+        <div class="swiper-slide swiper-hidden" style="background: #ffffff url(http://www.qiqiuyu.com/assets/img/placeholder/banner_search.jpg?version=8.2.0) no-repeat; background-size: cover;">
+        </div>
+        <div class="cloud-search-box container">
+            <form class="input-group search-input-group search_form"  action="${pageContext.request.contextPath}/search/search.action" method="post">
+                <div class="input-wrap" style="margin-left: 10%;">
+                    <input type="text" name="str" class="form-control search_input pull-right" placeholder="可搜索课程、培训、教研、社区、工作坊" value="${searchView.str }"  >
+                    <a href="javascript:void(0);" class="search_button">
+                        <i class="glyphicon glyphicon-search" ></i>
+
+                    </a>
+                </div>
+                <input type="hidden" name="source_type" value="${searchView.source_type}" />
+
+            </form>
+            <form  action="${pageContext.request.contextPath}/search/search.action" method="post" id="search_form">
+                <input type="hidden" name="str" value="${searchView.str }" >
+                <input type="hidden" name="rows" id="rows" value="${searchView.rows}"/>
+                <input type="hidden" name="page" id="page" value="${searchView.page}"/>
+                <input type="hidden" name="total" id="total" value="${searchView.total}" />
+                <input type="hidden" name="source_type" value="${searchView.source_type}" />
+            </form>
+        </div>
+    </section>
+
+    <div id="content-container" class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="cn-section" style="border: none;">
+
+                    <ul class="nav nav-tabs" id="search-nav-tabs">
+                        <li <c:if test="${searchView.source_type==0}">class="active"</c:if>><a href="${pageContext.request.contextPath}/search/search.action?source_type=0&str=${searchView.str }" >课程</a></li>
+                        <li <c:if test="${searchView.source_type==1}">class="active"</c:if>><a href="${pageContext.request.contextPath}/search/search.action?source_type=1&str=${searchView.str }" >培训</a></li>
+                        <li <c:if test="${searchView.source_type==2}">class="active"</c:if>><a href="${pageContext.request.contextPath}/search/search.action?source_type=2&str=${searchView.str }" >教研</a></li>
+                        <li <c:if test="${searchView.source_type==3}">class="active"</c:if>><a href="${pageContext.request.contextPath}/search/search.action?source_type=3&str=${searchView.str }" >资源</a></li>
+                        <li <c:if test="${searchView.source_type==4}">class="active"</c:if>><a href="${pageContext.request.contextPath}/search/search.action?source_type=4&str=${searchView.str }" >工作坊</a></li>
+                        <li <c:if test="${searchView.source_type==5}">class="active"</c:if>><a href="${pageContext.request.contextPath}/search/search.action?source_type=5&str=${searchView.str }" >社区</a></li>
+
+                    </ul>
+
+                    <div class="search-result" id="search-result">
+                        <div class="alert alert-blank alert-sm">
+                            为您找到
+                            <c:if test="${searchView.source_type==0}">课程</c:if>
+                            <c:if test="${searchView.source_type==1}">培训</c:if>
+                            <c:if test="${searchView.source_type==2}">教研</c:if>
+                            <c:if test="${searchView.source_type==3}">资源</c:if>
+                            <c:if test="${searchView.source_type==4}">工作坊</c:if>
+                            <c:if test="${searchView.source_type==5}">社区</c:if>
+                            结果约
+                            <span class="color-danger">${searchView.total }</span>个
+                        </div><br/>
+
+                        <div class="search-course-list" id="search-course" >
+
+                            <c:forEach items="${searchViews}" var="s">
+
+                                <%--课程--%>
+                                <c:if test="${searchView.source_type==0}">
+
+                                    <div class="search_info_list">
+                                            <div class="media media_content">
+                                                <a class="media-left" href="${pageContext.request.contextPath}/user_study/to_course_study.action?page=1&learnId=${s.source_id}&sourceType=0&tab=-1&is_direct=0">
+                                                    <img class="media-object" src="${pageContext.request.contextPath}${s.img}" style="width: 200px;height: 150px;">
+
+                                                    <span class="content_tag">小学教程</span>
+
+                                                </a>
+                                                <div class="media-body" style="margin-left: 20px;">
+                                                    <h2 class="media-heading title search-title" title="${s.title}">${s.title}</h2>
+
+                                                    <div style="margin:15px 0;">
+                                                        <span class="course-price-widget">
+                                                            <span class="price"> ￥500.0</span>
+                                                            <span class=text-success" style="display: none;"> 免费</span>
+                                                        </span>
+                                                    </div>
+                                                    <div style="margin-top: 20px;">
+                                                         <span class="text-muted">
+
+                                                            <i class="es-icon es-icon-star color-warning"></i>
+
+                                                            <i class="es-icon es-icon-star color-warning"></i>
+
+                                                            <i class="es-icon es-icon-star"></i>
+
+                                                            &nbsp;&nbsp;
+                                                            <span class="text-danger">${s.appraise_num}&nbsp;</span>条评价
+                                                        </span>
+                                                    </div>
+
+                                                    <div style="margin-top: 20px;">
+                                                        <span class="text-muted">主讲人&nbsp;&nbsp;
+                                                            <span class="text-danger">ceshi</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">报名人数 &nbsp;&nbsp;
+                                                            <span class="text-danger">40</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">收藏 &nbsp;&nbsp;
+                                                            <span class="text-danger">40</span>
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                </c:if>
+
+                                <%--培训--%>
+                                <c:if test="${searchView.source_type==1}">
+
+                                    <div class="search_info_list">
+                                            <div class="media media_content">
+                                                <a class="media-left"  href="${pageContext.request.contextPath}/train/to_train_detail.action?id=${s.source_id}&sign=0">
+                                                    <img class="media-object" src="${pageContext.request.contextPath}${s.img}" style="width: 200px;height: 150px;">
+
+                                                    <span class="content_tag">小学教程</span>
+
+                                                </a>
+                                                <div class="media-body" style="margin-left: 20px;">
+                                                    <h2 class="media-heading title search-title" title="${s.title}">${s.title}</h2>
+
+                                                    <div style="margin:15px 0;">
+                                                        <span class="course-price-widget">
+                                                            <span class="price"> ￥500.0</span>
+                                                            <span class=text-success" style="display: none;"> 免费</span>
+                                                        </span>
+                                                    </div>
+                                                    <div style="margin-top: 20px;">
+                                                         <span class="text-muted">
+
+                                                            <i class="es-icon es-icon-star color-warning"></i>
+
+                                                            <i class="es-icon es-icon-star color-warning"></i>
+
+                                                            <i class="es-icon es-icon-star"></i>
+
+                                                            &nbsp;&nbsp;
+                                                            <span class="text-danger">${s.appraise_num}&nbsp;</span>条评价
+                                                        </span>
+                                                    </div>
+
+                                                    <div style="margin-top: 20px;">
+                                                        <span class="text-muted">主办方&nbsp;&nbsp;
+                                                            <span class="text-danger">北京四中</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">报名人数 &nbsp;&nbsp;
+                                                            <span class="text-danger">40</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">收藏 &nbsp;&nbsp;
+                                                            <span class="text-danger">40</span>
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                </c:if>
+
+                                <%--教研--%>
+                                <c:if test="${searchView.source_type==2}">
+
+
+                                    <div class="search_info_list">
+                                            <div class="media media_content">
+                                                <a class="media-left"  href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${s.source_id}">
+                                                    <img class="media-object" src="${pageContext.request.contextPath}${s.img}" style="width: 200px;height: 150px;">
+
+                                                    <span class="content_tag">小学教程</span>
+
+                                                </a>
+                                                <div class="media-body" style="margin-left: 20px;">
+                                                    <h2 class="media-heading title search-title" title="${s.title}">${s.title}</h2>
+
+
+                                                    <div style="margin-top: 20px;">
+                                                         <span class="text-muted">
+
+                                                            <i class="es-icon es-icon-star color-warning"></i>
+
+                                                            <i class="es-icon es-icon-star color-warning"></i>
+
+                                                            <i class="es-icon es-icon-star"></i>
+
+                                                            &nbsp;&nbsp;
+                                                            <span class="text-danger">${s.appraise_num}&nbsp;</span>条评价
+                                                        </span>
+                                                    </div>
+                                                    <div class="progress" style="height: 18px;background-color: #eaeaea;padding: 0;margin-top: 15px;width: 280px;">
+
+                                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                                                            <span class="text-center">完成：4/10</span>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div>
+                                                        <span class="text-muted">收藏&nbsp;&nbsp;
+                                                            <span class="text-danger">20</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">工作坊 &nbsp;&nbsp;
+                                                            <span class="text-danger">北京四中数学组</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">组长 &nbsp;&nbsp;
+                                                            <span class="text-danger">李老师</span>
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                </c:if>
+
+                                <%--资源--%>
+                                <c:if test="${searchView.source_type==3}">
+                                <div class="course-item clearfix panel" style="margin-bottom: 0;padding: 10px 0;">
+                                    <a class="course-picture-link"  href="${pageContext.request.contextPath}/userFile/to_file.action?id=${s.source_id}" target="_blank" title="贡献">
+                                        <img class="avatar-lg-md" src="${pageContext.request.contextPath}${s.img}" style="margin: 15px 0 0 15px;"><br>
+                                        <span class="text-muted author_info">ceshi贡献</span>
+                                    </a>
+                                    <div class="resource_info" style="margin-top: -118px;">
+
+                                        <h4 class="mbl">
+
+                                            <a class="title" href="${pageContext.request.contextPath}/userFile/to_file.action?id=${s.source_id}" target="_blank" title="${s.title}">${s.title}</a>
+
+                                            <span class="lesson_plan">课例</span>
+                                            <span class="teaching_plan" style="display: none;">教案</span>
+                                        </h4>
+
+                                        <div class="course-footer ">
+                                            <span title="下载数量" class="text-muted"><i class="glyphicon glyphicon-download-alt"></i>&nbsp;10次下载 </span>
+                                            <span class="mlm mrm text-muted"></span>
+                                            <span title="收藏" class="text-muted"><i class="es-icon es-icon-bookmarkoutline"></i>&nbsp;${s.collect_num}位收藏 </span>
+
+
+                                        </div>
+                                        <br>
+                                        <div class="course-footer">
+                                            <span class="text-muted">格式&nbsp;:&nbsp;PDF</span>
+                                            <span class="mlm mrm text-muted"></span>
+                                            <span class="text-muted">评分&nbsp;:&nbsp;
+                                                    ${s.appraise_num}
+                                            </span>
+                                            <span class="mlm mrm text-muted"></span>
+                                            <span class= "text-muted">&nbsp;2017-09-09贡献</span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                </c:if>
+
+                                <%--工作坊--%>
+                                <c:if test="${searchView.source_type==4}">
+
+                                        <div class="search_info_list">
+                                            <div class="media media_content">
+                                                <a class="media-left"  href="${pageContext.request.contextPath}/community/to_community_index.action?sourceType=0&stamp=5&id=${s.source_id}">
+                                                    <img class="media-object" src="${pageContext.request.contextPath}${s.img}" style="width: 200px;height: 150px;">
+
+                                                    <span class="content_tag">小学教程</span>
+
+                                                </a>
+                                                <div class="media-body" style="margin-left: 20px;">
+                                                    <h2 class="media-heading title search-title" title="${s.title}">${s.title}</h2>
+
+                                                    <div style="margin-top: 20px;">
+                                                        <span class="text-muted">坊主 &nbsp;&nbsp;
+                                                            <span class="text-danger">cehi</span>
+                                                        </span>
+                                                    </div>
+                                                    <div style="margin-top: 20px;">
+                                                        <span class="text-muted">坊员人数 &nbsp;&nbsp;
+                                                            <span class="text-danger">400</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">组长 &nbsp;&nbsp;
+                                                            <span class="text-danger">李老师</span>
+                                                        </span>
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">话题数 &nbsp;&nbsp;
+                                                            <span class="text-danger">20</span>
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                </c:if>
+
+                                <%--社区--%>
+                                <c:if test="${searchView.source_type==5}">
+
+
+                                    <div class="search_info_list">
+                                            <div class="media media_content">
+                                                <a class="media-left"   href="${pageContext.request.contextPath}/community/to_community_index.action?sourceType=1&stamp=5&id=${s.source_id}">
+                                                    <img class="media-object" src="${pageContext.request.contextPath}${s.img}" style="width: 200px;height: 150px;">
+
+                                                    <span class="content_tag">小学教程</span>
+
+                                                </a>
+                                                <div class="media-body" style="margin-left: 20px;">
+                                                    <h2 class="media-heading title search-title" title="${s.title}">${s.title}</h2>
+
+
+                                                    <div style="margin-top: 20px;">
+                                                        <span class="text-muted">坊主 &nbsp;&nbsp;
+                                                            <span class="text-danger">cehi</span>
+                                                        </span>
+                                                    </div>
+                                                    <div style="margin-top: 20px;">
+                                                        <span class="text-muted">社区人数 &nbsp;&nbsp;
+                                                            <span class="text-danger">400</span>
+                                                        </span>
+
+                                                        <span class="mlm mrm text-muted"></span>
+                                                        <span class="text-muted">话题数 &nbsp;&nbsp;
+                                                            <span class="text-danger">20</span>
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                </c:if>
+
+                                <%--<div class="course-item clearfix" style="border: none;padding: 0;">--%>
+                                    <%--<a class="course-picture-link pull-left"--%>
+                                            <%--<c:if test="${searchView.source_type==0}">--%>
+                                                <%--href="${pageContext.request.contextPath}/user_study/to_course_study.action?page=1&learnId=${s.source_id}&sourceType=0&tab=-1&is_direct=0"--%>
+                                            <%--</c:if>--%>
+                                            <%--<c:if test="${searchView.source_type==1}">--%>
+                                                <%--href="${pageContext.request.contextPath}/train/to_train_detail.action?id=${s.source_id}&sign=0"--%>
+                                            <%--</c:if>--%>
+                                            <%--<c:if test="${searchView.source_type==2}">--%>
+                                                <%--href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${s.source_id}"--%>
+                                            <%--</c:if>--%>
+                                            <%--<c:if test="${searchView.source_type==3}">--%>
+                                                <%--href="${pageContext.request.contextPath}/userFile/to_file.action?id=${s.source_id}"--%>
+                                            <%--</c:if>--%>
+                                            <%--<c:if test="${searchView.source_type==4}">--%>
+                                                <%--href="${pageContext.request.contextPath}/community/to_community_index.action?sourceType=0&stamp=5&id=${s.source_id}"--%>
+                                            <%--</c:if>--%>
+                                            <%--<c:if test="${searchView.source_type==5}">--%>
+                                                <%--href="${pageContext.request.contextPath}/community/to_community_index.action?sourceType=1&stamp=5&id=${s.source_id}"--%>
+                                            <%--</c:if> target="_blank" title="${s.username}贡献">--%>
+                                        <%--<img  class="<c:if test="${searchView.source_type==3}">avatar-lg-md</c:if>--%>
+                                          <%--<c:if test="${searchView.source_type==3}">media-object</c:if>"--%>
+                                              <%--src="${pageContext.request.contextPath}${s.img}" style="margin: 15px 0 0 15px; <c:if test="${searchView.source_type!=3}"> width:200px;height: 150px; </c:if>">--%>
+
+
+                                    <%--</a>--%>
+
+                                    <%--<div class="search-info" style="<c:if test="${searchView.source_type==3}">margin-left: 115px;</c:if><c:if test="${searchView.source_type!=3}">margin-left: 230px;</c:if>">--%>
+
+                                        <%--<label class="title search-title" title="${s.title}">${s.title}--%>
+                                            <%--<c:if test="${searchView.source_type==3}">--%>
+                                                <%--<span class="lesson_plan">文档</span>--%>
+                                                <%--<span class="teaching_plan" style="display: none;">教案</span>--%>
+                                            <%--</c:if>--%>
+                                        <%--</label>--%>
+                                        <%--<c:if test="${searchView.source_type==0||searchView.source_type==1||searchView.source_type==2||searchView.source_type==3}">--%>
+                                            <%--<div style="margin:10px 0;height: 40px;">--%>
+                                                <%--<c:if test="${searchView.source_type!=2&&searchView.source_type!=3}">--%>
+                                                    <%--<span class="course-price-widget">--%>
+
+                                                        <%--<span class="price"> ￥20.0</span>--%>
+                                                            <%--&lt;%&ndash;免费&ndash;%&gt;--%>
+                                                        <%--<span class="text-success" style="display: none;">免费</span>--%>
+
+                                                    <%--</span>--%>
+                                                <%--</c:if>--%>
+
+                                                <%--<div style="margin-top: 10px;">--%>
+                                                  <%--<span class="text-muted">--%>
+                                                        <%--<i class="es-icon es-icon-star color-warning"></i>--%>
+                                                        <%--<i class="es-icon es-icon-star color-warning"></i>--%>
+                                                        <%--<i class="es-icon es-icon-star color-warning"></i>--%>
+                                                        <%--<i class="es-icon es-icon-star color-warning"></i>&nbsp;&nbsp;--%>
+                                                        <%--<span class="text-danger">&nbsp; ${s.appraise_num}</span>条评价--%>
+                                                    <%--</span>--%>
+                                                <%--</div>--%>
+                                                    <%--&lt;%&ndash;课例完成情况&ndash;%&gt;--%>
+                                                <%--<c:if test="${searchView.source_type==2}">--%>
+
+                                                    <%--<div class="progress" style="height: 18px;background-color: #eaeaea;padding: 0;margin-top: 15px;width: 280px;">--%>
+
+                                                        <%--<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:40%">--%>
+                                                            <%--<span class="text-center">完成：4/10</span>--%>
+                                                        <%--</div>--%>
+
+                                                    <%--</div>--%>
+                                                <%--</c:if>--%>
+
+                                            <%--</div>--%>
+                                        <%--</c:if>--%>
+
+                                         <%----%>
+
+                                            <%--&lt;%&ndash;资源&ndash;%&gt;--%>
+                                        <%--<c:if test="${searchView.source_type==3}">--%>
+                                            <%--<div style="margin-top:20px;">--%>
+                                                <%--<span class="text-muted">--%>
+                                                    <%--<span class="text-danger">600</span>&nbsp;&nbsp;人下载--%>
+                                                <%--</span>--%>
+                                                <%--<span class="mlm mrm text-muted"></span>--%>
+                                                <%--<span class="text-muted">收藏 &nbsp;&nbsp;--%>
+                                                <%--<span class="text-danger">${s.collect_num}</span>--%>
+                                                    <%--人--%>
+                                                <%--</span>--%>
+                                                <%--<span class="mlm mrm text-muted"></span>--%>
+                                                <%--<span class="text-muted">--%>
+
+                                                    <%--<i class="es-icon es-icon-star color-warning"></i>--%>
+
+                                                    <%--<i class="es-icon es-icon-star color-warning"></i>--%>
+
+                                                    <%--<i class="es-icon es-icon-star color-warning"></i>--%>
+
+                                                    <%--<i class="es-icon es-icon-star color-warning"></i>--%>
+                                                <%--&nbsp;&nbsp;--%>
+                                                <%--<span class="text-danger">&nbsp; ${s.appraise_num}</span>条评价--%>
+                                                <%--</span>--%>
+                                            <%--</div>--%>
+
+                                        <%--</c:if>--%>
+
+                                            <%--&lt;%&ndash;工作坊&ndash;%&gt;--%>
+                                        <%--<c:if test="${searchView.source_type==4}">--%>
+                                            <%--<div style="margin-top: 40px;">--%>
+
+                                                <%--<span class="text-muted">坊主&nbsp;&nbsp;--%>
+                                                    <%--<span class="text-danger">李老师</span>--%>
+                                                <%--</span>--%>
+                                                <%--<span class="mlm mrm text-muted"></span>--%>
+                                                <%--<span class="text-muted">所属社区&nbsp;&nbsp;--%>
+                                                    <%--<span class="text-danger">北京四中</span>--%>
+                                                <%--</span>--%>
+                                                <%--<span class="mlm mrm text-muted"></span>--%>
+                                            <%--</div>--%>
+
+                                        <%--</c:if>--%>
+                                            <%--&lt;%&ndash;社区&ndash;%&gt;--%>
+                                        <%--<c:if test="${searchView.source_type==5}">--%>
+                                            <%--<div style="margin-top: 40px;">--%>
+                                                 <%--<span class="text-muted">创建者&nbsp;&nbsp;--%>
+                                                    <%--<span class="text-danger">李老师</span>--%>
+                                                <%--</span>--%>
+                                                <%--<span class="mlm mrm text-muted"></span>--%>
+                                                <%--<span class="text-muted">--%>
+                                                    <%--<span class="text-danger">300</span>&nbsp;&nbsp;人加入--%>
+                                                <%--</span>--%>
+                                                <%--<span class="mlm mrm text-muted"></span>--%>
+
+                                                <%--<span class="text-muted">--%>
+                                                    <%--<span class="text-danger">300</span>&nbsp;&nbsp;个工作坊--%>
+                                                <%--</span>--%>
+
+                                            <%--</div>--%>
+
+                                        <%--</c:if>--%>
+
+                                    <%--</div>--%>
+
+                                <%--</div>--%>
+
+                            </c:forEach>
+                            <c:if test="${!empty searchViews}">
+                                <div id="test" class="pager" ></div>
+                            </c:if>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+<script>
+    $(function(){
+        //翻页
+        var total = $("#total").val();
+        var page =  parseInt($("#page").val())+1;
+
+        $("#btn5").on('click', function () {
+            $("#div1").PageChanged(5);
+        });
+
+        $(".pager").pagination({
+            thisPageIndex:page,
+            recordCount: total,       //总记录数
+            pageSize:  $("#rows").val(),            //一页记录数
+            onPageChange: function (page) {
+                document.title = page;
+                $("#page").val(page-1);
+                $('#search_form').submit();
+
+            }
+        });
+    });
+
+</script>
+
+

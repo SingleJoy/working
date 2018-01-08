@@ -1,0 +1,38 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.content.view.ContentStatiView;
+import cn.bnsr.edu_yun.frontstage.train.mapper.UserStudyLogMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudyLog;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyLogService;
+import cn.bnsr.edu_yun.frontstage.train.view.UserStudyLogView;
+
+public class UserStudyLogServiceImpl implements UserStudyLogService{
+	@Autowired
+	private UserStudyLogMapper userStudyLogMapper;
+	
+	@Override
+	public Long save(UserStudyLog userStudyLog) {
+		return userStudyLogMapper.insertSelective(userStudyLog);
+	}
+
+	@Override
+	public Long findUserStudyLogByUSLView(UserStudyLogView userStudyLogView) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String curr_model = df.format(userStudyLogView.getCreate_time());
+		userStudyLogView.setCreate_time(userStudyLogView.getCreate_time());
+		userStudyLogView.setCreate_time_model(curr_model);
+		return userStudyLogMapper.findUserStudyLogByUSLView(userStudyLogView);
+	}
+
+	@Override
+	public List<ContentStatiView> queryUserStudyLogStati(
+			ContentStatiView contentSatiView) {
+		return userStudyLogMapper.queryUserStudyLogStati(contentSatiView);
+	}
+
+}

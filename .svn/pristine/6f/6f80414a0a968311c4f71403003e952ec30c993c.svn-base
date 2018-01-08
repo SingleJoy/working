@@ -1,0 +1,172 @@
+package cn.bnsr.edu_yun.frontstage.base.service.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.ClassifyView;
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.TreeNode;
+import cn.bnsr.edu_yun.comparator.ClassifyComparator;
+import cn.bnsr.edu_yun.frontstage.base.mapper.ClassifyMapper;
+import cn.bnsr.edu_yun.frontstage.base.po.Classify;
+import cn.bnsr.edu_yun.frontstage.base.service.ClassifyService;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class ClassifyServiceImpl implements ClassifyService{
+	@Autowired 
+	private  ClassifyMapper  classifyMapper;
+	
+	
+	public DataGrid datagrid(ClassifyView classifyView) {
+		DataGrid j = new DataGrid();
+		classifyView.setPage(NumUtil.startingNum(classifyView.getPage(),classifyView.getRows()));
+		j.setRows(changeModel(find(classifyView)));
+		j.setTotal(total(classifyView));
+		return j;
+	}
+
+	private List<ClassifyView> changeModel(List<Classify> classifyList) {
+		List<ClassifyView> classifys = new ArrayList<ClassifyView>();
+		if (classifyList != null && classifyList.size() > 0) {
+			for (Classify tu : classifyList) {
+				ClassifyView u = new ClassifyView();
+				BeanUtils.copyProperties(tu, u);
+				classifys.add(u);
+			}
+		}
+		return classifys;
+	}
+
+	private List<Classify> find(ClassifyView classifyView) {
+		return classifyMapper.find(classifyView);
+	}
+
+	private Long total(ClassifyView classifyView) {
+		return classifyMapper.count(classifyView);
+	}
+	
+	
+
+
+	@Override
+	public void save(Classify classify) {
+		classify.setCreate_time(new Date());
+		classifyMapper.insertSelective(classify);
+		
+	}
+
+	@Override
+	public void update(Classify classify) {
+		classifyMapper.updateByPrimaryKeySelective(classify);
+	}
+	
+	@Override
+	public void delete(Classify classify) {
+		List<Classify> classifyList = classifyMapper.queryTree(classify);
+		if(classifyList!=null&&classifyList.size()>0){
+			for (Classify c : classifyList) {
+				delete(c);//递归删除
+			}
+		}
+		classifyMapper.deleteByPrimaryKey(classify.getId());
+	}
+	
+	@Override
+	public List<ClassifyView> treegrid(Classify classify) {
+		List<ClassifyView> treeList = classifyMapper.queryTreeGrid(classify);
+		if (treeList != null && treeList.size() > 0) {
+			for(ClassifyView cv : treeList){
+				if (countChildren(cv.getId().toString()) > 0) {
+					cv.setState("closed");
+				}
+			}
+		}
+		return treeList;
+	}
+
+	/*
+	 * 统计子节点的个数
+	 */
+	private Long countChildren(String parent_id) {
+		return classifyMapper.countChildren(parent_id);
+	}
+
+	@Override
+	public List<TreeNode> tree(Classify classify, Boolean b) {
+		List<Classify> classifyList = classifyMapper.queryTree(classify);
+		List<TreeNode> tree = new ArrayList<TreeNode>();
+		for (Classify c : classifyList) {
+			if (c.getParent_id().equals("0")) {
+				tree.add(this.classifyNode(c,b));
+			}
+		}
+		return tree;
+	}
+
+	private TreeNode classifyNode(Classify c, Boolean b) {
+		TreeNode node = new TreeNode();
+		node.setId(c.getId().toString());
+		node.setText(c.getClassify_name());
+		Map<String, Object> attributes = new HashMap<String, Object>();
+		attributes.put("classify_name", c.getClassify_name());
+		attributes.put("code", c.getCode());
+		attributes.put("seq", c.getSeq());
+		attributes.put("remarks", c.getRemarks());
+		node.setAttributes(attributes);
+		
+		List<Classify> l = classifyMapper.queryTree(c);
+		if (l != null && l.size()>0) {
+			node.setState("closed");
+			if (b) {// 递归查询子节点
+				Collections.sort(l, new ClassifyComparator());// 排序
+				List<TreeNode> children = new ArrayList<TreeNode>();
+				for (Classify r : l) {
+					TreeNode tn = classifyNode(r, true);
+					children.add(tn);
+				}
+				node.setChildren(children);
+				node.setState("open");
+			}
+		}
+		return node;
+	}
+
+	@Override
+	public List<Classify> findAllClassify(int type,boolean flag) {
+		return classifyMapper.findAllClassify(type,flag);
+	}
+
+	@Override
+	public List<Classify> queryByParentId(Long classifyId) {
+		return classifyMapper.queryByParentId(classifyId);
+	}
+
+	@Override
+	public Classify selectById(int id) {
+		
+		return classifyMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public ClassifyView getClassifyViewById(int id) {
+		ClassifyView classifyView = classifyMapper.getClassifyViewById(id);
+		if(classifyView!=null&&classifyView.getGradepa_id()==0){
+			classifyView.setParent_id("-1");
+		}
+		return classifyView;
+	}
+
+	@Override
+	public List<cn.bnsr.edu_yun.frontstage.base.view.ClassifyView> queryViewByParentId(Long classifyId) {
+		
+		return classifyMapper.queryViewByParentId(classifyId);
+	}
+
+}

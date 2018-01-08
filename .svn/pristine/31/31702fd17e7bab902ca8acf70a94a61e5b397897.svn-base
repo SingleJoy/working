@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>个人中心-我的社区-社区话题</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+</head>
+<body >
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+
+        <div class="col-lg-9 col-md-8">
+
+            <section class="es-section">
+
+                <div class="nav-btn-tab">
+                    <ul class="nav nav-tabs">
+                        <li ><a href="my-community-index.html">社区主页</a></li>
+                        <li ><a href="my-community-join.html" >我加入的社区</a></li>
+                        <li><a href="my-community-create-index.html" >我组建的社区</a></li>
+                        <li class="active"><a href="my-community-topic.html" >我发起的话题</a></li>
+                    </ul>
+                </div>
+                <h5 style="margin: 10px 0 20px 0;">我发起的话题:
+                    <a href="#">
+                        <span class="pull-right  num num_num" >7</span>
+
+                    </a>
+                </h5>
+
+                <ul class="course-wide-list">
+
+                    <li class="course-item clearfix">
+                        <a class="course-picture-link" href="#" target="_blank">
+                            <img class="course-picture" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 80px;height:80px;margin: 10px;">
+                        </a>
+                        <div class="course-body" style="margin-left: 110px;">
+                            <div style="float:right;" class="text-muted mrm mls">
+                                <div><i class="es-icon es-icon-people"></i><span style="margin-left: 10px;">参与人数:48</span></div>
+                            </div>
+                            <h4 class="mbl"><a href="#" target="_blank">如何学好语文?</a></h4>
+
+                            <div class="course-footer clearfix mtl">
+                               发起人: 李云龙 &nbsp;&nbsp;
+                               发起时间 2017-04-20 &nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="course-item clearfix">
+                        <a class="course-picture-link" href="#" target="_blank">
+                            <img class="course-picture" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 80px;height:80px;margin: 10px;">
+                        </a>
+                        <div class="course-body" style="margin-left: 110px;">
+                            <div style="float:right;" class="text-muted mrm mls">
+                                <div>
+                                    <i class="es-icon es-icon-people"></i>
+                                    <span style="margin-left: 10px;">参与人数:48</span>
+                                </div>
+                            </div>
+                            <h4 class="mbl"><a href="#" target="_blank">如何学好数学</a></h4>
+
+                            <div class="course-footer clearfix mtl">
+                                发起人: 李云龙 &nbsp;&nbsp;
+                                发起时间 2017-04-20 &nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <a class="pull-right more_data">更多 ></a>
+                <br/>
+                <br/>
+                <hr/>
+                <h5 style="margin: 10px 0 20px 0;">我回复的话题:
+                    <a href="#">
+                        <span class="pull-right  num num_num" >7</span>
+
+                    </a>
+                </h5>
+                <div class="my_topic_list">
+
+                    <div class="js-reviews">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="#">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/07-03/073023f91615826360.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark" href="#">
+                                        <span class="text-danger">我亦所望:</span>
+                                        <span style="padding: 0 3px;opacity: 0.8;">在理清情节结构的基础上,分析人物性格变化的过程</span>
+                                    </a>
+                                    <br/>
+
+                                   <div style="padding-top: 15px;">发起日期:&nbsp;&nbsp;2016-09-25</div>
+                                </div>
+
+                                <div class="content" style="background-color:#f9f9f9;">
+                                    <div class="full-content" style="padding: 5px;">
+                                        <span class="text-danger">我的回复:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                    </div>
+                                    <div style="padding: 5px;opacity: 0.8;">回复时间:&nbsp;&nbsp;2017-02-25
+                                        <span class="pull-right"><img src="../../../images/dianzan.png" class="dianzan">34</span>
+                                        <span class="pull-right" style="padding-right: 15px;"><i class="es-icon es-icon-textsms"></i>10</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="js-reviews">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="#">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/07-03/073023f91615826360.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark" href="#">
+                                        <span class="text-danger">我亦所望:</span>
+                                        <span style="padding: 0 3px;opacity: 0.8;">在理清情节结构的基础上,分析人物性格变化的过程</span>
+                                    </a>
+                                    <br/>
+
+                                   <div style="padding-top: 15px;">发起日期:&nbsp;&nbsp;2016-09-25</div>
+                                </div>
+
+                                <div class="content" style="background-color:#f9f9f9;">
+                                    <div class="full-content" style="padding: 5px;">
+                                        <span class="text-danger">我的回复:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                    </div>
+                                    <div style="padding: 5px;opacity: 0.8;">回复时间:&nbsp;&nbsp;2017-02-25
+                                        <span class="pull-right"><img src="../../../images/dianzan.png" class="dianzan">34</span>
+                                        <span class="pull-right" style="padding-right: 15px;"><i class="es-icon es-icon-textsms"></i>10</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="pull-right more_data">更多 ></a>
+                <br/>
+                <br/>
+                <hr/>
+            </section>
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+</div>
+
+
+</body>
+</html>

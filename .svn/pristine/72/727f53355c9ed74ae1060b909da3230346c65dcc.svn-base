@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>课程学习数据 </title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+
+    <div id="content-container" class="container">
+
+
+
+
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级管理</li>
+                        <li class="list-group-item ">
+                            <a href="       ">
+                                <span  ></span>服务设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span  ></span>班级主页
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="   ">
+                                <span  ></span>学员管理
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="  ">
+                                <span  ></span>试卷批阅
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="            ">
+                                <span  ></span>主题研讨
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href=" ">
+                                <span  ></span>成绩管理
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col course-data">
+                    <div class="panel-heading">如何学好语文
+                        <a href="" class="btn btn-default pull-right">返回主题研讨</a>
+                    </div>
+                    <div class="panel-body">
+                         <h4 style="margin-left: 20px;margin-bottom: 30px;">不少学生语文学习中出现问题,如何学好语文呢?</h4>
+
+                        <div class="js-reviews">
+                            <div class="media media-evaluate">
+                                <div class="media-left">
+                                    <a class=" js-user-card" href="">
+                                        <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                    </a>
+
+                                </div>
+
+                                <div class="media-body thread-post">
+                                    <div class="title">
+                                        <a class="link-dark " href="">小明</a>
+                                        &nbsp;&nbsp;2016-11-21
+                                    </div>
+
+                                    <div class="content">
+
+                                        <div class="full-content">多看多读多写
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="js-reviews">
+                            <div class="media media-evaluate">
+                                <div class="media-left">
+                                    <a class=" js-user-card" href="">
+                                        <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                    </a>
+
+                                </div>
+
+                                <div class="media-body thread-post">
+                                    <div class="title">
+                                        <a class="link-dark " href="">回复人id</a>
+                                        &nbsp;&nbsp;2016-11-21
+                                    </div>
+
+                                    <div class="content">
+
+                                        <div class="full-content">67967967967923653463473
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="js-reviews">
+                            <div class="media media-evaluate">
+                                <div class="media-left">
+                                    <a class=" js-user-card" href="">
+                                        <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                    </a>
+
+                                </div>
+
+                                <div class="media-body thread-post">
+                                    <div class="title">
+                                        <a class="link-dark " href="">回复人id</a>
+                                        &nbsp;&nbsp;2016-11-21
+                                    </div>
+
+                                    <div class="content">
+
+                                        <div class="full-content">67967967967923653463473回复
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

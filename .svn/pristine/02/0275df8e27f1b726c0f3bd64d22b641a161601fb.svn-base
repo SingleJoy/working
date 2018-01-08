@@ -1,0 +1,76 @@
+package cn.bnsr.edu_yun.frontstage.base.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.view.StudyTimeView;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyTimeService;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+@Controller
+@RequestMapping("my_chart")
+public class MyChartController {
+
+	@Autowired
+	private UserStudyTimeService userStudyTimeService;
+	@Autowired
+	private UserService userService;
+	@RequestMapping("/to_my_chart")
+	public ModelAndView toMyChart(HttpServletRequest request, int stamp, int state) {
+		ModelAndView modelAndView = new ModelAndView("frontstage/base/personalCenter/my_chart");
+		User user = (User) request.getSession().getAttribute("currentUser");
+		UserCenterView userCenter = userService.queryUserCenter(user.getId());
+		modelAndView.addObject("userCenter", userCenter);
+		modelAndView.addObject("state", state);
+		modelAndView.addObject("stamp", stamp);
+		return modelAndView;
+
+	}
+	@RequestMapping("/query_my_stats")
+	public void queryMyStats(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		StudyTimeView studyTimeView=new StudyTimeView();
+		User user = (User) request.getSession().getAttribute("currentUser");
+		studyTimeView.setUser_id(user.getId());
+		studyTimeView.setDays(TimeUtil.getDate());
+		List<StudyTimeView> studyTimeViews = userStudyTimeService.selectSumByUserId(studyTimeView);
+		JSONObject result = new JSONObject();
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+	@RequestMapping("/query_my_stats_week")
+	public void queryMyStatsWeek(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		StudyTimeView studyTimeView=new StudyTimeView();
+		User user = (User) request.getSession().getAttribute("currentUser");
+		studyTimeView.setUser_id(user.getId());
+		SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar=Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        //当前时间，貌似多余，其实是为了所有可能的系统一致
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        studyTimeView.setStartTime(s.format(calendar.getTime())+" 00:00:00");
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        studyTimeView.setEndTime(s.format(calendar.getTime())+" 23:59:59");
+		List<StudyTimeView> studyTimeViews = userStudyTimeService.selectSumByUserId(studyTimeView);
+		JSONObject result = new JSONObject();
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+	
+}

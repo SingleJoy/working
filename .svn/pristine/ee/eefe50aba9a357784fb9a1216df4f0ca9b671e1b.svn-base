@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>社区信息-社区课程</title>
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){
+            $(".file-chooser-main>ul>li").click(function(){
+                var index=$(this).index();
+                $(".video_source").hide().eq(index).show();
+            })
+        });
+        $(function(){
+            $(".file-browser-list-container>ul>li").click(function(){
+                $(".video_source").hide();
+                $(".file-chooser-main").hide();
+                $(".file-chooser-bar").show();
+            })
+        });
+        $(function(){
+            $(".edit_video").click(function(){
+                $(this).parent().hide();
+                $(".file-chooser-main").show();
+                $(".file-chooser-bar").hide();
+                $(".video_source").show();
+
+            })
+        });
+
+    </script>
+
+</head>
+<body >
+
+
+
+<button class="btn btn-info btn-sm" type="button"  data-toggle="modal" id="button_01">
+    <i class="glyphicon glyphicon-plus"></i>章节
+</button>
+
+<button class="btn btn-info btn-sm" type="button" data-target="#add_hour" data-toggle="modal">
+    <i class="glyphicon glyphicon-plus"></i>课时
+</button>
+
+
+<!--添加章节-->
+<div id="add_chapter" class="modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">编辑章节</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal"  method="post" >
+
+                    <div class="form-group">
+                        <div class="col-md-2 control-label"><label>章节标题</label></div>
+                        <div class="col-md-6 controls">
+                            <input class="form-control"  type="text" >
+                            <div class="help-block" style="display: none;">
+                                <span class="text-danger">请输入章节标题</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2 control-label"><label>章节序号</label></div>
+                        <div class="col-md-6 controls">
+                            <input class="form-control"  type="text" >
+                            <div class="help-block" style="display: none;">
+                                <span class="text-danger">请输入章节序号</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary" data-toggle="form-submit" >保存</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!--添加课时按钮点击弹窗-->
+
+<div id="add_hour" class="modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">添加/编辑课时</h4>
+            </div>
+
+            <div class="modal-body">
+                <form class="form-horizontal"  method="post" >
+
+                    <div class="form-group">
+                        <div class="col-md-2 control-label"><label>类型</label></div>
+                        <div class="col-md-9 controls">
+                            <div class="radios">
+                                <label><input type="radio" name="type" value="video" checked="checked"> 视频</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-md-2 control-label">
+                            <label >标题</label>
+                        </div>
+                        <div class="col-md-9 controls">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input  class="form-control" type="text" >
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" > 免费课时</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="help-block" style="display:none;">请输入标题</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-md-2 control-label">
+                            <label >摘要</label>
+                        </div>
+                        <div class="col-md-9 controls">
+                            <textarea class="form-control"></textarea>
+                            <div class="help-block" style="display:none;">请输入摘要</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2 control-label for-video-type"><label>视频</label></div>
+                        <div class="col-md-10 controls">
+
+                            <div class="file-chooser-bar" style="display: none;">
+                                <span >2、JRE与JDK简介.mp4</span>
+                                <button class="btn btn-link btn-sm edit_video" type="button" data-role="trigger" >
+                                    <i class="glyphicon glyphicon-edit"></i> 编辑
+                                </button>
+
+                            </div>
+
+                            <div class="file-chooser-main" style="padding-top: 4px;">
+                                <ul class="nav nav-pills nav-pills-sm mbs file-chooser-tabs">
+                                    <li class="active">
+                                        <a class="file-chooser-uploader-tab" href="#video-chooser-upload-pane" data-toggle="tab">上传视频</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#video-chooser-course-file" data-toggle="tab">
+                                            从课程文件中选择
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#video-chooser-import-pane" data-toggle="tab">从资源列表中选择</a>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group clearfix upload_video video_source" style="margin-top: 60px;">
+                        <div class="text-center">
+                            <button class="btn btn-default btn-lg" type="button">
+                                <i class="glyphicon glyphicon-plus"></i>上传视频
+                            </button>
+
+                        </div>
+                    </div>
+                     <!--课程文件-->
+                    <div class="form-group video_source " style="display: none;">
+
+                        <div class="tab-pane col-md-9 col-md-offset-2">
+                            <div class="file-browser">
+                                <div class="file-browser-list-container">
+                                    <ul class="file-browser-list">
+                                        <li class="file-browser-item clearfix" >
+                                            <span class="filename">2、JRE与JDK简介.mp4</span>
+                                            <span class="filesize">3.6MB</span>
+                                            <span class="filetime">2017-02-20 09:39</span>
+                                            <span class="createdUserId" >14</span>
+                                        </li>
+                                        <li class="file-browser-item clearfix" >
+                                            <span class="filename">2、JRE与JDK简介.mp4</span>
+                                            <span class="filesize">3.6MB</span>
+                                            <span class="filetime">2016-12-07 16:47</span>
+                                            <span class="createdUserId" style="display: none;">14</span>
+                                        </li>
+                                        <li class="file-browser-item clearfix" >
+                                            <span class="filename">clear.fi_tutorial.wmv</span>
+                                            <span class="filesize">47.3MB</span>
+                                            <span class="filetime">2016-11-24 09:51</span>
+                                            <span class="createdUserId" style="display: none;">14</span>
+                                        </li>
+                                        <li class="file-browser-item clearfix" >
+                                            <span class="filename">ceshi.mp4</span>
+                                            <span class="filesize">189.3MB</span>
+                                            <span class="filetime">2016-11-23 15:24</span>
+                                            <span class="createdUserId" style="display: none;">14</span>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <div class="col-md-2 control-label "><label>视频时长</label></div>
+                        <div class="col-md-9 controls">
+                            <input class="form-control width-input width-input-small"  type="text" name="minute" value="" >分
+                            <input class="form-control width-input width-input-small"  type="text" name="second" value="" >秒
+                            <div class="help-block">时长必须为非负整数</div>
+                            <div class="help-block" style="display:none;"><span class="text-danger">时长不可为空</span></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">所属章节</label>
+                        <div class="col-md-3 controls">
+
+                            <select  class="form-control width-input width-input-large">
+
+                                <option>第1章</option>
+                                <option>第2章</option>
+                                <option>第3章</option>
+
+                            </select>
+                            <div class="help-block" style="display:none;"><span class="text-danger">请选择所属章节</span></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-md-2 control-label">
+                            <label >序号</label>
+                        </div>
+                        <div class="col-md-3 controls">
+                            <input  class="form-control" type="text" >
+                            <div class="help-block" style="display:none;"><span class="text-danger">请输入序号</span></div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary" data-toggle="form-submit" >保存</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $("#id_01").click(function () {
+            $("#add_chapter").modal();
+
+        })
+
+    })
+</script>
+
+</body>
+</html>

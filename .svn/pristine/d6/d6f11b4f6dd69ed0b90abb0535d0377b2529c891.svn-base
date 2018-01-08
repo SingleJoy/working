@@ -1,0 +1,34 @@
+package cn.bnsr.edu_yun.backstage.resource.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.resource.service.BackFileAnalyzeService;
+import cn.bnsr.edu_yun.backstage.resource.view.BackFileView;
+import cn.bnsr.edu_yun.frontstage.resource.mapper.File_baseMapper;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class BackFileAnalyzeServiceImpl implements BackFileAnalyzeService {
+
+	@Autowired
+	private File_baseMapper fileBaseMapper;
+	@Override
+	public DataGrid datagrid(BackFileView backFileView) {
+		DataGrid j = new DataGrid();
+		backFileView.setPage(NumUtil.startingNum(backFileView.getPage(), backFileView.getRows()));
+		j.setRows(find(backFileView));
+		j.setTotal(total(backFileView));
+		return j;
+	}
+	
+	private List<BackFileView> find(BackFileView backFileView) {
+		return fileBaseMapper.findGeneral(backFileView);
+	}
+
+	private Long total(BackFileView backFileView) {
+		return fileBaseMapper.countGeneral(backFileView);
+	}
+
+}

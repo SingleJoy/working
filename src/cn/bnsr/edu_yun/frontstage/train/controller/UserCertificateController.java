@@ -1,0 +1,105 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.train.po.Certificate;
+import cn.bnsr.edu_yun.frontstage.train.service.CertModelService;
+import cn.bnsr.edu_yun.frontstage.train.service.CertificateService;
+import cn.bnsr.edu_yun.frontstage.train.view.CertModelView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserCertificateView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+@Controller
+@RequestMapping("/user_certificate")
+public class UserCertificateController {
+	private final Logger log = LoggerFactory.getLogger(UserCertificateController.class); 
+	@Autowired
+	private CertificateService certificateService;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private CertModelService certModelService;
+	
+	/**
+	 * 我的证书
+	 */
+	@RequestMapping("/to_user_certificate")
+	public ModelAndView userCertificate(HttpServletRequest request,UserCertificateView userCertificateView){
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		String state = request.getParameter("state");//二级分类标识
+		String stamp = request.getParameter("stamp");//一级分类标识
+		 
+		try {
+			userCertificateView.setRows(10);
+			if(userCertificateView.getPage()==0){
+				userCertificateView.setStartLine(0);
+			}else{
+				userCertificateView.setStartLine(userCertificateView.getPage()*userCertificateView.getRows());
+			}
+			userCertificateView.setUser_id(user.getId());
+			int total = certificateService.countMyCert(userCertificateView);
+			userCertificateView.setTotal(total);
+			//分页总页数
+			userCertificateView.setTotalPage(NumUtil.totalPage(total,userCertificateView.getRows()));
+			
+			List<UserCertificateView>  myCertList = certificateService.findMyCert(userCertificateView);
+			
+			modelAndView.addObject("myCertList",myCertList);
+			modelAndView.addObject("userCertificateView",userCertificateView);
+			
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			//个人中心统计数据  
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+			modelAndView.addObject("head_title", "我的证书");
+			request.setAttribute("state", state);
+			request.setAttribute("stamp", stamp);
+			modelAndView.setViewName("frontstage/train/personalCenter/my_certificate");
+		} catch (Exception e) {
+			log.error("学员问答查询失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	
+	/**
+	 * 展示证书模板
+	 */
+	@RequestMapping("/to_my_cert_detail")
+	public ModelAndView toCertModelShow(UserCertificateView userCertificateView){
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			Certificate cert = certificateService.selectOne(userCertificateView.getCert_id());
+			CertModelView certModel = certModelService.queryCertModel(cert.getCert_model_id());
+			User user = userService.selectByPrimaryKey(userCertificateView.getUser_id());
+			String content = certModel.getContent().replace("[姓名]", user.getUsername());
+			certModel.setContent(content);
+			modelAndView.addObject("certModel", certModel);
+			modelAndView.addObject("head_title", "我的证书模板");
+			modelAndView.setViewName("frontstage/train/personalCenter/my_cert_detail");
+		} catch (Exception e) {
+			log.error("证书模板图片信息查询失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+}

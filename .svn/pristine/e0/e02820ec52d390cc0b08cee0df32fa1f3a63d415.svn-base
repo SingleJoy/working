@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/certification.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+   <script>
+//       教师与管理员验证表单切换
+       $(function(){
+           var isclick=false;
+           $(".certification_content_tabs ul li").click(function(){
+               $(".certification_content_tabs ul li").removeClass("curr");
+               $(this).addClass("curr");
+               var index=$(this).index();
+               $(".form_tabs").hide().eq(index).show();
+
+               isclick=true;
+           }).mouseover(function(){
+               $(".certification_content_tabs ul li").removeClass("curr_01");
+               $(this).addClass("curr_01");
+           }).mouseout(function(){
+               $(".certification_content_tabs ul li").removeClass("curr_01");
+           })
+
+       });
+   </script>
+
+
+
+</head>
+<body>
+<div class="certification_content">
+    <div class="certification_content_top">
+    <h2>申请认证用户</h2>
+         <div class="application_progress">
+
+        <div class="application_progress_ ">
+            <div>1</div>
+            <p>注册账户</p>
+            <span></span>
+        </div>
+
+        <div class="application_progress_ application_progress_style">
+            <div>2</div>
+            <p>填写认证信息</p>
+            <span></span>
+        </div>
+
+
+        <div class="application_progress_ application_progress_style_01">
+            <div>3</div>
+            <p>申请提交成功</p>
+        </div>
+
+    </div>
+    </div>
+
+    <div class="certification_content_tabs">
+
+        <ul>
+            <li class="curr">教师认证&nbsp;?</li>
+
+            <li>管理员认证&nbsp;?</li>
+            <div>or</div>
+        </ul>
+
+    </div>
+
+     <div class="add_certification_info">填写实名认证信息</div>
+
+    <div class="certification_content_main">
+
+        <div class="form_tabs">
+          <form >
+              <div class="true_name"><span>* </span>真实姓名:<input type="text" ></div>
+              <div class="ID_number"><span>* </span>身份证号:<input type="text"></div>
+              <div class="sex"><span>* </span>性别:
+                  <p>
+                      <input type="radio" name="sex" class="sex_input">&nbsp;男
+                      <input type="radio" name="sex" class="sex_input">&nbsp;女
+                  </p>
+              </div>
+              <div class="email"><span>* </span>邮箱:<input type="email"></div>
+              <div class="cellphone_number"><span>* </span>手机号码:<input type="text"></div>
+              <div class="cellphone_number_resister"><span>* </span>验证码:<input type="text"></div>
+
+              <label>上传证明教师身份的照片：
+                  （如教师证内页，工作证，聘用书，不能使用教师证封面，自拍，身份证）<span>* </span></label>
+              <p><input type="file" class="upload_ID_picture"></p>
+              <span class="plus_number">+</span>
+              <li>提交</li>
+          </form>
+        </div>
+
+        <div class="form_tabs"  style="display: none;">
+              <form >
+                  <div class="true_name"><span>* </span>真实姓名:<input type="text" ></div>
+                  <div class="ID_number"><span>* </span>身份证号:<input type="text"></div>
+                  <div class="sex"><span>* </span>性别:
+                  <p>
+                    <input type="radio" name="sex" class="sex_input">&nbsp;男
+                    <input type="radio" name="sex" class="sex_input">&nbsp;女
+                  </p>
+                  </div>
+                  <div class="email"><span>* </span>邮箱:<input type="email"></div>
+                  <div class="cellphone_number"><span>* </span>手机号码:<input type="text"></div>
+                 <div class="cellphone_number_resister"><span>* </span>验证码:<input type="text"></div>
+                  <li>提交</li>
+             </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>

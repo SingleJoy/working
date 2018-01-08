@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bnsr.edu_yun.frontstage.base.mapper.MyCollectMapper">
+    <select id="showCollert" parameterType="cn.bnsr.edu_yun.frontstage.base.view.MyCollectView" resultType="cn.bnsr.edu_yun.frontstage.base.view.MyCollectView">
+select b.id id,c.size size,g.classify_name type, c.filename filename, c.upload_user upload_user,b.time collectTime,f.score
+from user a inner join user_file b on a.id = b.user_id inner join file_base c on b.file_id = c.id inner join file_catalog d on c.catalog_id = d.id 
+inner join file_property f on c.property_id = f.id inner join
+classify g on d.column_id = g.id
+where a.id = ${userId} and b.type = 2 
+order by b.time desc
+LIMIT ${startLine},${rows}
+    </select>
+    <select id="queryTotalContribution" parameterType="cn.bnsr.edu_yun.frontstage.base.mapper.MyCollectMapper" resultType="java.lang.Integer">
+ select count(*) from user a inner join user_file b on a.id = b.user_id inner join file_base c on b.file_id = c.id inner join file_catalog d on c.catalog_id = d.id 
+inner join file_property f on c.property_id = f.id inner join
+classify g on d.column_id = g.id
+where a.id = ${userId} and b.type = 2 
+    </select>
+    </mapper>

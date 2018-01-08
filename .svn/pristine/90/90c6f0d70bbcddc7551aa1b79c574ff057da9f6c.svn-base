@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bnsr.edu_yun.frontstage.base.mapper.MyAttentionMapper">
+    <select id="showMyAttenation" parameterType="cn.bnsr.edu_yun.frontstage.base.view.MyAttentionView" resultType="cn.bnsr.edu_yun.frontstage.base.view.MyAttentionView">
+        select #{support} support, a.id id, a.icon img, a.userName realname,<if test="teacher==1">c.titles titles ,</if>d.agree_count agreeCount from user a 
+        <if test="teacher==1">inner join user_info c on a.id = c.user_id</if>
+        inner join user_property d on a.property_id = d.id
+        where a.id  = #{userId} 
+        
+    </select>
+    <select id="showMyFans" parameterType="cn.bnsr.edu_yun.frontstage.base.view.MyAttentionView" resultType="cn.bnsr.edu_yun.frontstage.base.view.MyAttentionView">
+        select  #{support} support, a.id id,a.icon img,  a.userName realname,<if test="teacher==1">c.titles titles ,</if>d.agree_count agreeCount from user a 
+         <if test="teacher==1">inner join user_info c on a.id = c.user_id</if>
+        inner join user_property d on a.property_id = d.id
+        where a.id  = #{userId} 
+         
+    </select>
+     
+   <!--  <select id="showMyAttenationCount" parameterType="cn.bnsr.edu_yun.frontstage.base.view.MyAttentionView"  resultType="int">
+        select  count(*)  from user a inner join user_attent b on a.id = b.user_id inner join user_info c on a.id = c.user_id
+        inner join user_property d on a.property_id = d.id
+        where b.attent_user_id = #{userId} 
+        
+        
+    </select>
+    <select id="showMyFansCount" parameterType="cn.bnsr.edu_yun.frontstage.base.view.MyAttentionView" resultType="int">
+        select count(*)  from user a inner join user_attent b on a.id = b.user_id inner join user_info c on a.id = c.user_id
+        inner join user_property d on a.property_id = d.id
+        where a.id = #{userId} 
+         
+    </select> -->
+    </mapper>

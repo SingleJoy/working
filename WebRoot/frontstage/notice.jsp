@@ -1,0 +1,133 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+    <link href="${pageContext.request.contextPath}/frontstage/css/notices.css" rel="stylesheet" type="text/css">
+
+
+      <!--翻页-->
+	<link href="${pageContext.request.contextPath}/frontstage/css/msdn.css" rel="stylesheet" type="text/css" />
+	<script src="${pageContext.request.contextPath}/frontstage/js/jquery.pagination.js"></script>
+
+
+
+    <form  id="form" action="${pageContext.request.contextPath}/notice/queryNotice.a"post"" method="get">
+    
+    <input type="hidden" name="page" id="page" value="${noticeView.page}"/>
+  	<input type="hidden" name="rows" id="rows" value="${noticeView.rows}"/>
+    <input type="hidden" name="total" id="total" value="${noticeView.total}"/>
+  	<input type="hidden" name="totalPage" id="totalPage" value="${noticeView.totalPage}"/>
+  	 <input type="hidden" id="type" name = "type" value="${noticeView.type }"> 
+  	 </form>
+<div class="main_news">
+
+	<div class="news_tabs">
+		<a onclick = "tj(0)" href="javascript:return false;"
+			class="all_news <c:if test="${noticeView.type==0 }">curr a_curr</c:if>"><c:if test="${noticeView.type!=0 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/index.png"></c:if><c:if test="${noticeView.type==0 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/index_01.png"></c:if>全部消息<c:if test="${noticeView.type==0 }"><span>&gt;</span></c:if></a>
+		<a onclick = "tj(1)" href="javascript:return false;"
+			class="teaching_plan <c:if test="${noticeView.type==1 }">curr a_curr</c:if>"><c:if test="${noticeView.type!=1 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/news_teaching.png"></c:if><c:if test="${noticeView.type==1 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/news_teaching_01.png"></c:if>教案消息<c:if test="${noticeView.type==1 }"><span>&gt;</span></c:if></a>
+		<a onclick = "tj(2)" href="javascript:return false;"
+			class="concern_news <c:if test="${noticeView.type==2 }">curr a_curr</c:if>"><c:if test="${noticeView.type!=2 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/follow_center.png"></c:if><c:if test="${noticeView.type==2 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/follow_center_01.png"></c:if>谁关注我<c:if test="${noticeView.type==2 }"><span>&gt;</span></c:if></a>
+		<a onclick = "tj(3)" href="javascript:return false;"
+			class="system_news <c:if test="${noticeView.type==3 }">curr a_curr</c:if>"><c:if test="${noticeView.type!=3 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/rings.png"></c:if><c:if test="${noticeView.type==3 }"><img
+			src="${pageContext.request.contextPath}/frontstage/images/rings_01.png"></c:if>系统消息<c:if test="${noticeView.type==3 }"><span>&gt;</span></c:if></a>
+	</div>
+	<div class="main_news_content">
+     <div>
+     <c:if test="${noticeView.type==0 }"> <p>全部消息</p></c:if>
+     <c:if test="${noticeView.type==1 }"> <p>教案消息</p></c:if>
+     <c:if test="${noticeView.type==2 }"> <p>谁关注我</p></c:if>
+     <c:if test="${noticeView.type==3 }"> <p>系统通知</p></c:if>
+     </div>
+		<br/>
+		<br/>
+		<br/>
+
+         <c:forEach items="${notices}" var="n">
+         <div class="pager_notice" style="margin-top: 10px;margin-left: 10px;position: relative;">
+          <div class="circle"></div>
+          <div class="line"></div>
+          <div class="time">${n.time }</div>
+          <div class="notice_page_list" >${n.message }</div>
+		 </div>
+
+         </c:forEach>
+
+         <c:if test="${!empty notices}">
+
+         <div id="test" class="pager"></div>
+			</c:if>
+			<c:if test="${empty notices }">
+
+              <div class="empty">暂无数据</div>
+				
+        	</c:if>
+
+     </div>
+
+     
+
+ </div>
+ 
+
+</div>
+
+<script>
+function tj(value){
+	$("#type").val(value);
+
+	$("#form").submit();
+}
+
+
+
+
+function _searchLeft(){
+	var page = $("#page").val();
+	if(page!=0){
+		$("#page").val(page-1);
+		$('#form').submit();
+	}
+}
+function _searchRight(){
+
+	var page =  parseInt($("#page").val())+1;
+	var total = $("#total").val();
+	if(page<total){
+		$("#page").val(page);
+		$('#form').submit();
+	}
+}
+</script>
+ <script type="text/javascript">
+$(function(){
+//翻页
+var total = $("#total").val();
+var page =  parseInt($("#page").val())+1;
+
+$("#btn5").on('click', function () {
+    $("#div1").PageChanged(5);
+});
+
+$(".pager").pagination({
+	thisPageIndex:page,
+    recordCount: total,       //总记录数
+    pageSize: 5,           //一页记录数
+    onPageChange: function (page) {
+        document.title = page;
+		$("#page").val(page-1);
+		$('#form').submit();
+
+    }
+});
+});
+</script>
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>

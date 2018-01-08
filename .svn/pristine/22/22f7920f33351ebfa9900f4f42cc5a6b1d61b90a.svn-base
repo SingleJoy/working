@@ -1,0 +1,50 @@
+package cn.bnsr.edu_yun.frontstage.train.po;
+
+import java.util.Date;
+
+public class UserStudyLog {
+	private Long id;
+	private Long user_id;
+	private Long source_id;
+	private Integer source_type;
+	private Long class_id;
+	private Date create_time;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+	public Long getSource_id() {
+		return source_id;
+	}
+	public void setSource_id(Long source_id) {
+		this.source_id = source_id;
+	}
+	public Integer getSource_type() {
+		return source_type;
+	}
+	public void setSource_type(Integer source_type) {
+		this.source_type = source_type;
+	}
+	public Long getClass_id() {
+		return class_id;
+	}
+	public void setClass_id(Long class_id) {
+		this.class_id = class_id;
+	}
+	public Date getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
+	}
+	
+	
+}

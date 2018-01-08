@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/teaching-center.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript">
+//        课程类型切换
+        $(function(){
+            $(".course_type ul li").click(function(){
+                $(".course_type ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+                $(this).addClass("curr").find("a").addClass("curr");
+                var index=$(this).index();
+
+                $(".course_type_tabs").hide().eq(index).show();
+
+            }).mouseover(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).addClass("curr_01").find("a").addClass("curr_01");
+                }
+
+            }).mouseout(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+                }
+
+            })
+        });
+
+
+        $(function(){
+            $(".triangle").click(function(){
+                if($(this).siblings("ul").css("display")=="none"){
+                    $(this).siblings("ul").show();
+                    $(this).addClass("click_style").find("span").addClass("click_style_01");
+                }else{
+                    $(this).siblings("ul").hide();
+                    $(".triangle").removeClass("click_style").find("span").removeClass("click_style_01");
+
+                }
+            })
+        })
+
+$(function(){
+
+    var width = document.body.clientWidth;
+
+    var myWidth=(width-1000)/2;
+
+
+    $(".teaching_center_main_right").css("margin-left",myWidth+220+"px");
+
+});
+
+    </script>
+
+
+
+
+</head>
+<body>
+
+
+
+
+
+    <div class="teaching_center_main_right">
+
+
+            <!--在教课程 -->
+            <p>在教课程</p>
+            <div class="create_course">
+                <a href="javascript:return false;">创建课程</a>
+                <a href="javascript:return false;">创建直播课程</a>
+            </div>
+
+            <div class="course_type">
+                <ul>
+                    <li class="curr"><a href="javascript:return false;" class="curr">普通课程</a></li>
+                    <li><a href="javascript:return false;">班级课程</a></li>
+                </ul>
+            </div>
+
+            <!--普通课程-->
+            <div class="ordinary_course course_type_tabs" >
+
+                <table>
+
+                    <tr style="border-bottom: 2px solid #ddd;padding-bottom: 5px;">
+                        <th style="width:390px;">名称</th>
+                        <th style="width:78px; ">学员数</th>
+                        <th style="width: 92px;">价格(元)</th>
+                        <th style="width: 79px;">状态</th>
+                        <th style="width:140px;">操作</th>
+                    </tr>
+
+                    <tr style="border-bottom: 1px solid #ddd;">
+
+                        <td style="width:390px;">
+                            <a href="javascript:return false;"><img src="../images/course.png"></a>
+                            <a href="javascript:return false;" class="course_title_name">测试123</a>
+                        </td>
+
+                        <td style="width:78px;">10</td>
+
+                        <td style="width: 92px;">0.00</td>
+
+                        <td style="width: 79px;">
+                            <span style="opacity: 0.8;">未发布</span>
+                            <!--<span style="color: #a94442;">已关闭</span>-->
+                            <!--<span style="color: #3ebbce;">已发布</span>-->
+                        </td>
+
+                        <td style="width:140px;">
+                            <a href="javascript:return false;" class="course_operation">管理</a>
+                            <a href="javascript:return false;" class="triangle"><span class="triangle_down"></span></a>
+                            <ul class="course_operation_list" style="display: none;">
+                                <li><a href="javascript:return false;">课时管理</a></li>
+                                <li><a href="javascript:return false;">文件管理</a></li>
+                                <li><a href="javascript:return false;">学员管理</a></li>
+
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+
+                        <td style="width:390px;">
+                            <a href="javascript:return false;"><img src="../images/course.png"></a>
+                            <a href="javascript:return false;" class="course_title_name">测试123</a>
+                        </td>
+
+                        <td style="width:78px;">10</td>
+
+                        <td style="width: 92px;">0.00</td>
+
+                        <td style="width: 79px;">
+                            <span style="opacity: 0.8;">未发布</span>
+                            <!--<span style="color: #a94442;">已关闭</span>-->
+                            <!--<span style="color: #3ebbce;">已发布</span>-->
+                        </td>
+
+                        <td style="width:140px;">
+                            <a href="javascript:return false;" class="course_operation">管理</a>
+                            <a href="javascript:return false;" class="triangle"><span class="triangle_down"></span></a>
+                            <ul class="course_operation_list" style="display: none;">
+                                <li><a href="javascript:return false;">课时管理</a></li>
+                                <li><a href="javascript:return false;">文件管理</a></li>
+                                <li><a href="javascript:return false;">学员管理</a></li>
+
+                            </ul>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+
+
+
+            <!--班级课程-->
+            <div class="ordinary_course course_type_tabs" style="display: none;">
+
+                <table>
+
+                    <tr style="border-bottom: 2px solid #ddd;padding-bottom: 5px;">
+                        <th style="width:390px;">名称</th>
+                        <th style="width:180px; ">所属班级</th>
+                        <th style="width: 90px;">状态</th>
+                        <th style="width: 90px;">操作</th>
+
+                    </tr>
+
+
+
+                </table>
+
+            </div>
+
+
+
+    </div>
+
+
+
+
+
+</body>
+</html>

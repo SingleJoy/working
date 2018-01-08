@@ -1,0 +1,23 @@
+package cn.bnsr.edu_yun.backstage.base.service;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.backstage.base.po.Role;
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.RoleView;
+
+
+public interface RoleService {
+	
+	public DataGrid datagrid(RoleView roleView);
+
+	public void save(RoleView roleView);
+
+	public void update(RoleView roleView);
+
+	public void delete(String ids);
+
+	public List<Role> combobox(String level);
+	
+	String queryBackUserLevel(Long id);
+}

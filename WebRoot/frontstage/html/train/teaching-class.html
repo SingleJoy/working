@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>所教班级 -我的教学 </title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   <script type="text/javascript">
+       $(function(){
+           $(".general-course").click(function(){
+               $(this).addClass("active").siblings().removeClass("active");
+               $(".general-course-list").show();
+               $(".train-course-list").hide();
+           });
+           $(".train-course").click(function(){
+               $(this).addClass("active").siblings().removeClass("active");
+               $(".train-course-list").show();
+               $(".general-course-list").hide();
+           });
+       });
+   </script>
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <header class="es-header navbar">
+        <div class="navbar-header">
+            <div class="visible-xs  navbar-mobile">
+                <a href="javascript:;" class="navbar-more js-navbar-more">
+                    <i class="es-icon es-icon-menu"></i>
+                </a>
+                <div class="html-mask"></div>
+                <div class="nav-mobile">
+                    <form class="navbar-form" action="/search" method="get">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="搜索" name="q">
+                            <button class="button es-icon es-icon-search"></button>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav">
+
+                        <li class="nav-hover">
+                            <a href="/course/explore" >课程  <b class="caret"></b></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/course/explore"  >全部课程</a></li>
+                                <li><a href="/course/explore/intro"  >产品介绍</a></li>
+                                <li><a href="/course/explore/fuction"  >使用帮助</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/open/course/explore" >公开课 </a>
+                        </li>
+                        <li class="">
+                            <a href="/classroom/explore" >班级 </a>
+                        </li>
+                        <li class="nav-hover">
+                            <a href="/article" >资讯  <b class="caret"></b></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/article"  >全部资讯</a></li>
+                                <li><a href="/article/category/news"  >EduSoho</a></li>
+                                <li><a href="/article/category/news"  >行业资讯</a></li>
+                                <li><a href="/article/category/default"  >默认分类</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/mobile" >移动端 </a>
+                        </li>
+                        <li class="">
+                            <a href="/group" >小组 </a>
+                        </li>
+                        <li class="">
+                            <a href="/page/aboutus" >关于我们 </a>
+                        </li>          </ul>
+                </div>
+            </div>
+            <a href="/" class="navbar-brand">
+                <img src="http://edusoho-demo.b0.upaiyun.com/files/system/2015/06-10/1419291db01f365270.png">
+            </a>
+        </div>
+        <nav class="collapse navbar-collapse">
+            <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+
+                <li class="nav-hover">
+                    <a href="/course/explore" >课程  <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/course/explore"  >全部课程</a></li>
+                        <li><a href="/course/explore/intro"  >产品介绍</a></li>
+                        <li><a href="/course/explore/fuction"  >使用帮助</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="/open/course/explore" >公开课 </a>
+                </li>
+                <li class="">
+                    <a href="/classroom/explore" >班级 </a>
+                </li>
+                <li class="nav-hover">
+                    <a href="/article" >资讯  <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/article"  >全部资讯</a></li>
+                        <li><a href="/article/category/news"  >EduSoho</a></li>
+                        <li><a href="/article/category/news"  >行业资讯</a></li>
+                        <li><a href="/article/category/default"  >默认分类</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="/mobile" >移动端 </a>
+                </li>          <li class="nav-more nav-hover">
+                <a class="more">
+                    <i class="es-icon es-icon-morehoriz"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+
+                    <li class="">
+                        <a href="/group" >小组 </a>
+                    </li>
+                    <li class="">
+                        <a href="/page/aboutus" >关于我们 </a>
+                    </li>              </ul>
+            </li>
+
+
+            </ul>
+            <div class="navbar-user  left ">
+                <ul class="nav user-nav">
+                    <li class="user-avatar-li nav-hover">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <img class="avatar-xs" src="/files/user/2016/11-16/15524912997a998442.JPG?7.0.0">
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" class="dropdown-header">体验管理员1</li>
+                            <li><a href="/user/14"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                            <li><a href="/settings/"><i class="es-icon es-icon-setting"></i>个人设置</a></li>
+                            <li class="hidden-lg">
+                                <a href="/my">
+                                    <i class="es-icon es-icon-eventnote"></i>我的教学              </a>
+                            </li>
+                            <li><a href="/my/bill"><i class="es-icon es-icon-accountwallet"></i>账户中心</a></li>
+                            <li><a href="/admin/"><i class="es-icon es-icon-dashboard"></i>管理后台</a></li>
+
+                            <li class="hidden-lg"><a href="/notification"><span class="pull-right num">1</span><i class="es-icon es-icon-notificationson"></i>通知</a></li>
+                            <li class="hidden-lg"><a href="/message/"><span class="pull-right num"></span><i class="es-icon es-icon-mail"></i>私信</a></li>
+                            <li><a href="/logout"><i class="es-icon es-icon-power"></i>退出登录</a></li>
+                        </ul>
+                    </li>
+                    <li class="visible-lg">
+                        <a href="/my">
+                            我的教学
+                        </a>
+                    </li>
+                    <li class="visible-lg nav-hover">
+
+                        <a><i class="es-icon es-icon-mail"></i></a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="/message/">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-mail"></i>私信
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right hidden-xs hidden-sm" action="/search" method="get">
+                    <div class="form-group">
+                        <input class="form-control js-search" name="q" placeholder="搜索">
+                        <button class="button es-icon es-icon-search"></button>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div id="content-container" class="container">
+
+
+
+        <div class="row row-3-9">
+            <div class="col-md-3">
+                <div class="sidenav">
+                    <ul class="list-group">
+                        <li class="list-group-heading">我的教学</li>
+                        <li class="list-group-item">
+                            <a href="/my/teaching/courses">在教课程</a>
+                        </li>
+
+                        <li class="list-group-item  active ">
+                            <a href="/my/teaching/classrooms">所教班级
+                            </a>
+                        </li>
+
+
+                        <li class="list-group-item ">
+                            <a href="/my/teaching/threads/question">学员问答
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/my/teaching/threads/discussion">学员话题</a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="/my/teacher/reviewing/test/list">试卷批阅
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="/my/teaching/homework/list">作业批改</a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="/material/lib/browse">教学资料库</a>
+                        </li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">我的学习</li>
+                        <li class="list-group-item ">
+                            <a href="/my/courses/learning">我的课程</a>
+                        </li>
+
+
+                        <li class="list-group-item ">
+                            <a href="/my/classrooms">我的班级</a>
+                        </li>
+
+
+                        <li class="list-group-item
+          ">
+                            <a href="/my/livecourses/learing">我的直播课表</a>
+                        </li>
+
+                        <li class="list-group-item
+        " >
+                            <a href="/my/questions">我的问答</a>
+                        </li>
+                        <li class="list-group-item
+        ">
+                            <a href="/my/discussions">我的话题</a>
+                        </li>
+                        <li class="list-group-item
+        ">
+                            <a href="/my/notebooks">我的笔记</a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="/my/homework/list">我的作业</a>
+                        </li>
+
+                        <li class="list-group-item
+        " >
+                            <a href="/my/quiz">我的考试</a>
+                        </li>
+                        <li class="list-group-item
+        ">
+                            <a href="/my/group">我的小组</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col lesson-manage-panel">
+                    <div class="panel-heading">
+                        <div class="pull-right">
+                            <button class="btn btn-info btn-sm"  data-toggle="modal" data-target="#add-course"><i class="glyphicon glyphicon-plus"></i>新建普通课程</button>
+
+                            <button class="btn btn-info btn-sm"  data-toggle="modal" data-target="#modify-course"><i class="glyphicon glyphicon-plus"></i> 新建培训课程</button>
+
+
+                        </div>
+                        所教班级
+                    </div>
+
+                    <div class="panel-body">
+
+                        <ul class="nav nav-tabs">
+
+                            <li class="active general-course"><a href="javascript:return false;">普通课程</a></li>
+                            <li class="train-course"><a href="javascript:return false;">培训课程</a></li>
+
+                        </ul>
+                        <ul class="course-wide-list">
+                            <!--普通课程-->
+                            <li class="course-item clearfix general-course-list">
+                                <a class="course-picture-link" href="#" target="_blank">
+                                    <img class="course-picture" src="http://13661239841.test.edusoho.com.cn/files/course/2016/11-24/1353244e347e852657.jpg?7.0.0" alt="ceshi001">
+                                </a>
+                                <div class="course-body">
+                                    <div style="" class="text-muted mrm mls pull-right">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        <a href="#">管理班级</a>
+                                    </div>
+                                    <h4 class="mbl">
+                                        <a href="#" target="_blank">一般课程ceshi001</a>
+                                    </h4>
+                                    <span class="text-muted">共7课
+                                       <i class="fa fa-users mll" ></i> 1
+                                    </span>
+                                    <div class="course-footer clearfix mtl">
+                                        <strong class="mrl">今日新增</strong>
+                                        学员 0 &nbsp;&nbsp;
+                                        话题 0 &nbsp;&nbsp;
+                                        课时完成学习 0
+                                    </div>
+                                </div>
+                            </li>
+                            <!--培训课程-->
+                            <li class="course-item clearfix train-course-list" style="display: none;">
+                                <a class="course-picture-link" href="#" target="_blank">
+                                    <img class="course-picture" src="http://13661239841.test.edusoho.com.cn/files/course/2016/11-24/1353244e347e852657.jpg?7.0.0" alt="ceshi001">
+                                </a>
+                                <div class="course-body">
+                                    <div style="" class="text-muted mrm mls pull-right">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        <a href="#">管理培训课程</a>
+                                    </div>
+                                    <h4 class="mbl">
+                                        <a href="#" target="_blank">培训ceshi001</a>
+                                    </h4>
+                                    <span class="text-muted">共7课
+                                       <i class="fa fa-users mll" ></i> 1
+                                    </span>
+                                    <div class="course-footer clearfix mtl">
+                                        <strong class="mrl">今日新增</strong>
+                                        学员 0 &nbsp;&nbsp;
+                                        话题 0 &nbsp;&nbsp;
+                                        课时完成学习 0
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

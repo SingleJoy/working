@@ -1,0 +1,284 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+<c:set var="p" value="${pageContext.request.contextPath}"></c:set>
+
+
+<div class="cn-wrap">
+
+	<jsp:include page="course_study_header.jsp"></jsp:include>
+	<div class="container" style="margin-top: 20px;">
+
+		<div class="row">
+			<div class="col-lg-9 col-md-8  course-detail-main">
+
+				<section class="cn-section">
+
+					<div class="nav-btn-tab">
+						<ul class="nav nav-tabs" >
+							<c:if test="${empty currentUser}">
+								<li class="<c:if test="${tab==6 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(6);">概览</a></li>
+							</c:if>
+							<li class="<c:if test="${tab==1 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(1);" >课时列表</a></li>
+							<c:if test="${!empty currentUser}">
+								<c:if test="${userStudyStatus == 0 }">
+									<li value="1" class="<c:if test="${tab==2 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(2);">讨论 <small class="text-muted">( ${totalQuestion} )</small></a></li>
+									<%--<li class="<c:if test="${tab==8 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(8);">主题研讨 <small class="text-muted"></small></a></li>--%>
+									<%--<li value="2" class="<c:if test="${tab==3 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(3);">资料区<small class="text-muted"></small></a></li>--%>
+								</c:if>
+
+								<li class="<c:if test="${tab==5 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(5);">笔记 <small class="text-muted">( ${totalNote} )</small></a></li>
+								
+							</c:if>
+							<c:if test="${userStudyStatus==0||userStudyStatus==3 }">
+								<li class="<c:if test="${tab==4 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(4);">评价 <small class="text-muted">( ${totalAppraise} )</small></a></li>
+							</c:if>
+							<c:if test="${!empty currentUser}">
+								<c:if test="${userStudyStatus==0||userStudyStatus==3 }">
+									<li class="<c:if test="${tab==8 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(8);">排行 </a></li>
+								</c:if>
+								<li class="<c:if test="${tab==6 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(6);">概览</a></li>
+							</c:if>
+						</ul>
+					</div>
+
+					<div class="course-detail-content" >
+						<!-- 课时列表 -->
+						<c:if test="${tab==1 }">
+							<div class="cn-piece" >
+								<jsp:include page="course_chapter.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 讨论区问题-->
+						<c:if test="${tab==2 }">
+							<div>
+								<jsp:include page="course_topic.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 讨论区回答 -->
+						<c:if test="${tab==7 }">
+							<div>
+								<jsp:include page="course_topic_answer.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 资料 -->
+						<c:if test="${tab==3 }">
+							<ul class="media-list" >
+								<jsp:include page="course_data.jsp"></jsp:include>
+							</ul>
+						</c:if>
+						<!--评价-->
+						<c:if test="${userStudyStatus==0||userStudyStatus==3 }">
+							<c:if test="${tab==4 }">
+								<div class="class-detail-content" >
+									<jsp:include page="course_evaluate.jsp"></jsp:include>
+								</div>
+							</c:if>
+						</c:if>
+						<!--笔记-->
+						<c:if test="${tab==5 }">
+							<div class="nav-filter clearfix" style="border-bottom: none;">
+								<jsp:include page="course_note.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 概览 -->
+						<c:if test="${tab==6 }">
+
+							<jsp:include page="course_preview.jsp"></jsp:include>
+
+						</c:if>
+						<!-- rank -->
+						<c:if test="${userStudyStatus==0||userStudyStatus==3 }">
+							<c:if test="${tab==8 }">
+	
+								<jsp:include page="course_rank.jsp"></jsp:include>
+	
+							</c:if>
+						</c:if>
+					</div>
+				</section>
+			   <c:if test="${userStudyStatus==0||userStudyStatus==3 }">
+	               <c:if test="${tab==8  }">
+	               <c:if test="${!empty  myCourseRankView}">
+					<div class="panel panel-default learning_process">
+	
+						<div class="panel-body">
+	
+							<div>
+								<div class="pull-left">
+									<img src="${pageContext.request.contextPath}/frontstage/images/my_course_rank.png">
+								</div>
+	
+							</div>
+	
+							<ul class="media-list " style="margin-top: 60px;clear: both;">
+	
+	
+								<!--排名第一-->
+								<li class="media" style="padding-bottom: 10px;">
+	
+									<div class="media media-default">
+										<div class="media-left">
+											<div class="course_rank_square rank_0${myCourseRankView.rank } pull-left">${myCourseRankView.rank }
+											</div>
+	
+										</div>
+										<div class="media-body">
+											<div class="pull-left" style="margin-left: 20px;">
+												<a class="js-user-card"  id="userCard_1${myCourseRankView.user_id }" onmouseover="mouseOver(1,${myCourseRankView.user_id});" onmouseout="mouseOut(1,${myCourseRankView.user_id });" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${myCourseRankView.user_id }">
+													<img class="avatar-square-lg-md" src="${pageContext.request.contextPath}${myCourseRankView.icon }">
+												</a>
+											</div>
+
+											<div class="title course_user_info pull-left" >${myCourseRankView.username }</div>
+											<div class="pull-right" style="margin-top: 20px;">
+												<span>学习进度：${myCourseRankView.pace }%</span>
+												<span class="mlm mrm text-muted"></span>
+
+
+												<span><fmt:formatDate value="${myCourseRankView.complete_time }" type="date"/></span>
+											</div>
+	
+										</div>
+									</div>
+	
+	
+								</li>
+							</ul>
+	
+						</div>
+					</div>
+					</c:if>
+					<c:if test="${!empty  myCourseRankView1}">
+					<div class="panel panel-default learning_time" style="display: none">
+	
+						<div class="panel-body">
+	
+							<div>
+								<div class="pull-left">
+									<img src="${pageContext.request.contextPath}/frontstage/images/my_course_rank.png">
+								</div>
+	
+							</div>
+	
+							<ul class="media-list " style="margin-top: 60px;clear: both;">
+	
+	
+								<!--排名第一-->
+								<li class="media " style="padding-bottom: 10px; ">
+	
+									<div class="media media-default">
+										<div class="media-left">
+											<div class="course_rank_square rank_0${myCourseRankView1.rank } pull-left">${myCourseRankView1.rank }</div>
+	
+										</div>
+										<div class="media-body">
+											<div class="pull-left" style="margin-left: 20px;">
+												<a class="js-user-card "  id="userCard_1${myCourseRankView1.user_id }" onmouseover="mouseOver(1,${myCourseRankView1.user_id});" onmouseout="mouseOut(1,${myCourseRankView1.user_id });" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${myCourseRankView1.user_id }">
+	
+	
+													<img class="avatar-square-lg-md" src="${pageContext.request.contextPath}${myCourseRankView1.icon }">
+	
+												</a>
+												<div class="title course_user_info pull-left" >${myCourseRankView1.username }</div>
+											</div>
+	
+											<div class="pull-right" style="margin-top: 20px;">
+											<span>学习时长：<fmt:formatNumber type="number" maxFractionDigits="1" value="${myCourseRankView1.total_time/1000/60 }" />分钟</span>
+
+												<span class="mlm mrm text-muted"></span>
+
+
+												<span><fmt:formatDate value="${myCourseRankView1.complete_time }" type="date"/></span>
+
+											</div>
+	
+										</div>
+									</div>
+	
+	
+								</li>
+							</ul>
+	
+						</div>
+					</div>
+					</c:if>
+				   </c:if>
+				</c:if>
+			</div>
+
+			<jsp:include page="course_study_right.jsp"></jsp:include>
+		</div>
+
+	</div>
+
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+<script type="text/javascript">
+    //标签切换
+    function searchTabs(value){
+    	var tag_href;
+    	if("${is_teacher}"==="true"&&("${userStudyView.viewType }"==='1'||"${userStudyView.viewType }"==='2')){
+    		tag_href = '${p}/user_study/to_course_study.action?page=1&learnId='+${courseView.id}+'&sourceType=0&tab='+value+'&viewType='+${userStudyView.viewType}+'&is_direct='+${userStudyView.is_direct};
+    	}else{
+    		tag_href = '${p}/user_study/to_course_study.action?page=1&learnId='+${courseView.id}+'&sourceType=0&jumpId=${userStudyView.jumpId}&jumpType=${userStudyView.jumpType}&tab='+value+'&is_direct='+${userStudyView.is_direct};
+    	}
+        window.location.href=tag_href;
+    }
+    
+    var browser = {
+    	    versions: function () {
+    	        var u = navigator.userAgent, app = navigator.appVersion;
+    	        return {         //移动终端浏览器版本信息
+    	            trident: u.indexOf('Trident') > -1, //IE内核
+    	            presto: u.indexOf('Presto') > -1, //opera内核
+    	            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+    	            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+    	            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+    	            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+    	            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+    	            iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+    	            iPad: u.indexOf('iPad') > -1, //是否iPad
+    	            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+    	        };
+    	    }(),
+    	    language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    	}
+    
+	   
+    if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                //在微信中打开
+        	//alert("是在微信中打开");
+        }
+        if (ua.match(/WeiBo/i) == "weibo") {
+                //在新浪微博客户端打开
+        	//alert("是在新浪微博客户端打开");
+        }
+        if (ua.match(/QQ/i) == "qq") {
+                //在QQ空间打开
+        	//alert("是在QQ空间打开");
+        }
+        if (browser.versions.ios) {
+                //是否在IOS浏览器打开
+        } 
+        if(browser.versions.android){
+                //是否在安卓浏览器打开
+        	//alert("是在安卓浏览器打开");
+        }
+	} else {
+	        //否则就是PC浏览器打开
+	       /*  alert("是PC浏览器打开"); */
+	}
+</script>

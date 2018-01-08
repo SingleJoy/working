@@ -1,0 +1,160 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.train.view.CourseNoteView;
+import cn.bnsr.edu_yun.frontstage.base.view.NoteView;
+import cn.bnsr.edu_yun.frontstage.train.mapper.CourseHourMapper;
+import cn.bnsr.edu_yun.frontstage.train.mapper.CourseNoteMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseNote;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseNoteService;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainDetailView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class CourseNoteServiceImpl implements CourseNoteService {
+
+	@Autowired
+	private CourseNoteMapper courseNoteMapper;
+	
+	@Autowired
+	private CourseHourMapper courseHourMapper;
+	
+	@Override
+	public int selectCountByCourseId(long course_id,String course_hour_id) {
+		
+		return courseNoteMapper.selectCountByCourseId(course_id,course_hour_id);
+	}
+
+	@Override
+	public List<CourseNote> selectByCourseId(long course_id,String course_hour_id, String sort,
+			long start, long pageSize) {
+		
+		return courseNoteMapper.selectByCourseId(course_id,course_hour_id, sort, start, pageSize);
+	}
+
+	@Override
+	public CourseNote selectCountById(long id) {
+		
+		return courseNoteMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int update(CourseNote courseNote) {
+		
+		return courseNoteMapper.updateByPrimaryKeySelective(courseNote);
+	}
+
+	@Override
+	public CourseNote selectByHourIdAndUserId(long user_id, long course_hour_id) {
+		
+		return courseNoteMapper.selectByHourIdAndUserId(user_id, course_hour_id);
+	}
+
+	@Override
+	public int insert(CourseNote courseNote) {
+		
+		return courseNoteMapper.insertSelective(courseNote);
+	}
+
+
+	@Override
+	public CourseNoteView getById(Long id) {
+		CourseNoteView noteView = courseNoteMapper.getById(id);
+		if(noteView!=null){
+			if(noteView.getCourse_hour_id()!=null){
+				noteView.setCourse_hour_name(recursiveParentName(noteView.getCourse_hour_id()));
+			}
+			return noteView;
+		}
+		return null; 
+	}
+
+	@Override
+	public DataGrid datagrid(CourseNoteView courseNoteView) {
+		DataGrid j = new DataGrid();
+		courseNoteView.setPage(NumUtil.startingNum(courseNoteView.getPage(),courseNoteView.getRows()));
+		List<CourseNoteView> noteList = courseNoteMapper.search(courseNoteView);
+		if(noteList!=null&&noteList.size()>0){
+			for(CourseNoteView noteView:noteList){
+				if(noteView.getCourse_hour_id()!=null){
+					noteView.setCourse_hour_name(recursiveParentName(noteView.getCourse_hour_id()));
+				}
+			}
+		}
+		j.setRows(noteList);
+		j.setTotal(courseNoteMapper.count(courseNoteView));
+		return j;
+	}
+
+	/*
+	 * 递归获取Course_hour_name的父名
+	 */
+	private String recursiveParentName(Long id) {
+		CourseHour courseHour = courseHourMapper.selectByPrimaryKey(id);
+		if(courseHour!=null){
+			Long parent_id = courseHour.getParent_id();
+			String hour_title = courseHour.getHour_title();
+			if(parent_id!=0){
+				return recursiveParentName(parent_id)+":"+hour_title;
+			}else{
+				return hour_title;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void delete(String ids) {
+		if(ids!=null){
+			for(String id:ids.split(",")){
+				courseNoteMapper.deleteByPrimaryKey(Long.parseLong(id.trim()));
+			}
+		}
+		
+	}
+
+	@Override
+	public List<NoteView> queryMyNote(NoteView view) {
+		
+		return courseNoteMapper.queryMyNote(view);
+	}
+
+	@Override
+	public int queryMyNoteCount(NoteView view) {
+		
+		return courseNoteMapper.queryMyNoteCount(view);
+	}
+
+	@Override
+	public List<NoteView> queryMyCourseNote(NoteView view) {
+		
+		return courseNoteMapper.queryMyCourseNote(view);
+	}
+
+	@Override
+	public int queryMyCourseNoteCount(NoteView view) {
+		
+		return courseNoteMapper.queryMyCourseNoteCount(view);
+	}
+
+	@Override
+	public int deleteNote(long id) {
+		
+		return courseNoteMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public List<CourseNoteView> queryCourseIdsNote(TrainDetailView trainDetailView) {
+		return courseNoteMapper.queryCourseIdsNote(trainDetailView);
+	}
+
+	@Override
+	public int queryTotalCourseIdsNote(TrainDetailView trainDetailView) {
+		return courseNoteMapper.queryTotalCourseIdsNote(trainDetailView);
+	}
+
+}

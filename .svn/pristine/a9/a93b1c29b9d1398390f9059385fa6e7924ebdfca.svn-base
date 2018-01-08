@@ -1,0 +1,452 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String fastdfsPath = request.getScheme()+"://"+request.getServerName()+":8080/";
+%>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<script src="${pageContext.request.contextPath}/frontstage/js/qrcode/src/jquery.qrcode.js"></script>
+<script src="${pageContext.request.contextPath}/frontstage/js/qrcode/src/qrcode.js"></script>
+
+<style>
+    .square{width:60px;height: 60px;background-color: #ce1c00;text-align: center;cursor: pointer;position: relative;z-index: 99;}
+    .square>span{font-size: 16px;color: #fff;line-height: 70px;text-align: center;display: inline-block;}
+    .arrow_down{ width: 0;  height: 0;  border-left: 30px solid transparent;
+        border-right: 30px solid transparent;  border-top: 30px solid #ce1c00; }
+</style>
+
+
+<div id="content-container" class="container">
+
+    <ol class="breadcrumb breadcrumb-o">
+        <li><a href="#" >首页</a></li>
+        <li><a href="#">资源</a></li>
+        <li><a href="#">${pubver}/${stage}${subject }</a></li>
+        <li><a href="#">${file_base.filename }</a></li>
+    </ol>
+
+    <div class="row ">
+
+        <div class="col-md-9">
+
+            <div class="panel panel-default" >
+                <div class="pull-right">
+                    <div class="square collect_btn" id="collect_btn">
+                        <span><c:if test="${!empty userCollect }">已</c:if>收藏</span>
+                    </div>
+                    <div class="arrow_down"></div>
+                </div>
+                <div class="panel-body" style="border-bottom: 1px dashed #ddd;">
+
+                    <h2 style="position: relative;z-index: 1;"><label>${file_base.filename }</label></h2>
+                    <div class="media media-dynamic pull-left" style="display: inline-block;margin-top: -10px;">
+                        <div class="media-left">
+                            <a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${file_base.upload_user}"   title="">
+                                <img class="avatar-sm" src="${pageContext.request.contextPath}${file_base.user.icon }">
+
+                            </a>
+                        </div>
+
+                        <div class="media-body">
+                            <div class="title" style="margin-top: 15px;">
+                                <a class="link-dark " href="javascript:void(0);">${file_base.userInfo.true_name }</a>
+                                <span class="mlm mrm text-muted">｜</span>
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="text-warning">${file_base.file_property.click_times }</span>次浏览<span class="mlm mrm text-muted">｜</span>
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                                <span class="text-warning">${file_base.file_property.download_times }</span>次下载
+                                <span class="mlm mrm text-muted">｜</span>
+                                <span>
+                                    <i class="es-icon es-icon-bookmarkoutline"></i>
+                                    0次收藏
+                                </span>
+                                <%--<!--不是免费-->--%>
+                                <%--<c:if test="${!empty file_base.value&&file_base.value!=0 }">--%>
+                                <%--<span class="price"> ￥${file_base.value }</span>--%>
+                                <%--</c:if>--%>
+                                <%--<!--免费-->--%>
+                                <%--<c:if test="${empty file_base.value||file_base.value==0  }">--%>
+                                <%--<span class="text-info"> 免费</span>--%>
+                                <%--</c:if>--%>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel-body" >
+
+                    <form class="form-horizontal clearfix"  method="post" >
+
+                        <!--资源展示区域-->
+                        <iframe src="http://dcsapi.com/?k=192638169&url=http://222.128.104.201:8090/${file_base.path }"
+                                frameborder=0 width=100% height=800 style="margin-top: 20px;"></iframe>
+
+                        <div id="share-2"  class="social-share text-center" data-sites="weibo,qq,qzone,wechat" style="margin-top: 30px;"></div>
+                        <div class="pull-right collect_btn square" style="height: 50px;">
+
+                            <span style="line-height: 50px;"><c:if test="${!empty userCollect }">已</c:if>收藏</span>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default" >
+
+                <div class="panel-body" >
+
+                    <div >
+                       <div class="pull-left"><img src="${pageContext.request.contextPath}/frontstage/images/user_comments.png"></div>
+                        <a class="btn btn-primary btn-sm pull-right" href="#evaluate_modal" data-toggle="modal">
+                            <i class="glyphicon glyphicon-plus"></i>我要评论
+                        </a>
+
+                    </div>
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <form class="form-horizontal clearfix"  method="post"  id="appraise_form" >
+
+                        <c:if test="${!empty appraise }">
+                            <c:forEach items="${appraise }" var="app">
+                                <div class="js-reviews" id="appraise_${app.user_id}">
+                                    <div class="media media-evaluate">
+                                        <div class="media-left">
+                                            <a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${app.user_id}">
+                                                <img class="avatar-sm" src="${pageContext.request.contextPath}${app.icon }">
+                                            </a>
+                                        </div>
+                                        <div class="media-body thread-post">
+                                            <div class="title">
+                                                <a class="link-dark" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${app.user_id}">${app.username }</a>
+                                                <span><fmt:formatDate value="${app.appraise_time }" type="date" /></span>
+                                            </div>
+
+                                            <div class="score">
+                                                <c:forEach begin="1" end="${app.score }">
+                                                    <i class="es-icon es-icon-star color-warning"></i>
+                                                </c:forEach>
+                                            </div>
+
+                                            <div class="content">
+                                                <div class="full-content" >${app.appraise_content }</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                        <c:if test="${empty appraise }">
+                            <div class="empty" >暂无评价</div>
+                        </c:if>
+                        <c:if test="${totalAppraise>5}">
+                            <br>
+                            <div style="margin-left: 50%;cursor: pointer;margin-bottom: 30px;" id="pointer_more" >加载更多</div>
+                            <input type="hidden" id="pointer_number" value="2">
+                        </c:if>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="panel panel-default" >
+
+                <div class="text-center">
+                    <div style="margin-top: 20px;">
+                        <a class="btn btn-lg btn-info text-center" href="javascript:void(0);" style="width: 100%;line-height: 50px;font-size: 20px;" id="upload_btn">
+                            <i class="glyphicon glyphicon-open"></i>上传资源
+                        </a>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <a class="btn btn-lg btn-warning text-center" href="javascript:void(0);" style="width: 100%;line-height: 30px;" id="download_btn">
+                            <i class="glyphicon glyphicon-download-alt"></i>立即下载
+                        </a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="text-center" style="margin-top: 60px;">
+                        <h4>手机扫一扫，查看</h4>
+                        <div id="output"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--评价-->
+<div id="evaluate_modal" class="modal in" aria-hidden="false" data-backdrop="static" style="display: none;" >
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">评价</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal"  action="" method="post" novalidate="novalidate" >
+                    <div class="evaluation_again_content">
+                        <span>请打分&nbsp;:</span>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+
+                    </div>
+                    <input type="hidden" name="score"value="5" id="score_value">
+
+                    <div class="form-group controls col-md-10" style="margin-top: 20px;">
+                        <textarea class="form-control col-md-10 col-md-offset-1" rows="6"  id="appraise_content" name=""></textarea>
+                        <div class="help-block" style="display:none;"></div>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button  type="button" class="btn btn-primary" data-toggle="form-submit"  id="appraise_button">保存</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<link  href="${pageContext.request.contextPath}/frontstage/js/sharejs/dist/css/share.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/frontstage/js/sharejs/dist/js/jquery.share.min.js"></script>
+
+<script>
+
+    $(function(){
+
+        var url=window.location.href;
+        $('#output').qrcode({
+            text: url
+        });
+
+        $("#upload_btn").click(function () {
+            if(flag){
+                check_login();
+                return false;
+            }
+            var a=$("<a id='download_a' target='_blank'>");
+            a.attr("href","${pageContext.request.contextPath}/my_file_base/to_upload_file.action");
+            $("body").append(a);
+            document.getElementById("download_a").click();
+        });
+
+    });
+
+    $(function(){
+
+        $("#download_btn").click(function () {
+            if(flag){
+                check_login();
+                return false;
+            }
+            var form=$("<form>");//定义一个form表单
+            form.attr("style","display:none");
+            form.attr("target","");
+            form.attr("method","post");
+            form.attr("action","${pageContext.request.contextPath}/download/download_file.action");
+            var input1=$("<input>");
+            input1.attr("type","hidden");
+            input1.attr("name","id");
+            input1.attr("value","${file_base.id}");
+            var input3=$("<input>");
+            input3.attr("type","hidden");
+            input3.attr("name","type");
+            input3.attr("value",0);
+            $("body").append(form);//将表单放置在web中
+            form.append(input1);
+            form.append(input3);
+            form.submit();//表单提交
+        });
+    });
+    $("#appraise_button").click(
+        function() {
+            if(flag){
+                check_login();
+                return false;
+            }
+            var score = $("#score_value").val();
+
+            if (score == "") {
+                alert("请打分");
+                return false;
+            }
+            if (typeof(score) == "undefined") {
+                alert("请打分");
+                return false;
+            }
+            var content = $("#appraise_content").val();
+            if (content == "") {
+                alert("请评论");
+                return false;
+            }
+            $.ajax({
+                url : '${pageContext.request.contextPath}/user_appraise/appraise.action',
+                data : {
+                    appraise_content : content,
+                    score : score,
+                    id:'${userAppraiseId}',
+                    source_id : '${file_base.id}',
+                    source_type : 4,
+                },
+                dataType : 'json',
+                success : function(response) {
+                    if($(".empty").length==1){
+                        $(".empty").remove();
+                    }
+                    var appraise_form=$("#appraise_form");
+                    var userAppraise=response.userAppraise;
+                    var appraise_user=$("#appraise_"+userAppraise.user_id);
+                    if(appraise_user.length==1){
+                        appraise_user.remove();
+                    }
+                    var appraise_content=userAppraise.appraise_content;
+                    var appraise_score=userAppraise.score;
+                    var myDate=new Date();
+                    myDate.setTime(userAppraise.appraise_time.time);
+                    var year=myDate.getFullYear();
+                    var month=myDate.getMonth()+1;
+                    var date=myDate.getDate();
+                    var time=year+"-"+month+"-"+date;
+                    var html="";
+                    html+=('<div class="js-reviews" id="appraise_'+userAppraise.user_id+'"><div class="media media-evaluate">');
+                    html+=('<div class="media-left">');
+                    html+=('<a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${currentUser.id}">');
+                    html+=('<img class="avatar-sm" src="${pageContext.request.contextPath}${currentUser.icon }"></a></div>');
+                    html+=('<div class="media-body thread-post"><div class="title">');
+                    html+=('<a class="link-dark" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${currentUser.id}">${currentUser.username}</a>');
+                    html+=('<span>'+time+'</span></div>');
+                    html+=('<div class="score">');
+                    //<c:forEach begin="1" end="${app.score }">
+                    //     <i class="es-icon es-icon-star color-warning"></i>
+                    //</c:forEach>
+                    for(var i=0;i<appraise_score;i++){
+                        html+=('<i class="es-icon es-icon-star color-warning"></i>');
+                    }
+                    html+=('</div><div class="content">');
+                    html+=('<div class="full-content" >'+appraise_content+'</div>');
+                    html+=('</div></div></div></div>');
+                    appraise_form.prepend(html);
+                    $("#evaluate_modal").modal("hide");
+
+                }
+            });
+        });
+    $(".star").click(function () {
+        $(this).prevUntil("span").addClass("color-warning");
+        $(this).addClass("color-warning");
+        $(this).nextAll().removeClass("color-warning");
+        $("#score_value").val($(this).prevAll().length);
+
+    });
+    $(".collect_btn").click(function () {
+        if(flag){
+            check_login();
+            return false;
+        }
+        var source_id='${file_base.id}';
+        var source_type= 3;
+        var _this=$(this);
+
+        $.ajax({
+            url : '${pageContext.request.contextPath}/user_collect/collect.action',
+            data : {
+                source_id : source_id,
+                source_type : source_type,
+            },
+            dataType : 'json',
+            success : function(response) {
+                if(response.msg==1){
+                    _this.find("span").html("已收藏");
+                }
+                if(response.msg==2){
+                    _this.find("span").html("收藏");
+                }
+                //  window.location.reload();
+            }
+        });
+    });
+    $("#pointer_number").val(2);
+    $("#pointer_more").click(function(){
+
+        var _this=$(this);
+        var number=$("#pointer_number").val();
+        var page_size="${pageSize}";
+        $.ajax({
+            type:'get',
+            url : "${pageContext.request.contextPath}/userFile/ajax_more.action?page_size="+page_size+"&id=${file_base.id}&page="+number,
+            dataType:'json',
+            success : function(response) {
+
+                if(!response.flag){
+                    _this.remove();
+                }
+                var appraise_form=$("#appraise_form");
+                for(var i=0;i<response.appraise.length;i++){
+
+                    var userAppraise=response.appraise[i];
+                    var appraise_content=userAppraise.appraise_content;
+                    var appraise_score=userAppraise.score;
+                    var myDate=new Date();
+                    myDate.setTime(userAppraise.appraise_time.time);
+                    var year=myDate.getFullYear();
+                    var month=myDate.getMonth()+1;
+                    var date=myDate.getDate();
+                    var time=year+"-"+month+"-"+date;
+                    var html="";
+                    html+=('<div class="js-reviews" id="appraise_'+userAppraise.user_id+'"><div class="media media-evaluate">');
+                    html+=('<div class="media-left">');
+                    html+=('<a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id='+userAppraise.user_id+'">');
+                    html+=('<img class="avatar-sm" src="${pageContext.request.contextPath}'+userAppraise.icon+'"></a></div>');
+                    html+=('<div class="media-body thread-post"><div class="title">');
+                    html+=('<a class="link-dark" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id='+userAppraise.user_id+'">'+userAppraise.username+'</a>');
+                    html+=('<span>'+time+'</span></div>');
+                    html+=('<div class="score">');
+                    //<c:forEach begin="1" end="${app.score }">
+                    //     <i class="es-icon es-icon-star color-warning"></i>
+                    //</c:forEach>
+                    for(var j=0;j<appraise_score;j++){
+                        html+=('<i class="es-icon es-icon-star color-warning"></i>');
+                    }
+                    html+=('</div><div class="content">');
+                    html+=('<div class="full-content" >'+appraise_content+'</div>');
+                    html+=('</div></div></div></div>');
+
+                    appraise_form.append(html);
+                    $("#pointer_number").val(parseInt(number)+1);
+
+                }
+
+            },
+            error :function(response) {
+
+            }
+        });
+
+    });
+</script>
+
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>

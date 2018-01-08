@@ -1,0 +1,385 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<jsp:include page="/backstage/base/inc.jsp"></jsp:include>
+<script type="text/javascript" charset="utf-8">
+	var datagrid;
+	$(function() {
+
+		datagrid = $('#datagrid').datagrid({
+			url : '${pageContext.request.contextPath}/back_course/datagrid.action',
+			title : '',
+			iconCls : 'icon-save',
+			pagination : true,
+			pageSize : 10,
+			pageList : [ 10, 20, 30, 40 ],
+			fit : true,
+			fitColumns : true,
+			nowrap : false,
+			border : false,
+			idField : 'id',
+			sortName : 'create_time',
+			sortOrder : 'desc',
+			checkOnSelect : true,
+			selectOnCheck : true,
+			frozenColumns : [ [ {
+				title : '编号',
+				field : 'id',
+				width : 150,
+				sortable : true,
+				checkbox : true
+			}, {
+				title : '名称',
+				field : 'title',
+				width : 200,
+				formatter:function(value,rowData,rowIndex){
+					return lencut(value,15);
+					/* var rows = datagrid.datagrid('getRows');
+					var row = rows[rowIndex];
+					return '<a href="javascript:void(0);" onclick="viewDetails('+row.id+')" >'+value+'</a>'; */
+				} 
+			},{
+				title : '开班次数',
+				field : 'classNum',
+				sortable : true,
+				width : 80
+			},{
+				title : '所属分类',
+				field : 'classifyName',
+				width : 100,
+			},{
+				title : '是否推荐',
+				field : 'isRecommend',
+				width : 80,
+				formatter:function(value,rowData,rowIndex){
+					/* var rows = datagrid.datagrid('getRows');
+					var row = rows[rowIndex]; */
+					if(value=='0'){//是
+						//return "是/"+row.recommendTime+"/"+row.recommendSeq;
+						return "是";
+					}else{
+						return "否";
+					}
+				}
+			}] ],
+			columns : [ [ {
+				title : '课程详细id',
+				field : 'courseInfoId',
+				width : 100,
+				hidden : true
+			}, {
+				title : '推荐时间',
+				field : 'recommendTime',
+				width : 100,
+				hidden : true
+			}, {
+				title : '推荐序号',
+				field : 'recommendSeq',
+				width : 80,
+			}, /* {
+				title : '连载状态',
+				field : 'serial_status',
+				width : 90,
+				sortable : true,
+				formatter:function(v){
+					if(v=="0"){
+						return '非连载';
+					}else if(v=="1"){
+						return '更新中';
+					}else if(v=="2"){
+						return "已完结";
+					}
+				}
+			},  */{
+				title : '学员数',
+				field : 'studentNum',
+				sortable : true,
+				width : 70,
+			},/*  {
+				title : '收入',
+				field : 'income',
+				width : 80
+			}, */  {
+				title : '状态',
+				field : 'status',
+				width : 80,
+				sortable : true,
+				formatter:function(v){
+					if(v=="0"){
+						return '未发布';
+					}else if(v=="1"){
+						return '已发布';
+					}else if(v=="2"){
+						return "已关闭";
+					}else if(v=="3"){
+						return "已删除";
+					}
+				}
+			}, {
+				title : '创建时间',
+				field : 'create_time',
+				sortable : true,
+				width : 170,
+				formatter:function(v){
+					var dt;
+					if (v instanceof Date) {
+				        dt = v;
+				    } else {
+				        dt = new Date(v);
+				    }
+				 	return dt.format("yyyy-MM-dd hh:mm"); 
+				}
+			}, {
+				title : '创建者',
+				field : 'createUser',
+				width : 100,
+			},{
+				title : '操作',
+				field : 'statusType',
+				width : 150,
+				formatter:function(value, rowData, rowIndex){
+					var rows = datagrid.datagrid('getRows');
+					var row = rows[rowIndex];
+					var htmlval = '<a href="javascript:void(0);" onclick="toCourseDetail(this,'+row.id+','+row.status+');"  >查看</a>&nbsp;&nbsp;';
+					if(row.status==1){//已发布
+						htmlval += '<a href="javascript:void(0);" onclick="updateStatus1('+row.id+',2)" >关闭</a>&nbsp;&nbsp;';
+					}
+					if(row.status!=1 &&row.status!=3 ){//未发布
+						htmlval += '<a href="javascript:void(0);" onclick="updateStatus2('+row.id+',1)" >开启</a>&nbsp;&nbsp;';
+					}
+					if(row.isRecommend==1){//未推荐
+						htmlval += '<a href="javascript:void(0);" onclick="doRecommend('+row.courseInfoId+')" >推荐</a>&nbsp';
+					}else{
+						htmlval += '<a href="javascript:void(0);" onclick="removeRecommend('+row.courseInfoId+')" >取消推荐</a>&nbsp';
+					}
+					
+					return htmlval;
+				}
+			} ] ],
+			toolbar : [ {
+				text : '取消选中',
+				iconCls : 'icon-undo',
+				handler : function() {
+					datagrid.datagrid('unselectAll');
+				}
+			}, '-'],
+			onRowContextMenu : function(e, rowIndex, rowData) {
+				e.preventDefault();
+				$(this).datagrid('unselectAll');
+				$(this).datagrid('selectRow', rowIndex);
+				$('#menu').menu('show', {
+					left : e.pageX,
+					top : e.pageY
+				});
+			}
+		});
+
+	});
+	
+    function toCourseDetail(currentElement,value,status){
+    	if(status=="1"){//已发布课程 
+    		var see=true;
+    		$.ajax({
+     			  url : '${pageContext.request.contextPath}/class/is_exist_class.action',
+     			  dataType : 'json',
+     			  async : false,
+     			  data:{
+     				  source_id : value,
+     	   			  source_type : 0
+     	   		  }, 
+     	   		  success:function(data){
+     	   			 if(data.num<=1){
+	   	   			 	alert("该课程还没有开班或班级被屏蔽，请联系建课老师创建班级！");// class status=5  删除
+	   	   			 	see = false;
+ 	   				 }else if(data.courseHour_num<=0){
+ 	   					alert("该课程还没有建立课时，请联系建课老师创建课时！");
+ 	   				    see = false;
+ 	   				 }
+     	   		  }
+          	});
+    		if(see){
+    			window.open("${pageContext.request.contextPath}/user_study/to_course_study.action?page=1&learnId="+value+"&sourceType=0&tab=1&is_direct=0");
+    		}
+    	}else{
+    		alert("无法查看未发布的课程！");
+    	}
+    	
+    }
+	
+	//取消推荐课程
+	function removeRecommend(value){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/back_course/is_recommend_course.action',
+			data:{
+				courseInfoId : value,
+				isRecommend : 1
+			},
+			success : function(d) {
+				var json = $.parseJSON(d);
+				if (json.success) {
+					datagrid.datagrid('reload');
+				}
+				parent.sy.messagerShow({
+					msg : json.msg,
+					title : '提示'
+				});
+			}
+		});
+	}
+	
+	//设置推荐课程
+	function doRecommend(value) {
+		var p = parent.sy.dialog({
+			title : '设置推荐课程',
+			href : '${pageContext.request.contextPath}/back_course/to_recommend_course.action',
+			width : 420,
+			height : 260,
+			buttons : [ {
+				text : '确定',
+				handler : function() {
+					var f = p.find('form');
+					f.form('submit', {
+						url : '${pageContext.request.contextPath}/back_course/is_recommend_course.action',
+						success : function(d) {
+							var json = $.parseJSON(d);
+							if (json.success) {
+								datagrid.datagrid('reload');
+								p.dialog('close');
+							}
+							parent.sy.messagerShow({
+								msg : json.msg,
+								title : '提示'
+							});
+						}
+					});
+				}
+			} ],
+			onLoad : function() {
+				var f = p.find('form');
+				$.ajax({
+					url : '${pageContext.request.contextPath}/back_course/get_max_seq.action',
+					data : {
+						id : value
+					},
+					dataType : 'json',
+					success : function(d) {
+						if(d.success){
+							f.form('load', {
+								recommendSeq : d.obj,
+								courseInfoId : value
+							});
+						}
+					}
+				});
+			}
+		});
+	}
+	
+	
+	function updateStatus1(id,status) {//关闭
+		$.ajax({
+			url : '${pageContext.request.contextPath}/back_course/update_status.action',
+			data : {
+				id : id,
+				status : status
+			},
+			dataType : 'json',
+			success : function(d) {
+				datagrid.datagrid('load');
+				datagrid.datagrid('unselectAll');
+				parent.sy.messagerShow({
+					title : '提示',
+					msg : d.msg
+				});
+			}
+		});
+	}
+	function updateStatus2(id,status) {//发布
+		var result = confirm('您真的要发布该课程吗？');
+        if(result){
+        	 $.ajax({
+   			  url : '${pageContext.request.contextPath}/class/is_exist_class.action',
+   			  dataType : 'json',
+   			  data:{
+   				  source_id : id,
+   	   			  source_type : 0
+   	   		  }, 
+   	   		  success:function(data){
+   	   			  if(data.num>0&&data.courseHour_num>0){
+		   	   			$.ajax({
+			   	 			url : '${pageContext.request.contextPath}/back_course/update_status.action',
+			   	 			data : {
+			   	 				id : id,
+			   	 				status : status
+			   	 			},
+			   	 			dataType : 'json',
+			   	 			success : function(d) {
+			   	 				datagrid.datagrid('load');
+			   	 				datagrid.datagrid('unselectAll');
+			   	 				parent.sy.messagerShow({
+			   	 					title : '提示',
+			   	 					msg : d.msg
+			   	 				});
+			   	 			}
+			   	 		});
+   	   			  }else{
+   	   				 if(data.num<=0){
+	   	   			 	alert("该课程还没有开班，请联系建课老师创建班级！");
+   	   				 }else if(data.courseHour_num<=0){
+   	   					alert("该课程还没有建立课时，请联系建课老师创建课时！");
+   	   				 }
+   	   			  }
+   	   		  }
+        	});
+        }
+		
+	}
+	
+	function _search() {
+		datagrid.datagrid('load', sy.serializeObject($('#searchForm')));
+	}
+	function cleanSearch() {
+		datagrid.datagrid('load', {});
+		$('#searchForm input').val('');
+		$('#searchForm select').val('-1');
+	}
+</script>
+</head>
+<body class="easyui-layout" data-options="fit:true">
+	<div data-options="region:'north',border:false,title:'过滤条件'" style="height: 100px;overflow: hidden;" align="left">
+		<form id="searchForm" style="width: 100%;height: 100%;">
+			<table class="tableForm datagrid-toolbar" style="width: 100%;height: 100%;">
+				<tr>
+					<th>名称</th>
+					<td>
+						<input name="title" style="width:150px;" />
+					</td>
+				</tr>
+				<tr>
+					<th>课程状态</th>
+					<td>
+						<select name="status">
+							<option value="-1">请选择</option>
+							<option value="0">未发布</option>
+							<option value="1">已发布</option>
+						</select>
+						<a href="javascript:void(0);" class="easyui-linkbutton" onclick="_search();">过滤</a>
+						<a href="javascript:void(0);" class="easyui-linkbutton" onclick="cleanSearch();">清空</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div data-options="region:'center',border:false" style="overflow: hidden;">
+		<table id="datagrid"></table>
+	</div>
+
+	<div id="menu" class="easyui-menu" style="width:120px;display: none;">
+		<div onclick="append();" data-options="iconCls:'icon-add'">增加</div>
+		<div onclick="remove();" data-options="iconCls:'icon-remove'">删除</div>
+		<div onclick="edit();" data-options="iconCls:'icon-edit'">编辑</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<style>
+	.editing,.checking,.releasing,.refusing,.deleting{padding: 0 10px;border-radius: 20px; color: #fff;margin-left: 20px;}
+	.editing{background: #c39b80;}
+	.checking{background: #a8a8a8; }
+	.releasing{background: #3ebbce; }
+	.refusing{background: #e30f0c; }
+	.deleting{background: #be5227; }
+	.lesson_plan,.teaching_plan{padding: 0 10px;border-radius: 20px; color: #fff;margin-left: 20px;}
+	.lesson_plan{background: #3ebbce;}
+	.teaching_plan{background: #32ad1c; }
+</style>
+<div class="es-wrap">
+
+	<div id="content-container" class="container">
+		<jsp:include page="/frontstage/base/personalCenter/personal_header.jsp"></jsp:include>
+		<div class="row row-3-9">
+
+			<jsp:include page="/frontstage/base/personalCenter/personal_left.jsp"></jsp:include>
+
+			<div class="col-md-9">
+				<div class="panel panel-default" >
+
+					<div class="panel-heading">
+						${head_title}
+						<c:if test="${resouceFileView.type==1}">
+							<a class="btn btn-lg btn-info pull-right" href="${pageContext.request.contextPath}/my_file_base/to_upload_file.action" target="_blank">上传资源</a>
+						</c:if>
+					</div>
+
+					<div class="panel-body">
+						<div class="nav-btn-tab my_download">
+							<ul class="nav nav-tabs">
+								<c:if test="${resouceFileView.type==1}">
+									<li <c:if test="${resouceFileView.status==-1}">class="active"</c:if>><a href="javascript:void(0);" onclick="doStatus(-1);">全部上传</a></li>
+									<li <c:if test="${resouceFileView.status==0}">class="active"</c:if>><a href="javascript:void(0);" onclick="doStatus(0);">正常</a></li>
+									<li <c:if test="${resouceFileView.status==4}">class="active"</c:if>><a href="javascript:void(0);" onclick="doStatus(4);">未发布</a></li>
+									<li <c:if test="${resouceFileView.status==1}">class="active"</c:if>><a href="javascript:void(0);" onclick="doStatus(1);">审核中</a></li>
+									<li <c:if test="${resouceFileView.status==2}">class="active"</c:if>><a href="javascript:void(0);" onclick="doStatus(2);">被打回</a></li>
+									<li <c:if test="${resouceFileView.status==3}">class="active"</c:if>><a href="javascript:void(0);" onclick="doStatus(3);">已删除</a></li>
+								</c:if>
+								<c:if test="${resouceFileView.type==5}">
+									<li <c:if test="${resouceFileView.file_type==0}">class="active"</c:if>><a href="javascript:void(0);" onclick="doFileType(0);" >课件文件</a></li>
+									<li <c:if test="${resouceFileView.file_type==1}">class="active"</c:if>><a href="javascript:void(0);" onclick="doFileType(1);" >教案文件</a></li>
+								</c:if>
+							</ul>
+
+						</div>
+						<form class="form-inline" id="userFileForm" action="${pageContext.request.contextPath}/userFile/to_user_file.action" method="post">
+							<input type="hidden" name="stamp" id="stamp" value="${stamp}"/>
+							<input type="hidden" name="state" id="state" value="${state}"/>
+							<input type="hidden" name="page" id="page" value="${resouceFileView.page}"/>
+							<input type="hidden" name="rows" id="rows" value="${resouceFileView.rows}"/>
+							<input type="hidden" name="total" id="total" value="${resouceFileView.total}"/>
+							<input type="hidden" name="totalPage" id="totalPage" value="${resouceFileView.totalPage}"/>
+							<c:if test="${resouceFileView.type==1}">
+								<input type="hidden" name="status" id="status" value="${resouceFileView.status}"/>
+								<input type="hidden" name="file_type" value="-1"/>
+							</c:if>
+							<c:if test="${resouceFileView.type==5}">
+								<input type="hidden" name="status"  value="-1"/>
+								<input type="hidden" name="file_type" id="file_type" value="${resouceFileView.file_type}"/>
+							</c:if>
+							<input type="hidden" name="type"  value="${resouceFileView.type}"/>
+						</form>
+						<!--全部文件列表-->
+						<ul class="media-list course_ware" >
+							<c:forEach items="${userFileList}" var="userFile">
+								<li class="media" style="padding-bottom: 5px;">
+									<div class="media-body">
+										<span class="pull-right text-muted">${fn:substring(userFile.time,0,16)}</span>
+										<div class="mbm">
+
+											<a 
+											<c:if test="${userFile.status==0 }">href="${pageContext.request.contextPath}/userFile/to_file.action?id=${userFile.id }"  target="_blank"</c:if>
+											<c:if test="${userFile.status!=0 }">href="javascript:void(0);"</c:if>
+											   class="link-dark">
+												<label>${userFile.filename }
+													<c:if test="${userFile.file_type==0 }">
+														<span class="lesson_plan">课件</span>
+													</c:if>
+													<c:if test="${userFile.file_type==1 }">
+														<span class="teaching_plan">教案</span>
+													</c:if>
+													<c:if test="${resouceFileView.type==1}">
+														<c:if test="${userFile.status==0 }">
+															<span class="releasing">正常</span>
+														</c:if>
+														<c:if test="${userFile.status==1 }">
+															<span class="checking">审核中</span>
+														</c:if>
+														<c:if test="${userFile.status==2 }">
+															<span class="refusing">被打回</span>
+														</c:if>
+														<c:if test="${userFile.status==3 }">
+															<span class="deleting">已删除</span>
+														</c:if>
+														<c:if test="${userFile.status==4 }">
+															<span class="deleting">未发布</span>
+														</c:if>
+													</c:if>
+												</label>
+											</a>
+
+										</div>
+										<div class="text-muted text-normal">
+											<span>${userFile.profile}</span>
+
+										</div>
+										<div class="media media-dynamic">
+											<c:if test="${resouceFileView.type==1}">
+												<div class="media-body">
+													<div class="title">
+														<!-- <button type="button" class="btn btn-default btn-sm" >重新发布</button>
+                                                        <button type="button" class="btn btn-default btn-sm" >取消发布</button> -->
+														<c:if test="${userFile.status!=3 }">
+														<button type="button" class="btn btn-default btn-sm delete-btn" onclick="doDelete(${userFile.id});" style="margin-right: 20px;">删除</button>
+														</c:if>
+														<c:if test="${userFile.status==4||userFile.status==2 }">
+														<button type="button" class="btn btn-default btn-sm publish" style="margin-right: 20px;" data-id=${userFile.id}>发布</button>
+														
+														<a href="${pageContext.request.contextPath}/my_file_base/update_file.action?id=${userFile.id}" class="btn btn-default btn-sm" style="margin-right: 20px;">编辑</a>
+														</c:if>
+													</div>
+												</div>
+											</c:if>
+											<c:if test="${resouceFileView.type==5}">
+												<div class="media-left">
+													<a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${userFile.upload_user_id}" >
+														<img class="avatar-sm" src="${pageContext.request.contextPath}${userFile.upload_icon}">
+													</a>
+												</div>
+												<div class="media-body">
+													<div class="title" style="margin-top: 10px;">
+														<a class="link-dark " href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${userFile.upload_user_id}">${userFile.upload_user_name }贡献</a>
+<!-- 														<button type="button" class="btn btn-info btn-sm" style="margin-left: 30px;">再次下载</button>
+ -->													</div>
+												</div>
+											</c:if>
+										</div>
+
+									</div>
+								</li>
+							</c:forEach>
+						</ul>
+						<c:if test="${empty userFileList }">
+							<div class="empty">暂无数据</div>
+						</c:if>
+						<c:if test="${!empty userFileList }">
+
+							<div id="test" class="pager"></div>
+
+						</c:if>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+<script type="text/javascript">
+    $(function(){
+        //翻页
+        var total = $("#total").val();
+        var page =  parseInt($("#page").val())+1;
+
+        $("#btn5").on('click', function () {
+            $("#div1").PageChanged(5);
+        });
+
+        $(".pager").pagination({
+            thisPageIndex:page,
+            recordCount: total,       //总记录数
+            pageSize: $("#rows").val(),           //一页记录数
+            onPageChange: function (page) {
+                document.title = page;
+                $("#page").val(page-1);
+                $('#userFileForm').submit();
+
+            }
+        });
+    });
+
+    function doStatus(value){
+        $("#status").val(value);
+        $('#userFileForm').submit();
+    }
+
+    function doFileType(value){
+        $("#file_type").val(value);
+        $('#userFileForm').submit();
+    }
+
+    function doDelete(value){
+        $.ajax({
+            url:'${pageContext.request.contextPath}/my_file_base/delete_file.action',
+            data:{
+                id : value
+            },
+            dataType:'json',
+            success:function(d){
+                var result = confirm('是否要删除文件？');
+                if(result){
+                    if(d.flag==true){
+                        alert("删除成功！");
+                        window.location.reload();
+                    }
+                }
+            }
+        });
+    }
+$(".publish").click(function () {
+	        if (!confirm('要发布吗？')) {
+                return ;
+            }
+            var id=$(this).data("id");
+            $.ajax({
+                url : '${pageContext.request.contextPath}/userFile/publish.action?id='+id,
+                dataType : 'json',
+                success : function(response) {
+                  location.replace(location.href);
+                }
+
+            });
+});
+</script>

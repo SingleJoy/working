@@ -1,0 +1,172 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.service.SysLogService;
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.comparator.DataStatsComparator;
+import cn.bnsr.edu_yun.frontstage.train.mapper.CommunityMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.Community;
+import cn.bnsr.edu_yun.frontstage.train.po.StudentRelation;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassBelongsService;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityService;
+import cn.bnsr.edu_yun.frontstage.train.service.StudentRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.WorkshopService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityView;
+import cn.bnsr.edu_yun.frontstage.train.view.DataStatsView;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonService;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class CommunityServiceImpl implements CommunityService {
+	@Autowired
+	private CommunityMapper communityMapper;
+	@Autowired
+	private WorkshopService workshopService;
+	@Autowired
+	private StudentRelationService studentRelationService;
+	@Autowired
+	private ClassBelongsService classBelongsService;
+	@Autowired
+	private LessonService lessonService;
+	@Autowired
+	private SysLogService sysLogService;
+
+	@Override
+	public List<CommunityView> queryCommunity(CommunityView communityView) {
+		return communityMapper.queryCommunity(communityView);
+	}
+
+	@Override
+	public CommunityView getById(Long id) {
+		return communityMapper.getById(id);
+	}
+
+	@Override
+	public void saveCommunity(Community community) {
+		communityMapper.insertSelective(community);
+
+		// 保存学员关系表
+		StudentRelation sr = new StudentRelation();
+		sr.setCreate_time(new Date());
+		sr.setRole_type(0);// 默认创建者为管理员
+		sr.setSource_id(community.getId());
+		sr.setSource_type(0);
+		sr.setUser_id(community.getUser_id());
+		studentRelationService.saveStudentRelation(sr);
+	}
+
+	@Override
+	public void updateCommunity(Community community) {
+		communityMapper.updateByPrimaryKeySelective(community);
+	}
+
+	@Override
+	public int queryTotalCommunity(CommunityView communityView) {
+		return communityMapper.queryTotalCommunity(communityView);
+	}
+
+	@Override
+	public List<DataStatsView> queryDataStats(DataStatsView dataStatsView) throws ParseException {
+		Date date = new Date();
+		List<String> list = new ArrayList<String>();
+		int monthType = dataStatsView.getMonthType();
+		if (monthType == 0) {// 当前月
+			// 获的当前年月
+			dataStatsView.setDays(TimeUtil.getDate());
+		} else if (monthType == 1) {// 上月
+			dataStatsView.setDays(TimeUtil.getLastDate());
+		} else if (monthType == 2) {// 近三月
+			dataStatsView.setStartTime(TimeUtil.getBeforeMarch());
+			dataStatsView.setEndTime(TimeUtil.dateToString1(new Date()));
+			// }else if(dataStatsView.getMonthType()==3){//起止时间
+		}
+		if (monthType == 0 || monthType == 1) {// 本月、上月
+			date = TimeUtil.stringFormatDate(dataStatsView.getDays());
+			list = TimeUtil.getAllTheDateOftheMonth(date);
+		} else {// 近三月、起止时间
+			list = TimeUtil.getBetweenDates(TimeUtil.stringFormatDate1(dataStatsView.getStartTime()),
+					TimeUtil.stringFormatDate1(dataStatsView.getEndTime()));
+		}
+
+		List<DataStatsView> dataStatsList = new ArrayList<DataStatsView>();
+
+		if (dataStatsView.getStatsType() == 0) {// 用户
+			dataStatsList = studentRelationService.studentDataStats(dataStatsView);
+		} else if (dataStatsView.getStatsType() == 1) {// 课程
+			dataStatsList = classBelongsService.classBelongsDataStats(dataStatsView);
+		} else if (dataStatsView.getStatsType() == 2) {// 培训
+			dataStatsList = classBelongsService.classBelongsDataStats(dataStatsView);
+		} else if (dataStatsView.getStatsType() == 3) {// 课例
+			dataStatsList = lessonService.lessonDataStats(dataStatsView);
+		} else if (dataStatsView.getStatsType() == 4) {// 工作坊
+			dataStatsList = workshopService.workshopDataStats(dataStatsView);
+		} else if (dataStatsView.getStatsType() == 5) {// 活跃度、用户点击量
+			dataStatsList = sysLogService.dataStats(dataStatsView);
+		}
+
+		if (dataStatsList.size() != list.size()) {// 如果不相等，证明有缺少日期
+			int countNum = 0;
+			// 有数据日期
+			List<String> dataList = new ArrayList<String>();
+			for (int i = 0; i < dataStatsList.size(); i++) {
+				dataList.add(dataStatsList.get(i).getDays());
+				if (i == 0) {
+					countNum = dataStatsList.get(i).getCountNum();
+				}
+			}
+			list.removeAll(dataList);// 差集
+			for (int i = 0; i < list.size(); i++) {// 补全当前月日期
+				DataStatsView dataStats = new DataStatsView();
+				dataStats.setDays(list.get(i));
+				dataStats.setNewNum(0);
+				dataStats.setCountNum(countNum);
+				dataStatsList.add(dataStats);
+			}
+		}
+
+		Collections.sort(dataStatsList, new DataStatsComparator());// 排序
+
+		return dataStatsList;
+	}
+
+	@Override
+	public List<Community> queryCommunitys() {
+		return communityMapper.queryCommunitys();
+	}
+
+	@Override
+	public DataGrid datagrid(CommunityView communityView) {
+		DataGrid j = new DataGrid();
+		communityView.setPage(NumUtil.startingNum(communityView.getPage(), communityView.getRows()));
+		j.setRows(find(communityView));
+		j.setTotal(total(communityView));
+		return j;
+	}
+
+	public List<CommunityView> find(CommunityView communityView) {
+		return communityMapper.search(communityView);
+	}
+
+	public Long total(CommunityView communityView) {
+		return communityMapper.total(communityView);
+	}
+
+	@Override
+	public Long getMaxSeq() {
+		return communityMapper.getMaxSeq();
+	}
+
+	@Override
+	public void saveCommunityBackstage(Community community) {
+		communityMapper.insertSelective(community);
+	}
+
+
+}

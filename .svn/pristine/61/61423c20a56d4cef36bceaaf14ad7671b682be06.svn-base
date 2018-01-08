@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>教学资料库</title>
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <style>
+        .course_rank_square{width:35px; height: 35px;text-align: center;line-height: 35px;font-size: 16px;color: #fff;}
+        .rank_01{background-color:#ff2600;}
+        .rank_02{background-color:#ff3901;}
+        .rank_03{background-color:#ff6b03;}
+        .rank_04{background-color:#ff9902;}
+        .rank_05{background-color:#ffca00;}
+        .rank_06{background-color:#cdcb9d;}
+        .course_rank_page>li{border-bottom: 1px solid #ddd;}
+        .course_user_info{margin-left: 20px;}
+        .course_user_info>a{margin-top: -15px;display: inline-block;}
+         .avatar-square-lg-md{width: 90px;height: 90px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
+    </style>
+
+
+
+
+</head>
+<body>
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+        <div class="row">
+            <div class="col-lg-9 col-md-8 ">
+
+                <section class="es-section">
+
+                    <div class="nav-btn-tab">
+                        <ul class="nav nav-tabs">
+
+                            <li class="active"><a href="javascript:void(0);" onclick="searchTabs(1);">课时列表</a></li>
+
+
+                            <li value="1" class=""><a href="javascript:void(0);" onclick="searchTabs(2);">讨论 <small class="text-muted">( 0 )</small></a></li>
+
+
+                            <li class=""><a href="javascript:void(0);" onclick="searchTabs(5);">笔记 <small class="text-muted">( 0 )</small></a></li>
+
+                            <li class=""><a href="javascript:void(0);" onclick="searchTabs(4);">评价 <small class="text-muted">( 0 )</small></a></li>
+
+                            <li class=""><a href="javascript:void(0);" onclick="searchTabs(6);">概览</a></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="course-detail-content">
+
+
+                        <div class="es-piece">
+
+                            <!--排行榜-->
+                            <div class="piece-body">
+
+                                <ul class="media-list course_rank_page">
+
+
+                                    <!--排名第一-->
+                                    <li class="media" style="padding-bottom: 10px;">
+
+                                        <div class="media media-default">
+                                            <div class="media-left">
+                                                <div class="course_rank_square rank_01 pull-left">1</div>
+
+                                            </div>
+                                            <div class="media-body">
+                                                <a class="js-user-card pull-left" href="#"  title="">
+                                                    <img class="avatar-square-sm" src="http://www.qiqiuyu.com/files/default/2016/03-03/101221549470108890.jpg">
+
+                                                </a>
+                                                <div class="title course_user_info pull-left" >格洛咪</div>
+                                                <div class="pull-right" style="margin-top: 20px;">
+                                                    <span>完成日期：2017-04-05</span>
+                                                    <span class="mlm mrm text-muted"></span>
+                                                    <span>学习进度：40%</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+
+
+                                    <!--排名第二-->
+                                    <li class="media" style="padding-bottom: 10px;">
+
+                                        <div class="media media-default">
+                                            <div class="media-left">
+                                                <div class="course_rank_square pull-left rank_02">2</div>
+
+                                            </div>
+                                            <div class="media-body">
+                                                <a class="js-user-card pull-left" href="#"  title="">
+                                                    <img class="avatar-square-sm" src="http://www.qiqiuyu.com/files/default/2016/03-03/101221549470108890.jpg">
+
+                                                </a>
+                                                <div class="title course_user_info pull-left" >格洛咪</div>
+                                                <div class="pull-right" style="margin-top: 20px;">
+                                                    <span>完成日期：2017-04-05</span>
+                                                    <span class="mlm mrm text-muted"></span>
+                                                    <span>学习进度：40%</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+
+
+                                    <!--排名第三-->
+                                    <li class="media" style="padding-bottom: 10px;">
+
+                                        <div class="media media-default">
+                                            <div class="media-left">
+                                                <div class="course_rank_square pull-left rank_03">3</div>
+
+                                            </div>
+                                            <div class="media-body">
+                                                <a class="js-user-card pull-left" href="#"  title="">
+                                                    <img class="avatar-square-sm" src="http://www.qiqiuyu.com/files/default/2016/03-03/101221549470108890.jpg">
+
+                                                </a>
+                                                <div class="title course_user_info pull-left" >格洛咪</div>
+                                                <div class="pull-right" style="margin-top: 20px;">
+                                                    <span>完成日期：2017-04-05</span>
+                                                    <span class="mlm mrm text-muted"></span>
+                                                    <span>学习进度：40%</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+
+
+                                    <!--排名第四-->
+                                    <li class="media" style="padding-bottom: 10px;">
+
+                                        <div class="media media-default">
+                                            <div class="media-left">
+                                                <div class="course_rank_square pull-left rank_04">4</div>
+
+                                            </div>
+                                            <div class="media-body">
+                                                <a class="js-user-card pull-left" href="#"  title="">
+                                                    <img class="avatar-square-sm" src="http://www.qiqiuyu.com/files/default/2016/03-03/101221549470108890.jpg">
+
+                                                </a>
+                                                <div class="title course_user_info pull-left" >格洛咪</div>
+                                                <div class="pull-right" style="margin-top: 20px;">
+                                                    <span>完成日期：2017-04-05</span>
+                                                    <span class="mlm mrm text-muted"></span>
+                                                    <span>学习进度：40%</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+
+
+                                    <!--排名第五-->
+                                    <li class="media" style="padding-bottom: 10px;">
+
+                                        <div class="media media-default">
+                                            <div class="media-left">
+                                                <div class="course_rank_square pull-left rank_05">5</div>
+
+                                            </div>
+                                            <div class="media-body">
+                                                <a class="js-user-card pull-left" href="#"  title="">
+                                                    <img class="avatar-square-sm" src="http://www.qiqiuyu.com/files/default/2016/03-03/101221549470108890.jpg">
+
+                                                </a>
+                                                <div class="title course_user_info pull-left" >格洛咪</div>
+                                                <div class="pull-right" style="margin-top: 20px;">
+                                                    <span>完成日期：2017-04-05</span>
+                                                    <span class="mlm mrm text-muted"></span>
+                                                    <span>学习进度：40%</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+
+
+                                    <!--排名第六 rank_06-->
+                                    <li class="media" style="padding-bottom: 10px;">
+
+                                        <div class="media media-default">
+                                            <div class="media-left">
+                                                <div class="course_rank_square pull-left rank_06">6</div>
+
+                                            </div>
+                                            <div class="media-body">
+                                                <a class="js-user-card pull-left" href="#"  title="">
+                                                    <img class="avatar-square-sm" src="http://www.qiqiuyu.com/files/default/2016/03-03/101221549470108890.jpg">
+
+                                                </a>
+                                                <div class="title course_user_info pull-left" >格洛咪</div>
+                                                <div class="pull-right" style="margin-top: 20px;">
+                                                    <span>完成日期：2017-04-05</span>
+                                                    <span class="mlm mrm text-muted"></span>
+                                                    <span>学习进度：40%</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </section>
+
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+
+                        <div>
+                            <div class="pull-left">
+                                <img src="../../../../frontstage/images/my_course_rank.png"></div>
+
+                        </div>
+
+                        <ul class="media-list course_rank_page" style="margin-top: 60px;clear: both;">
+
+
+                            <!--排名第一-->
+                            <li class="media" style="padding-bottom: 10px;">
+
+                                <div class="media media-default">
+                                    <div class="media-left">
+                                        <div class="course_rank_square rank_01 pull-left">1</div>
+
+                                    </div>
+                                    <div class="media-body">
+                                        <a class="js-user-card pull-left" href="#"  title="">
+                                            <img class="avatar-square-lg-md" src="http://www.qiqiuyu.com/files/default/2016/03-03/101221549470108890.jpg">
+
+                                        </a>
+                                        <div class="title course_user_info pull-left" >
+                                            <span>格洛咪</span>
+
+                                            <div style="margin-top: 20px;">你当前排行
+                                                <span class="text-danger">
+                                                   &nbsp;1&nbsp;
+                                                </span>名
+                                            </div>
+                                        </div>
+                                        <div class="pull-right" >
+                                            <span>完成时长：<span class="text-danger">
+                                                &nbsp;20&nbsp;
+                                                </span>小时
+                                            </span>
+                                            <span class="mlm mrm text-muted"></span>
+                                            <span>学习进度：40%</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </li>
+
+
+
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-4  course-sidebar">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+
+                            课程老师
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div id="myCarousel1" class="carousel slide" data-interval="3000">
+
+
+
+                            <ol class="carousel-indicators">
+
+                                <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
+
+                            </ol>
+
+                            <div class="carousel-inner">
+
+
+
+                                <div class="item active">
+                                    <div class="panel">
+                                        <div class="panel-body " style="margin-top: 20px;">
+                                            <div class="media media-default">
+                                                <div class="media-left">
+                                                    <a id="userCard_128" onmouseover="mouseOver(1,28);" onmouseout="mouseOut(1,28);" href="/edu_yun/teacher_center/to_teacher_center.action?user_id=28">
+                                                        <img class="avatar-md" src="/edu_yun/picture/userImages/DSCF023215010566895356.JPG">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="title">
+                                                        <a class="link-dark link-light" href="/edu_yun/teacher_center/to_teacher_center.action?user_id=28">李师好你</a>
+                                                    </div>
+
+                                                    <div class="content">
+
+
+
+
+                                                        班主任
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+
+                        <!-- 轮播（Carousel）导航 -->
+
+                        <a class="carousel-control left" href="#myCarousel1" data-slide="prev" style="background-image: none;color: #616161">‹</a>
+                        <a class="carousel-control right" href="#myCarousel1" data-slide="next" style="background-image: none;color: #616161">›</a>
+
+
+                    </div>
+                </div>
+
+
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="es-icon es-icon-personadd"></i>
+                            最新班级公告
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="empty">暂无班级公告</div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-default student-dynamic">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="es-icon es-icon-recentactors"></i>
+                            学员动态
+                        </h3>
+                    </div>
+
+                    <div class="panel-body" id="userStudyRecords">
+                        <div class="media media-number-o color-gray text-overflow">
+                            <a class="link-dark " href="/edu_yun/teacher_center/to_teacher_center.action?user_id=28">ceshi</a>
+                            开始学习课时<a class="link-dark" href="javascript:void(0);">测试视频</a>
+                        </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

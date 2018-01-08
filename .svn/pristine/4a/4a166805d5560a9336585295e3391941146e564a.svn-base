@@ -1,0 +1,78 @@
+
+#db settings
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://192.168.10.237:3306/edu_yun?useUnicode=true&characterEncoding=utf-8
+jdbc.username=root
+jdbc.password=BnsrBnsr
+
+
+#openOffice settings
+oo_home =/opt/openoffice4
+#oo_home =C:\\Program Files (x86)\\OpenOffice 4
+oo_host=127.0.0.1
+oo_port=8100
+
+#文件服务器地址
+file_server_path = http://222.128.104.201:8090/
+#永中转换地址
+dcs_path=http://192.168.10.42:8080/dcs.web/
+#wealthToScore settings
+weath_to_score=1
+
+
+#stream settings
+#文件存储位置
+#STREAM_FILE_REPOSITORY=D:\\resumeUpload
+stream_file_repository=/opt/tomcat/webapps/edu_yun/resumeUpload
+# 文件上传后是否需要删除
+stream_delete_finish=true
+# 服务器是否允许其他不同域名的上传文件到这个服务器
+stream_is_cross=false
+# 允许域
+stream_cross_origin=*
+
+
+# Redis settings
+redis.host=192.168.10.253
+redis.port=6379
+redis.pass=
+redis.maxIdle=300
+redis.maxActive=600
+redis.maxWait=100000
+redis.testOnBorrow=true
+#0-没有缓存时间 ，单位为妙
+redis.cacheSeconds=0
+
+#默认图片存储路径
+defalutPicture=/picture/default
+#课程图片
+coursePicture=/picture/coursePicture
+#用户头像
+userImages=/picture/userImages
+#用户认证图片
+certificatePicture=/picture/certificate
+#培训图片
+trainPicture=/picture/trainPicture
+#课例图片
+lessonPicture=/picture/lessonPicture
+#校本教研附件
+attachmentFile=/xbjy/attachmentFile
+#校本教研附件地址
+attachmentFileUrl=http://222.128.104.201:8096/edu_yun/xbjy/attachmentFile
+#社区图片
+communityPicture=/picture/communityPicture
+#证书模板图片
+certModelPicture=/picture/certModelPicture
+
+#批量导入学员Excel(课程、培训)
+userStudyExcel=/Excel/userStudy
+
+#批量导入学员Excel(社区、工作坊)
+studentExcel=/Excel/studentExcel
+
+
+#信息附件(社区、工作坊)
+messageFile=/Message/messageFile
+#信息教研附件地址
+messageFileUrl=http://222.128.104.201:8096/edu_yun/Message/messageFile
+

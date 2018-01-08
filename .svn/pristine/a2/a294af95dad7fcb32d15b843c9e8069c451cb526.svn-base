@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bnsr.edu_yun.frontstage.base.mapper.MyResourcesMapper">
+   <select id="showMyResources" parameterType="cn.bnsr.edu_yun.frontstage.base.view.MyResourcesView" resultType="cn.bnsr.edu_yun.frontstage.base.view.MyResourcesView">
+     select a.id id, a.filename filename,a.size size,f.type_name fileType, c.classify_name `type` ,a.upload_time uploadtime
+       from file_base a inner join file_catalog b on a.catalog_id = b.id inner join classify c on b.column_id=c.id
+        inner join  file_type f on b.type = f.id 
+        
+       where a.upload_user = ${upload_user} and a.status =0
+      <if test="columnId != 0">
+       and c.id = ${columnId}
+      </if>
+       <if test="classification_entryId != null">
+       and b.classfication_id like '${classification_entryId}%'
+      </if>
+        order by a.upload_time desc
+     LIMIT ${startLine},${rows}
+  </select>
+  <select id="queryTotalResources" parameterType="cn.bnsr.edu_yun.frontstage.base.mapper.MyCollectMapper" resultType="java.lang.Integer">
+      select count(*) from file_base a inner join file_catalog b on a.catalog_id = b.id inner join classify c on b.column_id=c.id
+        inner join  file_type f on b.type = f.id 
+        where a.upload_user = ${upload_user} and a.status !=3
+      <if test="columnId != 0">
+       and c.id = ${columnId}
+      </if>
+       <if test="classification_entryId != null">
+       and b.classfication_id like '${classification_entryId}%'
+      </if>
+    </select>
+    </mapper>

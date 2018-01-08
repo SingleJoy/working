@@ -1,0 +1,80 @@
+* {  margin: 0; padding: 0;  text-decoration: none;color: #6d6d6d;}
+body {background-color: #eaeaea;  font-family: "Microsoft YaHei";overflow-x: hidden;}
+li{list-style:none;}
+input,button,select,textarea{outline:none;}
+
+
+.position{width: 1100px;margin: 10px auto;}
+.position>span,.position>span>a{font-size: 12px;}
+
+/*main*/
+.main_read{margin: 0 auto;width: 1100px;overflow-x: hidden;}
+
+/*main_read_top  主内容头部*/
+.main_read_top{width: 1100px;height:180px;background-color: #fff;margin-top: 10px;border-radius: 5px;}
+.title_name{font-size: 16px;margin-left: 140px;margin-top: -100px;}
+.main_read_top ul li img{width: 16px;height: 16px;display: inline;}
+.author_file_formate{padding-left: 30px;}
+.author_file_size{padding-left: 30px;}
+.author_file_price{padding-left: 30px;}
+.author_file_price_num{color:#ff9a00;padding: 10px;}
+.main_read_top ul li span{font-size: 12px;}
+.main_read_top ul li {margin-left: 140px;}
+.main_read_top ul {margin-top: 10px;}
+.author_img{width: 100px;height: 100px;border-radius: 50%;display: inline;margin-left: 30px;margin-top: 45px;}
+
+.author_info_txt{margin-top: 20px;}
+.author_title{padding-left: 16px;}
+/*.author_follow_button{position: absolute;width: 60px;height:30px;background-color:#ff9a00;font-size: 14px;color: #fff;text-align: center;cursor: pointer;margin-left: 300px;margin-top: -22px;}*/
+.keep,.free_download_course{border: 1px solid #3ebbce;font-size: 12px;text-align: center;line-height: 32px;border-radius: 5px;}
+.keep{width: 60px;height: 30px;margin-left: 1000px;margin-top: -108px;color: #3ebbce;cursor: pointer;z-index: 999;}
+.download_button{width: 60px;height: 30px;margin-left:1000px;margin-top: -32px;background-color: #f2746b;color: #fff;text-align: center;line-height: 30px;border-radius: 5px;font-size: 12px;display: block;}
+.free_download_course{width: 100px;height: 30px;margin-left: 970px;margin-top: -32px;background-color:#3ebbce;color: #fff;}
+.reader_num,.download_num{font-size: 12px;margin-left:920px;margin-top: 20px;}
+
+.reader_num span,.download_num span{color:#ff9a00;padding-left: 5px;}
+.download_num{float:right;margin-top: -16px;margin-right: 40px;}
+
+/*main_read_content 主内容 */
+.main_read_content{float:left;width: 825px;height: 800px;border: 1px solid #fff;background-color: #fff;}
+
+
+/*main_read_right 主内容右边相关资源 */
+.main_read_right{width: 250px;height: 280px;border: 1px solid #ddd;margin-left: 20px;background-color: #fff;float: left;border-radius: 5px;}
+.main_read_right p{font-size: 14px;padding-top: 10px;padding-left: 20px;}
+.main_read_right>ul{margin-left: 15px;}
+.main_read_right>ul>li{font-size: 12px;margin-top: 10px;width: 220px;border-top:1px solid #ddd;padding-top: 10px;}
+.main_read_right>ul>li>a{font-size: 12px;}
+.main_read_right>ul:first-child{padding-top: 10px;}
+.main_read_right>ul>li>a{padding-left: 15px;}
+.resources_download_num{padding-left: 22px;line-height: 20px;}
+
+/*main_content_bottom 主内容下面评论*/
+.main_read_content_operation{position: relative;margin-top: 730px;}
+.main_read_content_operation ul{}
+.main_read_content_operation ul li{display: inline;}
+.main_read_content_operation ul li img{padding-left: 10px;}
+
+/*border*/
+.border{width:780px;border:1px solid #c7c7c7;position:relative;}
+
+/*评论*/
+.my_comment{position: relative;clear: both;background-color: #fff;width: 825px;height:250px;}
+.my_comment>p{font-size:14px;margin-top: 15px;float: left;margin-right: 20px;padding-left: 15px;}
+.my_comment>img{float: left;padding-top: 15px;}
+.my_comment>textarea{width: 780px;height: 135px;margin-top: 10px;overflow:hidden; resize:none;clear: both;margin-left: 20px;border-radius: 5px;border: 1px solid #ddd;line-height: 20px;padding-left: 10px;padding-top: 5px;font-size: 14px;}
+.my_comment>input{width:80px;height:30px;margin-top:15px;font-size:12px;color:#fff;background-color:#3dbbcd;border-radius:5px;position:relative;line-height: 30px;float: right;margin-right: 30px;}
+.share_button_box{position:absolute;z-index: 99;height: 30px;width: 100px;margin-left: 20px;margin-top:1000px;}
+
+.other_comment{width: 825px;position: relative;background-color: #fff;height:160px;margin-top: -20px;}
+.other_comment p{font-size: 14px;margin-top: 50px;padding: 15px;}
+
+.reader_comment>img{width: 50px;height: 50px;border-radius: 50%;margin-top: 20px;margin-left: 10px;}
+.reader_comment{width: 780px;height: 80px;border-top: 1px solid #d9d9d9;margin-left: 20px;}
+.reader_comment p{margin-top: -50px;width: 730px;position: relative;font-size: 12px;margin-left: 70px;}
+.reader_comment p span{padding-left: 20px;padding-right:40px;}
+.reader_comment>div{position:relative;width: 730px;font-size: 12px;margin-left: 80px;}
+.score{position: relative;float: right;padding-right: 40px;}
+
+
+

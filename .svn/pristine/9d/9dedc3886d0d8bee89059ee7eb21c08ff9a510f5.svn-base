@@ -1,0 +1,65 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+<link href="${pageContext.request.contextPath}/frontstage/js/JMEditor/style/default.css" rel="stylesheet" media="screen" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/jquery-1.8.3.min.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/JMEditor.js"></script>
+
+ <style>
+#cke_profile{margin-left:60px;}
+</style> 
+<div align="center" style="padding: 5px;overflow: hidden;">
+	<form id="courseDetail" >
+		<input type="hidden" name="id" value="${userAppraiseView.id }"/>
+		<input type="hidden" name="course_id" value="${userAppraiseView.course_id }"/>
+		<input type="hidden" name="user_id" value="${userAppraiseView.user_id }"/>
+	        <h3>详细信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="button" value="返回" onclick="location.href='javascript:history.go(-1);'"/> </h3>
+	        <div >
+	            <p>
+	               <label>课程名称</label>
+	               <input type="text" name="courseName" disabled="disabled" value="${userAppraiseView.courseName }">
+	            </p>
+	        </div>
+	        <div>
+	            <label>评价内容</label> &nbsp;<label>状态：</label>
+	               <c:choose>
+	               <c:when test="${userAppraiseView.status eq 0 }">启用</c:when>
+	               <c:otherwise>禁止</c:otherwise>                                                        
+	               </c:choose>
+	           	<div id="appraise_content" style="width:500px;height:150px;margin-left:120px;"
+	           		contentEditable="true" class="editDemo" disabled="disabled"></div> 
+	           	<input type="hidden" name="appraise_content" disabled="disabled"  value="${userAppraiseView.appraise_content }">
+	        </div>
+	        &nbsp;
+	        <div >
+	         <p>
+	            <label>作者</label>
+	            <input type="text" name="authorName" disabled="disabled" value="${userAppraiseView.authorName }">
+	            &nbsp;
+	            <label>评分</label>
+	            <input type="text" name="score" disabled="disabled"  value="${userAppraiseView.score }分">
+	            &nbsp;
+	            <label>评价时间</label>
+	            <input type="text" name="appraise_time" disabled="disabled" value="${userAppraiseView.appraise_time }">
+	         </p>
+	        </div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(function(){
+	    var profileVal = $("input[name='appraise_content']").val();
+	    //给JMEditor赋值
+	    var editor = CKEDITOR.replace("appraise_content",{
+	 		skin: "moono-lisa",width:540, height:150,margin:"0,0,0,120"
+	    });
+		if(profileVal!=''){
+			editor.setData(profileVal);
+		}
+	       
+	     $("#cke_profile").blur(function(){
+	 		$("input[name='appraise_content']").val(JMEditor.html('appraise_content'));
+	   	});
+	})
+   
+</script>

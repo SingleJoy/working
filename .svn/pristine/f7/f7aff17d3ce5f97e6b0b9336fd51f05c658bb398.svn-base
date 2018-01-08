@@ -1,0 +1,55 @@
+package cn.bnsr.edu_yun.backstage.base.view;
+
+public class RoleView extends PageBase{
+	private Long id;
+	private String name;
+	private String remarks;
+	private String ids;
+	private String authIds;
+	private String authNames;
+	private Integer level;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	public String getAuthIds() {
+		return authIds;
+	}
+	public void setAuthIds(String authIds) {
+		this.authIds = authIds;
+	}
+	public String getAuthNames() {
+		return authNames;
+	}
+	public void setAuthNames(String authNames) {
+		this.authNames = authNames;
+	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	
+}

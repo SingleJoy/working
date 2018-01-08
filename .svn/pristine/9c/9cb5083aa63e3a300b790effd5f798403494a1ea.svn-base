@@ -1,0 +1,184 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.frontstage.train.mapper.CourseHourMapper;
+import cn.bnsr.edu_yun.frontstage.train.mapper.TopicQuestionMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicQuestion;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicQuestionService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.TopicQuestionView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class TopicQuestionServiceImpl implements TopicQuestionService {
+
+	@Autowired
+	private TopicQuestionMapper topicQuestionMapper;
+	
+	@Autowired
+	private CourseHourMapper courseHourMapper;
+	
+
+	@Override
+	public int selectCountByCourseId(long course_id,int type,int elite) {
+
+		return topicQuestionMapper.selectCountByCourseId(course_id,type,elite);
+	}
+
+	@Override
+	public List<TopicQuestion> selectByCourseId(long course_id,int type,int elite, String sort,
+			long start, long pageSize) {
+
+		return topicQuestionMapper.selectByCourseId(course_id,type,elite, sort, start, pageSize);
+	}
+
+	@Override
+	public int insert(TopicQuestion topicQuestion) {
+
+		return topicQuestionMapper.insertSelective(topicQuestion);
+	}
+
+	@Override
+	public int update(TopicQuestion topicQuestion) {
+
+		return topicQuestionMapper.updateByPrimaryKeySelective(topicQuestion);
+	}
+
+	@Override
+	public TopicQuestion selectById(long id) {
+
+		return topicQuestionMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<TopicQuestion> selectByCourseHourId(long course_hour_id,
+			String sort, long start, long pageSize) {
+		
+		return topicQuestionMapper.selectByCourseHourId(course_hour_id, sort, start, pageSize);
+	}
+
+	@Override
+	public List<TopicQuestionView> queryQuestion(
+			TopicQuestionView topicQuestionView) {
+		return topicQuestionMapper.queryStudentsAsk(topicQuestionView);
+	}
+
+	@Override
+	public int queryTotalQuestion(TopicQuestionView topicQuestionView) {
+		return topicQuestionMapper.queryTotalQuestion(topicQuestionView);
+	}
+
+
+	@Override
+	public DataGrid datagrid(TopicQuestionView topicQuestionView) {
+		DataGrid j = new DataGrid();
+		topicQuestionView.setPage(NumUtil.startingNum(topicQuestionView.getPage(),topicQuestionView.getRows()));
+		List<TopicQuestionView> list = topicQuestionMapper.search(topicQuestionView);
+		if(list!=null&&list.size()>0){
+			for(TopicQuestionView qaView:list){
+				if(qaView.getCourseHourId()!=null){
+					qaView.setCourseHourName(recursiveParentName(qaView.getCourseHourId()));
+				}
+			}
+		}
+		j.setRows(list);
+		j.setTotal(topicQuestionMapper.count(topicQuestionView));
+		return j;
+	}
+	
+	/*
+	 * 递归获取Course_hour_name的父名
+	 */
+	private String recursiveParentName(Long id) {
+		CourseHour courseHour = courseHourMapper.selectByPrimaryKey(id);
+		if(courseHour!=null){
+			Long parent_id = courseHour.getParent_id();
+			String hour_title = courseHour.getHour_title();
+			if(parent_id!=0){
+				return recursiveParentName(parent_id)+":"+hour_title;
+			}else{
+				return hour_title;
+			}
+		}
+		return null;
+	}
+
+
+	@Override
+	public void delete(String ids) {
+		if(ids!=null){
+			for(String id:ids.split(",")){
+				topicQuestionMapper.deleteByPrimaryKey(Long.parseLong(id.trim()));
+			}
+		}
+		
+	}
+
+	@Override
+	public TopicQuestionView getById(Long id) {
+		TopicQuestionView qaView = topicQuestionMapper.getById(id);
+		if(qaView!=null){
+			if(qaView.getCourseHourId()!=null){
+				qaView.setCourseHourName(recursiveParentName(qaView.getCourseHourId()));
+			}
+			return qaView;
+		}
+		return null; 
+	}
+
+
+	@Override
+	public List<TopicQuestionView> queryUserStudentsAsk(
+			TopicQuestionView topicQuestionView) {
+		
+		return topicQuestionMapper.queryUserStudentsAsk(topicQuestionView);
+	}
+
+	@Override
+	public int queryUserTotalQuestion(TopicQuestionView topicQuestionView) {
+		
+		return topicQuestionMapper.queryUserTotalQuestion(topicQuestionView);
+	}
+
+	@Override
+	public int delete(TopicQuestion topicQuestion) {
+		
+		return topicQuestionMapper.deleteByPrimaryKey(topicQuestion.getId());
+	}
+
+	@Override
+	public int countAllTopicQuestion(TopicQuestion topicQuestion) {
+		
+		return topicQuestionMapper.countUserQuestion(topicQuestion);
+	}
+
+	@Override
+	public List<TopicQuestionView> queryTopic(TopicQuestionView topicQuestionView) {
+		
+		return topicQuestionMapper.queryTopic(topicQuestionView);
+	}
+
+	@Override
+	public List<TopicQuestionView> queryTopicCommunity(CommunityCenterView communityCenterView) {
+		
+		return topicQuestionMapper.queryTopicCommunity(communityCenterView);
+	}
+
+	@Override
+	public int queryTopicCommunityCount(CommunityCenterView communityCenterView) {
+		
+		return topicQuestionMapper.queryTopicCommunityCount(communityCenterView);
+	}
+
+	@Override
+	public int queryTopicCount(TopicQuestionView topicQuestionView) {
+		
+		return topicQuestionMapper.queryTopicCount(topicQuestionView);
+	}
+
+
+}

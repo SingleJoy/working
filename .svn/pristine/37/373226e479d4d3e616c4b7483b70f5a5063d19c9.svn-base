@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>作业未批阅</title>
+    <link href="./edusoho/bootstrap.css" rel="stylesheet">
+    <link href="./edusoho/es-question.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body>
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="question-set homework-set">
+            <div class="row question-set-heading">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="question-set-type">作业</div>
+                            <div class="question-set-title">7777</div>
+                            <div class="homwork-status">
+                                <div class="pull-right label label-success" style="margin-left:10px;">批改中</div>   
+                            </div>
+                            <div class="question-set-description">
+                                <p>111111</p>
+                                <p class="text-muted">所属课程 <a href="">ceshi</a></p>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row question-set-body">
+                <div class="col-md-9 question-set-main">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">作业题目 <small class="text-muted">共1题</small></div>
+                        <div class="panel-body">
+                            <div class="question-set-items">
+                                <div id="homework-question1" class="question-set-item">
+                                    <div class="question-set-item-side">
+                                        <span class="question-set-item-seq">1</span>
+                                    </div>
+                                    <div class="question-set-item-main">
+                                        <div class="question question-essay question-3">
+                                            <div class="question-heading editor-text">  
+                                                <p>12www</p>
+                                            </div>
+                                            <div class="question-body clearfix">
+                                                <div class="question-eassy-form-control">
+                                                    <div class="question-eassy-answer">
+                                                        <strong>学员回答:
+                                                        </strong>
+                                                    </div>
+                                                    <p></p><p>qweqweqweqweq</p>
+                                                    <p></p>
+                                                </div>
+                                                <div class="question-eassy-form-control">
+                                                    <div class="question-eassy-rightanswer">
+                                                        <strong>正确答案</strong>
+                                                    </div> 
+                                                    <p class="question-text-success"></p><p>qwqqdqw</p>
+                                                    <p></p>
+                                                </div>
+                                                <div class="question-eassy-form-control question-teacher-say-input">
+                                                    <div class="teacher-say-text">评语:</div>
+                                                    <textarea class="form-control  teacher-say" name=""></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="question-footer"></div>
+                                        </div>
+                                    </div>
+                                </div>                                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 question-set-side">
+                    <div class="panel panel-default question-set-card affix-top" style="top: 165px;">
+                        <div class="panel-body"><a href="#homework-question1" class="question-index for-question-3 ">1</a></div>
+                        <div class="panel-footer">
+                            <button class="btn btn-success btn-block" >完成批改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

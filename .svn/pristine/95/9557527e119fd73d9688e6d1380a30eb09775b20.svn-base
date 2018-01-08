@@ -1,0 +1,377 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/sortable.js"></script>
+
+
+<div class="es-wrap">
+
+	<div id="content-container" class="container">
+
+		<jsp:include page="train_header.jsp"></jsp:include>
+
+		<div class="row">
+
+			<jsp:include page="train_left.jsp"></jsp:include>
+
+			<div class="col-md-9">
+				<div class="panel panel-default panel-col lesson-manage-panel">
+
+					<div class="panel-heading">
+						<div class="pull-right">
+							<c:if test="${trainView.status !=1 }">
+								<button class="btn btn-info btn-sm"  data-toggle="modal" onclick="chooseCourse(0,1);"><i class="glyphicon glyphicon-plus"></i> 添加课程</button>
+								<button class="btn btn-info btn-sm"  data-toggle="modal" data-target="#modify-course"><i class="glyphicon glyphicon-plus"></i> 修改课程类型</button>
+							</c:if>
+						</div>
+						课程管理
+					</div>
+
+					<div class="panel-body">
+						<div class="alert alert-info" style="padding: 8px;">拖拽并保存可以改变课程排列顺序!</div>
+						<div class="form-group" >
+							<div class="col-md-12 controls" >
+								<ul class="course-list-group sortable-list course-wide-list courses-selected" id="foo" >
+									<c:forEach items="${tcList}" var="trainCourse">
+										<li class="course-item  clearfix compulsory-course-list">
+											<input type="hidden" name="train_course_id" value="${trainCourse.course_id}" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+											<input type="hidden" name="id" value="${trainCourse.id}" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+											<span class="glyphicon glyphicon-resize-vertical sort-handle sort" style="padding: 50px 20px 0 20px;"></span>
+											<a class="course-picture-link" href="javascript:void (0);" target="_blank">
+												<img class="course-picture" src="${pageContext.request.contextPath}${trainCourse.img }" style="max-height:120px;">
+											</a>
+											<c:if test="${trainView.status !=1 }">
+												<button class="close delete-btn pull-right mrl mts mll"  type="button" onclick="delTrainCourse(${trainCourse.id},${trainView.id});" title="删除" style="font-size:35px;">× </button>
+											</c:if>
+											<div class="course-body">
+
+												<h4 class="course-title ">
+													<a href="javascript:void (0);" target="_blank">${trainCourse.title }</a>
+												</h4>
+												<span class="pull-left">创建者:${trainCourse.username }</span>
+												<div class="course-footer clearfix">
+
+													<div class="course-metas">
+
+														<c:if test="${trainCourse.is_required==0}">
+															<span class="text-muted text-sm text-danger">必修课程</span>
+														</c:if>
+														<c:if test="${trainCourse.is_required==1}">
+															<span class="text-muted text-sm text-info">选修课程</span>
+														</c:if>
+
+														<span class="divider"></span>
+														<span class="text-muted text-sm">${trainCourse.hourNum}个学时</span>
+
+													</div>
+
+												</div>
+
+											</div>
+										</li>
+									</c:forEach>
+								</ul>
+							</div>
+						</div>
+						<c:if test="${!empty tcList }">
+
+						</c:if>
+						<div class="form-group">
+							<div class="col-md-offset-9 col-md-3 controls">
+								<form id="saveTrainCourse" action="${pageContext.request.contextPath}/train_course/save_train_course.action" method="post">
+									<input type="hidden" name="sign" id="sign" value="${trainView.sign}" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+									<input type="hidden" name="flag" id="flag" value="${trainView.flag}" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+									<input type="hidden" name="source_id"  value="${trainView.id}" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+									<input type="hidden" name="source_type"  value="0" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/><!--培训-->
+									<input type="hidden" name="courseIds" id="courseIds" value="" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+									<input type="hidden" name="ids" id="ids" value="" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+									<input type="hidden" name="seqs" id="seqs" value="" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+									<input type="hidden" name="requireds" id="requireds" value="" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>/>
+								</form>
+								<c:if test="${!empty tcList }">
+									<c:if test="${trainView.status !=1 }">
+										<button type="button" onclick="doUpdate(0);" class="btn btn-fat btn-primary pull-right">保存修改</button>
+									</c:if>
+								</c:if>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+
+<!--添加课程-->
+<div id="add-course" class="modal"  data-toggle="modal" style="display: none;">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">选择课程</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info" role="alert">
+					加入班级的课程为选中的原课程复制生成，并与原课程实时同步更新。如需解除同步，请对该课程进行编辑。
+				</div>
+
+				<form class="form-inline form-search" role="search-form">
+					<div class="form-group ">
+						<input type="text" class="form-control" name="courseTitle" id="courseTitle" value="" placeholder="课程名称" >
+					</div>
+					<button type="button" class="btn btn-primary" onclick="chooseCourse(1,0);">搜索</button>
+					<a class="btn btn-primary" href="javascirpt:void(0);" onclick="chooseAll();">全部课程</a>
+				</form>
+
+				<div class="row mtl">
+					<div class="col-md-12">
+						<div class="courses-list">
+							<input type="hidden" id="chooseId" value=""/>
+							<input type="hidden" name="page" id="page" value="0"/>
+							<table class="table table-condensed">
+								<thead>
+								<tr>
+									<th></th>
+									<th width="50%">课程</th>
+									<th>主讲教师</th>
+								</tr>
+								</thead>
+								<tbody id="courseContent"></tbody>
+							</table>
+							<!--翻页-->
+							<nav class="text-center">
+								<div id="test" class="pager">
+								</div>
+							</nav>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="addCourse();" class="btn btn-primary pull-right" >添加</button>
+				<button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--修改课程类型-->
+<div id="modify-course" class="modal"  data-toggle="modal" style="display: none;">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">修改课程类型</h4>
+			</div>
+
+			<div class="modal-body">
+
+				<table class="table table-striped ">
+					<thead>
+					<tr>
+						<th>课程名称</th>
+						<th>课程类型</th>
+					</tr>
+					</thead>
+					<tbody>
+					<c:forEach items="${tcList}" var="trainCourse">
+						<tr>
+							<td>${trainCourse.title}</td>
+							<td>
+								<div >
+									<label class="checkbox-inline">
+										<input type="radio" value="0" name="course_type${trainCourse.id}" <c:if test="${trainCourse.is_required==0}" >checked="checked"</c:if>> 必修课程
+										<input type="radio" value="1"  name="course_type${trainCourse.id}" <c:if test="${trainCourse.is_required==1}" >checked="checked"</c:if> > 选修课程
+									</label>
+								</div>
+							</td>
+						</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="doUpdate(1);" class="btn btn-primary pull-right" >保存</button>
+				<button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	//选择课程
+	function chooseCourse(value,typeFlag){
+		var page = $("#page").val();
+		if(value==0){
+			page=0;
+			$("#courseTitle").val("");
+			$("#add-course").modal();
+		}
+
+		//已选择的课程
+		var a = document.getElementsByName("train_course_id");
+		var courseIds = "";
+		for(var i = 0;i<a.length;i++){
+			courseIds += a[i].value + ",";
+		}
+
+		//搜索
+		var  courseTitle = $("#courseTitle").val();
+
+		$.ajax({
+			url:"${pageContext.request.contextPath}/course/query_all_course.action?ver="+Math.ceil(Math.random()*100),
+			data:{
+				ids : courseIds,
+				title : courseTitle,
+				status : 1,
+				page : page
+			},
+			dataType:'json',
+			success:function(d){
+				if(d==0){//没有课程
+
+				}else{
+					var courseView = d[0].courseView;
+					var courses = d[0].courseList;
+					if(courses.length==0){
+						$(".text-center").hide();
+					}else{
+						$(".text-center").show();
+					}
+					var html="";
+					for(var i=0;i<courses.length;i++){
+						html += ' <tr>'+
+			                    '<td><input type="checkbox" onclick="doChoose('+courses[i].id+');"></td>'+
+			                    '<td>'+courses[i].title+'</td>'+
+			                    '<td>'+courses[i].speaker+'</td>'+
+			                  '</tr>';
+						
+					}
+					$("#courseContent").empty().append(html);
+					$("#page").val(courseView.page);
+					$("#courseTitle").val(courseView.title);
+					if(value==0){//点击触发弹窗按钮 加载 
+						doPages(1,1,courseView.rows,courseView.total);
+					}else if(typeFlag==0){
+						doPages(1,1,courseView.rows,courseView.total);
+					} 
+				}
+			}
+		});
+	}
+
+	function doPages(value,typeFlag,rows,total){
+		//翻页
+		var page =  parseInt($("#page").val())+1;
+		$("#btn5").on('click', function () {
+			$("#div1").PageChanged(5);
+		});
+
+		$(".pager").pagination({
+			thisPageIndex:page,
+			recordCount: total,       //总记录数
+			pageSize: rows,           //一页记录数
+			onPageChange: function (page) {
+				$("#page").val(page-1);
+				chooseCourse(value,typeFlag);
+			}
+		});
+	}
+
+	//搜索全部
+	function chooseAll(){
+		$("#courseTitle").val("");
+		chooseCourse(1,0);
+	}
+	//选中
+	function doChoose(value){
+		var chooseId = $("#chooseId").val();
+		if(chooseId.indexOf(value)==-1){//不包含
+			$("#chooseId").val(value+","+chooseId);
+		}else{//包含
+			$("#chooseId").val(chooseId.replace(value+",","").trim());
+		}
+	}
+
+	//添加选中课程
+	function addCourse(){
+		var chooseId = $("#chooseId").val();
+		if(chooseId!=""){
+			$("#courseIds").val(chooseId);
+			document.getElementById('saveTrainCourse').submit();
+		}else{
+			alert("请选择课程！");
+		}
+	}
+
+	//保存修改课程
+	function doUpdate(value){
+		var a = document.getElementsByName("id");
+		var ids = "";
+		var requireds = "";
+		for(var i = 0;i<a.length;i++){
+			ids += a[i].value + ",";
+			if(value==1){
+				requireds += $("input[name='course_type"+a[i].value+"']:checked").val() + ",";
+			}
+		}
+		$("#ids").val(ids);
+
+		if(value==0){
+			var b = document.getElementsByName("seq");
+			var seqs = "";
+			for(var i = 0;i<b.length;i++){
+				seqs += b[i].value + ",";
+			}
+			$("#seqs").val(seqs);
+		}else{
+			$("#requireds").val(requireds);
+		}
+
+		document.getElementById('saveTrainCourse').submit();
+	}
+	//删除培训课程
+	function delTrainCourse(id,sourceId){
+		var sign = $("#sign").val();
+		var flag = $("#flag").val();
+		var result = confirm("您真的要删除培训课程吗？");
+		if(result){
+			window.location.href="${pageContext.request.contextPath}/train_course/delete_train_course.action?id="+id+"&source_id="+sourceId+"&source_type=0&flag="+flag+"&sign="+sign+"&ver="+Math.ceil(Math.random()*100);
+		}
+
+	};
+	//拖拽
+	(function (){
+		window.x = new Sortable(foo, {
+			group: "words",
+			store: {
+				get: function (sortable) {
+					var order = localStorage.getItem(sortable.options.group);
+					return order ? order.split('|') : [];
+				},
+				set: function (sortable) {
+					var order = sortable.toArray();
+					localStorage.setItem(sortable.options.group, order.join('|'));
+				}
+			},
+			onEnd: function(evt){
+				var a = document.getElementsByName("id");
+				for(var i = 0;i<a.length;i++){
+					$("#trSeq"+a[i].value).val(i+1);
+				}
+			}
+		});
+	})();
+
+
+
+</script>
+
+<%--<jsp:include page="../layout/footer.jsp"></jsp:include>--%>

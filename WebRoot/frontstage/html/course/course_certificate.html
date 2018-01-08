@@ -1,0 +1,256 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <title>证书编辑</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <style>
+        .choose{z-index:100;color:#02b980;font-size:20px;}
+        .certificate_content{margin-left: -30px;}
+        .certificate_content>button{cursor: pointer;}
+        /*.certificate_list>li{width: 150px;}*/
+    </style>
+    <script>
+        $(function(){
+            $(".certificate_content>button").click(function(){
+                $(this).find("span").toggle();
+            })
+        });
+        $(function(){
+            $(".course-wide-list>li").click(function(){
+                $(this).find("div").find("div").find("div").toggle();
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="col-lg-9 col-md-8  course-detail-main" style="margin-top: 50px;">
+
+    <div class="panel panel-default panel-col course-data">
+        <div class="panel-heading">证书编辑
+            <a href="course_certificate_show.html" class="btn btn-info pull-right" target="_blank">查看证书模板</a>
+        </div>
+        <div class="panel-body">
+
+            <form method="post" action=""  class="form-horizontal">
+
+                <div class="form-group">
+                    <!--上传图片触发按钮-->
+                    <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#choose_back_pic">
+                        <i class="glyphicon glyphicon-plus"></i>证书背景图片
+                    </a>
+                    <div class="col-md-2 control-label"><label><span class="text-danger">*</span>证书名称</label></div>
+                    <div class="col-md-8 controls">
+                        <input type="text" class="form-control" name=""  value="" placeholder="证书名" >
+                        <div class="help-block">如:2016年北京市中小学教师培训</div>
+                    </div>
+
+                </div>
+
+                <div class="form-group" style="margin-top: -30px;">
+                    <div class="col-md-offset-2 col-md-8 controls">
+                        <img class="img-responsive" src="http://scc1a8b2s6-static.qiqiuyun.net/assets/img/default/course.png?7.0.0">
+                        <div class="help-block">证书背景图片要求必须1080x800 </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group" >
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span>证书内容:</label>
+                    <div class="col-md-8 controls">
+                        <!--编辑器-->
+                        <textarea  class="form-control" rows="12" placeholder="请输入证书内容"></textarea>
+                        <div class="help-block">如:李明明老师与二零一六年三月至二零一六七月参加
+                            "北京市中小学教师培训"学习,共计20学时,成绩合格,表现突出,特发此证!
+                        </div>
+                        <div class="alert alert-info">
+                            注意:1.证书内容包括证书大标题,小标题,获取整证书学员姓名(用大写XXX代替),证书编号(用大写YYY代替),
+                                 继续教育编号(用大写ZZZ代替),开班时间,截止时间,参加培训名称,完成学时数量,所获学分,主办方;
+                            <br/>
+                           2:您可以多次编译并最后保存提交<br/>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="form-group">
+
+                    <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#choose_seal_pic">
+                        <i class="glyphicon glyphicon-plus"></i>证书印章图片
+                    </a>
+
+                    <div class="col-md-2 control-label"><label><span class="text-danger">*</span>电子印章</label></div>
+                    <div class="col-md-6 controls">
+                        <input type="text"  name="" value="" class="form-control" >
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8 controls">
+                        <img class="img-responsive" src="http://scc1a8b2s6-static.qiqiuyun.net/assets/img/default/course.png?7.0.0" style="width: 150px;height: 150px;">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-2 controls">
+                        <button class="btn btn-fat btn-primary"  type="submit">保存</button>
+                    </div>
+                    <div class="col-md-2 controls">
+                        <button class="btn btn-fat btn-primary"  type="submit">保存并预览</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<!--选择证书背景图片弹窗-->
+<div id="choose_back_pic" class="modal" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">选择证书背景图片</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-info">
+                    同一证书只可选择一张背景图片和印章,同一背景图片或印章可以使用多张证书!证书背景图片和印章上传成功并且审核通过之后才能使用!
+                </div>
+
+
+                <div class="row mtl">
+                    <div class="col-md-12">
+                        <div class="courses-list">
+
+                            <ul class="course-wide-list">
+
+                                <li class="course-item clearfix" >
+                                    <a class="course-picture-link" href="" target="_blank">
+                                        <img class="course-picture" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/09-06/1545095625fe016373.jpg" alt="网校基本设置">
+                                    </a>
+                                    <div class="course-body">
+
+                                        <h4 class="course-title">
+                                            <a href="#" target="_blank">证书背景图片001</a><br/>
+                                            <a href="#" target="_blank">所属课程:"2017年北京市中小学教师培训"</a><br/>
+
+                                        </h4>
+
+                                        <div class="course-footer clearfix">
+
+
+                                            <div class="course-metas-4" style="display: none;">
+                                                <span class="glyphicon glyphicon-ok pull-right" style="z-index:100;color:#02b980;font-size:30px;"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--选择证书背景图片弹窗-->
+<div id="choose_seal_pic" class="modal" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">选择证书印章图片</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-info">
+                    同一证书只可选择一张背景图片和印章,同一背景图片或印章可以使用多张证书!证书背景图片和印章上传成功并且审核通过之后才能使用!
+                </div>
+
+
+                <div class="row mtl">
+                    <div class="col-md-12">
+                        <div class="courses-list">
+
+                            <ul class="course-wide-list">
+
+                                <li class="course-item clearfix" >
+                                    <a class="course-picture-link" href="" target="_blank">
+                                        <img class="course-picture" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/09-06/1545095625fe016373.jpg" alt="网校基本设置">
+                                    </a>
+                                    <div class="course-body">
+
+                                        <h4 class="course-title">
+                                            <a href="#" target="_blank">证书印章图片001</a><br/>
+                                            <a href="#" target="_blank">所属课程:"2017年北京市中小学教师培训"</a><br/>
+
+                                        </h4>
+
+                                        <div class="course-footer clearfix">
+
+
+                                            <div class="course-metas-4" style="display: none;">
+                                                <span class="glyphicon glyphicon-ok pull-right" style="z-index:100;color:#02b980;font-size:30px;"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+package cn.bnsr.edu_yun.frontstage.xbjy.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+import cn.bnsr.edu_yun.frontstage.base.po.Area;
+import cn.bnsr.edu_yun.frontstage.base.po.PubverList;
+import cn.bnsr.edu_yun.frontstage.base.po.SubjectList;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.service.AreaService;
+import cn.bnsr.edu_yun.frontstage.base.service.PubverListService;
+import cn.bnsr.edu_yun.frontstage.base.service.SubjectListService;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityView;
+import cn.bnsr.edu_yun.frontstage.xbjy.po.Lesson;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonUserIdentityService;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonUserIdentityView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.SubjectLessonView;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+@Controller
+@RequestMapping("/lesson_main")
+public class LessonMainController {
+
+	private final Logger log = LoggerFactory.getLogger(LessonMainController.class);
+	@Autowired
+	private LessonService lessonService;
+	@Autowired
+	private PubverListService pubverListService;
+	@Autowired
+	private SubjectListService subjectListService;
+	@Autowired
+	private AreaService areaService;
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private LessonUserIdentityService lessonUserIdentityService;
+
+	/**
+	 * 跳转教研主页
+	 */
+	@RequestMapping("/to_lesson_main")
+	public ModelAndView toLessonMain(HttpServletRequest request, LessonView lessonView) {
+		ModelAndView modelAndView = new ModelAndView();
+
+		if (lessonView.getSort() == null || lessonView.getSort().equals("")) {
+			lessonView.setSort("create_time");
+		}
+		if (lessonView.getList() == null || lessonView.getList().equals("")) {
+			lessonView.setList("finish");
+		}
+		if (lessonView.getPage() == 0) {
+			lessonView.setStartLine(0);
+		} else {
+			lessonView.setStartLine(lessonView.getPage() * lessonView.getRows());
+		}
+		lessonView.setRows(12);
+		int total = lessonService.queryLessonMainCount(lessonView);// 总数
+		lessonView.setTotal(total);
+		// 分页总页数
+		lessonView.setTotalPage(NumUtil.totalPage(total, 12));
+		// 教材版本
+		List<PubverList> editionList = pubverListService.queryPubver(lessonView.getSubject_id());
+		// 科目
+		List<SubjectList> subjectList = subjectListService.querySubject(lessonView.getStage_id());
+		List<LessonView> lessonViews = lessonService.queryLessonMain(lessonView);
+		if (lessonView.getStage_id() == null || lessonView.getStage_id() == "") {
+			subjectList = subjectListService.querySubject("XX");
+		}
+		if (lessonView.getSubject_id() == null || lessonView.getSubject_id() == "") {
+			editionList = pubverListService.queryPubver("XX001");
+		}
+		modelAndView.addObject("editionList", editionList);
+		modelAndView.addObject("subjectList", subjectList);
+		modelAndView.addObject("lessonView", lessonView);
+		modelAndView.addObject("lessonViews", lessonViews);
+		modelAndView.setViewName("frontstage/xbjy/lesson/lesson_main");
+		modelAndView.addObject("head_title", "教研列表");
+		return modelAndView;
+	}
+
+	@RequestMapping("/to_lesson")
+	public ModelAndView toLesson(HttpServletRequest request, LessonView lessonView) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = (User) request.getSession().getAttribute("currentUser");
+		lessonView = lessonService.queryLessonView(lessonView.getId());
+		Lesson lesson = new Lesson();
+		lesson.setScan_count(lessonView.getScan_count() + 1);
+		lesson.setId(lessonView.getId());
+		lessonService.update(lesson);
+		int stamp = 0;
+		if (user != null) {
+			LessonUserIdentityView lessonUserIdentityView = new LessonUserIdentityView();
+			lessonUserIdentityView.setUser_id(user.getId());
+			lessonUserIdentityView.setLesson_id(lessonView.getId());
+			lessonUserIdentityView = lessonUserIdentityService.findUserIdentity(lessonUserIdentityView);
+			if (lessonUserIdentityView.getIdentity() == 0) {
+				stamp = 1;
+			}
+		}
+		if (stamp == 0)
+			modelAndView.setViewName("redirect:/lesson/to_lesson_plan.action?lesson_id=" + lessonView.getId() + "&show=1&stamp=" + stamp + "&state=101");
+		else if (stamp == 1)
+			modelAndView.setViewName("redirect:/lesson/to_lesson_plan.action?lesson_id=" + lessonView.getId() + "&stamp=" + stamp + "&state=101");
+		return modelAndView;
+	}
+
+	@RequestMapping("/to_lesson_home")
+	public ModelAndView toLessonHome(HttpServletRequest request, SubjectLessonView subjectLessonView) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (subjectLessonView.getArea() == null || subjectLessonView.getArea().equals("")) {
+			subjectLessonView.setArea("DQ012");
+		}
+		if (subjectLessonView.getStr() == null) {
+			subjectLessonView.setStr("YW");
+		}
+		String subject_title = subjectLessonView.getSubject_title();
+		String area_id = subjectLessonView.getArea();
+		Area area = areaService.selectByArea_id(area_id);
+		// 名校课例,固定北京，通过ajax改变
+		subjectLessonView.setArea("%DQ012%");
+		List<LessonView> lessonViews2 = lessonService.queryLessonByArea(subjectLessonView);
+		// 社区轮播
+		CommunityView communityView = new CommunityView();
+		communityView.setSort("sort");
+		communityView.setRows(16);
+		communityView.setPaging("1");
+		communityView.setSign(99);
+		communityView.setArea_id("%" + area_id + "%");
+		List<CommunityView> hot = communityService.queryCommunity(communityView);
+		modelAndView.addObject("hot", hot);
+		// 精品推荐课例,1个根据学科分类
+		subjectLessonView.setRows(1);
+		subjectLessonView.setArea("%" + area_id + "%");
+		subjectLessonView.setSort("recommended");// 推荐
+		subjectLessonView.setList("recommended");
+		List<SubjectLessonView> lessonViews = lessonService.queryLessonHome(subjectLessonView);
+		// 优秀课例固定语文，地区随动，通过ajax改变科目，8个
+		subjectLessonView.setSort("excellent");// 优秀
+		subjectLessonView.setList("best");
+		subjectLessonView.setRows(8);
+		subjectLessonView.setStr("YW");
+		List<SubjectLessonView> lessonViews1 = lessonService.queryLessonHome(subjectLessonView);
+		modelAndView.setViewName("frontstage/xbjy/lesson/lesson_home");
+		modelAndView.addObject("head_title", "教研主页");
+		modelAndView.addObject("lessonViews", lessonViews);
+		modelAndView.addObject("lessonViews1", lessonViews1);
+		modelAndView.addObject("lessonViews2", lessonViews2);
+		modelAndView.addObject("area_id", area_id);
+		modelAndView.addObject("area", area);
+		modelAndView.addObject("subject_title", subject_title);
+		return modelAndView;
+	}
+
+	// 获取地区
+	@RequestMapping("/ajax_area")
+	public void getArea(HttpServletResponse response, HttpServletRequest request, String area_id) throws Exception {
+		JSONObject result = new JSONObject();
+		SubjectLessonView subjectLessonView = new SubjectLessonView();
+		subjectLessonView.setArea("%" + area_id + "%");
+		List<LessonView> lessonViews = lessonService.queryLessonByArea(subjectLessonView);
+		// 社区轮播
+		CommunityView communityView = new CommunityView();
+		communityView.setSort("sort");
+		communityView.setRows(16);
+		communityView.setPaging("1");
+		communityView.setSign(99);
+		communityView.setArea_id("%" + area_id + "%");
+		List<CommunityView> hot = communityService.queryCommunity(communityView);
+		result.put("lessonViews", lessonViews);
+		result.put("hot", hot);
+		ResponseUtil.write(response, result);
+	}
+
+	// 获取科目
+	@RequestMapping("/ajax_subject")
+	public void getSubject(HttpServletResponse response, HttpServletRequest request, String str, String area_id) throws Exception {
+		JSONObject result = new JSONObject();
+		SubjectLessonView subjectLessonView = new SubjectLessonView();
+		subjectLessonView.setSort("excellent");// 优秀
+		subjectLessonView.setList("best");
+		subjectLessonView.setRows(8);
+		subjectLessonView.setStr(str);
+		subjectLessonView.setArea("%" + area_id + "%");
+		List<SubjectLessonView> lessonViews = lessonService.queryLessonHome(subjectLessonView);
+		result.put("lessonViews", lessonViews);
+		ResponseUtil.write(response, result);
+	}
+}

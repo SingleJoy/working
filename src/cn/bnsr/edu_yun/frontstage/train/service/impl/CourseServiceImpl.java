@@ -1,0 +1,377 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.frontstage.base.po.Label;
+import cn.bnsr.edu_yun.frontstage.resource.view.SearchView;
+import cn.bnsr.edu_yun.frontstage.train.mapper.CourseMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.CertModelPicture;
+import cn.bnsr.edu_yun.frontstage.train.po.Class;
+import cn.bnsr.edu_yun.frontstage.train.po.ClassRelation;
+import cn.bnsr.edu_yun.frontstage.train.po.Course;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseInfo;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseLabelRelation;
+import cn.bnsr.edu_yun.frontstage.train.po.TeacherRelation;
+import cn.bnsr.edu_yun.frontstage.train.service.CertModelPictureService;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseInfoService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseLabelRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TeacherRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserAppraiseService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.SchoolCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserCollectView;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class CourseServiceImpl implements CourseService{
+	@Autowired
+	private CourseMapper courseMapper;
+	@Autowired
+	private CourseInfoService courseInfoService;
+	@Autowired
+	private TeacherRelationService teacherRelationService;
+	@Autowired
+	private CourseLabelRelationService courseLabelRelationService;
+	@Autowired
+	private ClassService classService;
+	@Autowired
+	private ClassRelationService classRelationService;
+	@Autowired
+	private UserAppraiseService userAppraiseService;
+
+	@Autowired
+	private CertModelPictureService  certModelPictureService;
+	
+	@Override
+	public List<CourseView> queryCourse(CourseView courseView) {
+		return courseMapper.queryCourse(courseView);
+	}
+	
+	@Override
+	public int queryTotalCourse(CourseView courseView) {
+		return courseMapper.queryTotalCourse(courseView);
+	}
+
+	@Override
+	public Long createCourse(String title,Long userId,int type,String room_id) {
+		Course course = new Course();
+		course.setTitle(title);
+		course.setRoom_id(room_id);
+		course.setCreate_time(new Date());
+		course.setUser_id(userId);
+		course.setStatus(0);//未发布
+		course.setType(type);
+		courseMapper.insertSelective(course);
+		
+		CourseInfo courseInfo = new CourseInfo();
+		courseInfo.setCourse_id(course.getId());
+		courseInfo.setPrice(0.0);
+		courseInfo.setIs_recommend(1);//默认未推荐
+		CertModelPicture defaultImg = certModelPictureService.getDefaultImg(3);
+		courseInfo.setImg(defaultImg.getPath());
+		courseInfo.setIs_default_img(0);
+		courseInfoService.insertCourseInfo(courseInfo);
+		
+		course.setCourse_info_id(courseInfo.getId());
+		courseMapper.updateByPrimaryKeySelective(course);
+		
+		TeacherRelation teacherRelation = new TeacherRelation();
+		teacherRelation.setSource_id(course.getId());
+		teacherRelation.setSource_type(0);
+		teacherRelation.setIs_display(0);//显示
+		teacherRelation.setSeq(0);
+		teacherRelation.setType(2);//班主任
+		teacherRelation.setUser_id(userId);
+		teacherRelationService.insertTeacherRelation(teacherRelation);
+		
+		if(type!=2){//不是直播课  创建该课程的培训班级
+	        Class c = new Class();
+			c.setName("培训班级");
+			c.setClasses("0000");
+			c.setType(2);
+			c.setSign_up(0);
+			c.setStatus(1);//已发布
+			classService.saveClass(c);
+			
+			//保存班级关联
+			ClassRelation cr = new ClassRelation();
+			cr.setSource_id(course.getId());
+			cr.setSource_type(0);
+			cr.setClass_id(c.getId());
+			classRelationService.saveClassRelation(cr);
+		}
+		return course.getId();
+	}
+
+	@Override
+	public void saveCourse(CourseView courseView) {
+		Course course = new Course();
+		BeanUtils.copyProperties(courseView, course);
+		course.setValidity(0);
+		courseMapper.updateByPrimaryKeySelective(course);
+		
+		 if(!courseView.getLabelId().equals("")){//课程标签不为空
+  			String labelIds = courseView.getLabelId();
+  			if(!labelIds.equals("0")){//已选择标签
+  				//删除该课程关联标签 之后重新添加
+  				courseLabelRelationService.deleteCourseRelation(course.getId());
+  				labelIds = labelIds.substring(0, labelIds.length()-1);
+  				if(labelIds.contains("-")){//多个标签
+  					String[] labelStr = labelIds.split("-");
+  					for(int j=0;j<labelStr.length;j++){
+						CourseLabelRelation clr = new CourseLabelRelation();
+						clr.setCourse_id(course.getId());
+						clr.setCourse_label_id(Long.parseLong(labelStr[j]));
+						courseLabelRelationService.insert(clr);
+  					}
+  				}else{//单个标签
+					CourseLabelRelation clr = new CourseLabelRelation();
+					clr.setCourse_id(course.getId());
+					clr.setCourse_label_id(Long.parseLong(labelIds));
+					courseLabelRelationService.insert(clr);
+  				}
+  			}
+	  	}
+	}
+
+	@Override
+	public CourseView queryCourseInfo(CourseView courseView) {
+		CourseView cv = new CourseView();
+		List<CourseView> cvList = courseMapper.queryCourseInfo(courseView);
+		if(cvList!=null && cvList.size()>0){
+			cv = cvList.get(0);
+		}
+		//查询课程相关标签
+		List<Label> labelList = courseLabelRelationService.getByCourseId(courseView.getId());
+		String labelId = "";
+		String labelName = "";
+		for(Label label : labelList ){
+			labelId += label.getId()+"-";
+			labelName += label.getLabel_name()+" ";
+		}
+		if(!labelId.equals("")){
+			cv.setLabelId(labelId);
+			cv.setLabelName(labelName);
+		}
+		cv.setFlag(courseView.getFlag());
+		cv.setSign(courseView.getSign());
+		return cv;
+	}
+
+	@Override
+	public void releaseCourse(String id) {
+		Course course = new Course();
+		course.setId(Long.parseLong(id));
+		course.setStatus(1);//发布
+		courseMapper.releaseCourse(course);
+	}
+
+	@Override
+	public Course getById(Long courseId) {
+		return courseMapper.selectByPrimaryKey(courseId);
+	}
+
+	@Override
+	public DataGrid datagrid(CourseView courseView) {
+		DataGrid j = new DataGrid();
+		courseView.setPage(NumUtil.startingNum(courseView.getPage(),courseView.getRows()));
+		j.setRows(find(courseView));
+		j.setTotal(total(courseView));
+		return j;
+	}
+
+	private List<CourseView> find(CourseView courseView) {
+		return courseMapper.find(courseView);
+	}
+
+	private Long total(CourseView courseView) {
+		return courseMapper.count(courseView);
+	}
+
+	@Override
+	public void updateStatus(CourseView courseView) {
+		Course course = courseMapper.selectByPrimaryKey(courseView.getId());
+		course.setStatus(Integer.parseInt(courseView.getStatus()));
+		courseMapper.updateByPrimaryKeySelective(course);
+	}
+
+	@Override
+	public List<SchoolCenterView> querySchoolCourse(SchoolCenterView view) {
+		
+		return courseMapper.querySchoolCourse(view);
+	}
+
+	@Override
+	public int querySchoolCourseCount(SchoolCenterView view) {
+		
+		return courseMapper.querySchoolCourseCount(view);
+	}
+
+	@Override
+	public List<SchoolCenterView> querySchoolTeacher(SchoolCenterView view) {
+		
+		return courseMapper.querySchoolTeacher(view);
+	}
+
+	@Override
+	public int querySchoolTeacherCount(SchoolCenterView view) {
+		
+		return courseMapper.querySchoolTeacherCount(view);
+	}
+
+	@Override
+	public List<SchoolCenterView> querySchoolResourse(SchoolCenterView view) {
+		
+		return courseMapper.querySchoolResourse(view);
+	}
+
+	@Override
+	public int querySchoolResourseCount(SchoolCenterView view) {
+		
+		return courseMapper.querySchoolResourseCount(view);
+	}
+
+	@Override
+	public List<CourseCenterView> queryCourseCenter(CourseCenterView ccv) {
+		/*if(!ccv.getClassifyId().equals("-1")){
+			List<String> classifyIds = new ArrayList<String>();
+			classifyIds.add(ccv.getClassifyId().toString());
+			if(ccv.getIsParent().equals("0")){//父分类
+				List<Classify> sonClassify = classifyService.queryByParentId(ccv.getClassifyId().toString());
+				for(Classify c:sonClassify){
+					classifyIds.add(c.getId().toString());
+				}
+			}
+			ccv.setClassifyIds(classifyIds);
+		}*/
+		return courseMapper.queryCourseCenter(ccv);
+	}
+
+	@Override
+	public int queryTotalCourseCenter(CourseCenterView ccv) {
+		return courseMapper.queryTotalCourseCenter(ccv);
+	}
+
+	@Override
+	public List<CourseView> getByCourseIds(List<String> list) {
+		return courseMapper.getByCourseIds(list);
+	}
+
+	@Override
+	public List<CourseView> queryClassifyCourse() {
+		return courseMapper.queryClassifyCourse();
+	}
+
+	@Override
+	public List<CommunityCenterView> queryCommunityCourse(CommunityCenterView ccv) {
+		return courseMapper.queryCommunityCourse(ccv);
+	}
+
+	@Override
+	public int queryTotalCommunityCourse(CommunityCenterView ccv) {
+		return courseMapper.queryTotalCommunityCourse(ccv);
+	}
+
+	@Override
+	public List<CommunityCenterView> queryMyCommunityCourse(
+			CommunityCenterView ccv) {
+		return courseMapper.queryMyCommunityCourse(ccv);
+	}
+
+	@Override
+	public int queryTotalMyCommunityCourse(CommunityCenterView ccv) {
+		return courseMapper.queryTotalMyCommunityCourse(ccv);
+	}
+
+	@Override
+	public List<CourseView> queryMyJoinCourse(CourseView courseView) {
+		
+		return courseMapper.queryMyJoinCourse(courseView);
+	}
+
+	@Override
+	public int queryMyJoinCourseCount(CourseView courseView) {
+		
+		return courseMapper.queryMyJoinCourseCount(courseView);
+	}
+
+
+	@Override
+	public List<SearchView> querySearch(SearchView searchView) {
+		int source_type=searchView.getSource_type();
+		List<SearchView> searchList=courseMapper.querySearch(searchView);
+		if(source_type<4)
+		for(SearchView searchView2:searchList){
+			if(source_type>1){
+				source_type++;
+			}
+			long totalAppraise = userAppraiseService.selectCountBySourceId(searchView2.getSource_id(), source_type);
+			Integer totalScore = userAppraiseService.selectTotalScore(searchView2.getSource_id(), source_type);
+			if (totalAppraise != 0 && totalScore != null) {
+				searchView2.setScore((int) (totalScore / totalAppraise));
+			} else {
+				searchView2.setScore(0);
+			}
+		}
+		
+		return searchList;
+	}
+
+	@Override
+	public int querySearchCount(SearchView searchView) {
+		
+		return courseMapper.querySearchCount(searchView);
+	}
+
+
+	@Override
+	public DataGrid generalCourseDatagrid(CourseView courseView) throws ParseException {
+		DataGrid j = new DataGrid();
+		String endTiem = courseView.getEndTime();
+		if(endTiem!=null&&endTiem.length()>0){
+			courseView.setEndTime(TimeUtil.afterNDay(endTiem, 1));
+		}
+		courseView.setPage(NumUtil.startingNum(courseView.getPage(),courseView.getRows()));
+		List<CourseView> list = courseMapper.queryGenralCourse(courseView);
+		j.setRows(list);
+		Long total = courseMapper.countGenralCourse(courseView);
+		j.setTotal(total);
+		return j;
+	}
+
+	@Override
+	public List<CourseView> queryCourseRanking(String sort) {
+		return courseMapper.queryCourseRanking(sort);
+	}
+
+	@Override
+	public List<UserCollectView> searchCourceM(String str) {
+		
+		return courseMapper.searchCourceM(str);
+	}
+
+	@Override
+	public List<CourseView> queryCreateCourseOfPersonal(CourseView courseView) {
+		// TODO Auto-generated method stub
+		return courseMapper.queryCreateCourseOfPersonal(courseView);
+	}
+
+	@Override
+	public int queryTotalCreateCourseOfPersonal(CourseView courseView) {
+		// TODO Auto-generated method stub
+		return courseMapper.queryTotalCreateCourseOfPersonal(courseView);
+	}
+
+
+}

@@ -1,0 +1,429 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.tiku.view.ExamView;
+import cn.bnsr.edu_yun.frontstage.train.mapper.CertificateMapper;
+import cn.bnsr.edu_yun.frontstage.train.mapper.ClassBelongsMapper;
+import cn.bnsr.edu_yun.frontstage.train.mapper.ClassMapper;
+import cn.bnsr.edu_yun.frontstage.train.mapper.ClassPasswordMapper;
+import cn.bnsr.edu_yun.frontstage.train.mapper.TeacherRelationMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.Class;
+import cn.bnsr.edu_yun.frontstage.train.po.ClassBelongs;
+import cn.bnsr.edu_yun.frontstage.train.po.ClassPassword;
+import cn.bnsr.edu_yun.frontstage.train.po.ClassRelation;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.po.TeacherRelation;
+import cn.bnsr.edu_yun.frontstage.train.po.UserClassHour;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudy;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserClassHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyService;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassData;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassTestView;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassView;
+import cn.bnsr.edu_yun.frontstage.train.view.TeacherView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+import cn.bnsr.edu_yun.frontstage.train.view.TutorClassView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserTotalScoreView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class ClassServiceImpl implements ClassService {
+
+	@Autowired
+	private ClassMapper classMapper;
+	@Autowired
+	private ClassPasswordMapper classPasswordMapper;
+	@Autowired
+	private TeacherRelationMapper teacherRelationMapper;
+	@Autowired
+	private ClassRelationService classRelationService;
+	@Autowired
+	private UserStudyService userStudyService;
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private UserClassHourService userClassHourService;
+	@Autowired
+	private CertificateMapper certificateMapper;
+	@Autowired
+	private ClassBelongsMapper classBelongsMapper;
+	
+	@Override
+	public List<ClassView> find(ClassView classView) {
+		return classMapper.find(classView);
+	}
+
+	@Override
+	public void delete(Long[] ids) {
+		if(ids!=null){
+			for(Long id:ids){
+				if(id!=null){
+					Class c = new Class();
+					c.setId(id);
+					c.setStatus(5);
+					classMapper.updateByPrimaryKeySelective(c);
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public void update(ClassView classView) {
+		Class class1 = new Class();
+		BeanUtils.copyProperties(classView, class1);
+		classMapper.updateByPrimaryKeySelective(class1);
+
+	}
+
+	@Override
+	public Integer countClass(ClassView classView) {
+		return classMapper.countClass(classView);
+	}
+
+	@Override
+	public String getCurrentClasses(ClassView classView) {
+		String lastClasses = classMapper.getLastClasses(classView);
+		if(lastClasses!=null){
+			Integer s = Integer.parseInt(lastClasses)+1;
+			StringBuilder sb = new StringBuilder();
+			for(int i=0;i<lastClasses.length()-String.valueOf(s).length();i++){
+				sb.append("0");
+			}
+			lastClasses = sb.toString()+s;
+		}else{
+			lastClasses = "0001";
+		}
+		return lastClasses;
+	}
+
+	@Override
+	public void saveAll(ClassView classView) {
+        Class c = new Class();
+        BeanUtils.copyProperties(classView, c);
+        classMapper.insertSelective(c);
+        Long classId = classMapper.getLastId();
+        Long sourceId = classView.getSource_id();
+        Integer sourceType = classView.getSource_type();
+        System.out.println("source_type"+sourceType);
+        Integer sign_up = classView.getSign_up();
+        Integer maximum = classView.getMaximum();
+        
+        if(classView.getCommunityType()==0||classView.getCommunityType()==1){
+	        //课程分类
+			ClassBelongs classBelongs = new ClassBelongs();
+			classBelongs.setClass_id(classId);
+			classBelongs.setClassify_relation_id(classView.getClassifyId());
+			classBelongs.setCreate_time(new Date());
+			classBelongs.setSource_id(classView.getCommunityId());
+			classBelongs.setSource_type(classView.getCommunityType());
+			classBelongs.setStatus(0);
+			classBelongs.setType(classView.getType());
+			classBelongsMapper.insert(classBelongs);
+        }
+        if(sign_up!=null&&maximum!=null&&sign_up!=0&&maximum!=0){//保存密码
+        	for(int i=0;i<maximum;i++){
+        		ClassPassword password = new ClassPassword();
+        		password.setClass_id(classId);
+        		password.setCode(NumUtil.getClassPassWord());
+        		password.setIs_use(1);
+				password.setUse_time(classView.getEnd_time());
+        		classPasswordMapper.insertSelective(password);
+            }
+        }
+        if(classView.getUserId()!=null){//保存班主任
+        	TeacherRelation teacherRelation = new TeacherRelation();
+        	teacherRelation.setUser_id(classView.getUserId());
+        	teacherRelation.setSource_id(classId);
+        	teacherRelation.setSource_type(sourceType+1);
+        	setReq(teacherRelation);
+        	teacherRelation.setType(2);
+        	teacherRelation.setIs_display(0);
+        	teacherRelationMapper.insertSelective(teacherRelation);
+        	
+        }
+        if(classView.getUser_id()!=null){//保存助教
+        	for(String userId:classView.getUser_id().split(",")){
+        		TeacherRelation teacherRelation = new TeacherRelation();
+        		teacherRelation.setUser_id(Long.parseLong(userId.trim()));
+        		teacherRelation.setSource_id(classId);
+        		teacherRelation.setSource_type(sourceType+1);
+        		setReq(teacherRelation);
+        		teacherRelation.setType(1);
+        		teacherRelation.setIs_display(0);
+            	teacherRelationMapper.insertSelective(teacherRelation);
+            	//助教也需要班主任和班级之间一样的关系吗
+            	//若需要，那么删除助教时也要把这种关系删除
+        	}
+        }
+        if(sourceId!=null){//保存班级关联
+        	ClassRelation classRelation = new ClassRelation();
+        	classRelation.setSource_id(sourceId);
+        	classRelation.setSource_type(classView.getSource_type());
+        	classRelation.setClass_id(classId);
+        	classRelationService.saveClassRelation(classRelation);
+        }
+		
+	}
+	public void setReq(TeacherRelation teacherRelation){
+		Integer seq = teacherRelationMapper.getLastSeq();
+    	if(seq!=null){
+    		teacherRelation.setSeq(seq+1);
+    	}else{
+    		teacherRelation.setSeq(1);
+    	}
+	}
+
+	@Override
+	public ClassView selectOne(Long id,Integer source_type) {
+//		ClassView classView = new ClassView();
+//		Class c = classMapper.selectByPrimaryKey(id);
+//		BeanUtils.copyProperties(c, classView);
+		return classMapper.selectOne(id,source_type);
+	}
+
+	@Override
+	public void updateAll(ClassView classView) {
+		Class c = new Class();
+        BeanUtils.copyProperties(classView, c);
+        classMapper.updateByPrimaryKeySelective(c);
+        Long classId = classView.getId();
+        Integer sourecType = classView.getSource_type();
+        //分类-更新/创建
+        if(classView.getCommunityType()!=null){
+        	if(classView.getCommunityType()==0||classView.getCommunityType()==1){
+        		ClassBelongs cb = new ClassBelongs();
+        		cb.setClass_id(classId);
+        		cb.setSource_id(classView.getCommunityId());
+        		cb.setSource_type(classView.getCommunityType());
+        		cb.setClassify_relation_id(classView.getClassifyId());
+        		if(classView.getClassBelongsId()==null){
+        			cb.setStatus(0);
+        			cb.setCreate_time(new Date());
+        			cb.setType(classView.getType());
+        			classBelongsMapper.insert(cb);
+        		}else{
+        			long id = classView.getClassBelongsId();
+        			cb.setId(id);
+        			cb.setType(classView.getType());
+        			classBelongsMapper.updateByPrimaryKeySelective(cb);
+        		}
+        	}else{
+        		if(classView.getClassBelongsId()!=null){
+        			classBelongsMapper.deleteByPrimaryKey(classView.getClassBelongsId());
+        		}
+        	}
+        }
+        List<Long> list = new ArrayList<>();
+        TeacherRelation relation = new TeacherRelation();
+        relation.setSource_id(classId);
+        relation.setSource_type(sourecType+1);
+        relation.setType(1);
+        List<TeacherView> teacherList = teacherRelationMapper.queryTeacher(relation);
+        if(teacherList!=null){
+        	for(TeacherView teacher : teacherList){
+        		list.add(teacher.getUser_id());
+        	}
+        }
+        if(classView.getUser_id()!=null){//添加助教
+        	for(String userId:classView.getUser_id().split(",")){
+        		if(!list.contains(Long.parseLong(userId.trim()))){
+        			TeacherRelation teacherRelation = new TeacherRelation();
+            		teacherRelation.setUser_id(Long.parseLong(userId.trim()));
+            		teacherRelation.setSource_id(classId);
+            		teacherRelation.setSource_type(sourecType+1);
+            		setReq(teacherRelation);
+            		teacherRelation.setType(1);
+            		teacherRelation.setIs_display(0);
+                	teacherRelationMapper.insertSelective(teacherRelation);
+        		}
+        	}
+        }
+	}
+
+	@Override
+	public void saveUserStudy(ClassView classView) {
+		Long classId = classMapper.getLastId();
+        Long sourceId = classView.getSource_id();
+        Integer sourceType = classView.getSource_type();
+		Long userId = classView.getUserId();
+		//建班后老师即作为该班的学生，即作为该班的已付费用户
+    	UserStudy userStudy = new UserStudy();
+    	userStudy.setUser_id(userId);
+    	userStudy.setSource_id(classId);
+    	userStudy.setSource_type(sourceType);
+    	userStudy.setLearn_id(sourceId);
+    	userStudyService.saveOrUpdateStudent(userStudy);
+    	if(sourceType==0){//是课程班级，那么也要与该课程所有课时相关联
+    		// 查询该课程所有课时list
+    		List<CourseHour> hourList = courseHourService.queryHourList(sourceId, false);
+    		for (CourseHour hour : hourList) {
+    			UserClassHour userClassHour = new UserClassHour();
+    			userClassHour.setCourse_id(sourceId);
+    			userClassHour.setCourse_hour_id(hour.getId());
+    			userClassHour.setUser_id(userId);
+    			userClassHour.setClass_id(classId);
+    			if(userClassHourService.selectByHourId(userClassHour) == null){
+    				userClassHourService.insert(userClassHour);
+    			}
+			}
+    	}else if(sourceType==1){//是培训班级，待续
+    		
+    	}
+		
+	}
+
+	@Override
+	public List<ClassTestView> queryClassTopic(ClassView classView) {
+		
+		return classMapper.queryClassTopic(classView);
+	}
+
+
+	@Override
+	public Class getById(Long id) {
+		return classMapper.selectByPrimaryKey(id);
+	}
+
+
+
+	@Override
+	public List<ClassTestView> searchClassTopic(ClassView classView) {
+		
+		return classMapper.searchClassTopic1(classView);
+	}
+
+	@Override             
+	public List<ExamView> queryClassStudentScore(ExamView examView) {
+		
+		return classMapper.queryClassExam(examView);
+	}
+
+	@Override
+	public Integer countClassStudentScore(ExamView examView) {
+		
+		return classMapper.countClassExam(examView);
+	}
+
+	@Override
+	public List<ExamView> queryDiscussScore(ExamView examView) {
+		
+		return classMapper.queryDiscussScore(examView);
+	}
+
+	@Override
+	public Integer countDiscussScore(ExamView examView) {
+		
+		return classMapper.countDiscussScore(examView);
+	}
+
+
+	@Override
+	public List<ClassTestView> queryClassTest(ClassTestView testView) {
+		
+		return classMapper.queryClassTest(testView);
+	}
+
+	@Override
+	public Integer countClassTest(ClassTestView testView) {
+		
+		return classMapper.countClassTest(testView);
+	}
+
+	@Override
+	public List<ClassTestView> queryClassTalking(ClassTestView testView) {
+		
+		return classMapper.queryClassTalking(testView);
+	}
+
+	@Override
+	public Integer countClassTalking(ClassTestView testView) {
+		
+		return classMapper.countClassTalking(testView);
+	}
+
+	@Override
+	public List<ClassTestView> queryClassHomeTest(ClassView classView) {
+		
+		return classMapper.queryClassHomeTest(classView);
+	}
+
+	@Override
+	public List<TutorClassView> queryTutorClass(TutorClassView tutorClassView) {
+		return classMapper.queryTutorClass(tutorClassView);
+	}
+
+	@Override
+	public int queryTotalTutorClass(TutorClassView tutorClassView) {
+		return classMapper.queryTotalTutorClass(tutorClassView);
+	}
+
+	@Override
+	public List<ClassTestView> queryClassHomeTest1(ClassView classView) {
+		
+		return classMapper.queryClassHomeTest1(classView);
+	}
+
+	@Override
+	public List<UserTotalScoreView> queryUserTotalScore(ClassView classView) {
+		List<UserTotalScoreView> userTotalScoreViews=classMapper.queryUserTotalScore(classView);
+		return userTotalScoreViews;
+	}
+
+	@Override
+	public List<ClassData> queryClassData(ClassData classDataView) {
+		// TODO Auto-generated method stub
+		return classMapper.queryClassData(classDataView);
+	}
+
+	@Override
+	public void saveClass(Class c) {
+		classMapper.insertSelective(c);
+	}
+
+	@Override
+	public Long searchCourseTrainClass(Long courseId) {
+		return classMapper.searchCourseTrainClass(courseId);
+	}
+
+	@Override
+	public List<Class> queryClass(TrainView trainView) {
+		return classMapper.queryClass(trainView);
+	}
+
+	@Override
+	public List<ClassTestView> queryMyCommunityDiscuss(ClassView classView) {
+		return classMapper.queryMyCommunityDiscuss(classView);
+	}
+
+	@Override
+	public int queryTotalMyCommunityDiscuss(ClassView classView) {
+		return classMapper.queryTotalMyCommunityDiscuss(classView);
+	}
+
+	@Override
+	public List<ClassView> queryClassesofCourse(ClassView classView) {
+		List<ClassView> classList = classMapper.queryClassesofCourse(classView);
+		DecimalFormat df = new DecimalFormat("#.00");
+		for(int i=0;classList!=null&&i<classList.size();i++){
+			ClassView cv= classList.get(i);
+			double p = cv.getPrice();
+			if(cv.getDiscount()!=null&&(cv.getDiscount()<100&&cv.getDiscount()>=0)){
+				p = (cv.getPrice()*cv.getDiscount())/100;
+			}
+			cv.setPrice(Double.parseDouble(df.format(p)));
+		}
+		return classList;
+	}
+
+
+}

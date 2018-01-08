@@ -1,0 +1,168 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.frontstage.train.mapper.TrainMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.CertModelPicture;
+import cn.bnsr.edu_yun.frontstage.train.po.Train;
+import cn.bnsr.edu_yun.frontstage.train.service.CertModelPictureService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainExamStandardService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainExamStandardView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class TrainServiceImpl implements TrainService {
+	@Autowired
+	private TrainMapper trainMapper;
+	@Autowired
+	private TrainExamStandardService trainExamStandardService;
+	@Autowired
+	private CertModelPictureService  certModelPictureService;
+
+	@Override
+	public List<TrainView> queryTrain(TrainView trainView) {
+		return trainMapper.queryTrain(trainView);
+	}
+
+	@Override
+	public int queryTotalTrain(TrainView trainView) {
+		return trainMapper.queryTotalTrain(trainView);
+	}
+
+	@Override
+	public Long saveTrain(TrainView trainView) {
+		Train train = new Train();
+		BeanUtils.copyProperties(trainView, train);
+		if(trainView.getId()!=null && !trainView.getId().equals("")){
+			trainMapper.updateByPrimaryKeySelective(train);
+		}else{
+			CertModelPicture defaultImg = certModelPictureService.getDefaultImg(4);
+			train.setImg(defaultImg.getPath());
+			train.setCreate_time(new Date());
+			train.setPrice(0.00);
+			train.setStatus(0);//新建培训默认未发布      页面通过判断未发布才能进行发布    sunyu 
+			train.setIs_default_img(0);//是默认图片
+			trainMapper.insertSelective(train);
+			//保存培训考核标准 设置默认值
+			TrainExamStandardView standardView = new TrainExamStandardView();
+			standardView.setTrain_id(train.getId());
+			standardView.setOption_ratio(0);
+			standardView.setRequired_ratio(0);
+			trainExamStandardService.saveOrUpdate(standardView);
+		}
+		return train.getId();
+	}
+
+	@Override
+	public TrainView getByTrain(TrainView trainView) {
+		return trainMapper.getByTrain(trainView);
+	}
+
+	@Override
+	public List<TrainView> queryTrainCenter(TrainView trainView) {
+		return trainMapper.queryTrainCenter(trainView);
+	}
+
+	@Override
+	public int queryTotalTrainCenter(TrainView trainView) {
+		return trainMapper.queryTotalTrainCenter(trainView);
+	}
+
+	@Override
+	public Train getById(Long learnId) {
+		return trainMapper.selectByPrimaryKey(learnId);
+	}
+
+	@Override
+	public List<CommunityCenterView> queryCommunityTrain(CommunityCenterView ccv) {
+		return trainMapper.queryCommunityTrain(ccv);
+	}
+
+	@Override
+	public int queryTotalCommunityTrain(CommunityCenterView ccv) {
+		return trainMapper.queryTotalCommunityTrain(ccv);
+	}
+
+	@Override
+	public List<CommunityCenterView> queryMyCommunityTrain(
+			CommunityCenterView ccv) {
+		return trainMapper.queryMyCommunityTrain(ccv);
+	}
+
+	@Override
+	public int queryTotalMyCommunityTrain(CommunityCenterView ccv) {
+		return trainMapper.queryTotalMyCommunityTrain(ccv);
+	}
+
+	@Override
+	public List<TrainView> queryMyTrain(TrainView trainView) {
+		
+		return trainMapper.queryMyTrain(trainView);
+	}
+
+	@Override
+	public int queryMyTrainCount(TrainView trainView) {
+		
+		return trainMapper.queryMyTrainCount(trainView);
+	}
+
+	@Override
+	public DataGrid datagrid(TrainView trainView) {
+		DataGrid j = new DataGrid();
+		trainView.setPage(NumUtil.startingNum(trainView.getPage(),trainView.getRows()));
+		j.setRows(find(trainView));
+		j.setTotal(total(trainView));
+		return j;
+	}
+	
+	private List<TrainView> find(TrainView trainView) {
+		return trainMapper.find(trainView);
+	}
+
+	private Long total(TrainView trainView) {
+		return trainMapper.count(trainView);
+	}
+
+	@Override
+	public void updateStatus(TrainView trainView) {
+		Train train = trainMapper.selectByPrimaryKey(trainView.getId());
+		train.setStatus(trainView.getStatus());
+		trainMapper.updateByPrimaryKeySelective(train);
+		
+	}
+
+	@Override
+	public void isRecommendTrain(TrainView trainView) {
+		Train train = trainMapper.selectByPrimaryKey(trainView.getId());
+		train.setIs_recommend(trainView.getIs_recommend());
+		train.setRecommend_seq(trainView.getRecommendSeq());
+		String recommendTime = trainView.getRecommendTime();
+		if(recommendTime!=null){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				train.setRecommend_time(sdf.parse(recommendTime));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+//		train.setRecommend_time(new Date(trainView.getRecommendTime()));
+		trainMapper.updateByPrimaryKeySelective(train);
+		
+	}
+
+	@Override
+	public int getMaxSeq() {
+		return trainMapper.getMaxSeq();
+	}
+	
+}

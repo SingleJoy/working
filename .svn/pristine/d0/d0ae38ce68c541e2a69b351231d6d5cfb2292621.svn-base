@@ -1,0 +1,19 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.train.mapper.UserStudyTimeMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudyTime;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyTimeService;
+
+public class UserStudyTimeServiceImpl implements UserStudyTimeService {
+
+	@Autowired
+	private UserStudyTimeMapper userStudyTimeMapper;
+
+	@Override
+	public int insert(UserStudyTime userStudyTime) {
+		
+		return userStudyTimeMapper.insertSelective(userStudyTime);
+	}
+}

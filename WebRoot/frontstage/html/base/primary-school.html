@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/primary-school.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <!--<script type="text/javascript" src="../jq/jq.js"></script>-->
+    <script type="text/javascript" src="../jq/jquery.1.10.2.js"></script>
+    <script type="text/javascript" src="../js/primary-school.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+
+    <script>
+        $(function(){
+
+            var width = document.body.clientWidth;
+
+            var myWidth=(width-1000)/2;
+
+            $(".navbar").css("margin-left",myWidth+200+"px");
+            $(".navbar_bottom_content").css("margin-left",myWidth+220+"px");
+            $("#nav_content_classify").css("margin-left",myWidth+220+"px");
+            $(" #searchbox").css("margin-left",myWidth+800+"px");
+            $(".admin_states").css("margin-left",myWidth+910+"px");
+
+        });
+        //导航栏登录  注册
+
+        $(function(){
+            $(".navbar_my_name img").mouseover(function(){
+                $(".navbar_my_name img").attr("src","../images/menu_top.png");
+                $(".admin_states").show();
+            })
+            $(".admin_states").mouseover(function(){
+                $(".navbar_my_name img").attr("src","../images/menu_top.png");
+                $(".admin_states").show();
+            })
+
+            $(".admin_states").mouseout(function(){
+                $(".navbar_my_name img").attr("src","../images/menu_down.png");
+                $(".admin_states").hide();
+            })
+
+            $(".navbar_my_name img").mouseout(function(){
+                $(this).attr("src","../images/menu_down.png");
+                $(".admin_states").hide();
+            })
+
+        });
+
+
+
+    </script>
+
+
+
+</head>
+<body>
+
+
+
+
+<div class="navbar_page">
+
+    <div class="navbar">
+
+
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li class="personal_space"><a href="#">个人中心</a></li>
+            <li class="notes"><a href="#">通知</a></li>
+            <li><a  href="#">课程列表</a></li>
+            <li><a  href="#">中考资料</a></li>
+            <li><a  href="#">高考资料</a></li>
+
+        </ul>
+        <!--<p><a href="#" class="navbar_sign"><img src="../images/register_logo.png">注册</a>-->
+        <!--<a href="#" class="navbar_login"><img src="../images/admin_logo.png">登录</a>-->
+        <!--</p>-->
+        <div  class="navbar_my_name">杜塞尔多夫<img src="../images/menu_down.png"></div>
+
+    </div>
+    <div  class="admin_states">
+        <ul>
+            <li><a href="" class="go_my_space">前往个人空间</a></li>
+            <li><a href="" class="sign_out">退出</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="navbar_bottom" >
+    <div class="navbar_bottom_content">
+        <ul >
+            <li ><a href="javascript:return false;" style="color:#ffffff;">小学语文</a><span class="nav_txt_span">●</span></li>
+            <li><a href="javascript:return false;">人教版2011</a></li>
+            <li id="nav_content_img"><a href="javascript:return false;"><img src="../images/menu_down.png" class="nav_content_img" ></a></li>
+
+        </ul>
+    </div>
+    <form id="searchbox" class="" target="_blank" method="get" name="youke" action="">
+        <span class="write"><input id="kw" class="text-entry" autocomplete="off" tabindex="1" maxlength="256" value="" name="word" placeholder="在求资网中搜索"></span>
+        <span class="submit"><input id="sb" class="submit-btn" type="submit"></span>
+
+    </form>
+    <div class="nav_content_classify" id="nav_content_classify" style="display: none;">
+        <div class="nav_content_classify_title">
+            <div class="nav_content_classify_title_name">教材选择</div><br/>
+
+            <ul class="nav_content_classify_ul">
+                <p>学&nbsp;&nbsp;&nbsp;段:</p>
+                <li class="curr"><a href="#" style="color: #000000;"  class="curr">小学</a></li>
+                <li><a href="#" style="color: #000000;">初中</a></li>
+                <li><a href="#" style="color: #000000;">高中</a></li>
+            </ul>
+            <br/>
+            <div class="nav_content_sel_title">科&nbsp;&nbsp;&nbsp;目:
+                <select class="nav_content_sel">
+                    <option >语文</option>
+                    <option>数学</option>
+                    <option>英语</option>
+                </select>
+            </div>
+
+            <div class="nav_content_sel_title">教材版本:
+                <select class="nav_content_sel content_sel_1">
+                    <option value="">人教版2011</option>
+                    <option value="">人教版2012</option>
+                    <option value="">人教版2013</option>
+                </select>
+            </div>
+
+            <input type="button" value="确定" class="nav_content_button">
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="login">
+    <div class="cd-user-modal">
+        <div class="cd-user-modal-container">
+            <div class="login_top_title">教育信息公共服务云平台</div>
+            <img src="../images/login.jpg" class="login_img">
+            <div id="cd-login">
+
+                <form class="cd-form">
+                    <a class="cd-form_login" href="#">账号登录</a>
+                    <a class="cd-form_phone" href="#">手机动态登录</a>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-username" for="signin-username">用户名</label>
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="手机/邮箱/用户名">
+                    </p>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-password" for="signin-password">密码</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="输入密码">
+                    </p>
+
+
+                    <p class="fieldset phone-admin" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-phone" type="text" placeholder="请输入手机号">
+                    </p>
+
+                    <p class="fieldset var-password" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-var-password" type="text"  placeholder="请输入验证码">
+                        <input type="button" class="login_button" value="点击获取验证码">
+                    </p>
+
+
+
+                    <p class="fieldset remember-state">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me" class="remember_state">记住登录状态</label>
+                        <a href="#" class="login_problem">登录遇到问题</a>
+                    </p>
+
+                    <p class="fieldset admin">
+                        <input class="full-width2" type="submit" value="登 录"><br/>
+                        <a class="register_now" href="#">立即注册</a>
+                    </p>
+                </form>
+
+                <div class="login_border"></div>
+
+                <div class="other_login">
+                    <p>可以使用以下方式登录</p>
+                    <a href="#"><img src="../images/wechat.jpg" class="wechat_login"></a>
+                    <a href="#"><img src="../images/qq.jpg" class="qq_login"></a>
+                </div>
+
+            </div>
+            <a href="#" class="cd-close-form">关闭</a>
+        </div>
+    </div>
+</div>
+
+<div class="main"  >
+    <div class="main_top_border"></div><br/>
+    <div class="main_left">
+        <div class="all_pinyin" id="all_pinyin"><a href="javascript:;">全部拼音<img src="../images/menu_down_black.png" class="main_left_tab_img"></a></div>
+        <ul class="all_pinyin_content" >
+            <li class="curr"><a href="javascript:;">a o e</a></li>
+            <li><a href="javascript:;">i o u</a></li>
+            <li><a href="javascript:;">b p m f</a></li>
+            <li><a href="javascript:;">d t n l</a></li>
+        </ul>
+
+        <div class="literacy_01" ><a href="javascript:;">识字一<img src="../images/menu_down_black.png" class="main_left_tab_img"></a></div>
+        <ul class="literacy_content_01">
+            <li class="curr"><a href="javascript:;">日</a></li>
+            <li><a href="javascript:;">月</a></li>
+            <li><a href="javascript:;">田</a></li>
+            <li><a href="javascript:;">土</a></li>
+        </ul>
+
+
+        <div class="literacy_02" ><a href="javascript:;">识字二<img src="../images/menu_down_black.png" class="main_left_tab_img"></a></div>
+        <ul class="literacy_content_02">
+            <li class="curr"><a href="javascript:;">金</a></li>
+            <li><a href="javascript:;">木</a></li>
+            <li><a href="javascript:;">水</a></li>
+            <li><a href="javascript:;">火</a></li>
+        </ul>
+
+
+        <div class="literacy_03" ><a href="javascript:;">识字三<img src="../images/menu_down_black.png" class="main_left_tab_img"></a></div>
+        <ul class="literacy_content_03">
+            <li class="curr"><a href="javascript:;">金</a></li>
+            <li><a href="javascript:;">木</a></li>
+            <li><a href="javascript:;">水</a></li>
+            <li><a href="javascript:;">火</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main_top">
+
+        <ul>
+            <li class="curr"><a href="javascript:;">全部</a></li>
+            <li><a href="javascript:;">同步课件</a></li>
+            <li><a href="javascript:;">课程习题</a></li>
+            <li><a href="javascript:;">教学设计</a></li>
+            <li><a href="javascript:;">课堂实录</a></li>
+        </ul>
+    </div>
+
+    <div class="recommend_page"><span>1210</span>位老师选择了这些资源</div>
+    <div class="latest_upload" style="">
+        <br/>
+
+        <ul class="latest_upload_ul" >
+            <li class="latest_upload_li"><a class="latest_upload_title_text" href="#">预习学案 生活中的正数和负数</a>
+                <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+            </li>
+            <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+        </ul>
+        <ul class="latest_upload_ul" style="margin-left: 20px;">
+            <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+                <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+            </li>
+            <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+        </ul>
+        <ul class="latest_upload_ul" style="margin-left: 20px;">
+            <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+                <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+            </li>
+            <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+        </ul>
+    </div>
+
+    <div class="main_content_sum">共<span class="main_content_sum_num">4500</span>篇文章
+        <ul class="main_content_sort">
+            <li class="curr"><a href="#">好评最多</a></li>
+            <li><a href="#">下载最多</a></li>
+            <li><a href="#">最新发布</a></li>
+            <li><a href="#">综合排序</a></li>
+        </ul>
+    </div>
+
+    <div class="main_content">
+
+        <div class="content_page">
+            <a href="#"><img src="../images/maitian.jpg" class="main_content_page_img"></a>
+            <p class="content_page_title">预习学案 生活中的正数和负数</p><br/>
+            <div class="main_content_page_detail">
+                <p><span class="main_content_page_download_num">200</span>位老师下载
+                    <span class="main_content_page_praise_num">4</span>位老师好评
+                    <span class="main_content_page_size">1356MB</span>
+                </p>
+            </div>
+            <div class="main_content_formate">格式:<span class="main_content_page_formate_type">rmvb</span><span class="main_content_ul_li_txt">评分:</span><span class="main_content_page_score">4.8</span></li>
+                <div class="main_content_page_type">
+                    <span class="main_content_page_charge">免费</span>
+                    <span class="main_content_page_style_span">|</span>
+                    上传人:<span class="main_content_page_author">潇湘夜雨</span>
+                    <span class="main_content_page_style_span">|</span>
+                    <span class="main_content_page_upload_time">2015-10-12上传</span>
+                </div>
+                <div class="main_content_page_star_img">
+                    <img  src="../images/icon_star.png">
+                    <img  src="../images/icon_star.png">
+                    <img  src="../images/icon_star.png">
+                    <img  src="../images/icon_star.png">
+                    <img class="main_content_page_star" src="../images/icon_star.png">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="content_page">
+            <a href="#"><img src="../images/maitian.jpg" class="main_content_page_img"></a>
+            <p class="content_page_title">预习学案 生活中的正数和负数</p><br/>
+            <div class="main_content_page_detail">
+                <p><span class="main_content_page_download_num">200</span>位老师下载
+                    <span class="main_content_page_praise_num">4</span>位老师好评
+                    <span class="main_content_page_size">1356MB</span>
+                </p>
+            </div>
+            <div class="main_content_formate">格式:<span class="main_content_page_formate_type">rmvb</span><span class="main_content_ul_li_txt">评分:</span><span class="main_content_page_score">4.8</span></li>
+                <div class="main_content_page_type">
+                    <span class="main_content_page_charge">免费</span>
+                    <span class="main_content_page_style_span">|</span>
+                    上传人:<span class="main_content_page_author">潇湘夜雨</span>
+                    <span class="main_content_page_style_span">|</span>
+                    <span class="main_content_page_upload_time">2015-10-12上传</span>
+                </div>
+                <div class="main_content_page_star_img">
+                    <img  src="../images/icon_star.png">
+                    <img  src="../images/icon_star.png">
+                    <img  src="../images/icon_star.png">
+                    <img  src="../images/icon_star.png">
+                    <img class="main_content_page_star" src="../images/icon_star.png">
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<div class="footer" style="margin-top: 500px;">
+    <div class="footer_content">
+        <ul class="footer_content_ul">
+            <li><a class="footer_title">北京市百年树人远程教育有限公司<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="agreement">协议<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="proposal">建议</a></li>
+        </ul>
+
+    </div>
+</div>
+
+</body>
+
+</html>

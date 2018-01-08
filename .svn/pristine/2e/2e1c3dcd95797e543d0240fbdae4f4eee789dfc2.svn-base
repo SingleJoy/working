@@ -1,0 +1,364 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.Classify;
+import cn.bnsr.edu_yun.frontstage.base.po.Label;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.po.UserProperty;
+import cn.bnsr.edu_yun.frontstage.base.service.ClassifyService;
+import cn.bnsr.edu_yun.frontstage.base.service.LabelService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.ClassifyView;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.train.po.ClassifyRelation;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseLivingView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.HttpRequest;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 课程
+ * 
+ * @author fangxiongwei
+ * @date 2016年10月25日
+ */
+@Controller
+@RequestMapping("/course")
+public class CourseController {
+	private final Logger log = LoggerFactory.getLogger(CourseController.class);
+
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private LabelService labelService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private ClassifyService classifyService;
+
+	/**
+	 * 跳转课程管理页面(在教课程)
+	 */
+	@RequestMapping("/to_course")
+	public ModelAndView toCourse(HttpServletRequest request, CourseView courseView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		try {
+			courseView.setUserId(user.getId());
+			courseView.setRows(10);
+			if (courseView.getPage() == 0) {
+				courseView.setStartLine(0);
+			} else {
+				courseView.setStartLine(courseView.getPage() * courseView.getRows());
+			}
+			List<CourseView> courseList = courseService.queryCourse(courseView);
+			int total = courseService.queryTotalCourse(courseView);// 课程总数
+			courseView.setTotal(total);
+			// 分页总页数
+			courseView.setTotalPage(NumUtil.totalPage(total, courseView.getRows()));
+
+			modelAndView.addObject("courseList", courseList);
+			modelAndView.addObject("courseView", courseView);
+
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			// 个人中心统计数据
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+
+			request.setAttribute("state", state);
+			request.setAttribute("stamp", stamp);
+			modelAndView.addObject("head_title", "在教课程");
+			modelAndView.setViewName("frontstage/train/course/teaching_course");
+		} catch (Exception e) {
+			log.error("课程列表查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 跳转创建课程页面
+	 */
+	@RequestMapping("/to_create_course")
+	public ModelAndView toCreateCourse(HttpServletRequest request) {
+		String type = request.getParameter("type");
+		request.setAttribute("type", type);
+		request.setAttribute("head_title", "创建课程");
+		return new ModelAndView("frontstage/train/course/create_course");
+	}
+
+	/**
+	 * 创建课程
+	 */
+	@RequestMapping("/create_course")
+	public ModelAndView createCourse(HttpServletRequest request, Integer type, String title) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		Long courseId = null;
+		try {
+			String room_id = null;
+			if (type == 2) {
+				CourseLivingView courseLivingView = new CourseLivingView();
+				courseLivingView.setName(title);
+				String param = courseLivingView.getStr(courseLivingView);
+				String sr = HttpRequest.sendPost("http://www.buka.tv/room/add.do", param);
+				JSONObject j = JSONObject.fromObject(sr);
+				System.out.println(sr);
+				room_id = (Integer) j.get("room_id") + "";
+			}
+			courseId = courseService.createCourse(title, user.getId(), type, room_id);
+			title = URLEncoder.encode(title, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			log.error("创建课程编码错误", ExceptionUtil.getExceptionMessage(e));
+		} catch (Exception e) {
+			log.error("创建课程失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return new ModelAndView("redirect:/course/to_course_info.action?id=" + courseId + "&title=" + title + "&flag=0&sign=1");
+	}
+
+	/**
+	 * 跳转课程基本信息页面
+	 */
+	@RequestMapping("/to_course_info")
+	public ModelAndView toCourseInfo(HttpServletRequest request, CourseView courseView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			List<Classify> pcList = classifyService.queryByParentId(54l);// 课程父分类
+			List<Classify> classifyList = classifyService.findAllClassify(1, false);// 课程子分类
+			List<Label> labelList = labelService.findAllLabel(1);// 课程标签
+			if (courseView.getId() != null) {
+				courseView = courseService.queryCourseInfo(courseView);
+			}
+			if (courseView.getValidity() == null) {// 默认0不设置有效期
+				courseView.setValidity(0);
+			}
+			modelAndView.addObject("classifyList", classifyList);
+			modelAndView.addObject("pcList", pcList);
+			modelAndView.addObject("labelList", labelList);
+			modelAndView.addObject("courseView", courseView);
+			modelAndView.addObject("head_title", "基本信息");
+			modelAndView.setViewName("frontstage/train/course/course_info");
+		} catch (Exception e) {
+			log.error("跳转课程基本信息页面失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	/**
+	 * 保存课程基本信息
+	 */
+	@RequestMapping("/save_course")
+	public ModelAndView saveCourse(HttpServletRequest request, CourseView courseView) {
+		try {
+			courseService.saveCourse(courseView);
+		} catch (Exception e) {
+			log.error("保存课程基本信息失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return new ModelAndView("redirect:/course/to_course_info.action?id=" + courseView.getId() + "&flag=1&sign=1");
+	}
+
+	/**
+	 * 发布课程
+	 */
+	@RequestMapping("/release_course")
+	public ModelAndView releaseCourse(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		courseService.releaseCourse(id);
+		return new ModelAndView("redirect:/course/to_course_info.action?id=" + id + "&flag=2&sign=1");
+	}
+
+	/**
+	 * 跳转课程中心页面
+	 */
+	@RequestMapping("/to_course_center")
+	public ModelAndView toCourseCenter(HttpServletRequest request, CourseCenterView ccv) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			ccv.setRows(20);
+			if (ccv.getPage() == 0) {
+				ccv.setStartLine(0);
+			} else {
+				ccv.setStartLine(ccv.getPage() * ccv.getRows());
+			}
+			List<String> list = new ArrayList<String>();
+
+			// 课程分类
+			List<Classify> classifyList = classifyService.queryByParentId(54l);// 课程父分类
+			if (ccv.getClassifyId() != -1) {// 选中一级分类查询二级分类
+				List<Classify> sonClassifyList = classifyService.queryByParentId(ccv.getClassifyId());
+				list.add(ccv.getClassifyId().toString());
+				for (Classify cr : sonClassifyList) {
+					list.add(cr.getId().toString());
+				}
+				ccv.setClassifyIds(list);
+				modelAndView.addObject("sonClassifyList", sonClassifyList);
+			}
+			modelAndView.addObject("classifyList", classifyList);
+
+			List<CourseCenterView> courseList = courseService.queryCourseCenter(ccv);
+			int total = courseService.queryTotalCourseCenter(ccv);// 课程总数
+			ccv.setTotal(total);
+			// 分页总页数
+			ccv.setTotalPage(NumUtil.totalPage(total, ccv.getRows()));
+
+			modelAndView.addObject("courseList", courseList);
+			modelAndView.addObject("ccv", ccv);
+			modelAndView.addObject("head_title", "课程中心");
+			modelAndView.setViewName("frontstage/train/course_show/course_center");
+		} catch (Exception e) {
+			log.error("课程中心查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 异步查询课程列表
+	 */
+	@RequestMapping("/query_all_course")
+	@ResponseBody
+	public JSONArray queryAllCourse(HttpServletRequest request, CourseView courseView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		try {
+			courseView.setUserId(user.getId());
+			courseView.setRows(7);
+			if (courseView.getPage() == 0) {
+				courseView.setStartLine(0);
+			} else {
+				courseView.setStartLine(courseView.getPage() * courseView.getRows());
+			}
+			if (courseView.getTitle().equals("")) {
+				courseView.setTitle(null);
+			}
+			courseView.setType("0");// 普通课程
+			if (!courseView.getIds().equals("")) {
+				courseView.setList(NumUtil.getList(courseView.getIds()));
+			}
+			List<CourseView> courseList = courseService.queryCourse(courseView);
+			int total = courseService.queryTotalCourse(courseView);// 课程总数
+			courseView.setTotal(total);
+			// 分页总页数
+			courseView.setTotalPage(NumUtil.totalPage(total, courseView.getRows()));
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("courseList", courseList);
+			map.put("courseView", courseView);
+
+			if (courseList != null) {
+				return JSONArray.fromObject(map);
+			}
+
+		} catch (Exception e) {
+			log.error("课程列表查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return JSONArray.fromObject(0);
+
+	}
+
+	/**
+	 * 异步查询课程信息
+	 */
+	@RequestMapping("/get_by_course_ids")
+	@ResponseBody
+	public JSONArray getByCourseIds(HttpServletRequest request, CourseView courseView) {
+		try {
+			if (!courseView.getIds().equals("")) {
+				courseView.setList(NumUtil.getList(courseView.getIds()));
+			}
+			List<CourseView> courseList = courseService.getByCourseIds(courseView.getList());
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			map.put("courseList", courseList);
+
+			if (courseList != null) {
+				return JSONArray.fromObject(map);
+			}
+		} catch (Exception e) {
+			log.error("课程列表查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return JSONArray.fromObject(0);
+	}
+
+	@RequestMapping("/to_course_center_m")
+	public void toCourseCenterM(HttpServletRequest request, CourseCenterView ccv, HttpServletResponse response) {
+		JSONObject result = new JSONObject();
+		try {
+			if (ccv.getRows() == 0)
+				ccv.setRows(5);
+			if (ccv.getPage() == 0) {
+				ccv.setStartLine(0);
+			} else {
+				ccv.setStartLine(ccv.getPage() * ccv.getRows());
+			}
+			// 课程分类 
+			List<ClassifyView> classifyList = classifyService.queryViewByParentId(54l);// 课程父分类
+			result.put("classifyList", classifyList);
+			ccv.setSortType("1");
+			List<CourseCenterView> newList = courseService.queryCourseCenter(ccv);
+			ccv.setSortType("2");
+			List<CourseCenterView> hotList = courseService.queryCourseCenter(ccv);
+			ccv.setSortType("3");
+			List<CourseCenterView> recommendList = courseService.queryCourseCenter(ccv);
+			result.put("newList", newList);
+			result.put("hotList", hotList);
+			result.put("recommendList", recommendList);
+			// result.put("courseCenterView", ccv);
+			ResponseUtil.write(response, result);
+		} catch (Exception e) {
+			log.error("课程中心查询失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+
+	}
+	@RequestMapping("/to_classify_m")
+	public void toClassifyM(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject result = new JSONObject();
+		try {
+			List<ClassifyView> classifyList = classifyService.queryViewByParentId(54l);// 课程父分类
+			for(ClassifyView classifyView:classifyList){
+				List<ClassifyView> son =classifyService.queryViewByParentId(classifyView.getId()+0l);
+				classifyView.setSon(son);
+			}
+			
+			result.put("classifyList", classifyList);
+			ResponseUtil.write(response, result);
+		} catch (Exception e) {
+			log.error("课程中心查询失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+
+	}
+}

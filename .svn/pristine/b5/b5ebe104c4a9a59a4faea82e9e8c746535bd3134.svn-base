@@ -1,0 +1,124 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+public class CourseMobileView {
+
+	private String img;
+	
+	private Double price;//价格
+	
+	private String startTime;
+	
+	private String endTime;
+	
+	private String url;
+	
+	private int  valid_date;
+	
+	private String class_name;
+	
+	private String course_name;
+	
+	private String school;
+	
+	private String username;
+	
+	private Long class_id;
+	
+	private String lastTime;
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public int getValid_date() {
+		return valid_date;
+	}
+
+	public void setValid_date(int valid_date) {
+		this.valid_date = valid_date;
+	}
+
+	public String getClass_name() {
+		return class_name;
+	}
+
+	public void setClass_name(String class_name) {
+		this.class_name = class_name;
+	}
+
+	public String getCourse_name() {
+		return course_name;
+	}
+
+	public void setCourse_name(String course_name) {
+		this.course_name = course_name;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public void setSchool(String school) {
+		this.school = school;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Long getClass_id() {
+		return class_id;
+	}
+
+	public void setClass_id(Long class_id) {
+		this.class_id = class_id;
+	}
+
+	public String getLastTime() {
+		return lastTime;
+	}
+
+	public void setLastTime(String lastTime) {
+		this.lastTime = lastTime;
+	}
+}

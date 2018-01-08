@@ -1,0 +1,43 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import java.util.List;
+
+public class CourseHourMobileView {
+
+	private Long id;
+	private String title;
+	private int seq;
+	private String status;
+	private List<CourseHourMobileView> sonList;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public List<CourseHourMobileView> getSonList() {
+		return sonList;
+	}
+	public void setSonList(List<CourseHourMobileView> sonList) {
+		this.sonList = sonList;
+	}
+	
+}

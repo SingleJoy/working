@@ -1,0 +1,292 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
+
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/jquery-1.8.3.min.js"></script>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/JMEditor.js"></script>
+
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/frontstage/js/My97DatePicker/WdatePicker.js"></script>
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+
+
+
+
+<div class="es-wrap" >
+    <jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+    <div id="content-container" class="container" >
+
+        <jsp:include page="/frontstage/xbjy/lesson/lesson_header.jsp"></jsp:include>
+
+        <div class="course-detail row" style="margin-top: 20px;">
+
+            <jsp:include page="/frontstage/xbjy/lesson/lesson_left.jsp"></jsp:include>
+
+            <div class="col-lg-9 col-md-8  course-detail-main">
+                <c:if test="${(tab==0&&lessonLeft.plan101==1)||(tab==1&&lessonLeft.plan102==1)||(tab==3&&lessonLeft.prepare201==1)||(tab==4&&lessonLeft.assessment401==1)||(tab==2&&lessonLeft.plan102==1) }">
+                    <div class="panel panel-default panel-col course-data">
+                        <div class="panel-heading">教学设计与参考
+                            <c:if test="${flag }">
+                                <c:if test="${update==1 }">
+                                    <a  class="btn btn-warning btn-fat pull-right" href="${pageContext.request.contextPath}/lesson_design/update_design.action?id=${lessonDesign.id}&lesson_id=${lessonView.id}&tab=${tab}">
+                                        <c:if test="${tab==1 }">
+                                            协同修改</c:if>
+                                        <c:if test="${tab==0 }">
+                                            修改教学设计及参考
+                                        </c:if>
+                                        <c:if test="${tab==3 }">
+                                            提交修改教学设计及参考
+                                        </c:if>
+                                        <c:if test="${tab==4 }">
+                                            提交反思后教学设计及参考
+                                        </c:if>
+                                    </a>
+                                </c:if>
+                            </c:if>
+                        </div>
+
+                        <div class="panel-body">
+                            <h5 class="text-center" style="font-weight: bold;margin:15px 0;">教学设计及参考</h5>
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered all-statistics" >
+                                    <tbody>
+                                    <tr>
+                                        <td class="active">教学课题(教材版本)</td>
+                                        <td >${lessonView.name }(${lessonView.versionName })</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">学段/学科(年级)</td>
+                                        <td >${lessonView.stageName }${lessonView.subjectName }(${lessonView.grade_name })</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">上课老师</td>
+                                        <td >${lessonView.school }     ${lessonView.username }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">教育目标</td>
+                                        <td >${lessonDesign.edu_goal }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">课例划分</td>
+                                        <td >${lessonDesign.lesson_divide }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">教材及内容分析</td>
+                                        <td >${lessonDesign.materials_analysis } </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">学生学情分析</td>
+                                        <td >${lessonDesign.student_analysis }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">教学策略选择与设计</td>
+                                        <td >${lessonDesign.strategy_design }</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="active">教学重点与难点</td>
+                                        <td >${lessonDesign.focus_difficulty }</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="active">教学媒体（资源）选择</td>
+                                        <td >${lessonDesign.media_selection }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">教学过程</td>
+                                        <td >${lessonDesign.teaching_process }</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">板书设计</td>
+                                        <td >${lessonDesign.typography_design }</td>
+                                    </tr>
+                                    <c:if test="${flag }">
+                                        <c:if test="${tab==0||tab==3||tab==4 }">
+                                            <tr>
+                                                <td class="active">附件</td>
+                                                <td style="text-decoration: underline;">
+                                                    <c:forEach items="${lessonAttachmentViews}" var="view">
+                                                        <a href="javascript:void (0);" class="text-info" data-id="${view.id }">${view.name }</a>
+                                                        <br>
+                                                    </c:forEach>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                    </c:if>
+
+
+                                    </tbody>
+                                </table>
+                                
+                                    <c:if test="${tab==1 }">
+                                        <table class="table table-bordered member-statistics" style="margin-top: 50px;">
+                                            <tbody>
+                                            <tr>
+                                                <td class="active" style="width: 10%;">版本</td>
+                                                <td class="active" style="width: 10%;">修改人</td>
+                                                <td class="active" style="width: 22%;text-align: center;">修改时间</td>
+                                                <td class="active">操作</td>
+                                            </tr>
+                                            <c:forEach items="${lessonDesignViews }" var="view" varStatus="status">
+                                                <tr>
+                                                    <td class="active">${view.version_num }</td>
+                                                    <td >${view.username }</td>
+                                                    <td >${view.create_time }</td>
+                                                    <td >
+
+                                                        <a href="${pageContext.request.contextPath}/lesson_design/to_lesson_design.action?id=${view.id }&lesson_id=${lesson.id}&tab=2">查看内容</a><span class="mlm mrm">｜</span>
+                                                        <c:if test="${status.last }">
+                                                            <a href="javascript:void (0);" style="color: black">对比上一版本</a><span class="mlm mrm">｜</span>
+                                                        </c:if>
+                                                        <c:if test="${!status.last }">
+                                                            <a href="${pageContext.request.contextPath}/lesson_design/compare.action?id=${view.id }&tab=${tab }&compare=before" >对比上一版本</a><span class="mlm mrm">｜</span>
+                                                        </c:if>
+                                                        <c:if test="${status.last }">
+                                                            <a href="javascript:void (0);" style="color: black">对比原始版本</a><span class="mlm mrm">｜</span>
+                                                        </c:if>
+                                                        <c:if test="${!status.last }">
+                                                            <a href="${pageContext.request.contextPath}/lesson_design/compare.action?id=${view.id }&tab=${tab }&compare=first" >对比原始版本</a><span class="mlm mrm">｜</span>
+                                                        </c:if>
+                                                        <c:if test="${status.first }">
+                                                            <a href="javascript:void (0);"  style="color: black">对比最终版本</a>
+                                                        </c:if>
+                                                        <c:if test="${!status.first }">
+                                                            <a href="${pageContext.request.contextPath}/lesson_design/compare.action?id=${view.id }&tab=${tab }&compare=last" >对比最终版本</a>
+                                                        </c:if>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+
+
+                                            </tbody>
+                                        </table>
+                                    </c:if>
+                                
+                            </div>
+                        </div>
+
+
+                    </div>
+                </c:if>
+
+                <c:if test="${(tab==0&&lessonLeft.plan101!=1)}">
+                    <div class="panel panel-default panel-col ">
+                        <div class="panel-heading">教学设计与参考 </div>
+                        <div class="panel-body" style="text-align: center;">
+                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_task_unfinshed.png" style="margin-top: 20px auto;">
+                            <div>未制定计划</div>
+                        </div>
+                    </div>
+                </c:if>
+
+                <c:if test="${(tab==1&&lessonLeft.plan102!=1)}">
+                    <div class="panel panel-default panel-col ">
+                        <div class="panel-heading">
+                            初始教学设计协同修改
+                        </div>
+                        <div class="panel-body" style="text-align: center;">
+                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_task_unfinshed.png" style="margin-top: 20px auto;">
+                            <div>未提交教学设计与课件</div>
+                        </div>
+                    </div>
+                </c:if>
+
+                <c:if test="${(tab==3&&lessonLeft.prepare201!=1)}">
+                    <div class="panel panel-default panel-col ">
+                        <div class="panel-heading">
+                            <p>提交修改后的教学设计</p>
+                        </div>
+                        <div class="panel-body" style="text-align: center;">
+                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_task_unfinshed.png" style="margin-top: 20px auto;">
+                            <div>未完成教学设计协同修改</div>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${(tab==4&&lessonLeft.assessment401!=1)}">
+
+                    <div class="panel panel-default panel-col ">
+                        <div class="panel-heading">
+                            提交反思后教学设计
+                        </div>
+                        <div class="panel-body" style="text-align: center;">
+                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_task_unfinshed.png" style="margin-top: 20px auto;">
+                            <div>未提交评课报告</div>
+                        </div>
+                    </div>
+                </c:if>
+            </div>
+
+        </div>
+    </div>
+
+
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+
+
+
+
+<c:if test="${flag }">
+<script type="text/javascript">
+  $(function(){
+$(".text-info").on("click",function(){
+                var id=$(this).data("id");
+                var explorer=getExplorer();
+                var form=$("<form>");//定义一个form表单
+                form.attr("style","display:none");
+                form.attr("target","");
+                form.attr("method","post");
+                form.attr("action","${pageContext.request.contextPath}/lesson_attachment/download.action");
+                var input2=$("<input>");
+                input2.attr("type","hidden");
+                input2.attr("name","id");
+                input2.attr("value",id);
+                var input3=$("<input>");
+                input3.attr("type","hidden");
+                input3.attr("name","explorer");
+                input3.attr("value",explorer);
+
+                $("body").append(form);//将表单放置在web中
+                form.append(input2);
+                form.append(input3);
+
+                form.submit();//表单提交 });
+            });
+
+        });
+        function getExplorer() {
+            var explorer = window.navigator.userAgent ;
+            //ie
+            if (explorer.indexOf("MSIE") >= 0) {
+
+                return "IE";
+            }
+            //firefox
+            else if (explorer.indexOf("Firefox") >= 0) {
+
+                return "Firefox";
+            }
+            //Chrome
+            else if(explorer.indexOf("Chrome") >= 0){
+
+                return "Chrome";
+            }
+            //Opera
+            else if(explorer.indexOf("Opera") >= 0){
+                return"Opera";
+            }
+            //Safari
+            else if(explorer.indexOf("Safari") >= 0){
+                return "Safari";
+            }
+        }
+</script>
+</c:if>

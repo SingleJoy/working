@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/read.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../jq/jquery.1.10.2.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+    <script >
+
+        //阅读页 read
+        $(function(){
+
+            var sumWidth =0;
+
+            var width = document.body.clientWidth;
+
+            var myWidth=(width-1000)/2;
+
+
+
+            $(".position").css("margin-left",myWidth+"px");
+
+            $(".main_read_top").css("margin-left",myWidth+"px");
+
+            $(".main_read_content").css("margin-left",myWidth+"px");
+
+            $(".main_read_right").css("margin-left",myWidth+800+"px");
+
+            $(".main_read_content_operation").css("margin-left",myWidth+700+"px");
+
+            $(".border").css("margin-left",myWidth+"px");
+
+            $(".my_comment p").css("margin-left",myWidth+"px");
+
+            $(".my_comment").find("textarea").css("margin-left",myWidth+"px");
+
+            $(".other_comment").css("margin-left",myWidth+"px");
+//            $(".reader_comment img").css("margin-left",myWidth+"px");
+//            $(".reader_comment p").css("margin-left",myWidth-60+"px");
+//            $(".reader_comment div").css("margin-left",myWidth+60+"px");
+
+
+        });
+
+    </script>
+
+</head>
+<body>
+
+
+<div class="top">
+
+    <ul class="top_txt">
+        <li><a class="admin cd-signin" onclick="return false;" href="javascript:void(0);">登录</a></li>
+        <li><a class="register" href="register.html">注册</a></li>
+        <li><a class="myspace" href="#">我的空间</a></li>
+        <li><a class="recent_browse" href="#">最近浏览</a></li>
+        <li><a class="cooper_organization" href="#">合作机构</a></li>
+    </ul>
+
+</div>
+
+
+<div class="login">
+    <div class="cd-user-modal">
+        <div class="cd-user-modal-container">
+            <div class="login_top_title">教育信息公共服务云平台</div>
+            <img src="../images/login.jpg" class="login_img">
+            <div id="cd-login">
+
+                <form class="cd-form">
+                    <a class="cd-form_login" href="#">账号登录</a>
+                    <a class="cd-form_phone" href="#">手机动态登录</a>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-username" for="signin-username">用户名</label>
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="手机/邮箱/用户名">
+                    </p>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-password" for="signin-password">密码</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="输入密码">
+                    </p>
+
+
+                    <p class="fieldset phone-admin" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-phone" type="text" placeholder="请输入手机号">
+                    </p>
+
+                    <p class="fieldset var-password" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-var-password" type="text"  placeholder="请输入验证码">
+                        <input type="button" class="login_button" value="点击获取验证码">
+                    </p>
+
+
+
+                    <p class="fieldset remember-state">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me" class="remember_state">记住登录状态</label>
+                        <a href="#" class="login_problem">登录遇到问题</a>
+                    </p>
+
+                    <p class="fieldset admin">
+                        <input class="full-width2" type="submit" value="登 录"><br/>
+                        <a class="register_now" href="#">立即注册</a>
+                    </p>
+                </form>
+
+                <div class="login_border"></div>
+
+                <div class="other_login">
+                    <p>可以使用以下方式登录</p>
+                    <a href="#"><img src="../images/wechat.jpg" class="wechat_login"></a>
+                    <a href="#"><img src="../images/qq.jpg" class="qq_login"></a>
+                </div>
+
+            </div>
+            <a href="#" class="cd-close-form">关闭</a>
+        </div>
+    </div>
+</div>
+
+<div class="main_read">
+   <div class="position">
+       <span class="position_1">首页</span>&gt;
+       <span class="position_2">初中语文</span>&gt;
+       <span class="position_3">七年级上</span>&gt;
+       <span class="position_4">第一单元</span>&gt;
+       <span class="position_5">在山的那一边</span>
+   </div>
+
+
+    <div class="main_read_top">
+        <img src="../images/personal-img.jpeg" class="author_img">
+        <div class="title_name">在山的那一边 教学预案</div>
+        <ul>
+            <li><img  src="../images/icon_star.png">
+                <img  src="../images/icon_star.png">
+                <img  src="../images/icon_star.png">
+                <img  src="../images/icon_star.png">
+                <img  src="../images/icon_star.png">
+                <span class="author_score_num">5分</span>
+            </li>
+            <li class="author_info_txt"><span class="author_name">那年夏天</span><span class="author_title">初中语文老师</span> <input type="button" value="+关注" class="author_follow_button"></li>
+        </ul>
+        <div class="keep">收藏</div>
+        <div class="free_download_course">免费下载教程</div>
+        <div class="reader_num"><span>3280</span>次浏览</div>
+        <div class="download_num"><span>1020</span>次下载</div>
+    </div>
+
+
+    <div class="main_read_right">
+        <p>相关资源</p>
+
+        <ul>
+            <li>1<a href="#">在山的那一边教学预案</a></li>
+            <li><span class="resources_download_num">608</span>次人已下载&nbsp;共<span>6</span>页</li>
+
+        </ul>
+
+        <ul >
+            <li>2<a href="#">在山的那一边教学预案</a></li>
+            <li><span class="resources_download_num">608</span>次人已下载&nbsp;共<span>6</span>页</li>
+
+        </ul>
+
+        <ul>
+            <li>3<a href="#">在山的那一边教学预案</a></li>
+            <li><span class="resources_download_num">608</span>次人已下载&nbsp;共<span>6</span>页</li>
+
+        </ul>
+
+        <ul>
+            <li>4<a href="#">在山的那一边教学预案</a></li>
+            <li><span class="resources_download_num">608</span>次人已下载&nbsp;共<span>6</span>页</li>
+
+        </ul>
+    </div>
+    <div class="main_read_content">
+        教学内容
+    </div>
+
+    <div class="main_read_content_operation">
+        <ul>
+            <li><a href=""><img src="../images/likes.png"></a></li>
+            <li><a href=""><img src="../images/read_download.png"></a></li>
+            <li><a href=""><img src="../images/forward.png"></a></li>
+        </ul>
+    </div>
+
+    <div class="border"></div>
+
+    <div class="my_comment">
+        <p>你的评论</p>
+        <textarea></textarea>
+        <input type="button" value="你的评论">
+
+
+    </div>
+
+    <div class="other_comment">
+        <p>评论</p>
+
+        <div class="reader_comment">
+            <img src="../images/personal-img.jpeg" >
+            <p>最后的精灵<span>5小时前</span><span class="score">教材评分</span></p>
+            <div>品读这"雨巷",我们总得走得进,走不出的哀伤.诗人虽然远离我们而去,但诗的语言正如星星的光辉<span class="score">4.7分</span></div>
+        </div>
+
+
+        <div class="reader_comment">
+            <img src="../images/personal-img.jpeg" >
+            <p>最后的精灵<span>5小时前</span><span class="score">教材评分</span></p>
+            <div>品读这"雨巷",我们总得走得进,走不出的哀伤.诗人虽然远离我们而去,但诗的语言正如星星的光辉<span class="score">4.7分</span></div>
+        </div>
+
+    </div>
+</div>
+<div class="footer">
+    <div class="footer_content">
+        <ul class="footer_content_ul">
+            <li><a class="footer_title">北京市百年树人远程教育有限公司<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="agreement">协议<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="proposal">建议</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+</html>

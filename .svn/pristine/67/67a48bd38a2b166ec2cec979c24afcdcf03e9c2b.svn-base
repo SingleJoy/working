@@ -1,0 +1,166 @@
+
+$(function(){
+
+    var width = document.body.clientWidth;
+    var myWidth=(width-1100)/2;
+    $(".navbar_bottom_content").css("margin-left",myWidth+220+"px");
+    $("#nav_content_classify").css("margin-left",myWidth+220+"px");
+    $(" #searchbox").css("margin-left",myWidth+800+"px");
+
+});
+//弹出框遮罩层
+//兼容火狐、IE8
+//显示遮罩层
+function showMask(){
+    $("#mask").css("height",$(document).height());
+    $("#mask").css("width",$(document).width());
+    $("#mask").show();
+}
+//隐藏遮罩层
+function hideMask(){
+    $("#mask").hide();
+}
+
+
+// main_top 上传文我的文档按钮(upload_page a)鼠标悬停事件
+$(function(){
+$(".upload_page a").mouseover(function(){
+    $(this).css("background-color","rgba(255,154,0,0.56)")
+
+}).mouseout(function(){
+    $(this).css("background-color","#fe9a00")
+})
+});
+// main_top 申请老师认证(.application)鼠标悬停事件
+$(function(){
+    $(".application").mouseover(function(){
+        $(this).css("background-color","#fb9374")
+
+    }).mouseout(function(){
+        $(this).css("background-color","#fe7545")
+    })
+});
+
+
+//main_left布局
+
+$(function(){
+    $(".main_left ul li:lt(0)").css("display","none");
+
+});
+
+
+
+
+
+$(function(){
+    $(".order_info:lt(1)").css("margin-top","20px");
+
+});
+
+//个人设置
+$(function(){
+    $(".setting ul li").click(function(){
+        $(this).addClass("curr").siblings().removeClass("curr");
+    });
+
+});
+$(function(){
+    $(".basic_info").click(function(){
+        $(".basic_info_click").show();
+        $(".school_setting_click").hide();
+        $(".subject_setting_click").hide();
+    });
+});
+$(function(){
+    $(".school_info").click(function(){
+        $(".basic_info_click").hide();
+        $(".school_setting_click").show();
+        $(".subject_setting_click").hide();
+    });
+});
+
+$(function(){
+    $(".subject_setting").click(function(){
+        $(".basic_info_click").hide();
+        $(".school_setting_click").hide();
+        $(".subject_setting_click").show();
+    });
+});
+
+
+//我的关注鼠标悬浮事件
+$(function(){
+    $(".concern_page").mouseover(function(){
+        $(this).css("border","1px solid #3ebbce");
+        $(this).find(".quit_concern").show();
+        $(".concern_page a").mouseover(function(){
+            $(this).css("color","red");
+
+        });
+
+    }).mouseout(function(){
+        $(".concern_page").css("border","none");
+        $(".quit_concern").css("display","none");
+        $(this).find("a").css("color","none");
+    });
+    $(".concern_page a").mouseout(function(){
+        $(".concern_page a").css("color","#6d6d6d");
+
+    });
+});
+
+
+$(function(){
+    $(".my_concern_li").click(function(){
+        $(".concern_main").show();
+        $(".my_fans_page").hide();
+
+    });
+});
+
+$(function(){
+    $(".my_fans_li").click(function(){
+        $(".concern_main").hide();
+        $(".my_fans_page").show();
+
+    });
+});
+
+
+
+
+//我的收益
+$(function(){
+    $(".account_record a").click(function(){
+        $(".account_record").css("background-color","#eaeaea");
+        $(".account_withdraw").css("background-color","#fff");
+    });
+
+    $(".account_withdraw a").click(function(){
+        $(".account_record").css("background-color","#fff");
+        $(".account_withdraw").css("background-color","#eaeaea");
+
+    });
+});
+
+$(function(){
+    $(".resources_classify ul li").click(function(){
+        $(".resources_classify ul li").css("border-bottom","2px solid #ddd");
+        $(this).css("border-bottom","2px solid #3ebbce");
+
+        $(".resources_classify ul li a").css("color","#000000");
+        $(this).children().css("color","#3ebbce")
+    });
+})
+
+//我的积分
+$(function(){
+
+        $(".score_use_time_date:lt(1)").css("border-top","1px solid #ddd");
+        $(".score_use_states:lt(1)").css("border-top","1px solid #ddd");
+
+
+
+});
+

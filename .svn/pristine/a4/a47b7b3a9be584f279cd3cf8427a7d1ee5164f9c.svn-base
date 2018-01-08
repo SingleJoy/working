@@ -1,0 +1,128 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+        <jsp:include page="/frontstage/base/personalCenter/personal_header.jsp"></jsp:include>
+
+
+        <div class="row row-3-9">
+
+            <jsp:include page="/frontstage/base/personalCenter/personal_left.jsp"></jsp:include>
+
+            <div class="col-lg-9 col-md-9">
+
+                <section class="es-section">
+                    <form id="communityForm" action="${pageContext.request.contextPath}/workshop/to_workshop_center.action" method="post">
+                        <input type="hidden" name="rows" id="rows" value="${workshopView.rows}"/>
+                        <input type="hidden" name="page" id="page" value="${workshopView.page}"/>
+                        <input type="hidden" name="stamp" id="stamp" value="${stamp}"/>
+                        <input type="hidden" name="state" id="state" value="${state}"/>
+                        <input type="hidden" name="sign" id="sign" value="${workshopView.sign}"/>
+                        <input type="hidden" name="currentCommunity" id="currentCommunity" value=""/>
+                    </form>
+                    <div class="panel panel-default panel-col" style="border: none;">
+                        <div class="panel-body">
+                            <div class="nav-btn-tab community_tabs">
+                                <ul class="nav nav-tabs">
+                                    <li <c:if test="${workshopView.sign==0}">class="active" </c:if>><a href="javascript:void(0);"  onclick="doCommunityCenter(0);" >全部</a></li>
+                                    <li <c:if test="${workshopView.sign==1}">class="active" </c:if>><a href="javascript:void(0);"  onclick="doCommunityCenter(1);" >我是坊员</a></li>
+                                    <li <c:if test="${workshopView.sign==2}">class="active" </c:if>><a href="javascript:void(0);"  onclick="doCommunityCenter(2);" >我是坊主</a></li>
+                                    <li <c:if test="${workshopView.sign==3}">class="active" </c:if>><a href="javascript:void(0);"  onclick="doCommunityCenter(3);" >我发起的话题</a></li>
+                                </ul>
+                            </div>
+                            <c:if test="${workshopView.sign==3}">
+                                <jsp:include page="topic_community.jsp"></jsp:include>
+                            </c:if>
+                            <c:if test="${workshopView.sign==2}">
+                                <jsp:include page="found_workshop.jsp"></jsp:include>
+                            </c:if>
+                            <c:if test="${workshopView.sign==1}">
+                                <jsp:include page="join_workshop.jsp"></jsp:include>
+                            </c:if>
+                            <c:if test="${workshopView.sign==0}">
+                                <!--我参加的小组-->
+                                <div class="my-group">
+                                    <h5 style="margin: 10px 0 20px 0;">全部工作坊:
+                                        <span class="pull-right num num_num">${workshopView.total}</span>
+                                    </h5>
+
+                                    <div class="row">
+                                        <c:forEach items="${workshopViewList}" var="workshop">
+                                            <div class="col-md-4 community_list" >
+                                                <input type="hidden" id="current_commu" value="${workshop.id }"/>
+                                                <div class="media" style="padding:5px 0;margin-top: 0;">
+                                                    <a class="pull-left" href="javascript:void(0)"  onclick="doIndex(${workshop.id});" >
+                                                        <img class="media-object" src="${pageContext.request.contextPath}${workshop.img}" style="width: 80px;height: 80px;">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h5 class="media-heading" style="line-height: 25px;">${workshop.name}</h5>
+                                                        <div class="student_num hidden-xs"><i class="es-icon es-icon-people text-muted"></i>${workshop.studentNum}</div>
+                                                        <div class="message_num"><i class="es-icon es-icon-textsms text-muted"></i>${workshop.topicNum}</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+
+                                    <c:if test="${workshopView.totalPage>workshopView.page+1}">
+                                        <a class="pull-right more_data" href="javascript:void(0)" onclick="doMore();">更多 ></a>
+                                    </c:if>
+
+
+                                </div>
+
+
+                                   
+
+                            </c:if>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    function doIndex(value){
+        window.open("${pageContext.request.contextPath}/community/to_community_index.action?stamp=5&sourceType=1&id="+value,'_blank');
+    }
+
+    function doCommunityCenter(value){
+        window.location.href="${pageContext.request.contextPath}/workshop/to_workshop_center.action?stamp=0&state=1&page=0&rows=0&sign="+value;
+    }
+
+    function doCommunity(id,studentNum){
+        window.location.href="${pageContext.request.contextPath}/workshop/to_workshop_main.action?id="+id,"_blank";
+    }
+
+    function doMore(){
+        var page = $("#page").val();
+        $("#page").val(parseInt(page)+1);
+        document.getElementById('communityForm').submit();
+    }
+
+    /* 社区选择 */
+    $(".community_list").click(function(){
+        $(".community_list").css("backgroundColor","#fff");
+        $(this).css("backgroundColor","#eaeaea");
+        var current_commu_id = $(this).find("#current_commu").attr("value");
+        $("#currentCommunity").attr("value",current_commu_id);
+        $("#communityForm").submit();
+    });
+</script>
+
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>

@@ -1,0 +1,204 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/jquery-1.11.0.min.js"></script> --%>
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+<script>
+var uploader = WebUploader.create({
+	auto: true,
+	// swf文件路径
+	swf: '${pageContext.request.contextPath}/frontstage/js/webuploader/Uploader.swf',
+	// 文件接收服务端。
+	server: '${pageContext.request.contextPath}/community/upload_img.action',
+
+	// 选择文件的按钮。可选。
+	// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+	pick: "#headImg",
+
+	// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+	resize: false,
+	accept: {
+		title: 'Images',
+		extensions: 'gif,jpg,jpeg,bmp,png',
+		mimeTypes: 'image/jpg,image/jpeg,image/png'   //修改这行
+	}
+});
+
+/**
+ *上传成功后
+ *file:文件
+ *response:服务器返回
+ */
+uploader.on( 'uploadSuccess', function( file,response  ) {
+	var hidden=$('<input type="hidden" value="'+response.fileName+'" name="head_img" class="hidden">' );
+	var $form=$("#communityForm");
+	$form.append(hidden);
+});
+
+// 当有文件添加进来的时候
+uploader.on( 'fileQueued', function( file ) {
+
+	// <input type="hidden">
+	var $img;
+	var $li = $(
+				'<div id="' + file.id + '" class="file-item thumbnail">' +
+				'<img style="margin:20 0 0 110">' +
+					/*  '<div class="info">' + file.name + '</div>' + */
+				'</div>'
+		),
+		$img = $li.find('img');
+	var   $list=$("#headFile");
+
+	// $list为容器jQuery实例
+	$list.append( $li );
+	$("#headImg").hide();
+	/* $("#hedimg").hide(); */
+
+	// 创建缩略图
+	// 如果为非图片文件，可以不用调用此方法。
+	// thumbnailWidth x thumbnailHeight 为 100 x 100
+	uploader.makeThumb( file, function( error, src ) {
+		if ( error ) {
+			$img.replaceWith('<span>不能预览</span>');
+			return;
+		}
+
+		$img.attr( 'src', src );
+	}, 100, 90);
+});
+function _province(value){
+	$("#area_id").val(value);
+	$("#city").find("option").remove();
+	$("#county").find("option").remove();
+	$("#city").append('<option value=-1 >全部</option>');
+	$("#county").append('<option value=-1 >全部</option>');
+	
+	if(value==1){
+	value=0;
+	}
+	$.ajax({
+		url:"${pageContext.request.contextPath}/area/showArea.action?parentId="+value,
+		dataType:'json',
+		success:function(json){
+			var a = JSON.stringify(json);
+			var o = eval( "(" + a + ")" );
+			var html = "";
+			for(var j in o){
+				html += '<option  value='+o[j].id+' >'+o[j].area_name+'</option>';
+			}
+			$("#city").append(html);
+		}
+	});
+}
+
+function _city(value){
+	$("#area_id").val(value);
+	$("#county").find("option").remove();
+	$("#county").append('<option value=-1 >全部</option>');
+	$.ajax({
+		url:"${pageContext.request.contextPath}/area/showArea.action?parentId="+value,
+		dataType:'json',
+		success:function(json){
+			var a = JSON.stringify(json);
+			var o = eval( "(" + a + ")" );
+			var html = "";
+			for(var j in o){
+				html += '<option  value='+o[j].id+' >'+o[j].area_name+'</option>';
+			}
+			$("#county").append(html);
+		}
+
+	});
+}
+
+function _county(value){
+	$("#area_id").val(value);
+}
+</script>
+<div style="padding: 5px; overflow: hidden;">
+	<form id="communityForm" method="post">
+		<table class="tableForm">
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>&nbsp;社区名称：</th>
+				<td><input name="name" id="name" onblur="checkName();" style="width: 180px;"  placeholder="请输入社区名称"  class="easyui-validatebox"
+					data-options="required:'true',missingMessage:'请填写社区名称'" /></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>&nbsp;是否需要审核：</th>
+				<td><label><input type="radio" name="is_examine" value="1"  class="" checked> 否 </label>
+				    <label><input type="radio" name="is_examine" value="0"  class="" > 是</label></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>&nbsp;省：</th>
+				<td >
+				<input type="hidden" id="area_id" name="area_id" value="">
+				<select name="province" id="province"  style="width: 180px;" onchange='_province(this.value)' class="form-control" >
+					<option  value="1">--全国--</option>
+					<c:forEach items="${provinceList}" var="pro">
+						<option  value="${pro.id}">${pro.area_name}</option>
+					</c:forEach> 
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>&nbsp;市：</th>
+				<td >
+				<select name="city" id="city" style="width: 180px;" onchange="_city(this.value)" class="form-control">
+					<option  value="-1">全部</option>
+					<%-- <c:forEach items="${cityList}" var="pro">
+						<option value="${pro.id}">${pro.area_name}</option>
+					</c:forEach> --%>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>&nbsp;县/区：</th>
+				<td >
+				<select  name="county" id="county" style="width: 180px;" onchange="_county(this.value)" class="form-control">
+					<option  value="-1">全部</option>
+					<%-- <c:forEach items="${countyList}" var="pro">
+						<option   value="${pro.id}">${pro.area_name}</option>
+					</c:forEach> --%>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>&nbsp;社区类型：</th>
+				<td>
+				    <label><input type="radio" name="type" value="0" class="ordinary_train_community" checked> 普通社区</label>
+				    <label><input type="radio" name="type" value="1" class="teacher_train_community"> 教师培训社区 </label>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<th>&nbsp;社区头像：</th>
+				<td>
+				    <div id="headFile" class="upload_course_picture" ></div>
+				    <div id="headImg">
+				       <input type="button" value="+社区头像">
+				    </div>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>

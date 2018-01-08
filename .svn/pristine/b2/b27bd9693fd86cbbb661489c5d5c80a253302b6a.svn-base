@@ -1,0 +1,147 @@
+<%@ page language="java" import="java.util.*,cn.bnsr.edu_yun.frontstage.base.po.User" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<% User user = (User)request.getSession().getAttribute("currentUser");%>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+
+        <jsp:include page="class_header.jsp"></jsp:include>
+
+        <div class="row">
+        	<jsp:include page="class_left.jsp"></jsp:include>
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col">
+
+
+                    <div class="panel-heading">
+                        <div class="pull-right">
+                            <a href="${pageContext.request.contextPath}/class/to_add_or_update_class_notice.action?id=${classView.id}&flag=2&sign=10&source_id=${classView.source_id}&source_type=${classView.source_type}" class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-plus"></span> 新建通知</a>
+                        </div>
+                        班级通知
+                    </div>
+                    <c:if test="${!empty messageList }">
+	                    <div class="panel-body ">
+	                        <form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/class/to_class_notice_manager.action" id="noticeForm">
+								<input type="hidden" name="classId" value="${classView.id }"/>
+								<input type="hidden" name="source_id" value="${classView.source_id }"/>
+								<input type="hidden" name="source_type" value="${classView.source_type }"/>
+								<input type="hidden" name="flag" value="${classView.flag }"/>
+								<input type="hidden" name="sign" value="${classView.sign }"/>
+								<input type="hidden" name="page" id="page" value="${messageView.page}" /> 
+								<input type="hidden" name="rows" id="rows" value="${messageView.rows}" />
+								<input type="hidden" name="total" id="total" value="${messageView.total}" />
+			    				<input type="hidden" name="totalPage" id="totalPage" value="${messageView.totalPage}" />
+	                            <table class="table table-hover">
+	                                <thead>
+	                                <tr>
+	                                	<th><input type="checkbox" class="checkAll"></th>
+	                                    <th width="25%" >通知名称</th>
+	                                    <th style="">发表人</th>
+	                                    <th style="">发表日期</th>
+	                                    <th>操作</th>
+	                                </tr>
+	                                </thead>
+	
+	                                <tbody >
+			                           <c:forEach items="${messageList }" var="message">
+				                           <tr>
+				                              <td><input type="checkbox" name="subId" value="${message.id }"></td>
+				                              <td style="text-overflow:ellipsis;white-space: nowrap;max-width: 250px;overflow: hidden;" title="${message.title }">${message.title }</td>
+				                              <td>${message.username }</td>
+				                              <td>${message.release_time }</td>
+				                              <td>
+				                              	<div class="btn-group">
+				                                    <a href="javascript:void(0);"  class="btn btn-default btn-sm">管理</a>
+				                                    <a href="javascript:void(0);;" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+				                                       <span class="caret"></span>
+				                                    </a>
+				                                    <ul class="dropdown-menu pull-right">
+				                                        <li>
+				                                           <a href="${pageContext.request.contextPath }/class/to_add_or_update_class_notice.action?id=${classView.id }&flag=${classView.flag }&sign=${classView.sign }&source_id=${classView.source_id }&source_type=${classView.source_type }&messageId=${message.id }">
+				                                     			<i class="es-icon es-icon-edit"  title="编辑"></i> 编辑
+				                                           </a>
+				                                        </li>
+				                                        <li>
+				                                           <a href="${pageContext.request.contextPath}/class/del_class_notice.action?classId=${classView.id }&flag=${classView.flag }&sign=${classView.sign }&source_id=${classView.source_id }&source_type=${classView.source_type }&id=${message.id }" class="del-question">
+				                                                <span class="glyphicon glyphicon-remove-circle"></span> 删除
+				                                          </a>
+				                                        </li>
+				                                     </ul>
+				                                 </div>
+				                              </td>
+				                           </tr>
+			                          </c:forEach>
+	                                </tbody>
+	                            </table>
+	                        </form>
+	                    </div>
+                    </c:if>
+                </div>
+               <c:if test="${!empty messageList }">
+
+                		<div id="test" class="pager" style="padding-top:10px;"></div>
+
+               </c:if>
+            </div>
+        </div>
+    </div>
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+<script type="text/javascript">
+	$(".checkAll").click(function(){
+		if($(".checkAll").prop("checked")){
+			$("[name='subId']").prop("checked","checked");
+		}else{
+			$("[name='subId']").removeAttr("checked");
+		}		
+	});
+	
+	function onSubmit(){
+		$("#page").val(0);
+		$('#noticeForm').submit();
+	}
+	
+	function delNotices(){
+		var ids="";
+		$("[name='subId']:checked").each(function(){
+			ids+=$(this).val()+",";
+		});
+		if(ids.length<=1){
+			return ;
+		}
+		ids=ids.substring(0,ids.length-1);
+		window.location.href="${pageContext.request.contextPath}/class/batch_del_class_notice.action?classId="+${classView.id}+"&flag="+${classView.flag}+"&sign="+${classView.sign}+"&source_id="+${classView.source_id}+"&source_type="+${classView.source_type}+"&ids="+ids;
+	}
+	
+	$(function(){
+	    //翻页
+	    var total = $("#total").val();
+	    var page =  parseInt($("#page").val())+1;
+
+	    $("#btn5").on('click', function () {
+	        $("#div1").PageChanged(5);
+	    });
+
+	    $(".pager").pagination({
+	        thisPageIndex:page,
+	        recordCount: total,       //总记录数
+	        pageSize: $("#rows").val(),//一页记录数
+	        onPageChange: function (page) {
+	            document.title = page;
+	            $("#page").val(page-1);
+	            $('#noticeForm').submit();
+
+	        }
+	    });
+	});
+</script>

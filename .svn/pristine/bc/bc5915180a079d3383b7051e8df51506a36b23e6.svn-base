@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>老师-课程</title>
+    <link href="../../css/author-space.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../../jq/jq.js"></script>
+    <script>
+        $(function(){
+            $(".teacher_follow_page_list").mouseover(function(){
+                $(this).find(".teacher_follow_page_list_bottom").find("p").hide().parent().find("a").show();
+
+            }).mouseout(function(){
+                $(this).find(".teacher_follow_page_list_bottom").find("p").show().parent().find("a").hide();
+            })
+        })
+        $(function(){
+            $(".teacher_follow_page_list:nth-child(3n+1)").css("margin-left","0");
+        })
+    </script>
+</head>
+<body>
+
+<div class="main_teacher">
+
+    <div class="main_teacher_left">
+        <ul>
+            <li ><a href="javascript:return false;">个人简介</a></li>
+            <li ><a href="javascript:return false;"  >课程</a></li>
+            <li ><a href="javascript:return false;">班级</a></li>
+            <li><a href="javascript:return false;">资源</a></li>
+            <li><a href="javascript:return false;">教研</a></li>
+            <li class="curr"><a href="javascript:return false;" class="curr">关注/粉丝</a></li>
+            <li ><a href="javascript:return false;" >加入小组</a></li>
+        </ul>
+
+    </div>
+
+    <div class="main_teacher_right">
+
+
+
+        <div class="main_right_follow_content">
+
+            <div class="teacher_follow_type">
+                <ul>
+                    <li class="curr"><a href="javascript:return false;" class="curr">关注</a></li>
+                    <li><a href="javascript:return false;">粉丝</a></li>
+                </ul>
+            </div>
+
+            <div class="teacher_follow_page">
+
+                <div class="teacher_follow_page_list">
+                      <div class="teacher_follow_page_list_top">
+                            <a href="javascript:return false;"><img src="../images/dog.jpg"></a>
+                            <h4><a href="javascript:return false;">李老师</a></h4>
+                      </div>
+                      <div class="teacher_follow_page_list_bottom">
+                          <br/>
+                          <p>测试0011111111</p>
+                        <a href="javascript:return false;" style="margin-left: 60px;background-color:#3ebbce;color: #fff;display: none;">关注</a>
+                        <!--<a href="javascript:return false;" style="margin-left: 60px;display: none;">已关注</a>-->
+                        <a href="javascript:return false;" style="display: none;">私信</a>
+
+                     </div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

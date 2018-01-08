@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="../css/notices.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script>
+
+        $(function(){
+            $(".news_tabs a span:lt(1)").show();
+            $(".main_news_content div:gt(1)").hide();
+
+            $(".news_tabs a").click(function(){
+                $(this).addClass("a_curr").siblings().removeClass("a_curr").children("span").hide();
+
+
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+<div class="main_news">
+  <div class="news_tabs">
+      <a href="javascript:return false;" class="all_news curr a_curr"><img src="../images/index.png"><img src="../images/index_01.png">全部消息<span>&gt;</span></a>
+      <a href="javascript:return false;" class="teaching_plan"><img src="../images/news_teaching.png"><img src="../images/news_teaching_01.png">教案消息<span>&gt;</span></a>
+      <a href="javascript:return false;" class="concern_news"><img src="../images/follow_center.png"><img src="../images/follow_center_01.png">谁关注我<span>&gt;</span></a>
+      <a href="javascript:return false;" class="system_news"><img src="../images/rings.png"><img src="../images/rings_01.png">系统消息<span>&gt;</span></a>
+  </div>
+ <div class="main_news_content">
+
+     <div class="all_news_content">
+         <p>全部消息</p>
+
+         <span class="circle"></span>
+         <span class="line"></span>
+         <div class="time">2016-9-12</div>
+         <a class="notice_page" href="javascript:return false;">上传教学设计抢现金大奖的活动正在进行中，快来参与吧!上传教学设计抢现金大奖的活动正在进行中，快来参与吧</a>
+         <br/>
+
+     </div>
+
+     <div class="teaching_plan_content">
+         <p>教案消息</p>
+
+         <span class="circle"></span>
+         <span class="line"></span>
+         <span class="time">2016-9-12</span>
+         <a class="notice_page" href="javascript:return false;">上传教学设计抢现金大奖的活动正在进行中，快来参与吧!上传教学设计抢现金大奖的活动正在进行中，快来参与吧</a>
+         <br/>
+
+         <span class="circle"></span>
+         <span class="line"></span>
+         <span class="time">2016-9-12</span>
+         <a class="notice_page" href="javascript:return false;">上传教学设计抢现金大奖的活动正在进行中，快来参与吧</a>
+         <br/>
+
+     </div>
+
+
+     <div class="concern_news_content">
+         <p>谁关注我</p>
+
+         <span class="circle"></span>
+         <span class="line"></span>
+         <span class="time">2016-9-12</span>
+         <a class="notice_page" href="javascript:return false;">上传教学设计抢现金大奖的活动正在进行中，快来参与吧!上传教学设计抢现金大奖的活动正在进行中，快来参与吧</a>
+         <br/>
+
+         <span class="circle"></span>
+         <span class="line"></span>
+         <span class="time">2016-9-12</span>
+         <a class="notice_page" href="javascript:return false;">上传教学设计抢现金大奖的活动正在进行中，快来参与吧</a>
+         <br/>
+
+     </div>
+
+
+     <div class="system_news_content">
+         <p>系统通知</p>
+
+         <span class="circle"></span>
+         <span class="line"></span>
+         <span class="time">2016-9-12</span>
+         <a class="notice_page" href="javascript:return false;">上传教学设计抢现金大奖的活动正在进行中，快来参与吧!上传教学设计抢现金大奖的活动正在进行中，快来参与吧</a>
+         <br/>
+
+         <span class="circle"></span>
+         <span class="line"></span>
+         <span class="time">2016-9-12</span>
+         <a class="notice_page" href="javascript:return false;">上传教学设计抢现金大奖的活动正在进行中，快来参与吧</a>
+         <br/>
+
+     </div>
+
+ </div>
+
+</div>
+</body>
+</html>

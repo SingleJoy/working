@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>添加选择题</title>
+    <link href="./edusoho/bootstrap.css" rel="stylesheet">
+    <link href="./edusoho/es-question.css" rel="stylesheet">
+    <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body class="">
+  <div class="es-wrap">
+      <div id="content-container" class="container">
+          <div class="row">
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                <ul class="list-group">
+                <li class="list-group-heading">课程信息</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>基本信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>详细信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程图片
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课时管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>录播管理</a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程文件
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程设置</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>价格设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>教师设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>学员管理
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">题库</li>
+                <li class="list-group-item active">
+                <a href="">
+                <span></span>题目管理
+                </a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>试卷管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>试卷批阅</a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>作业批改</a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程运营</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程学习数据</a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href=""><span></span>课程订单查询</a>
+                </li>
+                </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading clearfix">
+                      题目管理
+                    </div>
+                    <div class="panel-body">
+                      <ol class="breadcrumb">
+                          <li><a href="/course/33/manage/question">题目管理</a></li>
+                          <li class="active">添加题目</li>
+                      </ol>
+                      <div id="question-creator-widget">
+                        <form id="question-create-form" class="form-horizontal quiz-question" method="post" action="" novalidate="novalidate" >
+                          <div class="form-group">
+                              <div class="col-md-2 control-label"><label>从属</label></div>
+                              <div class="col-md-8 controls">
+                                  <select class="form-control width-input width-input-large" name="target">
+                                      <option value="">本课程</option>
+                                      <option value="">课时1：111</option>
+                                      <option value="">课时2：22</option>
+                                  </select>
+                                  <div class="help-block">可以针对本课程或者某个课时出题</div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="col-md-2 control-label"><label>难度</label></div>
+                              <div class="col-md-8 controls radios">
+                                  <label><input type="radio" name="difficulty" value="simple"> 简单</label>
+                                  <label><input type="radio" name="difficulty" value="normal" checked="checked"> 一般</label>
+                                  <label><input type="radio" name="difficulty" value="difficulty"> 困难</label>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-md-2 control-label"><label for="question-stem-field">题干</label></div>
+                            <div class="col-md-8 controls">
+                              <textarea class="form-control" id="question-stem-field"  name="stem" style="height: 180px;"></textarea>
+                            </div>
+                          </div>
+                          <div id="choices">
+                              <div class="form-group">
+                                <div class="col-sm-2 control-label">
+                                    <label class="choice-label" for="item-input-1">选项A</label>
+                                </div>
+                                <div class="col-sm-8 controls">
+                                    <textarea class="form-control item-input col-md-8" id="item-input-1" name="choices[]"></textarea>
+                                    <p class="mtm">
+                                      <label><input type="checkbox" class="answer-checkbox"> 正确答案</label>
+                                    </p>
+                                </div>
+                                <div class="col-sm-2" style="padding-left:0;">
+                                  <a class="btn btn-default btn-sm delete-choice mlm" href="javascript:void(null)"><i class="glyphicon glyphicon-trash"></i></a>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-sm-2 control-label"><label class="choice-label" for="item-input-2">选项B</label></div>
+                                <div class="col-sm-8 controls">
+                                  <textarea class="form-control item-input col-md-8" id="item-input-2" name="choices[]"></textarea>
+                                  <p class="mtm">
+                                    <label><input type="checkbox" class="answer-checkbox"> 正确答案</label>
+                                  </p>
+                                </div>
+                                <div class="col-sm-2" style="padding-left:0;">
+                                  <a class="btn btn-default btn-sm delete-choice mlm" href="javascript:void(null)"><i class="glyphicon glyphicon-trash"></i></a>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-sm-2 control-label"><label class="choice-label" for="item-input-3">选项C</label></div>
+                                <div class="col-sm-8 controls">
+                                  <textarea class="form-control item-input col-md-8" id="item-input-3" name="choices[]" ></textarea>
+                                  <p class="mtm">
+                                    <label><input type="checkbox" class="answer-checkbox"> 正确答案</label>
+                                  </p>
+                                </div>
+                                <div class="col-sm-2" style="padding-left:0;">
+                                  <a class="btn btn-default btn-sm delete-choice mlm" href="javascript:void(null)"><i class="glyphicon glyphicon-trash"></i></a>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-sm-2 control-label"><label class="choice-label" for="item-input-5">选项D</label></div>
+                                <div class="col-sm-8 controls">
+                                  <textarea class="form-control item-input col-md-8" id="item-input-5" name="choices[]"></textarea>
+                                  <p class="mtm">
+                                    <label><input type="checkbox" class="answer-checkbox"> 正确答案</label>
+                                  </p>
+                                </div>
+                                <div class="col-sm-2" style="padding-left:0;">
+                                  <a class="btn btn-default btn-sm delete-choice mlm" href="javascript:void(null)"><i class="glyphicon glyphicon-trash"></i></a>
+                                </div>
+                              </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <div class="col-md-2 control-label"></div>
+                            <div class="col-md-8 controls">
+                               <button class="btn btn-success btn-sm pull-right add-choice" type="button">新增选项</button>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="col-md-2 control-label"><label>不定项选择题</label></div>
+                              <div class="col-md-8 controls radios">
+                                <label><input type="radio" name="uncertain" value="0" checked="checked"> 否</label><label><input type="radio" name="uncertain" value="1"> 是</label>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-md-8 col-md-offset-2 controls ">
+                                <a href="javascript:;" class="text-success dis_hide_analysis">» 显示/隐藏 高级选项 ...</a>
+                            </div>
+                          </div>
+                          <div id="advanced-collapse" class="advanced-collapse collapse" style="height: auto;">
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label for="question-analysis-field">解析</label></div>
+                                <div class="col-md-8 controls">
+                                    <textarea class="form-control" id="question-analysis-field"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label for="question-score-field">分值</label></div>
+                                <div class="col-md-4 controls">
+                                    <input class="form-control" value="2" type="text" id="question-score-field" name="score">
+                                </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-md-8 col-md-offset-2 controls">
+                                <button type="submit" class="btn btn-primary submit-btn">保存并继续添加</button>
+                                <button type="submit" class="btn btn-primary submit-btn">保存</button>
+                                <a href="" class="btn btn-link">返回</a>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      
+      <!-- footer -->
+
+  </div>
+
+<script type="text/javascript">
+    $(function(){
+        // 点击显示隐藏
+        var type = 1;
+        $('.dis_hide_analysis').click(function(){
+            if (type == 1) {
+                $('#advanced-collapse').slideDown();
+                type = 2;
+            }else if (type == 2) {
+                $('#advanced-collapse').slideUp();
+                type = 1;
+            }
+        })
+        // 添加选项选项--动态添加
+        var sum = 0;
+        $(".add-choice").on("click",function(){
+            var str = '<div class="form-group"><div class="col-sm-2 control-label"><label class="choice-label" for="item-input-5">选项D</label></div><div class="col-sm-8 controls"><textarea class="form-control item-input col-md-8" id="item-input-5" name="choices[]"></textarea><p class="mtm"><label><input type="checkbox" class="answer-checkbox"> 正确答案</label></p></div><div class="col-sm-2" style="padding-left:0;"><a class="btn btn-default btn-sm delete-choice mlm" href="javascript:void(null)"><i class="glyphicon glyphicon-trash"></i></a></div></div>';
+            if (sum < 10) {
+               $('#choices').append(str);
+               sum++;
+            }
+        })
+        // 删除选项
+        $("#choices").on("click",".delete-choice",function(){
+            $(this).parent().parent().remove();
+        })
+    })
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

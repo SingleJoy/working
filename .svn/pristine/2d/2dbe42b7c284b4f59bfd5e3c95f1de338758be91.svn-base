@@ -1,0 +1,116 @@
+package cn.bnsr.edu_yun.backstage.resource.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.controller.BaseController;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.backstage.resource.service.BackFileAnalyzeService;
+import cn.bnsr.edu_yun.backstage.resource.service.BackFileService;
+import cn.bnsr.edu_yun.backstage.resource.view.BackFileView;
+import cn.bnsr.edu_yun.backstage.resource.view.FileDetailView;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_base;
+import cn.bnsr.edu_yun.frontstage.resource.service.File_baseService;
+import cn.bnsr.edu_yun.util.ConfigInfo;
+import cn.bnsr.edu_yun.util.ConvertSwf;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+
+/**
+ * 资源文档管理
+ * @author fangxiongwei
+ * @date 2016年9月20日
+ */
+@Controller
+@RequestMapping("/back_file_analyze")
+public class BackFileAnalyzeController extends BaseController{
+	private final Logger log = LoggerFactory.getLogger(BackFileAnalyzeController.class);
+	@Autowired
+	private BackFileAnalyzeService backFileAnalyzeService;
+	@Autowired
+	private File_baseService fileBaseService;
+	@Autowired
+	private BackFileService backFileService;
+	/**
+	 *跳转资源页面
+	 */
+	@RequestMapping("/to_file_analyze")
+	public ModelAndView toFileAnalyze(){
+		return new ModelAndView("backstage/resourceAnalyze/file_analyze");
+	}
+	
+	/**
+	 * 获得资源datagrid
+	 */
+	@RequestMapping("/datagrid")
+	public void datagrid(HttpServletResponse response,HttpServletRequest request,BackFileView backFileView) {
+		super.writeJson(backFileAnalyzeService.datagrid(backFileView),response);
+	}
+	
+	/**
+	 *跳转资源预览页面
+	 */
+	@RequestMapping("/to_read_file") 
+	public ModelAndView readFile(HttpServletRequest request,HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			long id   =	Long.parseLong(request.getParameter("id"));
+			File_base fileBase=fileBaseService.selectById(id);
+			String folder=ConfigInfo.getString("stream_file_repository");
+			String oldName=fileBase.getPath();
+			String a1=oldName.substring(oldName.lastIndexOf("/"));
+			String a2=a1.substring(0,a1.lastIndexOf("."));
+			String newName=folder+a2+".pdf";
+			int code = (int)((Math.random() * 9 + 1) * 100000);
+		    String uploadPath = request.getSession().getServletContext().getRealPath("/read");
+			String swfName="/file"+code+".swf";
+			String fileName="file"+code+".swf";
+			ConvertSwf c = new ConvertSwf();
+			c.convertPdf2Swf(newName,uploadPath+swfName);
+			modelAndView.addObject("swfName",fileName);
+			modelAndView.setViewName("backstage/resource/file/read_file");
+			log.info("转换成功");
+		} catch (Exception e) {
+			log.error("转换失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	
+	
+	/**
+	 *跳转资源详细页面
+	 */
+	@RequestMapping("/to_file_detail") 
+	public ModelAndView fileDetail(String file_type,String check) {
+		ModelAndView mv = new ModelAndView("backstage/resource/file/file_detail");
+		mv.addObject("file_type", file_type);
+		mv.addObject("check", check);
+		return mv;
+	}
+	
+	/**
+	 *查询资源详细
+	 */
+	@RequestMapping("/query_fileDetail")
+	public void queryFileDetail(HttpServletRequest request,HttpServletResponse response){
+		Json j = new Json();
+		try {
+			String id = request.getParameter("id");
+			FileDetailView fileDetail = backFileService.queryFileDetail(id);
+			j.setObj(fileDetail); 
+			j.setMsg("查询成功！");
+			j.setSuccess(true);
+		} catch (Exception e) {
+			log.error("查询失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("查询失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+}

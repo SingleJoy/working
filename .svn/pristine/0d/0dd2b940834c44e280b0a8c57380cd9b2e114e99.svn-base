@@ -1,0 +1,67 @@
+package cn.bnsr.edu_yun.backstage.train.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.controller.BaseController;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.backstage.train.view.StudyTimeStatsView;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyTimeService;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+
+@Controller
+@RequestMapping("/back_user_study")
+public class BackUserStudyController extends BaseController {
+	
+	private final Logger log = LoggerFactory.getLogger(BackUserStudyController.class);
+	
+	@Autowired
+	private UserStudyTimeService userStudyTimeService;
+	
+	
+	/**
+	 *跳转用户统计页面
+	 */
+	@RequestMapping("/to_study_time_stats")
+	public ModelAndView toStudyTimeStats(HttpServletRequest request){
+		String timeType = request.getParameter("timeType");
+		String startTime = request.getParameter("startTime");
+		String endTime = request.getParameter("endTime");
+		String days = request.getParameter("days");
+		request.setAttribute("timeType", timeType);
+		request.setAttribute("startTime", startTime);
+		request.setAttribute("endTime", endTime);
+		request.setAttribute("days", days);
+		return new ModelAndView("backstage/train/userStudy/study_time_stats");
+	}
+	
+	/**
+	 * 查询用户统计数据
+	 */
+	@RequestMapping("/query_study_time_stats")
+	public void queryUserStats1(HttpServletResponse response,StudyTimeStatsView condition){
+		Json j = new Json();
+		try {
+			List<StudyTimeStatsView> studyTimeStatsList = userStudyTimeService.queryWatchStats(condition);
+			j.setSuccess(true);
+			j.setObj(studyTimeStatsList);
+			j.setMsg("查询统计数据成功!");
+		} catch (Exception e) {
+			log.error("查询统计数据失败",ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+			j.setMsg("查询统计数据失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+
+}

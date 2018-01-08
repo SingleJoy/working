@@ -1,0 +1,30 @@
+package cn.bnsr.edu_yun.frontstage.resource.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.resource.mapper.TeachingPlanFileMapper;
+import cn.bnsr.edu_yun.frontstage.resource.mapper.TeachingPlanMapper;
+import cn.bnsr.edu_yun.frontstage.resource.po.TeachingPlan;
+import cn.bnsr.edu_yun.frontstage.resource.po.TeachingPlanFile;
+import cn.bnsr.edu_yun.frontstage.resource.service.TeachingPlanService;
+
+public class TeachingPlanServiceImpl implements TeachingPlanService{
+
+	@Autowired
+	private TeachingPlanMapper teachingPlanMapper;
+	@Autowired
+	private TeachingPlanFileMapper teachingPlanFileMapper;
+	
+	@Override
+	public int insert(TeachingPlan teachingPlan) {
+		
+		return teachingPlanMapper.insertSelective(teachingPlan);
+	}
+
+	@Override
+	public int insertFile(TeachingPlanFile teachingPlanFile) {
+		
+		return teachingPlanFileMapper.insertSelective(teachingPlanFile);
+	}
+
+}

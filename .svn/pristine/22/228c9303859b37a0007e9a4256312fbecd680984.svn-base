@@ -1,0 +1,203 @@
+package cn.bnsr.edu_yun.frontstage.base.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.Notice;
+import cn.bnsr.edu_yun.frontstage.base.po.Notification;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.service.NoticeService;
+import cn.bnsr.edu_yun.frontstage.base.service.NotificationService;
+import cn.bnsr.edu_yun.frontstage.base.view.NoticeView;
+import cn.bnsr.edu_yun.frontstage.base.view.NotificationView;
+import cn.bnsr.edu_yun.frontstage.train.po.Course;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.po.Train;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+@Controller
+@RequestMapping("notice")
+public class NoticeController {
+	@Autowired
+	private NoticeService noticeService;
+	@Autowired
+	private NotificationService notificationService;
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private CourseService courseService;
+
+	@RequestMapping("queryNotice")
+	public ModelAndView queryNotice(HttpServletRequest request, NotificationView notificationView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		notificationView.setUser_id(user.getId());
+		notificationView.setRows(10);
+		if (notificationView.getPage() == 0) {
+			notificationView.setStartLine(0);
+		} else {
+			notificationView.setStartLine(notificationView.getPage() * notificationView.getRows());
+		}
+		int total = (int) notificationService.queryNotificationCount(notificationView);
+		notificationView.setTotal(total);
+		notificationView.setTotalPage(NumUtil.totalPage(total, 10));
+		List<NotificationView> notificationViews = notificationService.queryNotification(notificationView);
+		for (NotificationView view : notificationViews) {
+			int type = view.getType();
+			String msg = null;
+			String msg1 = "<span>" + view.getMsg1() + "</span>";
+			String msg2 = "<span>" + view.getMsg2() + "</span>";
+			String msg3 = "<span>" + view.getMsg3() + "</span>";
+			String path = request.getContextPath();
+			String url1 = path + "/author_space/to_author_space.action?userId=" + view.getOther_user_id();
+			String url2 = "";
+			String url3 = "";
+			if (view.getSource_type() == 0) {// 课程
+				url2 = path + "/user_study/to_course_study.action?page=1&tab=1&learnId=" + view.getSource_id() + "&sourceType=" + view.getSource_type();
+				url3 = path + "/user_study/to_course_study.action?page=1&tab=7&questionId=" + view.getQuestion_id() + "&learnId=" + view.getSource_id()
+						+ "&sourceType=" + view.getSource_type();
+			} else if (view.getSource_type() == 1) {// 培训
+				url2 = path + "/train/to_train_detail.action?id=" + view.getSource_id() + "&sign=0";
+				url3 = path + "/train/to_train_detail.action?id=" + view.getSource_id() + "&sign=6&questionId=" + view.getQuestion_id();
+			}
+			String username = "<a href=\"" + url1 + "\">" + view.getOther_username() + "</a>";
+			String course_title = "<a href=\"" + url2 + "\">" + view.getCourse_title() + "</a>";
+			String question_title = "<a href=\"" + url3 + "\">" + view.getQuestion_title() + "</a>";
+			if (type == 1) {
+				msg = username + msg1 + course_title + msg2 + question_title;
+				view.setMsg(msg);
+			} else if (type == 2) {
+				msg = msg1 + course_title + msg2 + question_title + msg3;
+				view.setMsg(msg);
+			} else if (type == 3 || type == 4 || type == 5 || type == 6) {
+				view.setMsg(msg1);
+			} else if (type == 7 || type == 8) {
+				msg = msg1 + username + msg2;
+				view.setMsg(msg);
+			} else if (type == 9) {
+				msg = username + msg1 + question_title + msg2 + " <a href=\"" + url3 + "\">" + "点击查看" + "</a>";
+				view.setMsg(msg);
+			} else if (type == 10 || type == 11 || type == 12 || type == 13 || type == 14 || type == 15) {
+				msg = msg1 + question_title + msg2;
+				view.setMsg(msg);
+			} else if (type == 16) {
+				Date date = new Date(view.getNotice_time().getTime() + 86400000);
+				SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				String time = "<span>" + formater.format(date) + "</span>";
+				msg = msg1 + course_title + msg2 + time + msg3;
+				view.setMsg(msg);
+			} else if (type == 17) {
+				CourseHour courseHour = courseHourService.getHour(view.getCourse_hour_id() + "");
+
+				String attribute = "";
+
+				if (courseHour.getAttribute_type() == 0) {
+					attribute = "考试:";
+				}
+				if (courseHour.getAttribute_type() == 3) {
+					attribute = "研讨:";
+				}
+				if (courseHour.getAttribute_type() == 4) {
+					attribute = "作业:";
+				}
+				msg = msg1 + course_title + msg2 + attribute + courseHour.getHour_title() + msg3;
+				view.setMsg(msg);
+
+			} else if (type == 18) {
+				msg = "课程" + course_title + "有试卷需要批阅";
+				view.setMsg(msg);
+			} else if (type == 19) {
+				
+				Train train = trainService.getById(view.getSource_id());
+				Course course = courseService.getById(view.getCourse_hour_id());
+
+				msg = msg1 +"<a href=\"javascript:;\">" +train.getName()+ "</a>" + msg2 +"<a href=\"javascript:;\">" + course.getTitle()+"</a>" + msg3;
+				view.setMsg(msg);
+
+			}
+		}
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("notificationViews", notificationViews);
+		modelAndView.addObject("notificationView", notificationView);
+		modelAndView.setViewName("frontstage/base/notification");
+		return modelAndView;
+	}
+
+	@RequestMapping("queryNoticeJson")
+	@ResponseBody
+	public JSONArray queryNoticeJson(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		NoticeView noticeView = new NoticeView();
+		noticeView.setRows(5);
+		noticeView.setPage(0);
+		noticeView.setUserId(user.getId());
+		noticeView.setType(Integer.parseInt(request.getParameter("type")));
+		List<Notice> list = noticeService.selectNoticeBuUserId(noticeView);
+		List<NoticeView> list2 = new ArrayList<NoticeView>();
+		for (Notice n : list) {
+			NoticeView noticeView2 = new NoticeView();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(n.getTime());
+			noticeView2.setMessage(n.getMessage());
+			noticeView2.setType(n.getType());
+			noticeView2.setTime(String.valueOf(calendar.get(Calendar.YEAR)) + "-" + String.valueOf(calendar.get(Calendar.MONTH) + 1) + "-"
+					+ String.valueOf(calendar.get(Calendar.DATE)));
+			list2.add(noticeView2);
+
+		}
+
+		return JSONArray.fromObject(list2);
+	}
+
+	@RequestMapping("/unfinish_notice")
+	public void unfinishNotice(Long course_hour_id, Long course_id, Long source_id, String user_ids, HttpServletResponse response, HttpServletRequest request) throws Exception {
+		CourseHour courseHour = null;
+		if (course_hour_id != null)
+			courseHour = courseHourService.getHour(course_hour_id + "");
+
+		String[] strs = user_ids.split(",");
+
+		for (String str : strs) {
+			long user_id = Long.parseLong(str);
+			Notification notification = new Notification();
+			Date date = new Date();
+			notification.setIs_read(1);
+			notification.setCreate_time(date);
+			notification.setNotice_time(date);
+			notification.setUser_id(user_id);
+			if (courseHour != null) {
+				notification.setNotice_type_id(17);
+				notification.setSource_id(courseHour.getCourse_id());
+				notification.setCourse_hour_id(course_hour_id);
+			} else {
+				notification.setNotice_type_id(19);
+				notification.setSource_id(source_id);
+				notification.setCourse_hour_id(course_id);
+				notification.setSource_type(1);
+			}
+			notificationService.insert(notification);
+			JSONObject result = new JSONObject();
+			ResponseUtil.write(response, result);
+		}
+	}
+}

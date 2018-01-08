@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>成绩管理</title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body >
+
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+        <div class="cn-section course-manage-header clearfix">
+            <img class="picture" src="">
+            <h1 class="title"><a href="">ceshi001</a>
+                <span class="label label-success"> 已发布</span>
+            </h1>
+
+            <div class="toolbar hidden-xs">
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle btn-sm" href="">返回班级主页</a>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                        预览 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" >
+                        <li><a href="" target="blank">作为未购买用户</a></li>
+                        <li><a href="" target="blank">作为旁听生</a></li>
+                        <li><a href="" target="_blank">作为正式学员</a></li>
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级设置</li>
+                        <li class="list-group-item ">
+                            <a href="class-basic-info.html">
+                                <span></span>基本信息
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="class-price-setting.html">
+                                <span></span>价格设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-cover-photo.html">
+                                <span></span>班级图片
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-service-setting.html">
+                                <span></span>服务设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-headmaster.html">
+                                <span></span>班主任设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-teacher-setting.html">
+                                <span></span>教师设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-assistant.html">
+                                <span></span>助教设置
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级管理</li>
+                        <li class="list-group-item ">
+                            <a href="class-course-management.html">
+                                <span></span>课程管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="class_student_manage.html">
+                                <span></span>学员管理
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="class_scores_manage.html">
+                                <span></span>成绩管理
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">题库</li>
+                        <li class="list-group-item">
+                            <a href="">
+                                <span></span>题目管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>试卷管理
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class_mark.html">
+                                <span></span>试卷批阅
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class_task.html"><span></span>作业批改
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+
+                    <div class="panel-heading">成绩管理
+                        <div class="panel-bar">
+
+                            <a href="javascript:;" data-toggle="modal"  class="btn btn-info btn-sm mhs">
+                                <i class="glyphicon glyphicon-export"></i> 导出成绩
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs mbl">
+                            <li class="active"><a href="">考试成绩</a></li>
+                            <li ><a href="">作业成绩</a></li>
+                            <li ><a href="">研讨成绩</a></li>
+
+                        </ul>
+                        <form class="form-inline well well-sm " action="" method="get" novalidate="">
+                            <div class="form-group col-md-7">
+                                <input class="form-control " style="width:45%" type="text" placeholder="请输入用户名/邮箱/手机号" name="keyword" value="">
+                                <button class="btn btn-primary">搜索</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="30%">学员</th>
+                                    <th width="10%">成绩</th>
+                                    <!--若成绩为作业成绩和研讨成绩,考试时间变为提交时间-->
+                                    <th width="15%">考试时间</th>
+                                    <th width="15%">批改试卷</th>
+                                    <th width="30%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="media" style="vertical-align: middle;">
+                                        <a class="pull-left js-user-card" href="" title="">
+                                            <img class="avatar-sm" src="">
+                                        </a>
+                                        <a target="_blank" href="">ceshi001</a>
+                                        <div class="text-muted text-sm">加入时间：2016-12-14 09:22</div>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                       98
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        2017-01-01
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        2017-01-09
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="btn-group">
+                                            <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal">发私信</button>
+                                            <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#look-info" >查看资料</button>
+                                                <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">管理
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu pull-right">
+                                                  <li><a class="" href="" data-toggle="modal" data-target="#remark-students" >备注</a></li>
+                                                 <li><a class="student-remove" href="javascript:;">移除</a></li>
+                                             </ul>
+                                        </div>
+                                    </td>
+                                </tr>  
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- footer -->
+</div>
+
+
+
+<!-- 查看资料弹窗 -->
+<div id="look-info" class="modal " aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">个人详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-condenseda table-bordered">
+                <tbody>
+                    <tr>
+                        <th width="25%">用户名</th>
+                        <td width="75%">
+                            <a class="pull-right" href="" target="_blank">个人主页</a>
+                            ceshi001
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>modszhang@163.com</td>
+                    </tr>
+                    <tr>
+                        <th>姓名</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>性别</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>公司</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>职业</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>头衔</th>
+                        <td>啊</td>
+                    </tr>
+                    <tr>
+                        <th>电话</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>个人签名</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>自我介绍</th>
+                        <td>
+                            <div class="editor-text">
+                                <p>啊啊啊</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>个人网站</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>微博</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>微信</th>
+                        <td>暂无</td>
+                    </tr>
+                    <tr>
+                        <th>QQ</th>
+                        <td>暂无</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 学员备注弹窗 -->
+<div id="remark-students" class="modal" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">学员备注</h4>
+            </div>
+            <div class="modal-body">
+                <form id="student-remark-form" method="post" action="" novalidate="novalidate">
+                    <div class="form-group">
+                        <div class="controls">
+                            <input class="form-control" name="remark" value="">
+                            <div class="help-block" id="id1">请填写学员的备注信息</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">  
+                <button type="submit" class="btn btn-primary pull-right">保存</button>
+                <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="classfiy">
+    <input type="text">
+    <div>
+        <input type="text">
+        <input type="button">
+        <input type="radio">
+    </div>
+</div>
+<script>
+    //    tab选项卡添加下划线样式
+    $(function(){
+        $(".panel-body>ul>li.active").css("border-bottom","2px solid #46c37b");
+        $(".panel-body>ul>li").mouseover(function(){
+            $(".panel-body>ul>li.active").css("border-bottom","none");
+            $(this).css("border-bottom","2px solid #46c37b");
+        }).mouseout(function(){
+            $(this).css("border","none");
+            $(".panel-body>ul>li.active").css("border-bottom","2px solid #46c37b");
+        });
+
+    });
+</script>
+
+</body>
+</html>

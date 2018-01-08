@@ -1,0 +1,106 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<div class="es-wrap">
+
+	<div id="content-container" class="container" style="margin-top: -10px;">
+
+		<ol class="breadcrumb breadcrumb-o">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">课例列表 </a></li>
+		</ol>
+
+		<div class="es-banner">
+
+
+			<div class="container">
+				<div class="title">
+					<i class="es-icon es-icon-viewcomfy"></i> 课例列表
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default"  style="margin-top: 20px;">
+			<div class="panel-body">
+				<form id="lessonForm" action="${pageContext.request.contextPath}/lesson/to_lesson_list.action" method="get">
+					<input type="hidden" name="page" id="page" value="${lessonView.page}" />
+					<input type="hidden" name="rows" id="rows" value="${lessonView.rows}" />
+					<input type="hidden" name="total" id="total" value="${lessonView.total}" />
+					<input type="hidden" name="totalPage" id="totalPage" value="${lessonView.totalPage}" />
+					<div class="course-list">
+						<div class="row">
+							<c:forEach items="${lessonList}" var="lesson">
+								<div class="col-lg-3 col-md-4 col-xs-6">
+									<div class="course-item">
+
+										<div class="course-img">
+											<a href="#" onclick="toLessonDetail(${lesson.id});">
+												<img src="${pageContext.request.contextPath}${lesson.lesson_pic}" class="img-responsive" style="width: 260px; height: 150px;" />
+											</a>
+										</div>
+
+										<div class="course-info">
+											<div class="title">
+												<a class="link-dark" href="#" onclick="toLessonDetail(${lesson.id});">${lesson.name }</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</c:forEach>
+
+						</div>
+						<c:if test="${empty lessonList }">
+							<div class="empty">暂无数据</div>
+						</c:if>
+						<c:if test="${!empty lessonList }">
+							<div id="test" class="pager" style="clear: both;"></div>
+						</c:if>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		//翻页
+		var total = $("#total").val();
+		var page =  parseInt($("#page").val())+1;
+
+		$("#btn5").on('click', function () {
+			$("#div1").PageChanged(5);
+		});
+
+		$(".pager").pagination({
+			thisPageIndex:page,
+			recordCount: total,       //总记录数
+			pageSize:  $("#rows").val(),            //一页记录数
+			onPageChange: function (page) {
+				document.title = page;
+				$("#page").val(page-1);
+				$('#lessonForm').submit();
+
+			}
+		});
+	});
+
+	function toLessonDetail(value){
+		window.location.href="${pageContext.request.contextPath}/lesson/to_lesson_show.action?lesson_id="+value+"&stamp=0";
+	}
+
+	function doSearch(value){
+		window.location.href="${pageContext.request.contextPath}/train/to_train_center.action?type="+value;
+	}
+</script>
+
+
+

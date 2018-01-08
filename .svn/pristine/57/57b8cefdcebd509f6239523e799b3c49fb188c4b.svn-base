@@ -1,0 +1,108 @@
+package cn.bnsr.edu_yun.interceptor;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import cn.bnsr.edu_yun.frontstage.base.po.Area;
+import cn.bnsr.edu_yun.frontstage.base.po.IpIntercept;
+import cn.bnsr.edu_yun.frontstage.base.service.AreaService;
+import cn.bnsr.edu_yun.frontstage.base.service.IpInterceptService;
+import cn.bnsr.edu_yun.util.AddressUtils;
+import cn.bnsr.edu_yun.util.IpUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class AreaInterceptor extends HandlerInterceptorAdapter {
+
+	private final Logger log = LoggerFactory.getLogger(AreaInterceptor.class);
+
+	@Autowired
+	private AreaService areaService;
+	@Autowired
+	private IpInterceptService ipInterceptService;
+	
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		log.info("===========AreaInterceptor.preHandle============");
+		// 获取用户登录的外网IP
+		String networkIp = IpUtil.getIpAddr(request);
+		networkIp = StringUtils.isBlank(networkIp) ? "" : networkIp;
+		if (!"".equals(networkIp)&&(!"本地".equals(networkIp)&&!"127.0.0.1".equals(networkIp))) {
+//			SysLog syslog = new SysLog();
+//			syslog.setRemote_ip(networkIp);
+//			syslog.setMsg("拦截测试ip");
+//			sysLogService.saveSysLog(syslog);
+			IpIntercept ipIntercept0 = new IpIntercept();
+			ipIntercept0.setRemote_ip(networkIp);
+			ipIntercept0.setCreate_time(TimeUtil.stringFormatDate1(TimeUtil.dateToString1(new Date())));
+			ipIntercept0 = ipInterceptService.queryIpInfoByIp(ipIntercept0);
+			if(ipIntercept0!=null){//找到访问过的ip 及 地址了
+				if(ipIntercept0.getIs_intercept()==0){//关闭
+					log.info("Interceptor："+ipIntercept0.getRegion()+"还未开放，敬请期待！");  
+					request.setAttribute("msg", "<p style='font-size:12px;'>抱歉，"+ipIntercept0.getRegion()+"不再服务区内！</p>");
+					request.getRequestDispatcher("../area_close.jsp").forward(request, response);  
+					return false;
+				}
+				return true;
+			}else{//这是新的ip，需要验证
+				IpIntercept ipIntercept = new IpIntercept();
+				ipIntercept.setRemote_ip(networkIp);
+				ipIntercept.setCreate_time(new Date());
+				// 地理位置 省市
+				String address = "";
+				Map<String, String> addressMap = AddressUtils.getAddress(networkIp, "utf-8");
+				if (addressMap != null && (addressMap.get("region") != null)) {
+					address = addressMap.get("region");
+					ipIntercept.setRegion(address);
+					if (address!=""&&address!="内网IP") {
+						Area area = areaService.selectByName(address);
+						if(area!=null){
+							ipIntercept.setProvince_id(area.getId());
+							if(area.getIs_open()==1){//该省暂未开放
+								ipIntercept.setIs_intercept(0);
+								ipInterceptService.insert(ipIntercept);
+								log.info("Interceptor："+address+"还未开放，敬请期待！");  
+								request.setAttribute("msg", "<p style='font-size:12px;'>抱歉，"+address+"不再服务区内！</p>");
+								request.getRequestDispatcher("../area_close.jsp").forward(request, response);  
+								return false;
+							}else{
+								//该省已经开放
+								ipIntercept.setArea(addressMap.get("area"));
+								ipIntercept.setCity(addressMap.get("city"));
+								ipIntercept.setCountry(addressMap.get("country"));
+								ipIntercept.setCounty(addressMap.get("county"));
+								ipIntercept.setIsp(addressMap.get("isp"));
+								ipIntercept.setIs_intercept(1);
+								ipInterceptService.insert(ipIntercept);
+								return true;
+							}
+						}
+						
+					}
+					if(address=="内网IP"){//没有找到地理位置，排除内网的情况
+						return true;
+					}
+				}
+			}
+		}
+		if(networkIp=="本地"||"127.0.0.1".equals(networkIp)){//公司内网要放过啦
+			return true;
+		}
+		request.setAttribute("msg", "<p style='font-size:12px;'>抱歉，找不到您的地址了！</p>");
+		request.getRequestDispatcher("../area_close.jsp").forward(request, response);  
+		return false;
+	}
+
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/qiuzi_ico.ico" media="screen" />
+    <link href="../css/open-class.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../js/open-class.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".open_class_classify_list>ul>li").click(function(){
+                $(this).addClass("curr").siblings().removeClass("curr");
+                var index=$(this).index();
+                if(index!=0){
+                    $(".open_class_classify_list").css("height","100px");
+                    $(".page_list_tabs").hide().eq(index).show();
+                }else{
+                    $(".page_list_tabs").hide();
+                    $(".open_class_classify_list").css("height","50px");
+                }
+            })
+        });
+
+        $(function(){
+            $(".classify_list_page>ul>li>a").click(function(){
+                $(this).addClass("curr").parents("li").siblings().find("a").removeClass("curr");
+            })
+        });
+
+        $(function(){
+            $(".sort_content>ul>li").click(function(){
+                $(this).addClass("curr").find("a").addClass("curr").parents("li").siblings().removeClass("curr").find("a").removeClass("curr");
+
+            })
+        });
+        $(function(){
+            var classify_list_page=document.getElementsByClassName("classify_list_page");
+            for(var i=0;i<classify_list_page.length;i++){
+                    classify_list_page[i].style.marginLeft=-100*i+"px";
+            }
+
+        });
+    </script>
+
+
+
+
+
+
+</head>
+<body>
+
+<div class="open_class_top">
+    <p>
+        <label>全部教程</label>
+        <a href="javascript:return false;" class="check_open_class">查看公开课</a>
+        <a href="javascript:return false;" class="check_class">查看班级</a>
+    </p>
+</div>
+
+<div class="open_class_classify_list">
+
+    <ul>
+        <li  class="curr">
+            <a href="javascript:return false;">全部</a>
+            <div class="classify_list_page page_list_tabs" style="display: none;">
+                <ul>
+                    <li><a href="javascript:return false;" class="curr">全部</a></li>
+                    <li><a href="javascript:return false;" >小学语文</a></li>
+                    <li><a href="javascript:return false;">小学数学</a></li>
+                    <li><a href="javascript:return false;">小学英语</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="javascript:return false;">小学教程</a>
+            <div class="classify_list_page page_list_tabs" style="display: none;">
+                <ul>
+                    <li><a href="javascript:return false;" class="curr">全部</a></li>
+                    <li><a href="javascript:return false;" >小学语文</a></li>
+                    <li><a href="javascript:return false;">小学数学</a></li>
+                    <li><a href="javascript:return false;">小学英语</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="javascript:return false;">初中教程</a>
+            <div class="classify_list_page page_list_tabs" style="display: none;">
+                <ul>
+                    <li><a href="javascript:return false;" class="curr">全部</a></li>
+                    <li><a href="javascript:return false;" >初中语文</a></li>
+                    <li><a href="javascript:return false;">初中数学</a></li>
+                    <li><a href="javascript:return false;">初中英语</a></li>
+                    <li><a href="javascript:return false;">初中物理</a></li>
+                </ul>
+            </div>
+        </li>
+
+    </ul>
+
+
+
+
+
+
+
+</div>
+
+<div class="open_class_sort">
+
+    <div class="sort_content">
+        <ul>
+            <li class="curr"><a href="javascript:return false;" class="curr">最新</a></li>
+            <li><a href="javascript:return false;">最热</a></li>
+            <li><a href="javascript:return false;">推荐</a></li>
+        </ul>
+    </div>
+
+    <div id="class_type_sort">
+        <p><input type="checkbox"><a href="javascript:return false;">免费课程</a></p>
+        <p><input type="checkbox"><a href="javascript:return false;">直播课程</a></p>
+    </div>
+
+</div>
+<br/>
+
+<div class="sort_main_content_list">
+
+    <div class="sort_list_page">
+        <a href="javascript:return false;"><img src="../images/open_class_01.jpg" class="open_class_img"></a>
+        <span class="open_class_type">更新中</span>
+        <div class="open_class_theme"><span>最新</span><a href="javascript:return false;">语文系列专题课(一)</a></div>
+        <p class="applicants_num"><img src="../images/course_admin.png"><span>578</span><label>10人评价</label></p>
+        <div class="open_class_price">
+            <span class="open_class_price_num">￥29.9</span>
+            <!--<span class="open_class_price_free">免费</span>-->
+        </div>
+
+    </div>
+
+    <div class="sort_list_page">
+        <a href="javascript:return false;"><img src="../images/open_class_01.jpg" class="open_class_img"></a>
+        <span class="open_class_type">更新中</span>
+        <div class="open_class_theme"><span>最新</span><a href="javascript:return false;">语文系列专题课(一)</a></div>
+        <p class="applicants_num"><img src="../images/course_admin.png"><span>578</span><label>10人评价</label></p>
+        <div class="open_class_price">
+            <span class="open_class_price_num">￥29.9</span>
+            <!--<span class="open_class_price_free">免费</span>-->
+        </div>
+
+    </div>
+
+    <div class="sort_list_page">
+        <a href="javascript:return false;"><img src="../images/open_class_01.jpg" class="open_class_img"></a>
+        <span class="open_class_type">更新中</span>
+        <div class="open_class_theme"><span>最新</span><a href="javascript:return false;">语文系列专题课(一)</a></div>
+        <p class="applicants_num"><img src="../images/course_admin.png"><span>578</span><label>10人评价</label></p>
+        <div class="open_class_price">
+            <span class="open_class_price_num">￥29.9</span>
+            <!--<span class="open_class_price_free">免费</span>-->
+        </div>
+
+    </div>
+
+    <div class="sort_list_page">
+        <a href="javascript:return false;"><img src="../images/open_class_01.jpg" class="open_class_img"></a>
+        <span class="open_class_type">更新中</span>
+        <div class="open_class_theme"><span>最新</span><a href="javascript:return false;">语文系列专题课(一)</a></div>
+        <p class="applicants_num"><img src="../images/course_admin.png"><span>578</span><label>10人评价</label></p>
+        <div class="open_class_price">
+            <span class="open_class_price_num">￥29.9</span>
+            <!--<span class="open_class_price_free">免费</span>-->
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+</body>
+
+</html>

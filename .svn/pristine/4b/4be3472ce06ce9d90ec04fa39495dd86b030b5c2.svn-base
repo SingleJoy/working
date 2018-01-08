@@ -1,0 +1,122 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.train.mapper.TrainPhaseMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.TrainCourse;
+import cn.bnsr.edu_yun.frontstage.train.po.TrainPhase;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainCourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainPhaseService;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainCourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainPhaseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+
+public class TrainPhaseServiceImpl implements TrainPhaseService{
+	@Autowired
+	private TrainPhaseMapper trainPhaseMapper;
+	@Autowired
+	private TrainCourseService trainCourseService;
+
+	@Override
+	public List<TrainPhaseView> queryTrainPhase(Long trainId,Long userId) {
+		List<TrainPhaseView> trainPhaseList =  trainPhaseMapper.queryTrainPhase(trainId,userId);
+		for(TrainPhaseView tp : trainPhaseList ){
+			//必修课程
+			List<CourseView> requiredCourse = trainCourseService.queryPhaseCourse(tp.getId(),0);
+			String requiredIds = "";
+			int requiredHours = 0 ;
+			for(CourseView cv : requiredCourse){
+				requiredIds += cv.getId()+",";
+				requiredHours += Integer.parseInt(cv.getHours()!=null?cv.getHours():"0");
+			}
+			tp.setRequiredIds(requiredIds);
+			tp.setRequiredCourse(requiredCourse);
+			tp.setRequiredHours(requiredHours);
+			//选修课程
+			List<CourseView> optionCourse = trainCourseService.queryPhaseCourse(tp.getId(),1);
+			String optionIds = "";
+			int optionHours = 0;
+			for(CourseView cv : optionCourse){
+				optionIds += cv.getId()+",";
+				optionHours += Integer.parseInt(cv.getHours()!=null?cv.getHours():"0");
+			}
+			tp.setOptionIds(optionIds);
+			tp.setOptionCourse(optionCourse);
+			tp.setOptionHours(optionHours);
+			tp.setTotleNum(optionCourse.size()+requiredCourse.size());
+			tp.setOptionCourseNum(0);//已选课时
+		}
+		return trainPhaseList;
+	}
+
+	@Override
+	public void saveTrainPhase(TrainPhaseView trainPhaseView) {
+		TrainPhase tp = new TrainPhase();
+		BeanUtils.copyProperties(trainPhaseView, tp);
+		if(trainPhaseView.getId()!=null){//修改
+			trainPhaseMapper.updateByPrimaryKeySelective(tp);
+			//全删，全加 阶段课程
+			TrainCourseView tcv = new TrainCourseView();
+			tcv.setPhaseId(trainPhaseView.getId());//阶段id
+			trainCourseService.deletePhaseCourse(tcv);
+		}else{//保存
+			trainPhaseMapper.insertSelective(tp);
+		}
+		Long trainPhaseId = tp.getId();
+		
+		if(!trainPhaseView.getRequiredIds().equals("")){//必修课程
+			for (String courseId : trainPhaseView.getRequiredIds().split(",")) {
+				TrainCourse tc = new TrainCourse();
+				tc.setSource_id(trainPhaseId);
+				tc.setSource_type(1);
+				tc.setCourse_id(Long.parseLong(courseId));
+				tc.setSeq(0);
+				tc.setCredit(0);
+				tc.setIs_required(0);//必修
+				trainCourseService.insertSelective(tc);
+			}
+		}
+		
+		if(!trainPhaseView.getOptionIds().equals("")){//选修
+			for (String courseId : trainPhaseView.getOptionIds().split(",")) {
+				TrainCourse tc = new TrainCourse();
+				tc.setSource_id(trainPhaseId);
+				tc.setSource_type(1);
+				tc.setCourse_id(Long.parseLong(courseId));
+				tc.setSeq(0);
+				tc.setCredit(0);
+				tc.setIs_required(1);//选修
+				trainCourseService.insertSelective(tc);
+			}
+		}
+	}
+
+	@Override
+	public void deleteTrainPhase(Long id) {
+		trainPhaseMapper.deleteByPrimaryKey(id);
+		// 级联删除 阶段课程
+		TrainCourseView tcv = new TrainCourseView();
+		tcv.setPhaseId(id);//阶段id
+		trainCourseService.deletePhaseCourse(tcv);
+	}
+
+	@Override
+	public int searchTotalHours(Long trainId) {
+		return trainPhaseMapper.searchTotalHours(trainId);
+	}
+
+	@Override
+	public int queryPhaseOfTrainPhaseCount(Long train_id) {
+		return trainPhaseMapper.queryPhaseOfTrainPhaseCount(train_id);
+	}
+
+	@Override
+	public List<TrainPhaseView> queryTrainParseBaseMessage(TrainView trainView) {
+		return trainPhaseMapper.queryTrainParseBaseMessage(trainView);
+	}
+	
+}

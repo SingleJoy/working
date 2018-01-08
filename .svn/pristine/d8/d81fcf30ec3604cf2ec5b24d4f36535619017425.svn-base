@@ -1,0 +1,163 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<div class="cn-wrap">
+
+	<div id="content-container" class="container">
+		<jsp:include page="course_header.jsp"></jsp:include>
+
+		<div class="row">
+			<jsp:include page="course_left.jsp"></jsp:include>
+			<div class="col-md-9">
+
+				<div class="panel panel-default panel-col">
+					<div class="panel-heading">教师设置</div>
+					<input type="hidden" id="createUserId" value="${courseView.userId }" <c:if test="${courseView.status ==1}">disabled="disabled"</c:if>/>
+
+					<div class="course_save_succ alert alert-success" <c:if test="${courseView.flag!=1}">style="display:none;"</c:if>>教师设置已保存!</div>
+
+
+					<form  id="tearcherAdd" action="${pageContext.request.contextPath}/teacher_relation/save_teacher_relation.action" method="post" class="form-horizontal">
+						<input type="hidden" name="source_id" value="${courseView.id }" <c:if test="${courseView.status ==1}">disabled="disabled"</c:if>/>
+						<input type="hidden" name="sign" value="${courseView.sign }" <c:if test="${courseView.status ==1}">disabled="disabled"</c:if>/>
+						<input type="hidden" name="source_type" value="0" <c:if test="${courseView.status ==1}">disabled="disabled"</c:if>/>
+
+						<div  class="form-group">
+
+							<div class="col-md-2 control-label"><label>已添加教师</label></div>
+							<div class="col-md-8 controls">
+								<ul class="list-group teacher-list-group sortable-list" id="teacher_div">
+
+									<c:forEach items="${teacherList}" var="teacher">
+
+										<input type="hidden" name="id" value="${teacher.id }" <c:if test="${courseView.status ==1}">disabled="disabled"</c:if>/>
+										<input type="hidden" name="userId" value="${teacher.userId }" <c:if test="${courseView.status ==1}">disabled="disabled"</c:if>/>
+										<input type="hidden" id="isDisplay_${teacher.id}" name="isDisplay" value="${teacher.isDisplay}" <c:if test="${courseView.status ==1}">disabled="disabled"</c:if>/>
+
+										<li class="list-group-item clearfix" >
+
+											<img src="${pageContext.request.contextPath}${teacher.icon}" class="avatar-small"/>
+											<span class="nickname">${teacher.teacherName }</span>
+											<c:if test="${teacher.userId != courseView.userId}">
+												<label class="visible-checkbox">
+													<input type="checkbox" id="display_${teacher.id }" <c:if test="${teacher.isDisplay==0}">checked="checked"</c:if> onclick="checkDisplay(${teacher.id});" >显示
+												</label>
+											</c:if>
+											<c:if test="${courseView.status !=1}">
+												<button class="close delete-btn"  type="button" title="删除" onclick="doDelete(${teacher.userId },${teacher.id});">× </button>
+											</c:if>
+										</li>
+
+									</c:forEach>
+								</ul>
+							</div>
+						</div>
+
+						<c:if test="${courseView.status !=1}">
+							<div class="add_more_teacher form-group">
+								<div class="col-md-2 control-label"><label></label></div>
+								<div class="col-md-8 controls">
+									<div class="input-group">
+										<input type="text" id="name" class="form-control"/>
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" onclick="doAdd();">添加</button>
+										</span>
+									</div>
+									<div class="alert alert-info">*输入教师用户名全称点击添加老师，之后点击保存按钮</div>
+								</div>
+
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-offset-4 col-md-4 controls">
+									<button type="button" class="btn btn-fat btn-primary" onclick="doSubmit();">保存</button>
+								</div>
+							</div>
+						</c:if>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+
+
+<script type="text/javascript">
+    function doDelete(value,id){
+        var createUserId = $("#createUserId").val();
+        if(value==createUserId){
+            alert("该老师为课程创建者不能删除！");
+        }else{
+            window.location.href="${pageContext.request.contextPath}/teacher_relation/delete_teacher.action?courseId="+${courseView.id }+"&sign="+${courseView.sign }+"&id="+id;
+        }
+    }
+    function checkDisplay(value){
+        var checked =document.getElementById("display_"+value).checked;
+        if(checked){//选中
+            $("#isDisplay_"+value).val(0);
+        }else{
+            $("#isDisplay_"+value).val(1);
+        }
+    }
+    function doSubmit(){
+        document.getElementById('tearcherAdd').submit();
+    }
+    function doAdd(){
+        var createUserId = $("#createUserId").val();
+
+        var name = $("#name").val();
+        if(name==''){
+            alert("请输入教师用户名");
+        }else{
+            $.ajax({
+                url:"${pageContext.request.contextPath}/user/search_user.action",
+                data:{
+                    username:name,
+                    usertype:3
+                },
+                dataType:'json',
+                success:function(d){
+                    if(d!=0){
+                        var userIds =  document.getElementsByName("userId");
+                        var flag = true;
+                        for(var i=0;i<userIds.length;i++){
+                            if(userIds[i].value == d[0].id){
+                                flag = false;
+                            }
+                        }
+                        if(flag){
+                            var teacherHtml =
+
+								"<li class=\"list-group-item clearfix\">"+
+								"<input type=\"hidden\" name=\"userId\" value=\""+d[0].id+"\" />"+
+                                "<input type=\"hidden\" id=\"display_"+d[0].id+"\" name=\"isDisplay\" value=\"0\"/>"+
+								"<img src=${pageContext.request.contextPath}/"+d[0].icon+" class=\"avatar-small\">"+
+								"<span class=\"nickname\">"+d[0].teacherName+"</span>"+
+
+                                "<button class=\"close delete-btn\" type=\"button\" title=\"删除\" onclick=\"checkDisplay("+d[0].id+");\">×</button>"+
+
+                               "</li>";
+
+
+                            $("#teacher_div").append(teacherHtml);
+                        }else{
+                            $("#name").val("");
+                            alert("已存在该教师！");
+                        }
+                    }else{
+                        $("#name").val("");
+                        alert("没有该教师！");
+                    }
+                }
+            });
+        }
+    }
+</script>
+

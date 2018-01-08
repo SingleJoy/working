@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/qiuzi_ico.ico" media="screen" />
+    <link href="../css/teaching-center.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script>
+        $(function(){
+            $(".my_notes_info_list>ul>li").mouseover(function(){
+                $(this).find(".my_notes_delete").show();
+            }).mouseout(function(){
+                $(this).find(".my_notes_delete").hide();
+
+            })
+        })
+
+    </script>
+
+</head>
+<body>
+<div class="teaching_center_main">
+
+
+
+    <div class="teaching_center_main_right">
+        <p>我的笔记</p>
+
+        <div class="my_notes_content_detail">
+
+            <div class="my_notes_info">
+                <a href="javascript:return false;">返回</a>
+                <img src="../images/course.png">
+                <label>测试的笔记</label>
+            </div>
+
+            <div class="my_notes_info_list">
+                <ul>
+                    <li>
+                        <label >共10字</label>
+                        <a href="javascript:return false;" class="my_notes_title">课时1<span>:</span>测试001</a><br/>
+                        <p>啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+                        <a href="javascript:return false;" class="my_notes_delete"><img src="../images/delete.jpg"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+.table-bordered>tbody>tr>td>a>span{cursor: pointer;}
+#lesson_pic{cursor: pointer;}
+.mask{width:190px;height:110px;background-color: #313131;position: absolute;opacity: 0.8;cursor: pointer;}
+.task1,.task2{color: #fff;}
+.task1{background:url("../images/task_right.png") 6px no-repeat; }
+.task2{background:url("../images/task_left.png") -1px no-repeat; }
+
+.learning-data-table>tbody>tr>td:nth-child(1){width:25%;vertical-align: middle;text-align: center;}
+.learning-data-table>tbody>tr>td{font-size: 14px;}
+.plan_lesson{background:url("../images/plan_lesson_01.png") 11px no-repeat;padding-left: 15px;}
+.prepare_lesson{background:url("../images/prepare_lesson_01.png") 11px no-repeat;}
+.having_lesson{background:url("../images/having_lesson_01.png") 11px no-repeat;}
+.evaluation_lesson{background:url("../images/evaluation_lesson_01.png") 11px no-repeat;}
+.rethink{background:url("../images/rethink_lesson_01.png") 11px no-repeat;}
+.task-list{line-height: 25px;}
+.task-list>a>span{padding-right: 10px;}
+.task-list>a{font-size: 16px;}
+
+/*.study_section{background: url("../images/study_section.png") no-repeat;margin-left: 20px;margin-top: 10px;}*/
+/*.grade{background: url("../images/grade.png") no-repeat;margin-left: 20px;margin-top: 10px;}*/
+/*.subject{background: url("../images/subject.png") no-repeat;margin-left: 20px;margin-top: 10px;}*/
+/*.textbooks{background: url("../images/textbooks.png") no-repeat;margin-left: 20px;margin-top: 10px;}*/
+/*.area{background: url("../images/area.png") no-repeat;margin-left: 20px;margin-top: 10px;}*/
+.lesson_info_text{background-color: #353535;opacity: 0.6;padding: 0 5px;}
+.lesson_info_text>span{color: #ddd;}
+.lesson_teacher{padding-left:30px; }
+.already_completed,.pending_completion,.to_be_assigned{float: right;}
+#all-task,#my-task{padding: 5px 15px;cursor: pointer;font-size: 16px;display: inline-block;}
+td.active{font-weight: bold;}
+.all-statistics>tbody>tr>td{font-size: 14px;}
+.all-statistics>tbody>tr>td:nth-child(2){width:75%;}
+.all-statistics>tbody>tr>td{font-size: 14px;}
+.member-statistics>tbody>tr>td{font-size: 14px;}
+.mission-accomplished{background: url("../images/task_ok.png") 2px 3px no-repeat;padding: 0 15px;}
+.mission-fail{background: url("../images/task_no.png") 2px 3px no-repeat;padding: 0 15px;}
+#defaultImg{
+    width:190px;height:110px;}
+.file:hover{color: #fff;}
+.webuploader-pick>div>label:hover{color: #fff;}
+.task_pic>div{float: left;display: inline-block;width: 80px;}
+

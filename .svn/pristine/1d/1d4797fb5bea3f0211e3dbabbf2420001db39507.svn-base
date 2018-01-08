@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <!--<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <link href="../css/open-class-detail.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../js/open-class.js"></script>
+    <script type="text/javascript" src="../jq/My97DatePicker/WdatePicker.js"></script>
+
+    <script>
+
+
+        $(function(){
+            $(".course_features").click(function(){
+                $(this).addClass("curr");
+                $(".course_plan").removeClass("curr");
+                $(".course_features_detail").show();
+                $(".course_plan_detail").hide();
+            })
+
+            $(".course_plan").click(function(){
+                $(this).addClass("curr");
+                $(".course_features").removeClass("curr");
+                $(".course_features_detail").hide();
+                $(".course_plan_detail").show();
+
+            })
+        });
+
+        //open_class_detail_tabs ul li切换样式
+        $(function(){
+            var isclick=false;
+            $(".open_class_detail_tabs ul li").click(function(){
+                $(".open_class_detail_tabs ul li").removeClass("curr").find("a").removeClass("curr");
+                $(this).addClass("curr").find("a").addClass("curr");
+                var index=$(this).index();
+                $(".open_class_tab").hide().eq(index).show();
+                isclick=true;
+            }).mouseover(function(){
+                $(".open_class_detail_tabs ul li").removeClass("curr_01").find("a").removeClass("curr_01");
+                $(this).addClass("curr_01").find("a").addClass("curr_01");
+            }).mouseout(function(){
+                $(".open_class_detail_tabs ul li").removeClass("curr_01").find("a").removeClass("curr_01");
+            })
+
+        });
+
+        //   讨论区分类样式
+        $(function(){
+
+            $(".discussion_area ul li").click(function(){
+                $(".discussion_area ul li").removeClass("curr").find("a").removeClass("curr");
+                $(this).addClass("curr").find("a").addClass("curr");
+
+
+            }).mouseover(function(){
+                $(".discussion_area ul li").removeClass("curr_01").find("a").removeClass("curr_01");
+                $(this).addClass("curr_01").find("a").addClass("curr_01");
+            }).mouseout(function(){
+                $(".discussion_area ul li").removeClass("curr_01").find("a").removeClass("curr_01");
+
+            })
+
+        });
+
+        //         讨论区
+        $(function(){
+
+            $(".discussion_area_page p").click(function(){
+                if($(".discussion_area_page ul").css("display")=="none"){
+                    $(".discussion_area_page ul").show();
+                }else{
+                    $(".discussion_area_page ul").hide();
+                }
+            })
+
+            $(".discussion_area_page ul li").click(function(){
+                $(this).addClass("curr").find("a").addClass("curr");
+                $ (".last_reply").text($(this).find("a").text());
+            }).mouseover(function(){
+                $(this).addClass("curr_01").find("a").addClass("curr_01");
+            }).mouseout(function(){
+                $(this).removeClass("curr_01").find("a").removeClass("curr_01");
+
+            })
+
+        });
+
+        $(function(){
+            $(".discussion_area_page p").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+
+        });
+
+
+        //老师介绍
+        $(function(){
+            $(".teacher_intro p button").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+
+        });
+        $(function(){
+            $(".open_class_teacher a img").mouseover(function(){
+                $(".teacher_intro").show();
+            }).mouseout(function(){
+                $(".teacher_intro").hide();
+
+            })
+
+        });
+        $(function(){
+            $(".teacher_intro").mouseover(function(){
+                $(".teacher_intro").show();
+            }).mouseout(function(){
+                $(".teacher_intro").hide();
+
+            })
+
+        });
+        //
+        $(function(){
+            $(".issue_topic p").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+
+        });
+        //学生介绍
+        $(function(){
+            $(".students_intro p button").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+
+        });
+        $(function(){
+            $(".open_class_students a img").mouseover(function(){
+                $(".students_intro").show();
+            }).mouseout(function(){
+                $(".students_intro").hide();
+
+            })
+
+        });
+        $(function(){
+            $(".students_intro").mouseover(function(){
+                $(".students_intro").show();
+            }).mouseout(function(){
+                $(".students_intro").hide();
+
+            })
+
+        });
+        //
+        $(function(){
+            $(".issue_topic p").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+
+        });
+        $(function(){
+            $(".period_lesson ul li").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+
+        });
+        //     点击事件--公告
+        $(function(){
+            $(".open_class_detail_tabs p").click(function(){
+
+                if($(".open_class_notice").css("display")=="none"){
+
+                    $("body").css("background-color","rgba(173,173,173,0.15)");
+                    $("body").css("opacity","0.5");
+                    $(".open_class_notice").show().css("opacity","1");
+
+                }else{
+                    $("body").css("background-color","#f5f5f5");
+                    $("body").css("opacity","1");
+                    $(".open_class_notice").hide();
+                }
+            })
+        });
+
+        //   公告布局
+        $(function(){
+            var width =document.body.clientWidth;
+            var width1 =(width-600)/2;
+            $(".open_class_notice").css("margin-left",width1+"px");
+
+        });
+
+        //open-class-detail.html  课时布局
+        $(function(){
+            $(".chapter_list").click(function(){
+                if($(".section_list").css("display")=="none"){
+                    $(".section_list").show();
+
+                }else{
+                    $(".section_list").hide();
+                }
+            })
+        });
+
+        //讨论区
+        $(function(){
+            $(".chapter_list").click(function(){
+                if($(".section_list").css("display")=="none"){
+                    $(".section_list").show();
+
+                }else{
+                    $(".section_list").hide();
+                }
+            })
+        });
+
+        $(function(){
+            $(".class_hour_info").mouseover(function(){
+                $(this).addClass("class_hour_info_curr");
+            }).mouseout(function(){
+                $(this).removeClass("class_hour_info_curr");
+            })
+
+        });
+        //         讨论区域
+        $(function(){
+            $(".release_topic").mouseover(function(){
+                $(this).addClass("release_topic_curr");
+            }).mouseout(function(){
+                $(this).removeClass("release_topic_curr");
+            })
+
+        });
+        $(function(){
+            $(".release_topic_page div button").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+<div class="open_class_detail_top">
+
+    <div class="open_class_detail_top_right">
+        <img src="../images/register_logo.png"><label>10人</label>
+        <br/><br/>
+        <br/><br/>
+        <a href="javascript:return false">收藏</a>
+        <a href="javascript:return false">分享</a>
+        <a href="javascript:return false">退出</a>
+    </div>
+
+
+    <div class="learning_progress">
+        <p>完成课时<span>2/8</span></p>
+        <a href="javascript:return false" class="next_class">下一课时：测试123ghg</a>
+    </div>
+    <a href="javascript:return false" class="continue_learning">继续学习</a>
+    <img src="../images/open_class_01.jpg" class="open_class_detail_img">
+    <div class="open_class_detail_page">
+        <p>111</p>
+        <span>测试</span>
+        <img src="../images/score_star_icon.png">
+        <img src="../images/score_star_icon.png">
+        <img src="../images/score_star_icon.png">
+        <label>(10人)</label>
+        <span>有效期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;还有8天</span>
+        <span>价格&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 25px;">免费</span></span>
+    </div>
+    <div class="progress_bar" title=""></div>
+
+</div>
+
+<div class="open_class_detail_main">
+
+    <div class="open_class_detail_main_left">
+
+        <div class="open_class_detail_tabs">
+            <ul>
+                <li ><a href="javascript:return false" >课时<small>(1)</small></a></li>
+                <li class="curr"><a href="javascript:return false" class="curr">讨论区<small>(2)</small></a></li>
+                <li><a href="javascript:return false">资料区<small>(3)</small></a></li>
+                <li><a href="javascript:return false">评价<small>(4)</small></a></li>
+                <li><a href="javascript:return false">笔记<small>(5)</small></a></li>
+                <li><a href="javascript:return false">概览<small>(6)</small></a></li>
+            </ul>
+
+        </div>
+         <!--讨论区发话题-->
+        <div class="release_topic_page">
+             <p>讨论区/发表话题</p>
+            <form>
+                <input type="text" placeholder="标题">
+            </form>
+            <!--文本编辑插件-->
+            <div>
+                <a class="quit">取消</a>
+                <button class="quit">发表</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="open_class_detail_main_right">
+
+        <div class="open_class_teacher">
+            <p>授课老师</p>
+            <a href="javascript:return false;">
+                <img src="../images/teacher.jpg">
+                <p>admin</p>
+                <span>李老师</span>
+            </a>
+
+            <div class="teacher_intro" style="display:none;margin-top: 15px;margin-left: -100px;">
+                <p>
+                    <a href="javascript:return false;"><img src="../images/teacher.jpg">
+                        <label>admin</label>
+                        <span>李老师</span>
+                    </a>
+                    <button class="follow curr">关注</button>
+                    <button class="private_letter">私信</button>
+                </p>
+                <div class="autograph">
+                    <p>天空不曾留下我的痕迹,但我已飞过.</p>
+                </div>
+                <ul>
+                    <li>
+                        <a href="javascript:return false;">10</a><br/>
+
+                        <a href="javascript:return false;">在学</a>
+                    </li>
+                    <li>
+                        <a href="javascript:return false;">6</a><br/>
+
+                        <a href="javascript:return false;">关注</a>
+                    </li>
+                    <li>
+                        <a href="javascript:return false;">9</a><br/>
+
+                        <a href="javascript:return false;">粉丝</a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <br/>
+        <div class="open_class_students">
+            <p>最新学员</p>
+            <a href="javascript:return false;"><img src="../images/dog.jpg" class="students_img"></a>
+            <a href="javascript:return false;"><img src="../images/dog.jpg"></a>
+            <a href="javascript:return false;"><img src="../images/dog.jpg"></a>
+        </div>
+        <br/>
+        <div class="open_class_students_status" style="height: 230px;">
+            <p>学员动态</p>
+            <ul>
+                <li><a href="javascript:return false;">xxxx</a><span>学习了</span><a href="javascript:return false;" class="open_class_name">1111</a></li>
+                <li><a href="javascript:return false;">ssss</a><span>学习了</span><a href="javascript:return false;" class="open_class_name">2222</a></li>
+                <li><a href="javascript:return false;">zzzz</a><span>学习了</span><a href="javascript:return false;" class="open_class_name">3333</a></li>
+                <li><a href="javascript:return false;">eeee</a><span>学习了</span><a href="javascript:return false;" class="open_class_name">444</a></li>
+            </ul>
+
+            <div class="students_intro" style="margin-top: -268px;margin-left: -100px;display: none;">
+
+                <p>
+                    <a href="javascript:return false;"><img src="../images/teacher.jpg">
+                        <label>admin</label>
+
+                    </a>
+                    <button class="follow curr">关注</button>
+                    <button class="private_letter">私信</button>
+                </p>
+
+                <div class="autograph">
+                    <p>天空不曾留下我的痕迹,但我已飞过.</p>
+                </div>
+
+                <ul>
+                    <li>
+                        <a href="javascript:return false;">10</a><br/>
+
+                        <a href="javascript:return false;">在学</a>
+                    </li>
+                    <li>
+                        <a href="javascript:return false;">6</a><br/>
+
+                        <a href="javascript:return false;">关注</a>
+                    </li>
+                    <li>
+                        <a href="javascript:return false;">9</a><br/>
+
+                        <a href="javascript:return false;">粉丝</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,613 @@
+package cn.bnsr.edu_yun.frontstage.tiku.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.tiku.po.Question;
+import cn.bnsr.edu_yun.frontstage.tiku.service.QuestionService;
+import cn.bnsr.edu_yun.frontstage.tiku.service.TestQuestionsService;
+import cn.bnsr.edu_yun.frontstage.tiku.view.QuestionView;
+import cn.bnsr.edu_yun.frontstage.tiku.view.TestPaperQuestionView;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseInfoService;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 题目管理
+ * 
+ * @author li
+ * @date 2016年12月27日
+ */
+@Controller
+@RequestMapping("/question")
+public class QuestionController {
+	private final Logger log = LoggerFactory.getLogger(QuestionController.class);
+
+	@Autowired
+	private QuestionService questionService;
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private CourseInfoService courseInfoService;
+	@Autowired
+	private TestQuestionsService testQuestionsService;
+
+	// 跳转题目管理
+	@RequestMapping("to_question")
+	public ModelAndView toQuestion(HttpServletRequest request, QuestionView questionView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = questionView.getSign();
+			String flag = questionView.getFlag();
+			Long courseid = questionView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			User user = (User) request.getSession().getAttribute("currentUser");
+			questionView.setUserId(user.getId());
+			if (questionView.getPage() == 0) {
+				questionView.setStartLine(0);
+			} else {
+				questionView.setStartLine(questionView.getPage() * questionView.getRows());
+			}
+			questionView.setRows(10);
+			int total = questionService.queryTotalCourse(questionView);// 总数
+			questionView.setTotal(total);
+			// 分页总页数
+			questionView.setTotalPage(NumUtil.totalPage(total, 10));
+			List<QuestionView> questionViews = questionService.queryQuestion(questionView);
+			modelAndView.addObject("questionViews", questionViews);
+			// 查询该课程所有章节list
+			List<CourseHour> chapterList = courseHourService.queryHourList(courseid, true);
+			modelAndView.addObject("chapterList", chapterList);
+			modelAndView.addObject("questionView", questionView);
+			modelAndView.addObject("head_title", "题目管理");
+			modelAndView.setViewName("frontstage/tiku/question/question");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转题目管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+
+	}
+
+	// 跳转子题
+	@RequestMapping("to_question_son")
+	public ModelAndView toQuestionSon(HttpServletRequest request, QuestionView questionView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = questionView.getSign();
+			String flag = questionView.getFlag();
+			Long courseid = questionView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			User user = (User) request.getSession().getAttribute("currentUser");
+			questionView.setUserId(user.getId());
+			if (questionView.getPage() == 0) {
+				questionView.setStartLine(0);
+			} else {
+				questionView.setStartLine(questionView.getPage() * questionView.getRows());
+			}
+			questionView.setRows(10);
+			questionView.setPid(questionView.getId());
+			int total = questionService.querySonQuestionCount(questionView);// 总数
+			questionView.setTotal(total);
+			// 分页总页数
+			questionView.setTotalPage(NumUtil.totalPage(total, 10));
+			List<QuestionView> questionViews = questionService.querySonQuestion(questionView);
+			modelAndView.addObject("questionViews", questionViews);
+			// 查询该课程所有章节list
+			List<CourseHour> chapterList = courseHourService.queryHourList(courseid, true);
+			modelAndView.addObject("chapterList", chapterList);
+			Long questionId = questionView.getId();
+			Question question = questionService.selectById(questionId);
+			modelAndView.addObject("question", question);
+			modelAndView.addObject("questionView", questionView);
+			modelAndView.addObject("head_title", "子题管理");
+			modelAndView.setViewName("frontstage/tiku/question/question_son");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转题目管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+
+	}
+
+	// 跳转添加题目
+	@RequestMapping("to_question_add")
+	public ModelAndView toQuestionAdd(HttpServletResponse response, HttpServletRequest request, int tab, QuestionView questionView) {
+		String path = "";
+		ModelAndView modelAndView = new ModelAndView();
+		if (tab == 0 || tab == 5) {// 跳转选择题
+			path = "question_add_select";
+			modelAndView.addObject("head_title", "添加选择题");
+		} else if (tab == 1) {// 跳转填空题
+			path = "question_add_fill";
+			modelAndView.addObject("head_title", "添加填空题");
+		} else if (tab == 2) {// 跳转判断题
+			path = "question_add_judge";
+			modelAndView.addObject("head_title", "添加判断题");
+		} else if (tab == 3) {// 跳转问答题
+			path = "question_add_qa";
+			modelAndView.addObject("head_title", "添加问答题");
+		} else if (tab == 4) {// 跳转材料题
+			path = "question_add_science";
+			modelAndView.addObject("head_title", "添加材料题");
+		} else {// 跳转材料题子题
+			path = "to_question_add_science_son";
+			modelAndView.addObject("head_title", "添加子题");
+		}
+		try {
+			String sign = questionView.getSign();
+			String flag = questionView.getFlag();
+			Long courseid = questionView.getCourseId();
+			Long questionId = questionView.getId();
+			// 查询该课程所有章节list
+			List<CourseHour> chapterList = courseHourService.queryHourList(courseid, true);
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+				modelAndView.addObject("chapterList", chapterList);
+			}
+			if (questionId != null) {
+				Question question = questionService.selectById(questionId);
+				modelAndView.addObject("question", question);
+			}
+			modelAndView.addObject("questionView", questionView);
+			modelAndView.setViewName("frontstage/tiku/question/" + path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转新增题目失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+
+	}
+
+	@RequestMapping("/query_all_question")
+	@ResponseBody
+	public JSONArray queryAllQuestion(HttpServletRequest request, QuestionView questionView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		questionView.setUserId(user.getId());
+		questionView.setGenre("0");
+		if (!questionView.getIds().equals("")) {
+			questionView.setList(NumUtil.getList(questionView.getIds()));
+		}
+		questionView.setRows(2);
+		if (questionView.getPage() == 0) {
+			questionView.setStartLine(0);
+		} else {
+			questionView.setStartLine(questionView.getPage() * questionView.getRows());
+		}
+		List<QuestionView> questionList = questionService.queryQuestion(questionView);
+		int total = questionService.queryTotalCourse(questionView);// 课程总数
+		questionView.setTotal(total);
+		// 分页总页数
+		questionView.setTotalPage(NumUtil.totalPage(total, questionView.getRows()));
+
+		List<CourseHour> chapterList = courseHourService.queryHourList(questionView.getCourseId(), true);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("questionList", questionList);
+		map.put("questionView", questionView);
+		map.put("chapterList", chapterList);
+		if (questionList != null) {
+			return JSONArray.fromObject(map);
+		} else {
+			return JSONArray.fromObject(0);
+		}
+	}
+
+	@RequestMapping("/search_question")
+	@ResponseBody
+	public JSONArray searchQuestion(HttpServletRequest request) {
+		String questionIds = request.getParameter("questionIds");
+		List<QuestionView> questionList = questionService.searchQuestion(questionIds);
+		if (questionList != null) {
+			return JSONArray.fromObject(questionList);
+		} else {
+			return JSONArray.fromObject(0);
+		}
+	}
+
+	// 添加题目
+	@RequestMapping("question_add")
+	public ModelAndView questionAdd(HttpServletRequest request, QuestionView questionView, int submit) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		long courseId = 0;
+		try {
+			courseId = questionView.getCourseId();
+			questionView.setUserId(user.getId());
+			if (questionView.getBelong_to() != null) {
+				if (questionView.getBelong_to() == -1) {
+					questionView.setBelong_type(0);
+					questionView.setBelong_to(courseId);
+				} else {
+					questionView.setBelong_type(1);
+				}
+			}
+			if (questionView.getType() == 0 || questionView.getType() == 5) {
+				questionService.insertSelect(questionView);
+			} else if (questionView.getType() == 1) {
+				questionService.insertFill(questionView);
+			} else if (questionView.getType() == 2 || questionView.getType() == 3) {
+				questionService.insertJudgeAndQa(questionView);
+			} else {
+				questionService.insertScience(questionView);
+			}
+			int is_son = questionView.getIs_son();
+			if (questionView.getType() == 4) {
+				modelAndView.setViewName("redirect:/question/to_question_son.action?id=" + questionView.getId() + "&courseId=" + courseId + "&flag=0&sign=10");
+			} else if (submit == 1) {
+				if (is_son == 1) {
+					modelAndView.setViewName("redirect:/question/to_question_add.action?courseId=" + courseId + "&flag=0&sign=10&tab=" + questionView.getType()
+							+ "&is_son=" + is_son + "");
+				} else {
+					modelAndView.setViewName("redirect:/question/to_question_add.action?pid=" + questionView.getPid() + "&courseId=" + courseId
+							+ "&flag=0&sign=10&tab=" + questionView.getType() + "&is_son=" + is_son + "");
+
+				}
+			} else if (submit == 2) {
+				if (is_son == 1) {
+					modelAndView.setViewName("redirect:/question/to_question.action?courseId=" + courseId + "&flag=0&sign=10");
+				} else {
+					modelAndView.setViewName("redirect:/question/to_question_son.action?id=" + questionView.getPid() + "&courseId=" + courseId
+							+ "&flag=0&sign=10");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("新增题目失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+
+	}
+
+	@RequestMapping("/delete_question")
+	public void deleteQuestion(HttpServletResponse response, HttpServletRequest request, String ids) throws Exception {
+		String[] strs = ids.split(",");
+		int i = 0;
+		for (String str : strs) {
+			if (str != null && !str.equals("")) {
+				long id = Long.parseLong(str);
+				Question q = questionService.selectById(id);
+				TestPaperQuestionView testPaperQuestionView = new TestPaperQuestionView();
+				testPaperQuestionView.setQuestion_id(id);
+				testPaperQuestionView.setQuestion_status(2);
+				testPaperQuestionView.setQuestion_type(q.getType());
+				if(q.getIs_son()==0){
+					testPaperQuestionView.setQuestion_is_son(0);
+				}else{
+					testPaperQuestionView.setQuestion_is_son(1);
+				}
+				testPaperQuestionView.setQuestions_score(0);
+				testQuestionsService.updateTestQuestionsStatusByQid(testPaperQuestionView);
+				questionService.deleteQuestion(id);
+				i++;
+			}
+		}
+		JSONObject result = new JSONObject();
+		result.put("num", i);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/modal_question")
+	public void modalQuestion(HttpServletResponse response, HttpServletRequest request, long id) throws Exception {
+		Question question = questionService.selectById(id);
+		JSONObject result = new JSONObject();
+		if (question.getType() == 0 || question.getType() == 5) {
+			result.put("modal", "<div class=\"modal-body\">" + toSeeSelect(question) + "</div>");
+		} else if (question.getType() == 1) {
+			result.put("modal", "<div class=\"modal-body\">" + toSeeFill(question) + "</div>");
+		} else if (question.getType() == 2) {
+			result.put("modal", "<div class=\"modal-body\">" + toSeeJudge(question) + "</div>");
+		} else if (question.getType() == 3) {
+			result.put("modal", "<div class=\"modal-body\">" + toSeeQa(question) + "</div>");
+		} else if (question.getType() == 4) {
+			result.put("modal", "<div class=\"modal-body\">" + toSeeScience(question) + "</div>");
+		}
+		ResponseUtil.write(response, result);
+
+	}
+
+	@RequestMapping("/html_question")
+	public void htmlQuestion(HttpServletResponse response, HttpServletRequest request, long id) throws Exception {
+		Question question = questionService.selectById(id);
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("<link rel=\"stylesheet\" media=\"screen\" href=\"" + request.getContextPath()
+				+ "/frontstage/css/bootstrap/font-awesome.min.css\" />");
+		stringBuffer.append("<link rel=\"stylesheet\" media=\"screen\" href=\"" + request.getContextPath() + "/frontstage/css/bootstrap/es-icon.css\" />");
+		stringBuffer.append("<link href=\"" + request.getContextPath() + "/frontstage/css/bootstrap/main-blue-light.css\" rel=\"stylesheet\" />");
+		stringBuffer.append("<link href=\"" + request.getContextPath() + "/frontstage/css/bootstrap/main.css\" rel=\"stylesheet\" />");
+		stringBuffer.append("<link href=\"" + request.getContextPath() + "/frontstage/css/bootstrap/head-white.css\" rel=\"stylesheet\" />");
+		stringBuffer.append("<link href=\"" + request.getContextPath() + "/frontstage/css/bootstrap/bootstrap.css\" rel=\"stylesheet\">");
+		if (question.getType() == 0 || question.getType() == 5) {
+			stringBuffer.append("<div class=\"modal-body\">" + toSeeSelect(question) + "</div>");
+		} else if (question.getType() == 1) {
+			stringBuffer.append("<div class=\"modal-body\">" + toSeeFill(question) + "</div>");
+		} else if (question.getType() == 2) {
+			stringBuffer.append("<div class=\"modal-body\">" + toSeeJudge(question) + "</div>");
+		} else if (question.getType() == 3) {
+			stringBuffer.append("<div class=\"modal-body\">" + toSeeQa(question) + "</div>");
+		} else if (question.getType() == 4) {
+			stringBuffer.append("<div class=\"modal-body\">" + toSeeScience(question) + "</div>");
+		}
+		ResponseUtil.write(response, new String(stringBuffer));
+
+	}
+
+	private String toSeeSelect(Question question) {
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("<div class=\"testpaper-question testpaper-question-choice \" >");
+		sb.append("<div class=\"testpaper-question-body\">");
+		sb.append("<div class=\"testpaper-question-stem-wrap clearfix\">");
+		sb.append("<div class=\"testpaper-question-seq-wrap\">");
+		sb.append("<div class=\"testpaper-question-seq\"></div>");
+		sb.append("<div class=\"testpaper-question-score\">" + question.getScore() + "分</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-stem\">");
+		sb.append(question.getStem() + "<br>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<ul class=\"testpaper-question-choices\">");
+		sb.append("<li class=\"\"><span class=\"testpaper-question-choice-index\">A.</span> <p>" + question.getOption_a() + "</p></li>");
+		sb.append("<li class=\"\"><span class=\"testpaper-question-choice-index\">B.</span> <p>" + question.getOption_b() + "</p></li>");
+		if (question.getOption_c() != null)
+			sb.append("<li class=\"\"><span class=\"testpaper-question-choice-index\">C.</span> <p>" + question.getOption_c() + "</p></li>");
+		if (question.getOption_d() != null)
+			sb.append("<li class=\"\"><span class=\"testpaper-question-choice-index\">D.</span> <p>" + question.getOption_d() + "</p></li>");
+		if (question.getOption_e() != null)
+			sb.append("<li class=\"\"><span class=\"testpaper-question-choice-index\">E.</span> <p>" + question.getOption_e() + "</p></li>");
+		sb.append("</ul>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-footer clearfix\">");
+		sb.append("<div class=\"testpaper-question-choice-inputs\">");
+		sb.append("<label class=\"checkbox-inline \">");
+		sb.append("<input type=\"checkbox\" name=\"\" value=\"0\">");
+		sb.append("A");
+		sb.append("</label>");
+		sb.append("<label class=\"checkbox-inline \">");
+		sb.append("<input type=\"checkbox\" name=\"\" value=\"1\">");
+		sb.append("B");
+		sb.append("</label>");
+		if (question.getOption_c() != null) {
+			sb.append("<label class=\"checkbox-inline \">");
+			sb.append("<input type=\"checkbox\" name=\"\" value=\"2\">");
+			sb.append("C");
+			sb.append("</label>");
+		}
+		if (question.getOption_d() != null) {
+			sb.append("<label class=\"checkbox-inline \">");
+			sb.append("<input type=\"checkbox\" name=\"\" value=\"3\">");
+			sb.append("D");
+			sb.append("</label>");
+		}
+		if (question.getOption_e() != null) {
+			sb.append("<label class=\"checkbox-inline \">");
+			sb.append("<input type=\"checkbox\" name=\"\" value=\"3\">");
+			sb.append("E");
+			sb.append("</label>");
+		}
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-actions pull-right\"></div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-preview-answer clearfix mtl mbl\">");
+		sb.append("<div class=\"testpaper-question-result\">");
+		sb.append("正确答案是 <strong class=\"text-success\">" + question.getRight_key() + "</strong>");
+		sb.append("</div>");
+		sb.append("</div>");
+		String analysis = question.getAnalysis();
+		if (analysis == null || analysis.trim().equals("")) {
+			analysis = "无解析";
+		}
+		sb.append("<div class=\"testpaper-question-analysis well\"><p>" + analysis + "</p><br></div>");
+		sb.append("</div>");
+
+		return new String(sb);
+
+	}
+
+	private String toSeeFill(Question question) {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("<div class=\"testpaper-question testpaper-question-fill \" id=\"question40\">");
+		sb.append("<div class=\"testpaper-question-body\">");
+		sb.append("<div class=\"testpaper-question-stem-wrap clearfix\">");
+		sb.append("<div class=\"testpaper-question-seq-wrap\">");
+		sb.append("<div class=\"testpaper-question-seq\"></div>");
+		sb.append("<div class=\"testpaper-question-score\">" + question.getScore() + "分</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-stem\">");
+		String stem = question.getStem();
+		StringBuffer sb_stem = new StringBuffer();
+		String[] strs = stem.split("______");
+		int i = 1;
+		for (String str : strs) {
+			if (i < strs.length) {
+				sb_stem.append(str + "<span class=\"question-stem-fill-blank\">(" + i++ + ")</span>");
+			} else {
+				sb_stem.append(str);
+			}
+		}
+		sb.append(new String(sb_stem) + "<br>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-footer clearfix\">");
+		sb.append("<div class=\"testpaper-question-fill-inputs\">");
+		sb.append("<input class=\"form-control \" type=\"text\" name=\"\" placeholder=\"填空答案，请填在这里\">");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-actions pull-right\"></div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-preview-answer clearfix mtl mbl\">");
+		sb.append("<div class=\"testpaper-question-result\">");
+		sb.append("<ul>");
+
+		String rightKeys = question.getRight_key();
+		String[] rightKeyList = rightKeys.split(",");
+		int j = 1;
+		for (String rightKey : rightKeyList) {
+			sb.append("<li>");
+			sb.append("填空(" + j + ")： 正确答案 <strong class=\"text-success\">" + rightKey.replace("|", " 或 ") + "</strong>");
+			sb.append("</li>");
+		}
+
+		sb.append("</ul>");
+		sb.append("</div>");
+		sb.append("</div>");
+		String analysis = question.getAnalysis();
+		if (analysis == null || analysis.trim().equals("")) {
+			analysis = "无解析";
+		}
+		sb.append("<div class=\"testpaper-question-analysis well\"><p>" + analysis + "</p><br></div>");
+		sb.append("</div>");
+
+		return new String(sb);
+	}
+
+	private String toSeeJudge(Question question) {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("<div class=\"testpaper-question testpaper-question-fill \" id=\"question41\">");
+		sb.append("<div class=\"testpaper-question-body\">");
+		sb.append("<div class=\"testpaper-question-stem-wrap clearfix\">");
+		sb.append("<div class=\"testpaper-question-seq-wrap\">");
+		sb.append("<div class=\"testpaper-question-seq\"></div>");
+		sb.append("<div class=\"testpaper-question-score\">" + question.getScore() + "分</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-stem\"><p>" + question.getStem() + "</p><br>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-footer clearfix\">");
+		sb.append("<div class=\"testpaper-question-determine-inputs\">");
+		sb.append("<label class=\"radio-inline \"><input type=\"radio\" name=\"\" value=\"1\"> 正确</label>");
+		sb.append("<label class=\"radio-inline \"><input type=\"radio\" name=\"\" value=\"0\">错误</label>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-actions pull-right\"></div>");
+		sb.append(" </div>");
+		sb.append("<div class=\"testpaper-preview-answer clearfix mtl mbl\">");
+		sb.append("<div class=\"testpaper-question-result\">");
+		String rightKey = "";
+		if (question.getRight_key().equals("1")) {
+			rightKey = "正确";
+		}
+		if (question.getRight_key().equals("0")) {
+			rightKey = "错误";
+		}
+		sb.append("正确答案是 <strong class=\"text-success\">" + rightKey + " </strong>");
+		sb.append("</div>");
+		sb.append("</div>");
+		String analysis = question.getAnalysis();
+		if (analysis == null || analysis.trim().equals("")) {
+			analysis = "无解析";
+		}
+		sb.append("<div class=\"testpaper-question-analysis well\">" + analysis + "</div>");
+		sb.append("</div>");
+
+		return new String(sb);
+	}
+
+	private String toSeeQa(Question question) {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("<div class=\"testpaper-question testpaper-question-essay \">");
+		sb.append("<div class=\"testpaper-question-body\">");
+		sb.append("<div class=\"testpaper-question-stem-wrap clearfix\">");
+		sb.append("<div class=\"testpaper-question-seq-wrap\">");
+		sb.append("<div class=\"testpaper-question-seq\"></div>");
+		sb.append("<div class=\"testpaper-question-score\">" + question.getScore() + "分</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-stem\">" + question.getStem() + "<br></div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-footer clearfix\">");
+		sb.append("<div class=\"testpaper-question-essay-inputs\">");
+		sb.append("<textarea class=\"form-control testpaper-question-essay-input-short\" rows=\"1\" style=\"overflow:hidden;line-height:20px;\"></textarea>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-question-actions pull-right\">");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class=\"testpaper-preview-answer clearfix mtl mbl\">");
+		sb.append("<div class=\"testpaper-question-result\">");
+		sb.append("<div class=\"testpaper-question-result-suggested\">");
+		sb.append("<div class=\"testpaper-question-result-title\">参考答案：</div>");
+		sb.append("<div><p>" + question.getRight_key() + "</p></div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		String analysis = question.getAnalysis();
+		if (analysis == null || analysis.trim().equals("")) {
+			analysis = "无解析";
+		}
+		sb.append("<div class=\"testpaper-question-analysis well\"><p>" + analysis + "</p><br></div>");
+		sb.append("</div>");
+
+		return new String(sb);
+	}
+
+	private String toSeeScience(Question question) {
+		List<Question> sonQuestions = questionService.selectAllsonQuestion(question.getId());
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("<div class=\"material\">");
+		sb.append("<div class=\"well testpaper-question-stem-material\"><p>" + question.getStem() + "</p></div>");
+		for (Question son : sonQuestions) {
+			if (son.getType() == 0 || son.getType() == 5) {
+				sb.append(toSeeSelect(son));
+			} else if (son.getType() == 1) {
+				sb.append(toSeeFill(son));
+			} else if (son.getType() == 2) {
+				sb.append(toSeeJudge(son));
+			} else if (son.getType() == 3) {
+				sb.append(toSeeQa(son));
+			}
+
+		}
+		sb.append("</div>");
+		sb.append("</div>");
+
+		return new String(sb);
+	}
+}

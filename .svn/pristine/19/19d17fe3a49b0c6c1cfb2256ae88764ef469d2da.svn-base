@@ -1,0 +1,87 @@
+
+
+//弹出框遮罩层
+//兼容火狐、IE8
+//显示遮罩层
+function showMask(){
+    $("#mask").css("height",$(document).height());
+    $("#mask").css("width",$(document).width());
+    $("#mask").show();
+}
+//隐藏遮罩层
+function hideMask(){
+    $("#mask").hide();
+}
+
+
+
+
+
+
+
+
+$(function(){
+    $(".basic_info").click(function(){
+        $(".basic_info_click").show();
+        $(".school_setting_click").hide();
+        $(".subject_setting_click").hide();
+    });
+});
+$(function(){
+    $(".school_info").click(function(){
+        $(".basic_info_click").hide();
+        $(".school_setting_click").show();
+        $(".subject_setting_click").hide();
+    });
+});
+
+$(function(){
+    $(".subject_setting").click(function(){
+        $(".basic_info_click").hide();
+        $(".school_setting_click").hide();
+        $(".subject_setting_click").show();
+    });
+});
+
+
+//我的关注鼠标悬浮事件
+$(function(){
+    $(".concern_page").mouseover(function(){
+        $(this).css("border","1px solid #3ebbce");
+        $(this).find(".quit_concern").show();
+        $(".concern_page a").mouseover(function(){
+            $(this).css("color","red");
+
+        });
+
+    }).mouseout(function(){
+        $(".concern_page").css("border","none");
+        $(".quit_concern").css("display","none");
+        $(this).find("a").css("color","none");
+    });
+    $(".concern_page a").mouseout(function(){
+        $(".concern_page a").css("color","#6d6d6d");
+
+    });
+});
+
+
+$(function(){
+    $(".my_concern_li").click(function(){
+        $(".concern_main").show();
+        $(".my_fans_page").hide();
+
+    });
+});
+
+$(function(){
+    $(".my_fans_li").click(function(){
+        $(".concern_main").hide();
+        $(".my_fans_page").show();
+
+    });
+});
+
+
+
+

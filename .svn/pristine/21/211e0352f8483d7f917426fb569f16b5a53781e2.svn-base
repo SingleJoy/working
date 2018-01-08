@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+    <title>ECharts</title>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/bootstrap/main.css"  type="text/css"/>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="../../../js/echarts.min.js"></script>
+    <script src="../../../js/china.js"></script>
+    <style>
+
+        #china-map {height: 800px;text-align: center;}
+        .popover-content>a{padding: 0 10px;}
+        .popover{min-width: 300px;}
+
+    </style>
+</head>
+<body>
+<header class="es-header navbar" style="background-color: #fff;">
+
+    <div class="navbar-header">
+        <a href="/edu_yun" class="navbar-brand">
+            <img src="/edu_yun/frontstage/images/qiuzi_index.png">
+        </a>
+    </div>
+    <nav class="collapse navbar-collapse">
+
+        <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+
+            <li class="nav-hover">
+                <a href="/edu_yun">首页 </a>
+
+            </li>
+
+            <li>
+                <a href="/edu_yun/community/to_community_center.action?stamp=0&amp;state=0&amp;sign=0" target="_blank">个人中心</a>
+            </li>
+
+            <li><a href="/edu_yun/train/to_train_home.action" target="_blank">培训主页</a></li>
+
+
+            <li><a href="/edu_yun/lesson_main/to_lesson_main.action" target="_blank">教研主页</a></li>
+            <li>
+                <a href="/edu_yun/user/resource_home.action" target="_blank">资源主页 </a>
+            </li>
+            <li><a href="javascript:void(0);" target="_blank">社区主页</a></li>
+            <li><a href="javascript:void(0);" target="_blank">工作坊主页</a></li>
+        </ul>
+
+        <div class="navbar-user ">
+
+            <ul class="nav user-nav">
+                <li class="user-avatar-li nav-hover">
+                    <a href="javascript:void (0);" class="dropdown-toggle" id="my_pic">
+                        <img class="avatar-xs" src="/edu_yun/picture/userImages/140Y126315b10-1509314973439181222.jpg">
+
+                    </a>
+                    <ul class="dropdown-menu" role="menu" id="header_mine">
+                        <li role="presentation" class="dropdown-header">ceshi</li>
+                        <li><a href="/edu_yun/teacher_center/to_teacher_center.action?user_id=28" target="_blank"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                        <li><a href="/edu_yun/private_letter/to_letter.action" target="_blank"><i class="es-icon es-icon-setting"></i>私信</a></li>
+                        <li class="hidden-lg">
+                            <a href="/edu_yun/notice/queryNotice.action?page=0&amp;type=0">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>
+                                通知</a>
+                        </li>
+                        <li class="hidden-lg">
+                            <a href="/edu_yun/private_letter/to_letter.action">
+                                <span class="pull-right num">0</span><i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+                        <li><a href="/edu_yun/user/ajaxLogout.action" class="sign_out" onclick="return false"><i class="es-icon es-icon-power"></i>退出登录</a></li>
+                    </ul>
+                </li>
+
+                <li class="visible-lg nav-hover">
+
+                    <a href="javascript:return false;" id="header_icon_mail">
+
+                        <i class="es-icon es-icon-mail"></i>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu" id="header_notes">
+                        <li>
+                            <a href="/edu_yun/notice/queryNotice.action?page=0&amp;type=0">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>通知
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/edu_yun/private_letter/to_letter.action">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </nav>
+</header>
+
+<!--绘制地图区域-->
+<div id="china-map"></div>
+
+<div class="es-wrap" style="background-color: #eaeaea;">
+
+
+    <div class="tabs-wrapper container">
+
+        <div class="tabs-group">
+            <div class="title" style="max-width: 50px;">区域</div>
+            <ul class="content list-unstyled list-inline" style="margin-left: 10px;">
+
+                <li class="classify">
+                    <a class="btn btn-link" href="">广东省
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <i class="es-icon es-icon-chevronright"></i>
+                    </a>
+                </li>
+                <li class="tabs-mark">
+                    <a class="btn btn-link" href="">广州市
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <i class="es-icon es-icon-chevronright"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tabs-group">
+            <ul class="content clearfix " style="clear: both;margin-left: 50px;">
+                <li class="active"> <a class="items nav-link tag" href="javascript:;">区县01</a></li>
+                <li><a class="items nav-link tag" href="javascript:;">区县02</a></li>
+                <li><a class="items nav-link tag" href="javascript:;">区县03</a></li>
+
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="text-line">
+            <h5 >
+                <span style="background-color: #eaeaea;">热门社区</span>
+                <div class="line"></div>
+            </h5>
+            <div class="subtitle">精选热门社区，满足你的学习兴趣。</div>
+        </div>
+
+        <div class="course-list">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="" target="_blank">
+                                <img src="http://www.qiqiuyu.com//files/default/2017/07-12/163818a560a6415269.jpg" alt="" class="img-responsive" style="width: 260px; height: 150px;">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="" target="_blank">
+                                    社区名称
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>24</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>2</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!--社区列表-->
+    <section class="community_list container">
+        <div class="text-line">
+            <h5 >
+                <span style="background-color: #eaeaea;">所有社区</span>
+                <div class="line"></div>
+            </h5>
+            <div class="subtitle"></div>
+        </div>
+        <div class="course-list">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="" target="_blank">
+                                <img src="http://www.qiqiuyu.com//files/default/2017/07-12/163818a560a6415269.jpg" alt="" class="img-responsive" style="width: 260px; height: 150px;">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="" target="_blank">
+                                    社区名称
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>24</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>2</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="" target="_blank">
+                                <img src="http://www.qiqiuyu.com//files/default/2017/07-12/163818a560a6415269.jpg" alt="" class="img-responsive" style="width: 260px; height: 150px;">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="" target="_blank">
+                                    社区名称
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>24</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>2</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="" target="_blank">
+                                <img src="http://www.qiqiuyu.com//files/default/2017/07-12/163818a560a6415269.jpg" alt="" class="img-responsive" style="width: 260px; height: 150px;">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="" target="_blank">
+                                    社区名称
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>24</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>2</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="" target="_blank">
+                                <img src="http://www.qiqiuyu.com//files/default/2017/07-12/163818a560a6415269.jpg" alt="" class="img-responsive" style="width: 260px; height: 150px;">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="" target="_blank">
+                                    社区名称
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>24</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>2</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-more-btn">
+            <a href="javascript:void(0);" target="_blank" class="btn btn-default btn-lg">
+                更多社区 <i class="mrs-o es-icon es-icon-chevronright"></i>
+            </a>
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<script>
+
+
+
+    var myChart = echarts.init(document.getElementById('china-map'));
+    var option = {
+        tooltip: {
+//                    show: false //不显示提示标签
+            formatter: '{b}', //提示标签格式
+            backgroundColor:"#000",//提示标签背景颜色
+            textStyle:{color:"#e1e1e1"} //提示标签字体颜色
+        },
+        series: [{
+            type: 'map',
+            mapType: 'china',
+            roam: true,
+            label: {
+                normal: {
+                    show: true,//显示省份标签
+                    textStyle:{color:"#fff"}//省份标签字体颜色
+                },
+                emphasis: {//对应的鼠标悬浮效果
+                    show: true,
+                    textStyle:{color:"#800080"}
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderWidth: .5,//区域边框宽度
+                    borderColor: '#009fe8',//区域边框颜色
+                    areaColor:"#4fc2f8",//区域颜色
+                },
+                emphasis: {
+                    borderWidth: .5,
+                    borderColor: '#4b0082',
+                    areaColor:"#CCEBFA",
+
+                }
+            },
+            data:[
+                {name:'北京', selected:true}//北京为选中状态
+            ]
+        }],
+    };
+
+
+    // 鼠标点击事件参考一下链接
+    // http://echarts.baidu.com/tutorial.html#ECharts%20%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%92%8C%E8%A1%8C%E4%B8%BA
+    //    http://www.cnblogs.com/xianwen/p/6045454.html
+    myChart.on('click', function (params) {    //params为省名称
+        var name = params.name;
+
+        alert(name);
+        var e = event || window.event;
+        var left=e.clientX;
+        var top=e.clientY;
+
+        $(".popover").css("left",left);
+        $(".popover").css("top",top);
+        if($(".popover").css("display")=="block"){
+            $(".popover").hide();
+        }else {
+            $(".popover").show();
+        }
+
+
+    });
+    myChart.on('mouseout', function (params) {    //params为省名称
+
+        $(".popover").hide();
+
+    });
+
+
+    $(function () {
+
+        $(".popover").mouseover(function () {
+            $(this).show();
+        });
+        $(".popover").mouseout(function () {
+            $(".popover").hide();
+        });
+    });
+
+
+    myChart.setOption(option);
+
+</script>
+
+
+
+
+
+<!--鼠标悬浮弹窗事件-->
+<div class="popover fade in" role="tooltip" style="display: none;position: absolute;" id="popover">
+
+    <h2 class="popover-title">
+        XX省各行政市名单
+    </h2>
+    <div class="popover-content">
+        <a href="#">深圳</a>
+        <a href="#">广州</a>
+        <a href="#">东莞</a>
+        <a href="#">惠州</a>
+        <a href="#">汕头</a>
+        <a href="#">潮汕</a>
+        <a href="#">清远</a>
+        <a href="#">珠海</a>
+        <a href="#">中山</a>
+        <a href="#">韶关</a>
+        <a href="#">河源</a>
+        <a href="#">和平</a>
+        <a href="#">江门</a>
+        <a href="#">佛山</a>
+        <a href="#">湛江</a>
+        <a href="#">肇庆</a>
+        <a href="#">罗定</a>
+
+    </div>
+</div>
+
+</body>
+</html>

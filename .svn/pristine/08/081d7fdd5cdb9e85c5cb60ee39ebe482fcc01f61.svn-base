@@ -1,0 +1,455 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<style type="text/css">
+	.add_button{background:url("${pageContext.request.contextPath}/frontstage/images/add_button.png") no-repeat;width: 15px;height: 15px;}
+	.delete_button{background:url("${pageContext.request.contextPath}/frontstage/images/delete_button.png") no-repeat;width:15px;height: 15px; }
+</style>
+<div class="cn-wrap">
+
+	<div id="content-container" class="container">
+		<jsp:include page="train_header.jsp"></jsp:include>
+		<div class="row">
+			<jsp:include page="train_left.jsp"></jsp:include>
+			<div class="col-md-9">
+				<div class="panel panel-default panel-col">
+					<div class="panel-heading">考核标准设置
+					<c:if test="${examStandardMessage!=null }">
+						<span class="text-danger">${examStandardMessage }</span>
+					</c:if>
+					</div>
+					<div class="course_save_succ alert alert-success" <c:if test="${trainView.flag!=1}">style="display:none;"</c:if>>考核标准设置已保存!</div>
+					<div class="panel-body">
+						<form id="trainExamStandard"  class="form-horizontal" action="${pageContext.request.contextPath}/train_exam_standard/transaction_train_exam_standard.action" method="post"  >
+							<input type="hidden"  name="id" value="${trainExamStandardView.id }" />
+							<input type="hidden"  id="source_id" name="train_id"  value="${trainView.id }" />
+							<input type="hidden"  name="source_id"  value="${trainView.id }" />
+							<input type="hidden"  name="source_type" value="0" />
+							<input type="hidden" name="sign" value="${trainView.sign }" />
+
+							<div style="margin-left: 45px;line-height: 25px;padding: 15px 0;">
+								该培训总学时<span class="text-warning">&nbsp;${trainExamStandardView.totalHours}&nbsp;</span>学时，
+								其中必修课 <span class="text-warning">&nbsp; ${trainExamStandardView.requiredHours}&nbsp;</span>学时，
+								选修课 <span class="text-warning">&nbsp;${trainExamStandardView.optionHours}&nbsp;</span>学时。<br/>
+							</div>
+
+							<div class="form-group" style="clear: both;">
+								<div class="col-md-2 control-label">总学时要求:</div>
+								<div class="col-md-5 controls">
+
+									<label><input type="text" <c:if test="${trainView.type==1}">readonly="readonly"</c:if> id="total_required" class="form-control width-input"  name="total_required" value="${trainExamStandardView.total_required }" <c:if test="${trainView.status ==1 }">disabled="disabled"</c:if>></label>学时
+
+								</div>
+								<div id="total_required_msg" class="help-block" style="display:none;">
+									请输入大于等于必修课时小于等于总学时的数
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-2 control-label">
+									<label>证书设置</label>
+								</div>
+								<div class="col-md-4 controls" >
+									<input type="hidden"  name="certificate_id" value="${certificate.certificate_id }"/>
+									<input id="cert_model_id" name="cert_model_id" value="${certificate.cert_model_id}" type="hidden">
+									<input id="cert_name" name="cert_name" value="${certificate.cert_model_title}" type="hidden">
+									<ul id="tutor_list" class="nav nav-pills clearfix tutor_list">
+										<c:if test="${!empty certificate.cert_model_id}">
+											<li class="active" id="cert_model_id_${certificate.cert_model_id}" >
+												<a href="javascript:;">${certificate.cert_model_title}&nbsp;&nbsp;<c:if test="${trainView.status ==0 }"><span class="tutor_del" onclick="delCert(${certificate.cert_model_id});">X</span></c:if></a></li>
+										</c:if>
+									</ul>
+								</div>
+                                
+								<span id="addCert" <c:if test="${!empty certificate.cert_model_id}">style="display: none;"</c:if>>
+									<c:if test="${trainView.status ==0 }">
+										<a href="javascript:void(0);" onclick="chooseCertModel(0,1);" class="tutor_add btn btn-info btn-sm" data-toggle="model">
+											<span class="glyphicon glyphicon-plus"></span>添加
+										</a>
+									</c:if>
+								</span>
+
+							</div>
+
+							<div class="form-group text-center">
+
+								<c:if test="${trainView.status !=1 }">
+									<button class="btn btn-fat btn-primary" onclick="checkform();" type="button">保存</button>
+								</c:if>
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+<!--选择证书弹窗-->
+<div id="add_certificate" class="modal" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">选择证书</h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="alert alert-info">
+					请选择证书模板
+				</div>
+				<form class="form-inline form-search" role="search-form">
+					<div class="form-group ">
+						<input type="text" class="form-control" name="title" id="title" value="" placeholder="图片名称" >
+					</div>
+					<button id="search_btn" type="button" class="btn btn-primary"  >搜索</button>
+				</form>
+				<div class="row mtl">
+					<div class="col-md-12">
+						<div class="courses-list">
+							<input id="index" type="hidden">
+							<input type="hidden" id="pageFlag" value="0"/>
+							<input type="hidden" name="page" id="page" value="0"/>
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th ></th>
+									<th >模板名称</th>
+									<th>作者</th>
+									<th>创建时间</th>
+								</tr>
+								</thead>
+								<tbody id="cert_models">
+								</tbody>
+							</table>
+							<nav class="text-center">
+								<div id="test" class="pager "></div>
+							</nav>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="add_cert_model_btn"  class="btn btn-primary">保存</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="see" class="modal" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">证书预览</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row row-8">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="panel-default" >
+							<div class="panel-body">
+
+								<div id="generImg" class="certificate_info" style="width: 700px;height:600px;margin-left:-80px;clear: both;">
+									<img id="negative" src="" style="width:700px;height: 600px; ">
+
+									<div id="content" style="position:absolute;margin-top:-500px;width:500px;margin-left:100px;"></div>
+									<div class="certificate_ seal" style="z-index:99;position: absolute;margin-left: 462px;margin-top:-176px;">
+										<img id="stamp" src="" style="width: 100px;height: 100px;">
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#pageFlag").val(0);
+	var rangMapp = {};
+	<c:forEach items="${certificatesViews}" var="certificate"   varStatus="i">
+	rangMapp['rang${i.index}'] = '${certificate.down_score},${certificate.up_score}';
+	</c:forEach>
+	$(function(){
+		//考核占比控制
+		$('#option_ratio').blur(function(){
+			var ratio = $(this).val();
+			if(!isNaN(ratio)&&ratio>=0&&ratio!=''&&ratio<=100){
+				$('#required_ratio').val(100-ratio);
+			}else{
+				$(this).val(0);
+				$('#option_ratio_msg').show();
+			}
+		});
+		$('#option_ratio').focus(function(){
+			var ratio = $('#required_ratio').val();
+			if(!isNaN(ratio)&&ratio>=0&&ratio!=''&&ratio<=100){
+				$(this).val(100-ratio);
+				$('#option_ratio_msg').hide();
+			}
+		});
+
+		$('#required_ratio').blur(function(){
+			var ratio = $(this).val();
+			if(!isNaN(ratio)&&ratio>=0&&ratio!=''&&ratio<=100){
+				$('#option_ratio').val(100-ratio);
+			}else{
+				$(this).val(0);
+				$('#required_ratio_msg').show();
+			}
+
+		});
+		$('#required_ratio').focus(function(){
+			var ratio = $('#option_ratio').val();
+			if(!isNaN(ratio)&&ratio>=0&&ratio!=''&&ratio<=100){
+				$(this).val(100-ratio);
+				$('#required_ratio_msg').hide();
+			}
+		});
+
+		$('#total_required').blur(function(){
+			var total = '${trainExamStandardView.totalHours}';
+			var required = '${trainExamStandardView.requiredHours}';
+			var ratio = $(this).val();
+			if(!isNaN(ratio)&&parseInt(ratio)>0&&ratio!=''){
+				if(parseInt(required)<=parseInt(ratio) && parseInt(ratio)<=parseInt(total)){
+					$('#total_required_msg').hide();
+				}else{
+					$('#total_required_msg').show();
+				}
+			}else{
+				$('#total_required_msg').show();
+			}
+
+
+		});
+
+		/* // 为form绑定监听提交表单事件
+		 var form = document.getElementById('trainExamStandard');
+		 form.addEventListener('submit', function(event) {
+		 var t1 = form.getElementsByTagName("input");
+		 for(i=0;i<t1.length;i++) {
+		 if(t1[i].name!="id"&&t1[i].value==""){
+		 $('#submit_msg').show();
+		 //阻止表单提交
+		 event.preventDefault();
+		 }
+
+		 }
+		 }) */
+	})
+	function checkform(){
+		var form = document.getElementById('trainExamStandard');
+		var t1 = form.getElementsByTagName("input");
+		for(i=0;i<t1.length;i++) {
+			if(t1[i].name!="certificate_id"&&t1[i].name!="cert_model_id"&&t1[i].value==""){
+				alert("请填写完整考核数据"+t1[i].name);
+				return false;
+			}
+		}
+		var total_required = parseInt($("#total_required").val());
+		var total = '${trainExamStandardView.totalHours}';
+		var required = '${trainExamStandardView.requiredHours}';
+		if(isNaN(total_required)||total_required<=0){
+			//alert("总学时为非法字符或小于或等于0的值");
+			$('#total_required_msg').text("总学时为非法字符或小于或等于0的值");
+			$('#total_required_msg').show();
+			return false;
+		}else if(parseInt(required)>total_required || total_required>parseInt(total)){
+			//alert("总学时必须大于等于必修课时小于等于必修与选修课的总学时");
+			$('#total_required_msg').text("总学时必须大于等于必修课时小于等于必修与选修课的总学时");
+			$('#total_required_msg').show();
+			return false;
+		}
+		$('#total_required_msg').hide();
+		form.submit();
+
+	}
+
+	var list = [];
+	function chooseCertModel(value,second){
+		var page = $("#page").val();
+		if(value==0){
+			page = 0;
+			$("#title").val("");
+			$(".disabled").find("a").each(function(index,element){
+				if(index==0){
+					$(element).click();
+				}
+			});
+			$("#add_certificate").modal();
+			$("#search_btn").removeAttr("onclick");
+			$("#search_btn").attr("onclick","chooseCertModel(1,0)");
+		}
+		//搜索
+		var title = $("#title").val();
+		if(second==0){
+			$(".disabled").find("a").each(function(index,element){
+				if(index==0){
+					$(element).click();
+				}
+			});
+		}
+		$.ajax({
+			url:"${pageContext.request.contextPath}/cert_model/query_cert_model.action",
+			data:{
+				page : page,
+				title : title
+			},
+			dataType:'json',
+			success:function(data){
+				var view = data.certModelView;
+				list = data.certModelList;
+				var html = "";
+				for(var i=0;i<list.length;i++){
+					var formatDate;
+					if(list[i].update_time!=null){
+						formatDate = format(list[i].update_time.time,'yyyy-MM-dd HH:mm:ss');
+					}else{
+						formatDate = "";
+					}
+					html += '<tr>'+
+					'<td ><input id="check_'+list[i].id+'" type="checkbox" onclick="doChoose('+list[i].id+',\''+list[i].title+'\');"></td>'+
+					'<td><a href="${pageContext.request.contextPath}/cert_model/to_cert_model_show.action?id='+list[i].id+'" target="_blank" style="cursor: pointer;">'+list[i].title+'</a></td>'+
+					'<td>'+list[i].username+'</td>'+
+					'<td>'+formatDate+'</td>'+
+					'</tr>';
+				}
+				$("#cert_models").empty().append(html);
+				$("#page").val(view.page);
+				$("#title").val(view.title);
+				if(value==0){
+					if($("#pageFlag").val()==0){
+						doPages(index,1,view.rows,view.total);
+						$("#pageFlag").val(1);
+					}
+				}else if(second==0){
+					$("#pageFlag").val(0);
+					doPages(index,1,view.rows,view.total);
+				}
+			}
+		});
+	}
+
+	function doPages(index,second,rows,total){
+		//翻页
+		var page =  parseInt($("#page").val())+1;
+		$("#btn5").on('click', function () {
+			$("#div1").PageChanged(5);
+		});
+
+		$(".pager").pagination({
+			thisPageIndex:page,
+			recordCount: total,       //总记录数
+			pageSize: rows,           //一页记录数
+			onPageChange: function (page) {
+				$("#page").val(page-1);
+				chooseCertModel(1,second,-1);
+			}
+		});
+	}
+
+	function doChoose(value,title){
+		$("#add_cert_model_btn").removeAttr("onclick");
+		if(!$("#check_"+value).attr("checked")){
+			$("#cert_model_id").val(value);
+			$("#cert_name").val(title);
+			$("#add_cert_model_btn").attr("onclick","addCertModel("+value+",\'"+title+"\')");
+			for(var i=0;i<list.length;i++){
+				if(value!=list[i].id){
+					$("#check_"+list[i].id).attr("checked", false);
+				}
+			}
+		}
+	}
+	function delCert(value){
+		$("#addCert").show();
+		$("#cert_model_id").val("");
+		$("#cert_name").val("");
+		$("#cert_model_id_"+value).remove();
+	}
+
+
+	function addCertModel(value,title){
+		var modelId = $("#cert_model_id").val();
+		if(modelId!=""){
+			var str = '<li class="active" id="cert_model_id_'+value+'" ><a href="javascript:;">'+title+'&nbsp;&nbsp;<span class="tutor_del" onclick="delCert('+value+');">X</span></a></li>';
+			$("#tutor_list").append(str);
+			$("#addCert").hide();
+			$("#add_certificate").modal('hide');
+		}else{
+			alert("请选择证书模板！");
+			return;
+		}
+	}
+
+	var format = function(time, format) {
+		var t = new Date(time);
+		var tf = function(i) {
+			return (i < 10 ? '0': '') + i
+		};
+		return format.replace(/yyyy|MM|dd|HH|mm|ss/g,
+				function(a) {
+					switch (a) {
+						case 'yyyy':
+							return tf(t.getFullYear());
+							break;
+						case 'MM':
+							return tf(t.getMonth() + 1);
+							break;
+						case 'mm':
+							return tf(t.getMinutes());
+							break;
+						case 'dd':
+							return tf(t.getDate());
+							break;
+						case 'HH':
+							return tf(t.getHours());
+							break;
+						case 'ss':
+							return tf(t.getSeconds());
+							break;
+					}
+				});
+	};
+	$(function(){
+		// 全选
+		$(".checkAll").click(function () {
+			var checkboxs = getElementsClass("subCheckbox");
+			for(var i=0;i<checkboxs.length;i++){
+				checkboxs[i].click();
+			}
+		})
+
+	});
+	function getElementsClass(classnames){
+		var classobj= new Array();//定义数组
+		var classint=0;//定义数组的下标
+		var tags=document.getElementsByTagName("*");//获取HTML的所有标签
+		for(var i in tags){//对标签进行遍历
+			if(tags[i].nodeType==1){//判断节点类型
+				if(tags[i].getAttribute("class") == classnames){//判断和需要CLASS名字相同的，并组成一个数组
+					classobj[classint]=tags[i];
+					classint++;
+				}
+			}
+		}
+		return classobj;//返回组成的数组
+	}
+</script>
+
+

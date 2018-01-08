@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>问题详情</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link type="text/css" rel="stylesheet" href="http://192.168.10.253:8090/edu_yun/frontstage/css/bootstrap/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="http://192.168.10.253:8090/edu_yun/frontstage/css/bootstrap/main.css">
+</head>
+<body>
+
+<div class="cn-wrap">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12  course-detail-main">
+
+            <section class="cn-section">
+
+
+                <div class="course-detail-content">
+
+                    <div class="course-detail row">
+
+
+                            <div class="thread" style="margin: 0 20px;">
+                                <div class="thread-header">
+
+                                    <div style="text-align: center;">
+
+                                        <label style="font-size: 16px;font-weight: bold;" class="text-left">
+                                            中国国产航母月底或将海试刺激印度加快服役核潜艇
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="thread-body" style="font-size: 14px;text-indent: 2rem;">
+                                    印度海军举行核潜艇下水仪式
+                                    就在中国首艘国产航母17号“山东”舰基本完成舾装工作，目前已启动动力系统，
+                                    并准备最近几天进行海试之际，印度的面子过不去了。据美国《国家利益》双月刊网站12月8日报道称，
+                                    据印度海军参谋长苏尼尔·兰巴说，国产航母“IAC-1”“维克兰特”号的工作进展顺利，
+                                    印度第一艘国产航母将在2020年底之前加入海军。另据“印度防务”网站12月11日报道，
+                                    印度海军千呼万唤的第二艘国产核潜艇“阿里哈特”号于近日低调下水，印度方面举行了小规模的仪式庆祝，
+                                    据说这艘核潜艇具有专门对付中国航母的能力。
+                                </div>
+
+                                <div class="thread-footer-content pull-left" style="font-size: 14px;">
+                                    <label class="author-name">环球时报</label>
+                                    <span class="mlm"></span>
+                                    <span class="article-time">2017-12-10</span>
+                                    <span class="mlm"></span>
+                                    <span class="reply-num">回复：<span class="text-danger">10</span></span>
+                                    <span class="mlm"></span>
+                                    <span class="click-num">点击：<span class="text-danger">100</span></span>
+                                </div>
+
+                            </div>
+
+                            <div class="thread-posts" style="margin: 20px 20px 0;">
+
+                                <div class="js-reviews">
+                                        <div class="media media-evaluate">
+                                            <div class="media-left">
+                                                <a class="avatar-link-small js-user-card" href="#"  title="">
+                                                    <img class="avatar-sm" src="http://www.qiqiuyu.com/files/user/2017/09-14/1644215b4714865973.jpg">
+                                                </a>
+
+                                            </div>
+                                            <div class="media-body thread-post">
+                                                <div class="title">
+                                                    <a class="link-dark ">ceshi</a>
+
+                                                   &nbsp;&nbsp;
+                                                    2017-10-12
+                                                </div>
+
+                                                <div class="content">
+
+                                                    <div class="full-content" >
+                                                        美国海军在上个月宣布，第一个F-35C舰载机中队将会在2018年1月部署在尼米兹级航母上，
+                                                        将于F/A-18E/F舰载机组成美国海军的航母攻击机编队，专门负责航母战斗机的防空和打击等作战任务。
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <div class="js-reviews">
+                                        <div class="media media-evaluate">
+                                            <div class="media-left">
+                                                <a class="avatar-link-small js-user-card" href="#"  title="">
+                                                    <img class="avatar-sm" src="http://www.qiqiuyu.com/files/user/2017/09-14/1644215b4714865973.jpg">
+                                                </a>
+
+                                            </div>
+                                            <div class="media-body thread-post">
+                                                <div class="title">
+                                                    <a class="link-dark ">ceshi</a>
+
+                                                   &nbsp;&nbsp;
+                                                    2017-10-12
+                                                </div>
+
+                                                <div class="content">
+
+                                                    <div class="full-content" >
+                                                        美国海军在上个月宣布，第一个F-35C舰载机中队将会在2018年1月部署在尼米兹级航母上，
+                                                        将于F/A-18E/F舰载机组成美国海军的航母攻击机编队，专门负责航母战斗机的防空和打击等作战任务。
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <div class="my-reply">
+
+                                    <form class="bs-example bs-example-form">
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button">回复</button>
+                                            </span>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

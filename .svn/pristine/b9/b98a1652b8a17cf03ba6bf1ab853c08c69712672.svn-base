@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>个人中心-我的下载</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link href="../../css/bootstrap/main.css" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <style>
+        .lesson_plan,.teaching_plan{padding: 0 10px;border-radius: 20px; color: #fff;margin-left: 20px;}
+        .lesson_plan{background: #3ebbce;}
+        .teaching_plan{background: #32ad1c; }
+    </style>
+
+</head>
+<body class="homepage">
+
+<div id="content-container" class="container">
+
+    <div class="row ">
+
+        <div class="col-md-3 col-lg-3">
+            <div class="sidenav locked">
+                <input type="hidden" id="stamp" value="0">
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_0">社区</li>
+                    <li class="list-group-item "><a href="/edu_yun/community/to_community_center.action?stamp=0&amp;state=0&amp;sign=0">我的社区</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/workshop/to_workshop_center.action?stamp=0&amp;state=1&amp;sign=0">我的工作坊</a></li>
+
+                    <li class="list-group-item  "><a href="/edu_yun/my_attention/showMyAttention.action?state=9&amp;type=1&amp;page=0&amp;stamp=6"><span></span>我的关注</a></li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/user_collect/to_user_collect.action?stamp=2&amp;state=20">
+                            <span></span>我的收藏
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_8">教研中心</li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/lesson/to_my_lesson.action?state=31&amp;status=-1">
+                            <span></span>我的课例
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- 教师 -->
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_1">教学中心</li>
+                    <li class="list-group-item  "><a href="/edu_yun/course/to_course.action?&amp;stamp=1&amp;state=12&amp;sign=1&amp;type=0&amp;status=-1">在教课程</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/train/to_train.action?&amp;stamp=1&amp;state=13&amp;sign=1&amp;type=0">培训管理</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/topic_question/query_question.action?&amp;stamp=1&amp;state=14"><span></span>学员问答</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/class/to_tutor_class.action?&amp;stamp=1&amp;state=15&amp;sourceType=0"><span></span>助教班级</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/cert_model/to_cert_model_manager.action?stamp=1&amp;state=29"><span></span>证书管理</a></li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_9">资料中心</li>
+                    <li class="list-group-item  "><a href="/edu_yun/course_file/to_file_base.action?stamp=9&amp;state=32&amp;type=-1"><span></span>教学资料库</a></li>
+                    <li class="list-group-item  "><a href="my-upload.html"><span></span>我的上传</a></li>
+                    <li class="list-group-item  active"><a href="my-download.html"><span></span>我的下载</a></li>
+                </ul>
+
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_3">学习中心</li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=22&amp;is_studyed=0&amp;source_type=0">
+                            <span></span>我的课程
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=23&amp;is_studyed=0&amp;source_type=1">
+                            <span></span>我的培训
+                        </a>
+                    </li>
+
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/topic_question/user_question.action?stamp=2&amp;state=24">
+                            <span></span>我的讨论
+                        </a>
+                    </li>
+
+
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/course_note/to_my_notes.action?stamp=2&amp;state=26">
+                            <span></span>我的笔记
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/exam/to_my_exam.action?stamp=2&amp;state=27">
+                            <span></span>我的考试
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/exam/to_my_homework.action?stamp=2&amp;state=28">
+                            <span></span>我的作业
+                        </a>
+                    </li>
+
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/user_certificate/to_user_certificate.action?stamp=2&amp;state=30&amp;source_type=0">
+                            <span></span>我的证书
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_7">设置</li>
+                    <li class="list-group-item  "><a href="/edu_yun/my_setting/showMySetting.action?state=35&amp;stamp=7"><span></span>基础信息</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/my_setting/showMyIcon.action?state=33&amp;stamp=7"><span></span>头像设置</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/user/resetPassword.action?state=34&amp;stamp=7"><span></span>密码修改</a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+
+            <div class="panel panel-default" >
+
+                <div class="panel-heading">
+                    我的下载
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="nav-btn-tab my_download">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="javascript:void(0);" >课件文件</a></li>
+                            <li><a href="javascript:void(0);" >教案文件</a></li>
+
+
+                        </ul>
+                    </div>
+
+
+                    <form class="form-horizontal clearfix"  method="post" style="margin-top: 30px;">
+
+
+                        <!--课件文件列表-->
+                        <ul class="media-list course_ware" >
+
+                            <li class="media" style="">
+                                <div class="media-body">
+                                    <span class="pull-right text-muted">2017-08-10下载</span>
+                                    <div class="mbm">
+
+                                        <a href="javascript:void(0);" class="link-dark">
+                                            <label>1.2 函数及其表示 教学设计 <span class="lesson_plan">课件</span></label>
+                                        </a>
+
+                                    </div>
+                                    <div class="text-muted text-normal">
+									    <span>
+									    一、[基础知识] （一） 映射 （1）映射：设A、B是两个集合，如果按照某种映射法则f，对于集合A中的任一个元素，
+                                            在集合B中都有唯一的元素和它对应，则这样的对应（包括集合A、B以及A到B的对
+									    </span>
+
+                                    </div>
+                                    <div class="media media-dynamic">
+                                        <div class="media-left">
+                                            <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                                <img class="avatar-sm" src="http://www.qiqiuyu.com//files/default/2017/08-09/180625162759940042.jpg">
+
+                                            </a>
+
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="title" style="margin-top: 10px;">
+                                                <a class="link-dark " href="javascript:void(0);">李老师贡献</a>
+                                                <button type="button" class="btn btn-info btn-sm" style="margin-left: 30px;">再次下载</button>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+
+
+
+                        <!--教案文件列表-->
+                        <ul class="media-list course_ware" style="display: none;">
+
+                            <li class="media" style="">
+                                <div class="media-body">
+                                    <span class="pull-right text-muted">2015-04-10下载</span>
+                                    <div class="mbm">
+
+                                        <a href="javascript:void(0);" class="link-dark">
+                                            <label>正弦定理和余弦定理<span class="teaching_plan">教案</span></label>
+                                        </a>
+
+                                    </div>
+                                    <div class="text-muted text-normal">
+									    <span>
+                                           <span class="empty">正弦定理和余弦定理的简介</span>
+									    </span>
+
+                                    </div>
+                                    <div class="media media-dynamic">
+                                        <div class="media-left">
+                                            <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                                <img class="avatar-sm" src="http://www.qiqiuyu.com//files/default/2017/08-09/180625162759940042.jpg">
+
+                                            </a>
+
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="title" style="margin-top: 10px;">
+                                                <a class="link-dark " href="javascript:void(0);">张老师贡献</a>
+                                                <button type="button" class="btn btn-info btn-sm" style="margin-left: 30px;">再次下载</button>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+    $(function () {
+
+        $(".my_download>ul>li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            var index=$(this).index();
+            $(".course_ware").hide().eq(index).show();
+        })
+    });
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+

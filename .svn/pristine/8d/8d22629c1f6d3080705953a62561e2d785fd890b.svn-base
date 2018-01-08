@@ -1,0 +1,260 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<div class="btn-group">
+	<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" id="hour_item"  >
+		<c:if test="${empty course_hour_id}">
+			全部课时
+		</c:if>
+		<c:if test="${!empty course_hour_id}">
+			${course_hour.hour_title}
+		</c:if>
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu" id="reply3">
+		<li  id="hour_item">
+			<a href="javascript:return false;">全部课时</a>
+		</li>
+		<c:forEach items="${hourList }" var="hour">
+			<li  id="hour_item${hour.id }">
+				<a href="javascript:return false;" title="${hour.hour_title }">${hour.hour_title }</a>
+			</li>
+		</c:forEach>
+	</ul>
+</div>
+
+<ul class="nav nav-pills nav-pills-sm">
+	<li class="dropdown hidden-xs" >
+		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:return false;" id="last_reply2">
+			<span>排序：</span>
+			${sort_name}
+			<span class="caret"></span>
+		</a>
+
+		<ul class="dropdown-menu hidden-xs" id="reply2" role="menu">
+			<li class="active" id="note_time"><a href="javascript:return false;">最新笔记</a></li>
+			<li class="latest_post" id="agree"><a href="javascript:return false;">点赞最多</a></li>
+		</ul>
+	</li>
+</ul>
+
+<br/>
+
+
+<div class="note-list" id="note-list">
+	<c:forEach items="${note }" var="n">
+		<div class="media note-item">
+			<div class="media-left">
+				<a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${n.user_id}"  >
+					<img class="avatar-sm" src="${pageContext.request.contextPath}${n.user.icon }">
+				</a>
+
+			</div>
+			<div class="media-body">
+				<div class="content">
+					<p>${n.note_content }</p>
+				</div>
+				<div class="metas clearfix">
+					<a class="link-dark name" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${n.user_id}">${n.user.username }</a>
+					· <span><fmt:formatDate value="${n.note_time }" type="date" /></span>
+					· <a href="${pageContext.request.contextPath}/course_study/to_study.action?id=${n.course_hour_id}&source_id=${userStudyView.sourceId}&source_type=${userStudyView.sourceType}&learn_id=${userStudyView.learnId}" class="period" target="_blank">${n.course_hour.hour_title }</a>
+
+				<span class="metas-sns">
+					<span class="icon-favour">
+						<a href="javascript:return false;" class="js-like ">
+							<i class="es-icon es-icon-thumbup img02" name="${n.id }"></i>
+							<span class="js-like-num" id="agree_number${n.id }">${n.agree }</span>
+						</a>
+					</span>
+				</span>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+</div>
+
+
+<c:if test="${totalNote>10}">
+
+	<div class="empty" id="pointer_more2" >加载更多</div>
+	<input type="hidden" id="pointer_number2" value="2">
+</c:if>
+
+
+<script type="text/javascript">
+	$(function() {
+
+		/***是否点过赞*/
+		$(".img02").each(
+				function() {
+					if(flag){return false;}
+					var _this = $(this);
+					var id = _this.attr("name");
+					$.ajax({
+						url : '${pageContext.request.contextPath}/course_note/is_agree.action',
+						data : {id : id},
+						dataType : 'json',
+						success : function(response) {
+							if (!response.status) {
+								_this.addClass("blue_curr");
+							}
+						}
+					});
+				});
+		/***笔记点赞*/
+		$(document).on("click",".img02",function(){
+			if(flag){
+				check_login();
+				return false;
+			}
+			var id = $(this).attr("name");
+			var _this = $(this);
+			if (!_this.is(".blue_curr")) {
+				//+1
+				$.ajax({
+					url : '${pageContext.request.contextPath}/course_note/agree.action',
+					data : {id : id},
+					dataType : 'json',
+					success : function(response) {
+						_this.addClass("blue_curr");
+						var s = $("#agree_number"+ id).html();
+						$("#agree_number" + id).html(parseInt(s) + 1);
+					}
+				});
+			} else {
+				//-1
+				$.ajax({
+					url : '${pageContext.request.contextPath}/course_note/agree.action',
+					data : {id : id
+					},
+					dataType : 'json',
+					success : function(response) {
+						_this.removeClass("blue_curr");
+						var s = $("#agree_number" + id).html();
+						$("#agree_number" + id).html(parseInt(s) - 1);
+					}
+				});
+			}
+		});
+		//排序btn-group dropdown
+		$(".dropdown ul li").click(function() {
+			$(this).addClass("active").find("a").addClass("active");
+			var parent = $(this).parent().attr("id");
+			var str = "";
+			if (parent == "reply2") {
+				$("#last_reply2").text($(this).find("a").text());
+				var id = $(this).attr("id");
+				str = "&tab=5&sort=" + id;
+			}
+			if (parent == "reply3") {
+				$("#last_reply3").text($(this).find("a").text());
+				var id = $(this).attr("id");
+				str = "&tab=5&course_hour_id=" + id.replace(/hour_item/, "");
+			}
+			$(this).parent().hide();
+			var is_direct='${userStudyView.is_direct}';
+			var path = location.pathname;
+			path = path + "?page=${page}&learnId=${courseView.id }&sourceType=0&elite=${elite}" + str+"&is_direct="+is_direct;
+
+			location.replace(path);
+
+		});
+		$(".btn-group ul li").click(function() {
+			$(this).addClass("active").find("a").addClass("active");
+			var parent = $(this).parent().attr("id");
+			var str = "";
+			if (parent == "reply2") {
+				$("#last_reply2").text($(this).find("a").text());
+				var id = $(this).attr("id");
+				str = "&tab=5&sort=" + id;
+			}
+			if (parent == "reply3") {
+				$("#last_reply3").text($(this).find("a").text());
+				var id = $(this).attr("id");
+				str = "&tab=5&course_hour_id=" + id.replace(/hour_item/, "");
+			}
+			$(this).parent().hide();
+			var is_direct='${userStudyView.is_direct}';
+			var path = location.pathname;
+			path = path + "?page=${page}&learnId=${courseView.id }&sourceType=0&elite=${elite}" + str+"&is_direct="+is_direct;
+
+			location.replace(path);
+
+		});
+
+
+		//加载更多
+		$("#pointer_number2").val(2);
+		$("#pointer_more2").click(function(){
+			if(flag){
+				check_login();
+				return false;
+			}
+			var _this=$(this);
+			var number=$("#pointer_number2").val();
+			$.ajax({
+				type:'get',
+				url : "${pageContext.request.contextPath}/user_study/ajax_note.action?id=${courseView.id}&sort=${sort}&course_hour_id=${course_hour_id}&page="+number,
+				dataType:'json',
+				success : function(response) {
+					if(!response.flag){
+						_this.remove();
+					}
+					for(var i=0;i<response.note.length;i++){
+						var div_media=$('<div class="media note-item">');
+						var div_media_left=$('<div class="media-left">');
+						var a_js_user=$('<a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id='+response.note[i].user_id+'">');
+						var img_avatar=$('<img class="avatar-sm" src="${pageContext.request.contextPath}'+response.note[i].user.icon+'">');
+						a_js_user.append(img_avatar);
+						div_media_left.append(a_js_user);
+						var div_media_body=$('<div class="media-body">');
+						var div_content=$('<div class="content">');
+						var p_content=$('<p>'+response.note[i].note_content+'</p>');
+						div_content.append(p_content);
+						var div_metas=$('<div class="metas clearfix">');
+						var a_link_dark=$('<a class="link-dark name" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id='+response.note[i].user_id+'">'+response.note[i].user.username+'</a>');
+						var span_time=$("<span>");
+						var myDate=new Date();
+						myDate.setTime(response.note[i].note_time.time);
+						var year=myDate.getFullYear();
+						var month=myDate.getMonth()+1;
+						var date=myDate.getDate();
+						var time=year+"-"+month+"-"+date;
+						span_time.html(time);
+						var a_period=$('<a href="${pageContext.request.contextPath}/course_study/to_study.action?source_id=${userStudyView.sourceId}&source_type=${userStudyView.sourceType}&learn_id=${userStudyView.learnId}&id='+response.note[i].course_hour_id+ '" class="period" target="_blank">'+response.note[i].course_hour.hour_title+ '</a>');
+						var span_metas=$('<span class="metas-sns">');
+						var span_icon=$('<span class="icon-favour">');
+						var a_js_like=$('<a href="javascript:return false;" class="js-like ">');
+						var i_es=$('<i class="es-icon es-icon-thumbup img02" name="'+response.note[i].id+'">');
+						var span_js_like=$('<span class="js-like-num" id="agree_number'+response.note[i].id+'">'+response.note[i].agree+'</span>');
+						a_js_like.append(i_es);
+						a_js_like.append(span_js_like);
+						span_icon.append(a_js_like);
+						span_metas.append(span_icon);
+						div_metas.append(a_link_dark);
+						div_metas.append("&nbsp;");
+						div_metas.append(span_time);
+						div_metas.append("&nbsp;");
+						div_metas.append(a_period);
+						div_metas.append(span_metas);
+						div_media_body.append(div_content);
+						div_media_body.append(div_metas);
+						div_media.append(div_media_left);
+						div_media.append(div_media_body);
+						$(".note-list").append(div_media);
+						$("#pointer_number2").val(parseInt(number)+1);
+
+					}
+
+				},
+				error :function(response) {
+
+				}
+			});
+		});
+
+	});
+
+
+</script>

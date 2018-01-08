@@ -1,0 +1,85 @@
+* {margin:0;padding:0;text-decoration:none;color:#6d6d6d;}
+body {background-color:#eaeaea;font-family:"Microsoft YaHei";}
+li{list-style:none;}
+input,button,select,textarea td,table{outline:none;box-shadow: none;padding-left: 10px;border-radius: 5px;resize: none;}
+img,button,td{outline:none;box-shadow: none;border: none;}
+button{cursor: pointer;}
+table{border-spacing:0; }
+textarea{resize: none;padding-left: 10px;}
+#cke_1_resizer,#cke_1_path{display: none;}
+
+
+/*management_background_course_main*/
+
+.management_background_course_main{width: 1000px;margin: 30px auto;}
+
+
+
+/*management_background_course_main_left*/
+
+.management_background_course_main_left{position: relative;float: left;}
+.management_background_course_main_left ul{border: 1px solid #ddd;width: 165px;height: 368px;border-radius: 5px;}
+.management_background_course_main_left ul li{width:150px;height: 40px;line-height: 40px;padding-left: 15px;border-bottom: 1px solid #ddd;}
+.management_background_course_main_left ul li.curr{background-color: #3ebbce;}
+.management_background_course_main_left ul li.curr_01{background-color: #ffffff;}
+.management_background_course_main_left ul li a{font-size: 14px;}
+.management_background_course_main_left ul li a.curr{color: #ffffff;}
+
+
+
+/*management_background_course_main_right*/
+.management_background_course_main_right{position: relative;float: left;width:798px;margin-left: 35px;padding-bottom: 10px; }
+.management_background_course_main_right h1{font-size: 18px;line-height: 32px;font-weight: normal;border-bottom: 1px solid #ccc;padding-bottom: 10px;}
+
+.create_course{float: right;display: inline;position: relative;margin-top: -40px;}
+.create_course a{padding: 5px 10px;font-size: 12px;line-height: 1.5;border-radius: 5px;color: #fff;background-color:#3ebbce; margin-right: 5px;}
+
+.course_management{}
+.course_management ul{margin-bottom: 10px;display:block;}
+.course_management p{position: absolute;border-bottom: 1px solid #ccc;margin-top: 40px;width:535px;margin-left: 270px;}
+.course_management ul li{float: left;width: 90px;height: 40px;text-align: center;line-height: 40px;color: #6d6d6d;}
+.course_management ul li.active{border:1px solid #ccc;border-bottom: none;}
+.course_management ul li.active_01{border-bottom:1px solid #ccc;}
+.course_management ul li a{color: #3ebbce;}
+.course_management ul li a.active{color: #6d6d6d;}
+
+.course_type{position: relative;clear: both;margin-top: 70px;}
+.course_type a{width: 70px;height:30px;font-size: 12px;line-height: 30px;display: block;float: left;text-align: center;}
+.course_type a.curr{background-color: #3ebbce;color: #fff;border-radius: 5px;}
+
+.course_classify{width: 800px;height:54px;background-color: #fff;margin-top: 120px;}
+.course_classify select,.course_classify input{height:34px;margin: 10px;padding-left: 10px;border-radius: 5px;border: 1px solid #ccc;}
+.course_classify select{width: 94px;}
+.course_classify input{width:186px;}
+.course_classify button{width:54px;height: 34px;font-size: 12px;line-height: 34px;background-color: #3ebbce;color: #fff;border-radius: 5px;}
+
+.course_management_table {}
+.course_management_table table tr th,.course_management_table table tr td{text-align: center;}
+.course_management_table table tr th{font-size: 14px;font-weight: bold;line-height: 37px;padding-top: 20px;border-bottom: 2px solid #ddd;padding-bottom: 10px;}
+.course_management_table table tr td{font-size: 14px;}
+.course_management_table table tr{height: 57px;}
+.name{font-weight: bold;color: #3ebbce;padding-top: 20px;}
+.name span{font-size: 12px;font-weight: normal;}
+.serialized_state{color: #3ebbce;}
+.income{color: #f40;}
+.triangle_down{border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 10px solid #a5a5a5;position: absolute;margin-top: 5px;margin-left: 5px;}
+.operation{}
+.ul_tabs{position: absolute;width: 200px;height: 206px;border: 1px solid #ccc;border-radius: 5px;margin-left: -125px;z-index: 999;background-color: #fff;}
+.ul_tabs li{width: 198px;height: 26px;line-height: 26px;padding: 3px 20px;color: #333;text-align: left;}
+.author{color: #3ebbce;margin-top: 20px;padding-top: 20px;}
+.create_time{font-size: 12px;text-align: left;z-index: -1;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*footer*/

@@ -1,0 +1,571 @@
+package cn.bnsr.edu_yun.frontstage.tiku.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.tiku.po.TestPaper;
+import cn.bnsr.edu_yun.frontstage.tiku.service.QuestionService;
+import cn.bnsr.edu_yun.frontstage.tiku.service.TestPaperService;
+import cn.bnsr.edu_yun.frontstage.tiku.service.TestQuestionsService;
+import cn.bnsr.edu_yun.frontstage.tiku.view.QuestionView;
+import cn.bnsr.edu_yun.frontstage.tiku.view.TestPaperQuestionView;
+import cn.bnsr.edu_yun.frontstage.tiku.view.TestPaperView;
+import cn.bnsr.edu_yun.frontstage.train.po.CourseHour;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseInfoService;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 试卷管理
+ * 
+ * @author li
+ * @date 2017年1月10日
+ */
+@Controller
+@RequestMapping("/testPaper")
+public class TestPaperController {
+	private final Logger log = LoggerFactory.getLogger(TestPaperController.class);
+
+	@Autowired
+	private QuestionService questionService;
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private CourseInfoService courseInfoService;
+	@Autowired
+	private TestPaperService testPaperService;
+	@Autowired
+	private TestQuestionsService testQuestionsService;
+
+	// 跳转试卷管理
+	@RequestMapping("to_testPaper")
+	public ModelAndView toTestPaper(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			if (testPaperView.getPage() == 0) {
+				testPaperView.setStartLine(0);
+			} else {
+				testPaperView.setStartLine(testPaperView.getPage() * testPaperView.getRows());
+			}
+			testPaperView.setRows(10);
+			int total = testPaperService.queryTestPaperCount(testPaperView);// 总数
+			testPaperView.setTotal(total);
+			// 分页总页数
+			testPaperView.setTotalPage(NumUtil.totalPage(total, 10));
+			List<TestPaperView> testPaperViews = testPaperService.queryTestPaper(testPaperView);
+			modelAndView.addObject("testPaperViews", testPaperViews);
+			modelAndView.addObject("testPaperView", testPaperView);
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper");
+			modelAndView.addObject("head_title", "试卷管理");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	// 跳转试卷预览
+	@RequestMapping("testPaper_look")
+	public ModelAndView testPaperLook(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		int tab=1;
+		// 展示题目,0-5代表五种题目类型，6代表子题
+		for (int type = 0; type < 7; type++) {
+			TestPaperQuestionView testPaperQuestionView = new TestPaperQuestionView();
+			testPaperQuestionView.setTestPaper_id(testPaperView.getId());
+			testPaperQuestionView.setType(type);
+			//List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryTestPaperQuestion(testPaperQuestionView);
+			List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryTestPaperQuestionOnDoTest(testPaperQuestionView);
+			modelAndView.addObject("testPaperQuestionViews" + type, testPaperQuestionViews);
+			double total_score = 0;
+			for (TestPaperQuestionView t : testPaperQuestionViews) {
+				//total_score += t.getQuestions_score();
+				if(t.getQuestion_status()==null||t.getQuestion_status()!=2){
+					total_score += t.getQuestions_score();
+				}else{
+					continue;
+				}
+			}
+			modelAndView.addObject("total_score" + type, total_score);
+		}
+		TestPaper testPaper = testPaperService.selectById(testPaperView.getId());
+		modelAndView.addObject("testPaper", testPaper);
+		modelAndView.addObject("tab", tab);
+		modelAndView.setViewName("frontstage/tiku/exam/do_test");
+		modelAndView.addObject("head_title", "试卷预览");
+		return modelAndView;
+	}
+
+	// 跳转添加试卷
+	@RequestMapping("to_testPaper_add")
+	public ModelAndView toTestPaperAdd(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			// 查询该课程所有章节list
+			List<CourseHour> chapterList = courseHourService.queryHourList(courseid, true);
+			modelAndView.addObject("chapterList", chapterList);
+			QuestionView questionView = new QuestionView();
+			questionView.setCourseId(courseid);
+			questionView = questionService.selectEveryQuestionTypeCount(questionView);
+			modelAndView.addObject("questionView", questionView);
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper_add");
+			modelAndView.addObject("head_title", "创建试卷");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	// 跳转编辑试卷
+	@RequestMapping("to_testPaper_edit")
+	public ModelAndView toTestPaperEdit(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			// 查询试卷内容
+			TestPaper testPaper = testPaperService.selectById(testPaperView.getId());
+			modelAndView.addObject("testPaper", testPaper);
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper_edit");
+			modelAndView.addObject("head_title", "编辑试卷信息");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	// 跳转重选题目
+	@RequestMapping("to_testPaper_return")
+	public ModelAndView toTestPaperReturn(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			// 查询该课程所有章节list
+			List<CourseHour> chapterList = courseHourService.queryHourList(courseid, true);
+			modelAndView.addObject("chapterList", chapterList);
+			// 查询试卷内容
+			TestPaper testPaper = testPaperService.selectById(testPaperView.getId());
+			modelAndView.addObject("testPaper", testPaper);
+			QuestionView questionView = new QuestionView();
+			questionView.setCourseId(courseid);
+			questionView = questionService.selectEveryQuestionTypeCount(questionView);
+			modelAndView.addObject("questionView", questionView);
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper_return");
+			modelAndView.addObject("head_title", "重新生成题目");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	// 添加试卷,初步选题,机选
+	@RequestMapping("testPaper_add")
+	public ModelAndView testPaperAdd(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			QuestionView questionView = new QuestionView();
+			User user = (User) request.getSession().getAttribute("currentUser");
+			questionView.setUserId(user.getId());
+			questionView.setCourseId(courseid);
+			// 保存试卷，选择题目
+			testPaperService.choiceQuestion(questionView, testPaperView);
+			// 展示题目,0-4代表五种题目类型，6代表子题
+			for (int type = 0; type < 7; type++) {
+				TestPaperQuestionView testPaperQuestionView = new TestPaperQuestionView();
+				testPaperQuestionView.setTestPaper_id(testPaperView.getId());
+				testPaperQuestionView.setType(type);
+				//List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryTestPaperQuestion(testPaperQuestionView);
+				List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryTestPaperQuestionOnDoTest(testPaperQuestionView);
+				modelAndView.addObject("testPaperQuestionViews" + type, testPaperQuestionViews);
+				double total_score = 0;
+				for (TestPaperQuestionView t : testPaperQuestionViews) {
+					//total_score += t.getQuestions_score();
+					if(t.getQuestion_status()==null||t.getQuestion_status()!=2){
+						total_score += t.getQuestions_score();
+					}else{
+						continue;
+					}
+				}
+				modelAndView.addObject("total_score" + type, total_score);
+			}
+			modelAndView.addObject("testPaperView", testPaperView);
+			modelAndView.addObject("head_title", "管理题目");
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper_question");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	// 试卷编辑
+	@RequestMapping("testPaper_edit")
+	public ModelAndView testPaperEdit(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			TestPaper testPaper = new TestPaper();
+			testPaper.setId(testPaperView.getId());
+			testPaper.setName(testPaperView.getName());
+			testPaper.setRemarks(testPaperView.getRemarks());
+			testPaper.setTimeless(testPaperView.getTimeless());
+			testPaperService.updateTestPaper(testPaper);
+			List<TestPaperView> testPaperViews = testPaperService.queryTestPaper(testPaperView);
+			modelAndView.addObject("testPaperViews", testPaperViews);
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper");
+			modelAndView.addObject("head_title", "试卷管理");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	// 题目重生成
+	@RequestMapping("testPaper_return")
+	public ModelAndView testPaperReturn(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			// 删掉老题目
+			TestPaperQuestionView testPaperQuestionView = new TestPaperQuestionView();
+			testPaperQuestionView.setTestPaper_id(testPaperView.getId());
+			//List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryAllTestPaperQuestion(testPaperQuestionView);
+			List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryAllTestPaperQuestionOnDoHomework(testPaperQuestionView);
+			for (TestPaperQuestionView t : testPaperQuestionViews) {
+				testQuestionsService.delete(t.getId());
+			}
+			QuestionView questionView = new QuestionView();
+			User user = (User) request.getSession().getAttribute("currentUser");
+			questionView.setUserId(user.getId());
+			questionView.setCourseId(courseid);
+			// 保存试卷，选择题目
+			testPaperService.choiceQuestion(questionView, testPaperView);
+			//试卷管理分页
+			if (testPaperView.getPage() == 0) {
+				testPaperView.setStartLine(0);
+			} else {
+				testPaperView.setStartLine(testPaperView.getPage() * testPaperView.getRows());
+			}
+			testPaperView.setRows(10);
+			int total = testPaperService.queryTestPaperCount(testPaperView);// 总数
+			testPaperView.setTotal(total);
+			// 分页总页数
+			testPaperView.setTotalPage(NumUtil.totalPage(total, 10));
+			
+			List<TestPaperView> testPaperViews = testPaperService.queryTestPaper(testPaperView);
+			modelAndView.addObject("testPaperViews", testPaperViews);
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper");
+			modelAndView.addObject("head_title", "试卷管理");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	// 试卷题目管理，保存
+	@RequestMapping("testPaper_save")
+	public ModelAndView testPaperSave(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			// 删掉老题目
+			TestPaperQuestionView testPaperQuestionView = new TestPaperQuestionView();
+			testPaperQuestionView.setTestPaper_id(testPaperView.getId());
+			//List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryAllTestPaperQuestion(testPaperQuestionView);
+			List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryAllTestPaperQuestionOnDoHomework(testPaperQuestionView);
+			for (TestPaperQuestionView t : testPaperQuestionViews) {
+				testQuestionsService.delete(t.getId());
+			}
+			QuestionView questionView = new QuestionView();
+			User user = (User) request.getSession().getAttribute("currentUser");
+			questionView.setUserId(user.getId());
+			questionView.setCourseId(courseid);
+			// 保存试卷
+			testPaperService.testPaperSave(testPaperView);
+
+			List<TestPaperView> testPaperViews = testPaperService.queryTestPaper(testPaperView);
+			modelAndView.addObject("testPaperViews", testPaperViews);
+			modelAndView.setViewName("redirect:/testPaper/to_testPaper.action?courseId=" +courseid + "&flag=" + flag+ "&sign="+sign);
+			} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	// 试卷题目管理
+	@RequestMapping("testPaper_question")
+	public ModelAndView testPaperQuestion(HttpServletRequest request, TestPaperView testPaperView) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			String sign = testPaperView.getSign();
+			String flag = testPaperView.getFlag();
+			Long courseid = testPaperView.getCourseId();
+			CourseView courseView = null;
+			if (courseid != null) {
+				courseView = courseInfoService.queryCourseDetail(courseid);
+			}
+			if (courseView != null) {
+				courseView.setSign(sign);
+				courseView.setFlag(flag);
+				modelAndView.addObject("courseView", courseView);
+			}
+			// 展示题目,0-4代表五种题目类型，5代表子题 改
+			for (int type = 0; type < 7; type++) {
+				TestPaperQuestionView testPaperQuestionView = new TestPaperQuestionView();
+				testPaperQuestionView.setTestPaper_id(testPaperView.getId());
+				testPaperQuestionView.setType(type);
+				//List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryTestPaperQuestion(testPaperQuestionView);
+				List<TestPaperQuestionView> testPaperQuestionViews = testQuestionsService.queryTestPaperQuestionOnDoTest(testPaperQuestionView);
+				modelAndView.addObject("testPaperQuestionViews" + type, testPaperQuestionViews);
+				double total_score = 0;
+				for (TestPaperQuestionView t : testPaperQuestionViews) {
+					//total_score += t.getQuestions_score();
+					if(t.getQuestion_status()==null||t.getQuestion_status()!=2){
+						total_score += t.getQuestions_score();
+					}else{
+						continue;
+					}
+				}
+				modelAndView.addObject("total_score" + type, total_score);
+			}
+			TestPaper testPaper = testPaperService.selectById(testPaperView.getId());
+			testPaperView.setName(testPaper.getName());
+			testPaperView.setTotal_score(testPaper.getTotal_score());
+			modelAndView.addObject("testPaperView", testPaperView);
+			modelAndView.addObject("head_title", "管理题目");
+			modelAndView.setViewName("frontstage/tiku/testPaper/testPaper_question");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("跳转试卷管理失败", ExceptionUtil.getExceptionMessage(e));
+		}
+
+		return modelAndView;
+	}
+
+	@RequestMapping("/ajax_question_count")
+	public void ajaxQuestionCount(HttpServletResponse response, HttpServletRequest request, QuestionView questionView) throws Exception {
+
+		questionView = questionService.selectEveryQuestionTypeCount(questionView);
+		JSONObject result = new JSONObject();
+		result.put("questionView", questionView);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/ajax_change_status")
+	public void ajaxChangeStatus(HttpServletResponse response, HttpServletRequest request, TestPaper testPaper) throws Exception {
+		// status=1:发布 status=2 删除: status=3 关闭:
+		testPaperService.updateTestPaper(testPaper);
+		JSONObject result = new JSONObject();
+		result.put("success", true);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/ajax_del")
+	public void ajaxDel(HttpServletResponse response, HttpServletRequest request, String ids) throws Exception {
+		String[] idsList = ids.split(",");
+		for (String id : idsList) {
+			if (id != "") {
+				TestPaper testPaper = new TestPaper();
+				testPaper.setId(Long.parseLong(id));
+				Integer status = 2;
+				testPaper.setStatus(status);
+				testPaperService.updateTestPaper(testPaper);
+			}
+		}
+		JSONObject result = new JSONObject();
+		result.put("success", true);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/ajax_question")
+	public void ajaxQuestion(HttpServletResponse response, HttpServletRequest request, QuestionView questionView) throws Exception {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		questionView.setUserId(user.getId());
+		questionView.setGenre(0 + "");
+		List<QuestionView> questionViews = questionService.queryQuestion(questionView);
+		List<CourseHour> chapterList = courseHourService.queryHourList(questionView.getCourseId(), true);
+		JSONObject result = new JSONObject();
+		result.put("questionViews", questionViews);
+		result.put("chapterList", chapterList);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/ajax_add_question")
+	public void ajaxAddQuestion(HttpServletResponse response, HttpServletRequest request, QuestionView questionView) throws Exception {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		questionView.setUserId(user.getId());
+		questionView.setGenre(0 + "");
+		List<QuestionView> questionViews = questionService.queryQuestion(questionView);
+		List<CourseHour> chapterList = courseHourService.queryHourList(questionView.getCourseId(), true);
+		JSONObject result = new JSONObject();
+		result.put("questionViews", questionViews);
+		result.put("chapterList", chapterList);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/ajax_add_son_question")
+	public void ajaxAddSonQuestion(HttpServletResponse response, HttpServletRequest request, QuestionView questionView, int seq) throws Exception {
+		// user pid courseid
+		User user = (User) request.getSession().getAttribute("currentUser");
+		questionView.setUserId(user.getId());
+		List<QuestionView> sons = questionService.querySonQuestion(questionView);
+		StringBuffer sb = new StringBuffer();
+		for (QuestionView son : sons) {
+			String type = "";
+			if (son.getType() == 0) {
+				type = "选择题";
+			}
+			if (son.getType() == 1) {
+				type = "填空题";
+			}
+			if (son.getType() == 2) {
+				type = "判断题";
+			}
+			if (son.getType() == 3) {
+				type = "问答题";
+			}
+			String difficulty = "";
+			if (son.getDifficulty() == 0) {
+				difficulty = "简单";
+			}
+			if (son.getDifficulty() == 1) {
+				difficulty = "一般";
+			}
+			if (son.getDifficulty() == 2) {
+				difficulty = "困难";
+			}
+			sb.append("<tr class=\" is-sub-question\" data-question=\"" + son.getId() + "\">");
+			sb.append("<td><span class=\"glyphicon glyphicon-resize-vertical sort-handle\"></span></td><td></td>");
+			sb.append("<td class=\"seq\">" + seq + "</td>");
+			sb.append("<td>" + son.getStem() + "<div class=\"text-muted text-sm\">从属于 " + questionView.getHour_title() + "</div></td>");
+			sb.append("<td>" + type + "</td>");
+			sb.append("<td>" + difficulty + "</td>");
+			sb.append("<td><input name=\"scores\" class=\"notMoveHandle form-control input-sm\" type=\"text\" value=\"" + son.getScore() + "\">");
+			sb.append("<input name=\"list\" value=\"" + son.getId() + "\" type=\"hidden\">");
+			sb.append("<input type=\"hidden\" value=\"" + seq + "\" name=\"seq\"></td>");
+			sb.append("<td><div class=\"btn-group\"> </div></td></tr>");
+			seq++;
+		}
+		JSONObject result = new JSONObject();
+		result.put("seq", seq);
+		result.put("html", new String(sb));
+		ResponseUtil.write(response, result);
+	}
+}

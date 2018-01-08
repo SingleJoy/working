@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/qiuzi_ico.ico" media="screen" />
+    <link href="../css/course-personal.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript">
+
+        $(function(){
+            $(".course_personal_tabs ul li").click(function(){
+               var index=$(this).index();
+                $(".course_tabs").hide().eq(index).show();
+                $(".course_personal_tabs ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+                $(this).addClass("curr").find("a").addClass("curr");
+            }).mouseover(function(){
+                if($(this).hasClass("curr")){
+                    return false;
+                }else{
+                    $(this).addClass("curr_01").find("a").addClass("curr_01");
+                }
+
+            }).mouseout(function(){
+                if($(this).hasClass("curr")){
+                    return false;
+                }else{
+                    $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+                }
+            })
+        });
+            //        关注/粉丝
+        $(function(){
+            $(".attention_fans_tabs ul li").click(function(){
+         //         var index=$(this).index();
+          //         $(".course_tabs").hide().eq(index).show();
+                $(".attention_fans_tabs ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+                $(this).addClass("curr").find("a").addClass("curr");
+            }).mouseover(function(){
+                if($(this).hasClass("curr")){
+                    return false;
+                }else{
+                    $(this).addClass("curr_01").find("a").addClass("curr_01");
+                }
+            }).mouseout(function(){
+                if($(this).hasClass("curr")){
+                    return false;
+                }else{
+                    $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+                }
+            })
+        });
+
+
+    </script>
+
+</head>
+<body>
+
+
+<div class="course_personal_main">
+
+    <div class="course_personal_tabs">
+        <ul>
+            <li class="curr"><a href="javascript:return false;" class="curr">在学课程</a></li>
+            <li><a href="javascript:return false;">收藏课程</a></li>
+            <li><a href="javascript:return false;">加入的小组</a></li>
+            <li><a href="javascript:return false;">关注/粉丝</a></li>
+        </ul>
+
+    </div>
+
+    <!--在学课程-->
+   <div class="studying_course course_tabs" >
+
+      <div class="studying_course_page">
+          <a href="javascript:return false;"><img src="../images/course.png"></a>
+          <a href="javascript:return false;"><p>测试</p></a>
+          <label>色调</label>
+          <span>11.00元</span>
+          <div>
+              <a href="javascript:return false;"><img src="../images/dog.jpg">
+                 <p>admin</p>
+                 <span>丰东股份</span>
+              </a>
+          </div>
+          <p>
+              <img src="../images/score_star_icon.png">
+              <img src="../images/score_star_icon.png">
+              <img src="../images/score_star_icon.png">
+              <img src="../images/score_star_icon.png">
+              <span>|</span><label>4学员</label>
+          </p>
+      </div>
+
+       <div class="studying_course_page">
+           <a href="javascript:return false;"><img src="../images/course.png"></a>
+           <a href="javascript:return false;"><p>测试</p></a>
+           <label>色调</label>
+           <span>11.00元</span>
+           <div>
+               <a href="javascript:return false;"><img src="../images/dog.jpg">
+                   <p>admin</p>
+                   <span>丰东股份</span>
+               </a>
+           </div>
+           <p>
+               <img src="../images/score_star_icon.png">
+               <img src="../images/score_star_icon.png">
+               <img src="../images/score_star_icon.png">
+               <img src="../images/score_star_icon.png">
+               <span>|</span><label>4学员</label>
+           </p>
+       </div>
+
+   </div>
+
+
+    <!--收藏课程-->
+    <div class="collect_course course_tabs" style="margin-top: 65px ;display: none;">
+
+        <div class="studying_course_page">
+            <a href="javascript:return false;"><img src="../images/course.png"></a>
+            <a href="javascript:return false;"><p>测试</p></a>
+            <label>色调</label>
+            <span>11.00元</span>
+            <div>
+                <a href="javascript:return false;"><img src="../images/dog.jpg">
+                    <p>admin</p>
+                    <span>丰东股份</span>
+                </a>
+            </div>
+            <p>
+                <img src="../images/score_star_icon.png">
+                <img src="../images/score_star_icon.png">
+                <img src="../images/score_star_icon.png">
+                <img src="../images/score_star_icon.png">
+                <span>|</span><label>4学员</label>
+            </p>
+        </div>
+
+    </div>
+
+    <!--加入的小组-->
+    <div class="joining_club course_tabs" style="display: none;">
+
+
+    </div>
+
+    <!--关注/粉丝-->
+    <div class="attention_fans course_tabs" style="display: none;">
+
+        <div class="attention_fans_tabs">
+            <ul>
+                <li class="curr"><a href="javascript:return false;" class="curr">关注</a></li>
+                <li><a href="javascript:return false;">粉丝</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+</body>
+
+</html>

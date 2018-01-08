@@ -1,0 +1,984 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>培训主页</title>
+    <meta name="keywords" content="EduSoho安装，EduSoho系统使用，EduSoho功能说明，EduSoho网络课堂，在线教育，在线教学，开源教学软件，网校系统，培训系统，培训网校，培训平台，培训解决方案，培训创业，培训程序，培训建站系统，培训软件，教育系统，教育平台，教育解决方案，教育服务，教育创业，教育程序，教育建站系统，教育软件，教学系统，教学网校，教学平台，教学解决方案，教学建站系统，教学软件，录播系统，录播网校，录播平台，录播解决方案，录播建站系统，点播系统，点播网校，点播平台，点播解决方案，点播课堂，点播程序，点播建站系统，直播系统，直播网校，直播平台，直播解决方案，直播课堂，直播服务，直播创业，直播程序，直播建站系统，直播软件，题库系统，题库平台，题库解决方案，题库服务，题库程序，题库建站系统，题库软件，网校系统，网校平台，网校解决方案，网校课堂，网校程序，网校建站系统，网校软件，课堂系统，课堂平台，课堂解决方案，课堂程序，课堂建站系统，课堂软件，题库系统，题库解决方案，题库程序，题库建站系统，题库软件">
+    <meta name="description" content="气球鱼学院是EduSoho网络课堂官方开办的在线教育培训网校，是在线教育从业者学习交流平台以及网校系统开发者社区。气球鱼学院的主要课程有EduSoho安装教程、使用教程、开发课程以及网校运营课程，帮助网校用户由浅入深的懂得EduSoho网校系统以及在线教育。">
+    <meta content="Sqx6qipk9NH8dJTUxLAkpVGuO1y2RgO4S2i6Uxuqq-4" name="csrf-token">
+    <meta content="1" name="is-login">
+    <meta content="0" name="is-open">
+    <meta property="qc:admins" content="2420731625611115156375">
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.12" rel="stylesheet">
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.12">
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.12" rel="stylesheet">
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.12" rel="stylesheet">
+
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(function(){
+            $(".js-search").focus(function(){
+                $(this).css("width","150px");
+            }).blur(function(){
+                $(this).css("width","100px");
+            });
+        });
+
+        $(function(){
+
+            $(".hover_show").mouseover(function(){
+                $(this).siblings("ul").show();
+            }).mouseout(function(){
+                $(this).siblings("ul").hide();
+            });
+            $(".dropdown-menu").mouseover(function(){
+                $(this).show();
+            }).mouseout(function(){
+                $(this).hide();
+            })
+
+        });
+
+        //轮播图
+        $(document).ready(function() {
+            $('.carousel').carousel({
+                interval: 2000
+            })
+        });
+
+        //tab选项卡添加下划线样式
+        $(function(){
+            $(".nav-btn-tab>ul>li.active").css("border-bottom","2px solid #46c37b");
+
+        });
+
+        //全部课程切换
+        $(function(){
+            $(".course_content>ul>li").click(function(){
+                $(".course_content>ul>li").css("border-bottom","none").removeClass("active");
+                  $(this).css("border-bottom","2px solid #46c37b").addClass("active");
+                 var index=$(this).index();
+                 $(".course_page").hide().eq(index).show();
+            });
+        });
+
+    </script>
+    <style>
+
+        .train_main_top_left>ul>li>a{font-size: 14px;color: #212121;}
+        .course-list>ul>li>a{font-size: 16px;color: #212121;opacity: 0.6;}
+        .head_list>li{float: left;}
+        .head_list>li>a{font-size: 14px;color: #fff;padding: 20px 30px;}
+         .carousel-inner>div{width: 100%;}
+         .carousel-inner>div>img{max-width: 1160px;margin: 0 auto;}
+        /*.bannerbox{background: url("http://www.chipscreen.com/UpLoadFiles/20130808/2013080816050198.jpg") repeat-x;}*/
+    </style>
+</head>
+<body >
+
+<div class="es-wrap " style="background-color: #fff;">
+
+    <!--头 -->
+    <div class="train_main_top container" >
+
+        <div class="train_main_top_left pull-left" >
+
+            <ul class="nav navbar-nav">
+                <li class=""><a href="javascript:void(0);">培训</a></li>
+                <li class=""><a href="javascript:void(0);">教研</a></li>
+                <li class=""><a href="javascript:void(0);">资源</a></li>
+                <li class=""><a href="javascript:void(0);">题库</a></li>
+                <li class=""><a href="javascript:void(0);">作业</a></li>
+                <li class=""><a href="javascript:void(0);">百科</a></li>
+            </ul>
+
+        </div>
+
+        <div class="container" style="z-index: 9999;">
+            <ul class="nav user-nav">
+                <li class="user-avatar-li nav-hover">
+                    <a href="javascript:;" class="dropdown-toggle hover_show">
+                        <img class="avatar-xs" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                    </a>
+
+                    <ul class="dropdown-menu" >
+                        <li role="presentation" class="dropdown-header">杜塞尔多夫</li>
+                        <li><a href="javascript:void(0);"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                        <li><a href="javascript:void(0);"><i class="es-icon es-icon-setting"></i>个人设置</a></li>
+                        <li class="hidden-lg user-nav-li-my">
+                            <a href="javascript:void(0);" style="color: #000;">
+                                <i class="es-icon es-icon-eventnote"></i>我的学习
+                            </a>
+                        </li>
+
+                        <li><a href="javascript:void(0);" style="color: #000;"><i class="es-icon es-icon-accountwallet"></i>账户中心</a></li>
+
+                        <li class="hidden-lg">
+                            <a href="javascript:void(0);">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>通知
+                            </a>
+                        </li>
+
+                        <li class="hidden-lg">
+                            <a href="javascript:void(0);"><span class="pull-right num"></span>
+                                <i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+
+                        <li class="user-nav-li-logout">
+                            <a href="javascript:void(0);">
+                                <i class="es-icon es-icon-power"></i>退出登录</a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <li class="visible-lg">
+                    <a href="" style="color: #000;">我的学习</a>
+                </li>
+
+                <li class="visible-lg ">
+
+                    <a style="color: #000;" class="hover_show"><i class="es-icon es-icon-mail"></i></a>
+
+                    <ul class="dropdown-menu" role="menu" style="z-index: 9999;">
+                        <li>
+                            <a href="">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>通知
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <!--导航栏-->
+    <header style="background-color:#08c794;">
+
+        <nav class="collapse navbar-collapse container" style="max-width: 1120px;margin: 0 auto;">
+
+            <form class="navbar-form navbar-right hidden-xs hidden-sm pull-right" action="" method="get">
+                <div class="form-group" style="margin-top: 5px;">
+                    <input class="form-control js-search" name="q" placeholder="搜索">
+                    <button class="button es-icon es-icon-search"></button>
+                </div>
+            </form>
+
+            <ul class="nav navbar-nav clearfix hidden-xs pull-right head_list">
+                <li><a href="javascript:void(0);" style="color: #fff;">首页</a></li>
+                <li><a href="javascript:void(0);" style="color: #fff;">课程</a></li>
+                <li><a href="javascript:void(0);" style="color: #fff;">培训</a></li>
+            </ul>
+
+        </nav>
+
+    </header>
+    <!-- js轮播图 -->
+    <section class="cn-posterswiper-container">
+
+        <div id="myCarousel" class="carousel slide">
+
+            <!-- 轮播（Carousel）指标 -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0"  data-interval="3000" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"  data-interval="3000"></li>
+                <li data-target="#myCarousel" data-slide-to="2"  data-interval="3000"></li>
+                <li data-target="#myCarousel" data-slide-to="3"  data-interval="3000"></li>
+            </ol>
+
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active" style="background-color:#0ac895;">
+                    <img class="img-responsive" src="../../images/train_flash_01.png">
+                </div>
+                <div class="item" style="background-color: #2677e3">
+                    <img class="img-responsive" src="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2017/02-24/181735f93673369231.jpg?7.5.2">
+                </div>
+                <div class="item" style="background-color: #00b68c;">
+                    <img class="img-responsive" src="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2017/02-24/181744878e96357371.png?7.5.2">
+                </div>
+                <div class="item" style="background-color: #ff9c00;">
+                    <img class="img-responsive" src="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-14/1537520192d7177992.jpg?6.11.1">
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--全部-->
+    <section class="course-list-section " style="background-color: #f4f7fc;">
+
+        <div class="container" style="">
+
+            <div class="text-line">
+                <h5>
+                    <span style="background: none;">全部课程</span>
+                    <div class="line"></div>
+                </h5>
+
+            </div>
+
+            <div class="nav-btn-tab course_content">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:void(0);">通识课程</a></li>
+                    <li class=""><a href="javascript:void(0);">学科课程</a></li>
+                    <li class=""><a href="javascript:void(0);">学前课程</a></li>
+                    <li class=""><a href="javascript:void(0);">通用课程</a></li>
+                    <li class=""><a href="javascript:void(0);">信息技术课程</a></li>
+                    <li class=""><a href="javascript:void(0);">综合类课程</a></li>
+
+                </ul>
+            </div>
+
+            <!--通识课程-->
+            <div class="course_page" style="clear: both;">
+
+                <div class="media">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object" src="http://img.mukewang.com/52e1d29d000161fe06000338-300-170.jpg" alt="..." style="width: 420px;height: 280px;">
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+                        <h3 class="media-heading">通识课程
+                            <span class="pull-right" style="font-size: 14px;padding-right:40px;" >已参加67人</span>
+                        </h3>
+                        <h4 style="margin-top:20px;">学校:北京市-西城区-北京四中 <span style="margin-left: 50px;">老师:李老师</span></h4>
+                        <div style="margin-top: 20px;width:660px;font-size: 14px;opacity: 0.6;">课程简介:<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人教版语文必修课1阅读鉴赏第一单元主要学习现代诗歌,是个是五四前后出现的,是相对古典诗歌而言的
+                            ,用白话写的,摆脱古典诗词严格规律束缚的,不断接受外来影响并努力融化在名族风格中的一种新诗体,五四之后
+                            对外国诗歌的大量翻译和介绍,出金了中国新诗的发展,这里在第一课选录毛泽东 沁园春 长沙,正好可以与诗歌进行对比.
+                        </div>
+                    </div>
+                    <div class="js-reviews" style="margin-top:30px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/160532c55741322245.JPG">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="/user/30559">张老师</a>
+
+                                    2017-03-07
+                                </div>
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+
+                                </div>
+                                <div class="content">
+                                    <div class="full-content">Good</div>
+                                </div>
+
+                                <div class="thread-subpost-container subcomments clearfix hide">
+                                    <div class="thread-subpost-content">
+
+                                        <ul class="media-list thread-post-list thread-subpost-list">
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--学科课程-->
+            <div class="course_page" style="clear: both;display: none">
+
+                <div class="media">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object" src="http://img.mukewang.com/52e1d29d000161fe06000338-300-170.jpg" alt="..." style="width: 420px;height: 280px;">
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+                        <h3 class="media-heading">学科课程
+                            <span class="pull-right" style="font-size: 14px;padding-right:40px;" >已参加67人</span>
+                        </h3>
+                        <h4 style="margin-top:20px;">学校:北京市-西城区-北京四中 <span style="margin-left: 50px;">老师:李老师</span></h4>
+                        <div style="margin-top: 20px;width:660px;font-size: 14px;opacity: 0.6;">课程简介:<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人教版语文必修课1阅读鉴赏第一单元主要学习现代诗歌,是个是五四前后出现的,是相对古典诗歌而言的
+                            ,用白话写的,摆脱古典诗词严格规律束缚的,不断接受外来影响并努力融化在名族风格中的一种新诗体,五四之后
+                            对外国诗歌的大量翻译和介绍,出金了中国新诗的发展,这里在第一课选录毛泽东 沁园春 长沙,正好可以与诗歌进行对比.
+                        </div>
+                    </div>
+                    <div class="js-reviews" style="margin-top:30px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/160532c55741322245.JPG">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="/user/30559">张老师</a>
+
+                                    2017-03-07
+                                </div>
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+
+                                </div>
+                                <div class="content">
+                                    <div class="full-content">Good</div>
+                                </div>
+
+                                <div class="thread-subpost-container subcomments clearfix hide">
+                                    <div class="thread-subpost-content">
+
+                                        <ul class="media-list thread-post-list thread-subpost-list">
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--学前课程-->
+            <div class="course_page" style="clear: both;display: none;">
+
+                <div class="media">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object" src="http://img.mukewang.com/52e1d29d000161fe06000338-300-170.jpg" alt="..." style="width: 420px;height: 280px;">
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+                        <h3 class="media-heading">学前课程
+                            <span class="pull-right" style="font-size: 14px;padding-right:40px;" >已参加67人</span>
+                        </h3>
+                        <h4 style="margin-top:20px;">学校:北京市-西城区-北京四中 <span style="margin-left: 50px;">老师:李老师</span></h4>
+                        <div style="margin-top: 20px;width:660px;font-size: 14px;opacity: 0.6;">课程简介:<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人教版语文必修课1阅读鉴赏第一单元主要学习现代诗歌,是个是五四前后出现的,是相对古典诗歌而言的
+                            ,用白话写的,摆脱古典诗词严格规律束缚的,不断接受外来影响并努力融化在名族风格中的一种新诗体,五四之后
+                            对外国诗歌的大量翻译和介绍,出金了中国新诗的发展,这里在第一课选录毛泽东 沁园春 长沙,正好可以与诗歌进行对比.
+                        </div>
+                    </div>
+                    <div class="js-reviews" style="margin-top:30px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/160532c55741322245.JPG">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="/user/30559">张老师</a>
+
+                                    2017-03-07
+                                </div>
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+
+                                </div>
+                                <div class="content">
+                                    <div class="full-content">Good</div>
+                                </div>
+
+                                <div class="thread-subpost-container subcomments clearfix hide">
+                                    <div class="thread-subpost-content">
+
+                                        <ul class="media-list thread-post-list thread-subpost-list">
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--通用课程-->
+            <div class="course_page" style="clear: both;display: none;">
+
+                <div class="media">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object" src="http://img.mukewang.com/52e1d29d000161fe06000338-300-170.jpg" alt="..." style="width: 420px;height: 280px;">
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+                        <h3 class="media-heading">通用课程
+                            <span class="pull-right" style="font-size: 14px;padding-right:40px;" >已参加67人</span>
+                        </h3>
+                        <h4 style="margin-top:20px;">学校:北京市-西城区-北京四中 <span style="margin-left: 50px;">老师:李老师</span></h4>
+                        <div style="margin-top: 20px;width:660px;font-size: 14px;opacity: 0.6;">课程简介:<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人教版语文必修课1阅读鉴赏第一单元主要学习现代诗歌,是个是五四前后出现的,是相对古典诗歌而言的
+                            ,用白话写的,摆脱古典诗词严格规律束缚的,不断接受外来影响并努力融化在名族风格中的一种新诗体,五四之后
+                            对外国诗歌的大量翻译和介绍,出金了中国新诗的发展,这里在第一课选录毛泽东 沁园春 长沙,正好可以与诗歌进行对比.
+                        </div>
+                    </div>
+                    <div class="js-reviews" style="margin-top:30px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/160532c55741322245.JPG">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="/user/30559">张老师</a>
+
+                                    2017-03-07
+                                </div>
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+
+                                </div>
+                                <div class="content">
+                                    <div class="full-content">Good</div>
+                                </div>
+
+                                <div class="thread-subpost-container subcomments clearfix hide">
+                                    <div class="thread-subpost-content">
+
+                                        <ul class="media-list thread-post-list thread-subpost-list">
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--信息技术课程-->
+            <div class="course_page" style="clear: both;display: none;">
+
+                <div class="media">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object" src="http://img.mukewang.com/52e1d29d000161fe06000338-300-170.jpg" alt="..." style="width: 420px;height: 280px;">
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+                        <h3 class="media-heading">信息技术课程
+                            <span class="pull-right" style="font-size: 14px;padding-right:40px;" >已参加67人</span>
+                        </h3>
+                        <h4 style="margin-top:20px;">学校:北京市-西城区-北京四中 <span style="margin-left: 50px;">老师:李老师</span></h4>
+                        <div style="margin-top: 20px;width:660px;font-size: 14px;opacity: 0.6;">课程简介:<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人教版语文必修课1阅读鉴赏第一单元主要学习现代诗歌,是个是五四前后出现的,是相对古典诗歌而言的
+                            ,用白话写的,摆脱古典诗词严格规律束缚的,不断接受外来影响并努力融化在名族风格中的一种新诗体,五四之后
+                            对外国诗歌的大量翻译和介绍,出金了中国新诗的发展,这里在第一课选录毛泽东 沁园春 长沙,正好可以与诗歌进行对比.
+                        </div>
+                    </div>
+                    <div class="js-reviews" style="margin-top:30px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/160532c55741322245.JPG">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="/user/30559">张老师</a>
+
+                                    2017-03-07
+                                </div>
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+
+                                </div>
+                                <div class="content">
+                                    <div class="full-content">Good</div>
+                                </div>
+
+                                <div class="thread-subpost-container subcomments clearfix hide">
+                                    <div class="thread-subpost-content">
+
+                                        <ul class="media-list thread-post-list thread-subpost-list">
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <!--综合类课程-->
+            <div class="course_page" style="clear: both;display: none;">
+
+                <div class="media">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object" src="http://img.mukewang.com/52e1d29d000161fe06000338-300-170.jpg" alt="..." style="width: 420px;height: 280px;">
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+                        <h3 class="media-heading">综合类课程
+                            <span class="pull-right" style="font-size: 14px;padding-right:40px;" >已参加67人</span>
+                        </h3>
+                        <h4 style="margin-top:20px;">学校:北京市-西城区-北京四中 <span style="margin-left: 50px;">老师:李老师</span></h4>
+                        <div style="margin-top: 20px;width:660px;font-size: 14px;opacity: 0.6;">课程简介:<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人教版语文必修课1阅读鉴赏第一单元主要学习现代诗歌,是个是五四前后出现的,是相对古典诗歌而言的
+                            ,用白话写的,摆脱古典诗词严格规律束缚的,不断接受外来影响并努力融化在名族风格中的一种新诗体,五四之后
+                            对外国诗歌的大量翻译和介绍,出金了中国新诗的发展,这里在第一课选录毛泽东 沁园春 长沙,正好可以与诗歌进行对比.
+                        </div>
+                    </div>
+                    <div class="js-reviews" style="margin-top:30px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);"   title="">
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/160532c55741322245.JPG">
+                                </a>
+
+                            </div>
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="/user/30559">张老师</a>
+
+                                    2017-03-07
+                                </div>
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+                                    <i class="es-icon es-icon-star"></i>
+
+                                </div>
+                                <div class="content">
+                                    <div class="full-content">Good</div>
+                                </div>
+
+                                <div class="thread-subpost-container subcomments clearfix hide">
+                                    <div class="thread-subpost-content">
+
+                                        <ul class="media-list thread-post-list thread-subpost-list">
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- 热门课程 -->
+    <div class="container">
+        <div class="text-line">
+            <h5><span>热门课程</span>
+                <div class="line"></div>
+            </h5>
+            <div class="subtitle">精选热门课程，满足你的学习兴趣。</div>
+        </div>
+
+        <div class="course-list">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Banner图 -->
+    <div class="bannerbox" style="width: 100%;height: 400px;">
+
+        <div class="banner-picture" style="background-color: #fff;width: 100%;height: 400px;">
+             <img src="http://www.chipscreen.com/UpLoadFiles/20130808/2013080816050198.jpg" style="width: 100%;height: 400px;opacity: 0.2;">
+        </div>
+    </div>
+
+    <!-- 最新培训 -->
+    <div class="container">
+        <div class="text-line">
+            <h5><span>最新培训</span>
+                <div class="line"></div>
+            </h5>
+
+        </div>
+
+        <div class="course-list">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="course-info">
+                            <div class="title">
+                                <a class="link-dark" href="javascript:void(0);" target="_blank">
+                                    如何创建课程？
+                                </a>
+                            </div>
+                            <div class="metas clearfix">
+                                <span class="num"><i class="es-icon es-icon-people"></i>3907</span>
+                                <span class="comment"><i class="es-icon es-icon-textsms"></i>8</span>
+
+                                <span class="course-price-widget">
+
+                                    <span class="price">
+                                        <span class="text-success">免费</span>
+                                    </span>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- 入驻学校 -->
+    <div class="container">
+        <div class="text-line">
+            <h5>
+                <span>入驻学校</span>
+                <div class="line"></div>
+            </h5>
+
+        </div>
+
+        <div class="course-list">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="javascript:void(0);" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/12-11/1541564294ac018349.jpg" class="img-responsive">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+</body>
+
+</html>

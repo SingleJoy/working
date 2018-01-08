@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>视频播放</title>
+
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <style>
+        :-webkit-full-screen {
+            /* properties */
+        }
+
+        :-moz-full-screen {
+            /* properties */
+        }
+
+        :-ms-fullscreen {
+            /* properties */
+        }
+
+        :full-screen { /*pre-spec */
+            /* properties */
+        }
+
+        :fullscreen { /* spec */
+            /* properties */
+        }
+
+        /* deeper elements */
+        :-webkit-full-screen video {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* styling the backdrop*/
+        ::backdrop {
+            /* properties */
+        }
+        ::-ms-backdrop {
+            /* properties */
+        }
+    </style>
+
+</head>
+<body onclick="fullShow()">
+
+<video controls="controls" preload="none" style="width: 100%;height: 100%;background-color: #000;"
+       autoplay playsinline webkit-playsinline>
+    <source id="video_source" src="http://192.168.10.253:8090/edu_yun/xbjy/test.mp4" type='video/mp4' />
+
+</video>
+
+<!--<script>-->
+    <!--//判断手机横竖屏状态：-->
+    <!--function hengshuping(){-->
+        <!--if(window.orientation==180||window.orientation==0){-->
+            <!--alert("竖屏状态！")-->
+        <!--}-->
+        <!--if(window.orientation==90||window.orientation==-90){-->
+            <!--alert("横屏状态！")-->
+        <!--}-->
+    <!--}-->
+    <!--window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", hengshuping, false);-->
+   <!---->
+        <!---->
+ <!---->
+<!--</script>-->
+
+<button onclick="launchFullscreen(document.documentElement);" type="button">启动全屏</button>
+
+</body>
+</html>
+
+

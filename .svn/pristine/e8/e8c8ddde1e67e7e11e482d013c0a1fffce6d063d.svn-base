@@ -1,0 +1,91 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+        <div class="row">
+            <div class="panel panel-default panel-page panel-create-course">
+                <div class="panel-heading"><h2>创建培训</h2></div>
+                <form id="saveTrain" action="${pageContext.request.contextPath}/train/save_train.action" class="form-horizontal" method="post">
+                	<input name="flag" type="hidden" value="0"/>
+                	<input name="sign" type="hidden" value="1"/>
+                	<input name="type" id="type" type="hidden" value="0"/>
+                    <div class="course-piece"> 选择培训类型</div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="ordinary" onclick="chooseType(0);" class="course-select active" >
+                                <i class="es-icon es-icon-putongkecheng "></i>
+                                <div class="course-type">专业培训</div>
+                                <div class="course-intro">支持视频、图文、PPT等各种形式，支持作业、笔记等多个学习工具的课程</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="complex" onclick="chooseType(1);" class="course-select ">
+                                <i class="es-icon es-icon-zhibokecheng "></i>
+                                <div class="course-type">进阶课程</div>
+                                <div class="course-intro">多阶段多课程</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-title row">
+                        <div class="col-md-2 controls-label text-lg">
+                            <div class="course-piece title"> 培训名称</div>
+                        </div>
+                        <div class="col-md-10 controls">
+                            <input type="text" id="train_name" name="name" required="required" class="form-control">
+                            <div class="help-block" style="display:none;">
+                               <span class="text-danger">请输入名称</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <input class="btn btn-fat btn-primary" type="button" onclick="doSumbit();" value="创建">
+                        <a class="btn btn-fat btn-link">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+<script type="text/javascript">
+function chooseType(value){
+	$("#type").val(value);
+	if(value==0){
+		$("#complex").removeClass('active');
+		$("#ordinary").addClass('active');
+	}else{
+		$("#ordinary").removeClass('active');
+		$("#complex").addClass('active');
+	}
+}
+function validate(){
+	var train_name = $("#train_name").val();
+	if(train_name==""){
+		$(".help-block").show();
+		return false;
+	}else{
+		$(".help-block").hide();
+		return true;
+	}
+}
+function doSumbit(){
+	var val = validate();
+	if(val){
+    	document.getElementById('saveTrain').submit();
+	}
+}
+$(function(){
+	$("input").blur(function(){
+		validate();
+  	});
+});
+    
+</script>
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>

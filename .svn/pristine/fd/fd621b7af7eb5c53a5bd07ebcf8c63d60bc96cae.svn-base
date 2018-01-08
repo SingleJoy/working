@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>社区展示页-社区话题</title>
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <style>
+
+        .js-reviews{margin-bottom: 50px;}
+    </style>
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <div class="container">
+
+        <ol class="breadcrumb breadcrumb-o">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">社区主页 </a></li>
+        </ol>
+    </div>
+
+    <header  style="width: 100%;height: 150px;background-color: #fff;">
+
+        <div class="container" style="z-index: 99;">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 100px;height: 120px;margin-top: 15px;">
+                </a>
+                <div class="media-body" style="padding-left: 10px;">
+
+                    <div class="search pull-right">
+                        <input type="text" class="search_input">
+                        <button type="button" class="all_content">全站</button>
+                        <button type="button" class="this_community">本社区</button>
+                    </div>
+
+                    <h4 class="media-heading" style="margin-top: 10px;">北京四中数学组
+                        <span class="cn-share " style="margin-top: 10px;margin-left: 20px;">
+                            <a class="dropdown-toggle btn-link" href="javascript:void(0);" data-toggle="dropdown">
+                                <p><i class="es-icon es-icon-share"></i></p>
+                            </a>
+                    </span>
+
+                    </h4>
+
+                    <div class="pull-left" style="margin-top: 40px;">
+                        <!--如果已加入社区的话，按钮变成红色，加入社区变成退出社区-->
+                        <!--<a href="javascript:void(0);" class="btn btn-warning btn-lg">加入社区</a>-->
+                        <a href="#quit_community" class="btn btn-warning btn-lg" data-toggle="modal">退出社区</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <nav class="navbar navbar-default" style="background-color: #46bbcd;width: 100%;height:50px;">
+
+        <div class="container" >
+            <ul class="community_index_nav" style="border: none;">
+                <li ><a href="community-index-show.html">社区主页</a></li>
+                <li ><a href="community-course-list.html">社区课程列表</a></li>
+                <li ><a href="community-train-list.html">社区培训列表</a></li>
+                <li ><a href="community-lesson-list.html">社区课例列表</a></li>
+                <li ><a href="community-workshop-list.html">工作坊</a></li>
+                <li class="active"><a href="community-topic-list.html">社区话题</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <div class="container">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <div class="nav-filter clearfix mbl">
+
+                    <ul class="nav nav-pills nav-pills-sm">
+
+                        <li class="active"><a class="js-nav"  href="javascript:void(0);">全部</a></li>
+
+                        <li><a class="js-nav"  href="javascript:void(0);">精华</a></li>
+
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                                <span class="color-gray">排序：</span>
+                                最新发帖
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="active"><a class="js-nav" href="javascript:void(0);">最新发帖</a></li>
+                                <li class=""><a class="js-nav" href="javascript:void(0);">最后回复</a></li>
+                                <li class=""><a class="js-nav" href="javascript:void(0);">回复数</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
+                </div>
+
+                <ul class="media-list thread-list">
+                    <li class="media">
+                        <div class="media-left">
+                            <span class="reply-num">
+                                <strong> 10 </strong> 回复
+                            </span>
+                        </div>
+                        <div class="media-body pts">
+                            <div class="media-heading">
+                                <a class="title gray-darker" href="community-topic-detail.html">如何正确的提交问题-让错误日志帮助提供更好的错误定位</a>
+                                <span class="label label-primary">置顶</span>
+
+                            </div>
+
+                            <div class="metas">
+                                <a class="userImg js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-xxs" src="//scc1a8b2s6-static.qiqiuyun.net/files/default/2015/05-12/171002aabdd8876310.png">
+
+                                </a>
+
+                                <a class="link-dark pls" href="javascript:void(0);">xiaofeiyang</a>
+                                发起了话题
+                                <span class="divider">•</span>
+                                2015-02-27
+                                <span class="divider">•</span>
+                                最后回复
+                                <a class="link-dark link-primary" href="javascript:void(0);">aFeng</a>
+
+                                <span class="divider">•</span>
+                                07-25
+                            </div>
+                        </div>
+                    </li>
+                    <li class="media">
+                        <div class="media-left">
+                            <span class="reply-num">
+                                <strong> 5 </strong> 回复
+                            </span>
+                        </div>
+                        <div class="media-body pts">
+                            <div class="media-heading">
+                                <a class="title gray-darker" href="community-topic-detail.html">Linux/Nginx环境下，怎么把EduSoho本地视频文件目录配置到数据盘？</a>
+                                <span class="label label-primary">置顶</span>
+                                <span class="label label-danger">精华</span>
+
+                            </div>
+
+                            <div class="metas">
+                                <a class="userImg js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-xxs" src="//scc1a8b2s6-static.qiqiuyun.net/files/user/2014/07-15/145200024998692279.jpg">
+
+                                </a>
+
+                                <a class="link-dark pls" href="javascript:void(0);">小青</a>
+                                发起了话题
+                                <span class="divider">•</span>
+                                2014-10-23
+                                <span class="divider">•</span>
+                                最后回复     <a class="link-dark link-primary" href="javascript:void(0);">罗瑞</a>
+
+                                <span class="divider">•</span>
+                                03-17
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="media">
+                        <div class="media-left">
+                            <span class="reply-num">
+                                <strong> 2 </strong> 回复
+                            </span>
+                        </div>
+                        <div class="media-body pts">
+                            <div class="media-heading">
+                                <a class="title gray-darker" href="community-topic-detail.html">这到底能不能装？还是只能存活于windows中？安装到本地windows中后台课程也报错，郁闷！！！！</a>
+
+                            </div>
+
+                            <div class="metas">
+                                <a class="userImg js-user-card" href="javascript:void(0);"  >
+                                    <img class="avatar-xxs" src="//scc1a8b2s6-static.qiqiuyun.net/files/user/2017/04-24/220517d219ef186598.jpg">
+
+                                </a>
+
+                                <a class="link-dark pls" href="javascript:void(0);">竹林深处</a>
+                                发起了话题
+                                <span class="divider">•</span>
+                                04-23
+                                <span class="divider">•</span>
+                                最后回复     <a class="link-dark link-primary" href="javascript:void(0);">各位观众四条艾西</a>
+
+                                <span class="divider">•</span>
+                                04-24
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="modal" id="quit_community" role="dialog" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">退出社区</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="text-center text-warning" style="margin: 30px auto;">确定退出该社区吗?</div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">确定退出</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    function change(value) {
+        var value_01 = value;
+        if (value_01 == 'other') {
+            $(".quit_reason_write").show();
+        }else {
+            $(".quit_reason_write").val("");
+            $(".quit_reason_write").hide();
+
+        }
+    }
+
+</script>
+</body>
+</html>

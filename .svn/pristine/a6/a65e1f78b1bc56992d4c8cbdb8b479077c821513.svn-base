@@ -1,0 +1,213 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+/**
+ * 社区主页
+ * @author fangxiongwei
+ * @date 2017年6月6日
+ */
+public class CommunityCenterView extends PageBase {
+	private Long id;
+	private String name;
+	private String img;
+	private int stamp;//标识 0-课程；1-培训；2-课例；3-工作坊；4-话题；5-社区主页 
+	private Long userId;
+	private String username;//创建人/主办方/坊主
+	private int studentNum;//学员数
+	private int sortType;//排序
+	private Long classifyId;//所属分类id
+	private String classifyName;//所属分类名称
+	private Long sonClassifyId;//所属子分类id
+	private String sonClassifyName;//所属子分类名称
+	private List<String> classifyIds;//分类ids
+	private int type;//0-全部；1-简单；2-复杂
+	private int  sourceType; //0-社区 1-工作坊
+	private int isJoin;//0 未加入；1-加入
+	private Long questionId;//问题id
+
+	private String search;//搜索字段
+	private String stage_id;
+	private String subject_id;
+	private String grade_id;
+	private int status;//条件，0:全部 1:条件1 2:条件2 ...
+	
+	private int courseNum;//培训-课程数量
+	private int allNum;//所有课程数量
+	private int alreadyNum;//已学完课程数量
+	private Integer is_studyed;//是否学完 0-否 1-是
+	private int open_status;
+	private int recommended;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public int getStamp() {
+		return stamp;
+	}
+	public void setStamp(int stamp) {
+		this.stamp = stamp;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public int getStudentNum() {
+		return studentNum;
+	}
+	public void setStudentNum(int studentNum) {
+		this.studentNum = studentNum;
+	}
+	public int getSortType() {
+		return sortType;
+	}
+	public void setSortType(int sortType) {
+		this.sortType = sortType;
+	}
+	public Long getClassifyId() {
+		return classifyId;
+	}
+	public void setClassifyId(Long classifyId) {
+		this.classifyId = classifyId;
+	}
+	public String getClassifyName() {
+		return classifyName;
+	}
+	public void setClassifyName(String classifyName) {
+		this.classifyName = classifyName;
+	}
+	public Long getSonClassifyId() {
+		return sonClassifyId;
+	}
+	public void setSonClassifyId(Long sonClassifyId) {
+		this.sonClassifyId = sonClassifyId;
+	}
+	public String getSonClassifyName() {
+		return sonClassifyName;
+	}
+	public void setSonClassifyName(String sonClassifyName) {
+		this.sonClassifyName = sonClassifyName;
+	}
+	public List<String> getClassifyIds() {
+		return classifyIds;
+	}
+	public void setClassifyIds(List<String> classifyIds) {
+		this.classifyIds = classifyIds;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public int getSourceType() {
+		return sourceType;
+	}
+	public void setSourceType(int sourceType) {
+		this.sourceType = sourceType;
+	}
+	public int getIsJoin() {
+		return isJoin;
+	}
+	public void setIsJoin(int isJoin) {
+		this.isJoin = isJoin;
+	}
+	public Long getQuestionId() {
+		return questionId;
+	}
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
+	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	public String getStage_id() {
+		return stage_id;
+	}
+	public void setStage_id(String stage_id) {
+		this.stage_id = stage_id;
+	}
+	public String getSubject_id() {
+		return subject_id;
+	}
+	public void setSubject_id(String subject_id) {
+		this.subject_id = subject_id;
+	}
+	public String getGrade_id() {
+		return grade_id;
+	}
+	public void setGrade_id(String grade_id) {
+		this.grade_id = grade_id;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public void setCourseNum(int courseNum) {
+		this.courseNum = courseNum;
+	}
+	public int getCourseNum() {
+		return courseNum;
+	}
+	public Integer getIs_studyed() {
+		return is_studyed;
+	}
+	public void setIs_studyed(Integer is_studyed) {
+		this.is_studyed = is_studyed;
+	}
+	public int getAllNum() {
+		return allNum;
+	}
+	public void setAllNum(int allNum) {
+		this.allNum = allNum;
+	}
+	public int getAlreadyNum() {
+		return alreadyNum;
+	}
+	public void setAlreadyNum(int alreadyNum) {
+		this.alreadyNum = alreadyNum;
+	}
+	public int getOpen_status() {
+		return open_status;
+	}
+	public void setOpen_status(int open_status) {
+		this.open_status = open_status;
+	}
+	public int getRecommended() {
+		return recommended;
+	}
+	public void setRecommended(int recommended) {
+		this.recommended = recommended;
+	}
+	
+	
+}

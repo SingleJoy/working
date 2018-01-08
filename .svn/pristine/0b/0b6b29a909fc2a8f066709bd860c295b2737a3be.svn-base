@@ -1,0 +1,211 @@
+package cn.bnsr.edu_yun.util;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 时间工具类
+ * @author fangxiongwei
+ * @date 2016年9月27日
+ */
+public class TimeUtil {
+	private static Calendar c = Calendar.getInstance();
+	
+	// 获得当前年
+	public static String getCurrYear() {
+		return c.get(Calendar.YEAR) + "";
+	}
+	// 获得当前月
+	public static String getCurrMonth() {
+		int month=c.get(Calendar.MONTH)+1;
+		return month>=10?month+"":"0"+month;
+	}
+	
+	//获取当前月所有日期
+	public static List<String> getAllTheDateOftheMonth(Date date) throws ParseException {
+		List<String> list = new ArrayList<String>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.DATE, 1);
+
+		int month = cal.get(Calendar.MONTH);
+		while(cal.get(Calendar.MONTH) == month){
+			list.add(dateToString1(cal.getTime()));
+			cal.add(Calendar.DATE, 1);
+		}
+		return list;
+	}
+	
+	//获取两个日期之间的日期
+	public static List<String> getBetweenDates(Date start, Date end) throws ParseException {
+	    List<String> result = new ArrayList<String>();
+	    Calendar tempStart = Calendar.getInstance();
+	    tempStart.setTime(start);
+	    tempStart.add(Calendar.DAY_OF_YEAR, 0);
+	    
+	    Calendar tempEnd = Calendar.getInstance();
+	    tempEnd.setTime(end);
+	    while (tempStart.before(tempEnd)) {
+	        result.add(dateToString1(tempStart.getTime()));
+	        tempStart.add(Calendar.DAY_OF_YEAR, 1);
+	    }
+	    return result;
+	}
+	
+	//获取当前月
+	public static String getDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH,0);
+        return format.format(cal.getTime());
+    }
+	
+	//获取上一月
+	public static String getLastDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		return format.format(cal.getTime());
+	}
+	
+	//获取近三月
+	public static String getBeforeMarch() throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -2);
+	    return format.format(cal.getTime());
+	}
+	 
+	//Date-->String
+	public static String dateToString1(Date date) throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String str = format.format(date);
+		return str;
+	}
+	
+	//Date-->String
+	public static String dateToString(Date date) throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+		String str = format.format(date);
+		return str;
+	}
+	
+	//Date-->String
+	public static String dateToString2(Date date) throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String str = format.format(date);
+		return str;
+	}
+	
+	//String-->Date
+	public static Date stringFormatDate(String str) throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+		Date date = format.parse(str);
+		return date;
+	}
+	//String-->Date
+	public static Date stringFormatDate1(String str) throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = format.parse(str);
+		return date;
+	}
+	
+	/**
+	 * 获取传参的月份的天数
+	 * 
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static int getDayCount(String year, String month) {
+		int daySum = 0;
+		if ("01,03,05,07,08,10,12".contains(month)) {
+			daySum = 31;
+		} else if ("04,06,09,11".contains(month)) {
+			daySum = 30;
+		} else {
+			int yearInt = Integer.parseInt(year);
+			if ((yearInt % 4 == 0 && yearInt % 100 != 0) || yearInt % 400 == 0) {// 闰年
+				daySum = 29;
+			} else {
+				daySum = 28;
+			}
+		}
+		return daySum;
+	}
+	
+	/**
+	 * fangxiongwei
+	 * 比较两个String时间的大小
+	 */
+	  public static int compare_date(String DATE1, String DATE2) {
+	        
+        String timeFormat = "";
+        if(DATE1.length()>7){
+        	timeFormat = "yyyy-MM-dd";
+        }else{
+        	timeFormat = "yyyy-MM";
+        }
+        DateFormat df = new SimpleDateFormat(timeFormat);
+        try {
+            Date dt1 = df.parse(DATE1);
+            Date dt2 = df.parse(DATE2);
+            if (dt1.getTime() > dt2.getTime()) {
+               // System.out.println("dt1 在dt2前");
+                return 1;
+            } else if (dt1.getTime() < dt2.getTime()) {
+               // System.out.println("dt1在dt2后");
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
+	  
+	/**
+	 * date时间  N 天之后的时间
+	 */
+	public static Date afterNDay(Date date,int n){   
+	  Calendar c = Calendar.getInstance();   
+	  c.setTime(date);   
+	  c.add(Calendar.DATE,n);   
+	  return c.getTime();    
+    }  
+	
+	/**
+	 * 得到两个Date对象的时间差
+	 */
+	public static Long getTimeInterval(Date oneDate,Date anotherDate) {
+		if(oneDate != null && anotherDate != null) {
+			return Math.abs(oneDate.getTime() - anotherDate.getTime());
+		}
+		return null;
+	}
+	/**
+	 * long类型时间转换时分秒
+	 */
+	public static String longToString(){
+		long time = 3600000+366000*25;//1m = 1000毫秒 
+		long day = time/(60*1000);
+		long hour = time/(60*60*1000);
+		long minute = (time - hour*60*60*1000)/(60*1000); 
+		long second = (time - hour*60*60*1000 - minute*60*1000)/1000; 
+		return day+"天"+hour+ "时" + minute + "分 ";
+	}
+	
+	public static void main(String[] args) throws ParseException {
+		List<String> list = new ArrayList<String>();
+		list = TimeUtil.getBetweenDates(TimeUtil.stringFormatDate1("2017-05-13"),TimeUtil.stringFormatDate1("2017-05-26"));
+
+		System.out.println(">>"+list);
+	}
+
+}

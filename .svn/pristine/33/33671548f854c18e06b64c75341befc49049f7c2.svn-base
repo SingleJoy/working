@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>工作坊展示页-工作坊首页</title>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <style>
+        .banner-picture{background: url("http://www.chipscreen.com/UpLoadFiles/20130808/2013080816050198.jpg") repeat-x;}
+        .workshop_name{background: url("../../images/workshop.png") 40px 0 no-repeat;}
+        .course_tags{background: url("../../images/course_tags.png")  no-repeat;width:75px;display: inline-block; }
+    </style>
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <div class="container">
+
+        <ol class="breadcrumb breadcrumb-o">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">工作坊主页 </a></li>
+        </ol>
+    </div>
+
+    <header  style="width: 100%;height: 240px;margin-bottom: 20px;z-index: 0;position: relative;">
+
+        <div class="banner" style="width: 100%;height: 240px;background-color: #1a2f40;">
+            <div class="banner-picture"></div>
+        </div>
+
+        <div class="container" style="margin-top: -240px;z-index: 99;">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 160px;height: 180px;margin-top:30px; ">
+                </a>
+                <div class="media-body" style="padding-left: 20px;">
+
+                    <span class="es-share top pull-right" style="margin-top: 20px;">
+                        <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown" style="color: #fff;">
+                            <p><i class="es-icon es-icon-share"></i></p>
+                            <p>分享</p>
+                        </a>
+
+                    </span>
+                    <h4 class="media-heading" style="color: #fff;margin-top: 30px;">北京四中数学组</h4>
+
+                    <div style="font-size: 20px;color: #fff;margin-top: 20px;">
+
+                        <span style="">
+                            <i class="es-icon es-icon-people" style="font-size: 20px;"></i>&nbsp;:&nbsp;48
+                        </span>
+                        <span class="comment" style="margin-left: 30px;">
+                            <i class="es-icon es-icon-textsms" style="font-size: 20px;"></i>&nbsp;:&nbsp;20
+                        </span>
+
+                        <span class="comment" style="margin-left: 30px;">
+                            <i class="es-icon es-icon-calendar" style="font-size: 20px;"></i>&nbsp;:&nbsp;2017-02-20
+                        </span>
+
+                    </div>
+                    <h4 style="color: #fff;margin-top: 20px;">工作坊管理:李老师</h4>
+                    <div class="pull-left" style="margin-top: 20px;">
+                        <!--如果已加入工作坊的话，按钮变成红色，加入工作坊变成退出工作坊-->
+                        <!--<a href="javascript:void(0);" class="btn btn-warning btn-lg">加入工作坊</a>-->
+                        <a href="#quit_community" class="btn btn-danger btn-lg" data-toggle="modal">退出工作坊</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <div class="container">
+
+        <div class="panel panel-default panel-col">
+            <div class="panel-heading" style="border: none;"></div>
+
+            <div class="panel-body" style="margin-top: -20px;">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="workshop-index-show.html">工作坊主页</a></li>
+                    <li ><a href="workshop-course-list.html">工作坊课程列表</a></li>
+                    <li ><a href="workshop-train-list.html">工作坊培训列表</a></li>
+                    <li ><a href="workshop-lesson-list.html">工作坊课例列表</a></li>
+                    <li ><a href="workshop-topic-list.html">工作坊话题</a></li>
+                </ul>
+
+                <!-- 工作坊简介 -->
+                <div class="community-container" style="margin-top: -50px;">
+                    <div class="text-line">
+                        <h5>
+                            <span>工作坊简介</span>
+                            <div class="line"></div>
+                        </h5>
+                        <div class="subtitle" style="opacity: 0.6;">Workshop profile</div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-11 text-left">
+                                    <span style="padding-right: 30px;"></span>
+                                    <span style="opacity: 0.8;">相对论是关于时空和引力的基本理论，主要由阿尔伯特·爱因斯坦创立，依据研究的对象不同分为狭义相对论和广义相对论。
+                                相对论的基本假设是相对性原理，即物理定律与参照系的选择无关。狭义相对论和广义相对的区别是，前者讨论的是匀速直
+                                线运动的参照系（惯性参照系）之间的物理定律，后者则推广到具有加速度的参照系中（非惯性系），并在等效原理的假设下，
+                                广泛应用于引力场中。相对论极大地改变了人类对宇宙和自然的“常识性”观念，提出了“同时的相对性”、“四维时空”、
+                                “弯曲时空”等全新的概念。它发展了牛顿力学，推动物理学发展到一个新的高度。狭义相对性原理是相对论的两个基本假定，
+                                在目前实验的观测下，物体的运动与相对论是吻合很好的，所以目前普遍认为相对论是正确的理论。
+                           </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-list">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="course-info ">
+                                        <div class="title text-center">
+                                            <a class="link-dark text-center" href="javascript:void(0);" target="_blank">
+                                                如何创建课程？
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix text-center">
+                                            <span>创建人:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <a class="pull-right " style="display: block;" href="javascript:void(0);">更多  &gt;</a>
+                    </div>
+                </div>
+
+                <!-- 工作坊培训介绍 -->
+                <div class="community-train-container">
+                    <div class="text-line">
+                        <h5>
+                            <span>工作坊培训介绍</span>
+                            <div class="line"></div>
+                        </h5>
+                        <div class="subtitle" style="opacity: 0.6;">Introduction of workshop course</div>
+
+                    </div>
+
+                    <div class="course-list">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="course-info ">
+                                        <div class="title text-center">
+                                            <a class="link-dark text-center" href="javascript:void(0);" target="_blank">
+                                                如何创建课程？
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix text-center" >
+                                            <span>主办方:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <a class="pull-right " style="display: block;" href="javascript:void(0);">更多  &gt;</a>
+                    </div>
+                </div>
+
+                <!-- 工作坊课例介绍 -->
+                <div class="community-lesson-container">
+                    <div class="text-line">
+                        <h5>
+                            <span>工作坊课例介绍</span>
+                            <div class="line"></div>
+                        </h5>
+                        <div class="subtitle" style="opacity: 0.6;">Introduction of workshop lesson</div>
+
+                    </div>
+
+                    <div class="course-list">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                            <div class="progress" style="max-width: 240px;margin-left: 10px;margin-top: -20px;z-index: 999;position: relative;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:17.647%">18%</div>
+                                            </div>
+                                            <span class="tags">
+                                                <span class="course_tags" style="color: #fff;padding-left: 5px;">初一语文</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="course-info text-center" style="margin-top: -20px;">
+                                        <div class="title ">
+                                            <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                                林教头风雪山神
+                                            </a><br/>
+                                            <a class="link-dark" href="javascript:void(0);" target="_blank" style="line-height: 35px;">
+                                                北京四中第一教研组
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix">
+                                            <span>主办方:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <a class="pull-right " href="javascript:void(0);" style="display: block;">更多  &gt;</a>
+                    </div>
+                </div>
+
+                <!-- 工作坊介绍 -->
+                <div class="community-workshop-container">
+                    <div class="text-line">
+                        <h5>
+                            <span>工作坊介绍</span>
+                            <div class="line"></div>
+                        </h5>
+                        <div class="subtitle" style="opacity: 0.6;">Introduction of workshop</div>
+
+                    </div>
+
+                    <div class="course-list">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                            <span class="tags">
+                                                <span class="course_tags" style="color: #fff;padding-left: 5px;">初一语文</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="course-info text-center workshop_name">
+                                        <div class="title ">
+                                            <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                                林教头风雪山神
+                                            </a>
+
+                                        </div>
+                                        <div class="metas clearfix">
+                                            <span>坊主:林冲</span>
+                                            <span class="num" style="margin-left: 30px;">
+                                                <i class="es-icon es-icon-people"></i>3907
+                                            </span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <a class="pull-right " href="javascript:void(0);" style="display: block;">更多  &gt;</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+<div class="modal" id="quit_community" role="dialog" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">退出工作坊</h4>
+            </div>
+            <div class="modal-body">
+                <form  class="form-horizontal" method="post" action="" >
+
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">退出原因</div>
+                        <div class="col-md-8 controls">
+
+                            <select class="form-control quit_reason" onclick="change(this.value)">
+                                <option value="reason">--请选择退学原因--</option>
+                                <option value="0">原因1</option>)
+                                <option value="1">原因2</option>
+                                <option value="other">其他</option>
+                            </select>
+                            <textarea class="form-control quit_reason_write"  placeholder="请输入退出工作坊原因" style="margin-top:10px;display:none;"></textarea>
+                            <span class="text-danger warning" style="display: none;">请输入退出工作坊原因</span>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    function change(value) {
+        var value_01 = value;
+        if (value_01 == 'other') {
+            $(".quit_reason_write").show();
+        }else {
+            $(".quit_reason_write").val("");
+            $(".quit_reason_write").hide();
+
+        }
+    }
+
+</script>
+</body>
+</html>

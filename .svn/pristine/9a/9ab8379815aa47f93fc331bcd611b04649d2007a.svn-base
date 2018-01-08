@@ -1,0 +1,218 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <title>证书模板管理</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){
+            $(".certificate_background").click(function(){
+                $(".certificate_table").show();
+                $(".seal_table").hide();
+            })
+        });
+        $(function(){
+            $(".seal").click(function(){
+                $(".certificate_table").hide();
+                $(".seal_table").show();
+            })
+        });
+    </script>
+
+</head>
+<body>
+<div class="col-md-9">
+
+    <div class="panel panel-default panel-col">
+        <div class="panel-heading">
+            <div class="pull-right">
+                <a href="#" class="btn btn-info btn-sm" data-target="#new_certificate_background_pic" data-toggle="modal">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    新增底版</a>
+                <a href="#" class="btn btn-info btn-sm" data-target="#new_seal_pic" data-toggle="modal">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    新增印章</a>
+            </div>
+            模板证书
+        </div>
+
+        <div class="panel-body">
+            <ul class="nav nav-tabs" style="border: none;">
+
+                <li class="active certificate_background"><a href="#">证书底版</a></li>
+                <li class="seal"><a href="#">电子印章</a></li>
+            </ul>
+
+             <!--证书底版-->
+            <table class="table table-hover certificate_table"  style="word-break:break-all;">
+                <thead>
+                <tr>
+                    <th style="width: 50%;">证书底版名称</th>
+                    <th>所属证书</th>
+                    <th>上传日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+
+                    <td>
+                        <a href="javascript:void(0);" class="pull-left mrm">
+                            <img style="width: 90px;height: 60px;" class="course-picture" width="100" src="/edu_yun/picture/Default.png"></a>
+
+                        <div class="mlm">
+                            <a href="javascript:void(0);" class="course_title_name">啊啊</a>
+                        </div>
+                    </td>
+
+                    <td>"2017年北京市中小学教师培训"</td>
+
+                    <td>2016-12-31</td>
+
+
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" href="course_certificate_show.html" target="_blank">预览</a>
+                            <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="course_certificate.html" target="_blank"><span class="glyphicon glyphicon-edit"></span> 编辑</a></li>
+                                <li><a href="javascript:"><span class="glyphicon glyphicon-remove-circle"></span> 删除</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+
+                </tbody>
+            </table>
+
+            <!--证书印章底版-->
+            <table class="table table-hover seal_table"  style="word-break:break-all; display: none;">
+                <thead>
+                <tr>
+                    <th style="width: 50%;">印章名称</th>
+                    <th>所属证书</th>
+                    <th>上传日期</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <td>
+                        <a href="javascript:void(0);" class="pull-left mrm">
+                            <img style="width: 90px;height: 60px;" class="course-picture" width="100" src="/edu_yun/picture/Default.png"></a>
+                        <div class="mlm">
+                            <a href="javascript:void(0);" class="course_title_name">证书背景图片001</a>
+                        </div>
+                    </td>
+
+                    <td>"2017年北京市中小学教师培训"</td>
+
+                    <td>2016-12-31</td>
+                    <td>审核中</td>
+
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" href="course_certificate_show.html" target="_blank">预览</a>
+                            <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="course_certificate.html" target="_blank"><span class="glyphicon glyphicon-edit"></span> 编辑</a></li>
+                                <li><a href="javascript:"><span class="glyphicon glyphicon-remove-circle"></span> 删除</a></li>
+                            </ul>
+                        </div>
+                    </td>
+
+                </tr>
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<!--新增证书背景图片弹窗-->
+<div id="new_certificate_background_pic" class="modal" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">上传证书背景图片</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div>
+                    <div >
+                        <p class="plus_number" style="font-size: 100px;opacity: 0.3;margin-left: 380px;cursor: pointer;z-index: 999;">+</p>
+                    </div>
+                    <div class="help-block">注意:背景图片大小必须是1080x800像素</div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--新增证书背景图片弹窗-->
+<div id="new_seal_pic" class="modal" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">上传证书印章图片</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div >
+                    <div>
+                        <p class="plus_number" style="font-size: 100px;opacity: 0.3;margin-left: 380px;cursor: pointer;z-index: 999;">+</p>
+                    </div>
+                    <div class="help-block">注意:背景图片大小必须是150x150像素</div>
+                </div>
+
+
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

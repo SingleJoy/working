@@ -1,0 +1,841 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
+
+<c:if test="${empty head_title}"><title>求资网</title></c:if>
+<c:if test="${!empty head_title}"><title>${head_title}</title></c:if>
+<meta content="1" name="is-login">
+<meta content="0" name="is-open">
+<link href="${pageContext.request.contextPath}/frontstage/css/xbjy.css" rel="stylesheet" type="text/css">
+
+
+
+<style>
+
+    .subject_classify>div>ul>li>a{font-size: 14px;}
+    .course-list>ul>li>a{font-size: 16px;opacity: 0.6;}
+    .head_list>li>a{font-size: 14px;color: #fff;padding: 20px 30px;}
+    .carousel-inner>div{width: 100%;}
+    .carousel-inner>div>img{max-width: 1160px;margin: 0 auto;}
+    ul.nav-tabs>li.active{border-bottom:2px solid #46c37b;}
+    .lesson_info_text{padding: 0 5px;}
+
+    .lesson_teacher{padding-left:30px; }
+    .lesson_content>span{width: 33%;float: left;padding: 5px 0;}
+    .subject_list>ul>li{display: inline-block;list-style: none;text-align: center;}
+    .subject_list>ul>li>a{color: #616161;line-height: 40px;}
+    .subject_list>ul>li.active>a{color: #5295e3;}
+    .school_lesson_list>div{margin-bottom: 20px;}
+    .lesson_index_banner{background: url("${pageContext.request.contextPath}/frontstage/images/lesson_banner.jpg") top center no-repeat;}
+    .item{margin-bottom: 30px;}
+</style>
+
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<div style="background-color: #fff;">
+
+    <!-- js轮播图 -->
+    <section class="es-poster swiper-container">
+
+        <div id="myCarousel" class="carousel slide">
+
+            <!-- 轮播（Carousel）指标 -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0"  data-interval="3000" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"  data-interval="3000"></li>
+                <li data-target="#myCarousel" data-slide-to="2"  data-interval="3000"></li>
+                <li data-target="#myCarousel" data-slide-to="3"  data-interval="3000"></li>
+            </ol>
+
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active" style="background-color:#0ac895;">
+                    <img class="img-responsive" src="${pageContext.request.contextPath}/frontstage/images/train_flash_01.png">
+                </div>
+                <div class="item" style="background-color: #2677e3">
+                    <img class="img-responsive" src="${pageContext.request.contextPath}/frontstage/images/train_flash_02.png">
+                </div>
+                <div class="item" style="background-color: #00b68c;">
+                    <img class="img-responsive" src="${pageContext.request.contextPath}/frontstage/images/train_flash_03.png">
+                </div>
+                <div class="item" style="background-color: #ff9c00;">
+                    <img class="img-responsive" src="${pageContext.request.contextPath}/frontstage/images/train_flash_04.png">
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--全部课例-->
+    <section class="lesson-list-section ">
+
+        <div class="container" >
+
+            <div class="text-line">
+                <h5>
+                    <span>推荐课例</span>
+                    <div class="line"></div>
+                </h5>
+                <!--<div class="subtitle">精选热门课程，满足你的学习兴趣。</div>-->
+            </div>
+
+
+
+            <!--全部课例展示-->
+            <div  class="course-list" style="clear: both;">
+
+                <div class="row">
+
+                    <c:forEach items="${lessonViews }" var="l">
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="course-item">
+
+                                <div class="course-img">
+                                    <a href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${l.id }" target="_blank">
+                                        <img <c:if test="${empty l.lesson_pic}">src="${pageContext.request.contextPath}/frontstage/images/course.png"</c:if>
+                                             <c:if test="${!empty l.lesson_pic}">src="${pageContext.request.contextPath}/${l.lesson_pic}"</c:if>  alt="" class="img-responsive" style="height: 160px;">
+                                        <c:if test="${l.excellent==1}">
+                                            <div class="tags" style="left: 0;">
+                                                <img src="${pageContext.request.contextPath}/frontstage/images/excellent_teaching_plan.png" title="优秀课例">
+                                            </div>
+                                        </c:if>
+                                    </a>
+                                </div>
+
+                                <div class="course-info" style="left:0;padding: 10px;">
+
+                                    <div class="lesson_info_text">
+                                        <span class="lesson_grade">${l.stageName }${l.subjectName }</span>
+                                        <span class="lesson_teacher pull-right">${l.user_sk_name }</span>
+                                    </div>
+
+                                    <a class="link-dark" href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${l.id }" target="_blank" style="padding: 5px;display: block;">
+                                        <span class="pull-left">${l.name }</span>
+                                        <span class="pull-right">工作坊&nbsp; ${l.workshop_name }</span>
+                                    </a>
+
+
+                                </div>
+
+                                <div class="progress" style="margin: 10px;max-width: 245px;">
+                                    <c:if test="${l.finish_count/l.all_count>=0.11 }">
+                                        <c:set var="width" value="${l.finish_count/l.all_count }"></c:set>
+                                    </c:if>
+                                    <c:if test="${l.finish_count/l.all_count<0.11 }">
+                                        <c:set var="width" value="0.11"></c:set>
+                                    </c:if>
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:<fmt:formatNumber type="percent" maxFractionDigits="3" value="${width }" />"><fmt:formatNumber type="percent" maxFractionDigits="0" value="${l.finish_count/l.all_count }" /></div>
+                                    <span style="float: right;">${l.finish_count}/${l.all_count}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </c:forEach>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="section-more-btn clearfix" style="clear: both;padding-top: 30px;">
+                <a href="${pageContext.request.contextPath}/lesson_main/to_lesson_main.action" class="btn btn-default btn-lg" >
+                    更多课例 <i class="mrs-o es-icon es-icon-chevronright"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+    <section class="lesson-list-section">
+
+        <div class="container">
+
+            <div class="text-line">
+                <h5>
+                    <span>优秀课例</span>
+                    <div class="line"></div>
+                </h5>
+                <!--<div class="subtitle">精选热门课程，满足你的学习兴趣。</div>-->
+            </div>
+
+
+            <!--全部课例展示-->
+            <div class="course-list" style="clear: both;">
+
+                <c:forEach items="${lessonViews1 }" var="l">
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+
+                            <div class="course-img">
+                                <a href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${l.id }" target="_blank">
+                                    <img <c:if test="${empty l.lesson_pic}">src="${pageContext.request.contextPath}/frontstage/images/course.png"</c:if>
+                                         <c:if test="${!empty l.lesson_pic}">src="${pageContext.request.contextPath}/${l.lesson_pic}"</c:if>  alt="" class="img-responsive" style="height: 160px;">
+                                    <c:if test="${l.excellent==1}">
+                                        <div class="tags" style="left: 0;">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/excellent_teaching_plan.png" title="优秀课例">
+                                        </div>
+                                    </c:if>
+                                </a>
+                            </div>
+
+                            <div class="course-info" style="left:0;padding: 5px 10px;">
+
+                                <div class="lesson_info_text">
+                                    <span class="lesson_grade">${l.stageName }${l.subjectName }</span>
+                                    <span class="lesson_teacher pull-right">主讲老师:&nbsp;${l.user_sk_name }</span>
+                                </div>
+
+                                <a class="link-dark" href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${l.id }" target="_blank" style="padding: 10px;line-height:30px;">
+                                    <span class="pull-left">${l.name }</span><span class="pull-right">工作坊&nbsp; ${l.workshop_name }</span>
+                                </a>
+
+                            </div>
+
+                            <div class="progress" style="margin: 10px;max-width: 245px;">
+                                <c:if test="${l.finish_count/l.all_count>=0.11 }">
+                                    <c:set var="width" value="${l.finish_count/l.all_count }"></c:set>
+                                </c:if>
+                                <c:if test="${l.finish_count/l.all_count<0.11 }">
+                                    <c:set var="width" value="0.11"></c:set>
+                                </c:if>
+                                <div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:<fmt:formatNumber type="percent" maxFractionDigits="3" value="${width }" />"><fmt:formatNumber type="percent" maxFractionDigits="0" value="${l.finish_count/l.all_count }" /></div>
+                                <span style="float: right;">${l.finish_count}/${l.all_count}</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </c:forEach>
+
+            </div>
+
+            <div class="section-more-btn clearfix" style="clear: both;padding-top: 30px;">
+                <a href="${pageContext.request.contextPath}/lesson_main/to_lesson_main.action" class="btn btn-default btn-lg" >
+                    更多课例 <i class="mrs-o es-icon es-icon-chevronright"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+    <!--名校课例-->
+    <section class="school-lesson-list-section ">
+
+        <div class="container" >
+
+            <div class="text-line">
+                <h5>
+                    <span>名校课例</span>
+                    <div class="line"></div>
+                </h5>
+                <!--<div class="subtitle">精选热门课程，满足你的学习兴趣。</div>-->
+            </div>
+
+            <div class="lesson_main_top" >
+
+                <div class="pull-left">
+                    <ul class="nav nav-tabs" style="border: none;">
+                        <li <c:if test="${area=='DQ012' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ012" class="area">北京</a></li>
+                        <li <c:if test="${area=='DQ008' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ008" class="area">上海</a></li>
+                        <li <c:if test="${area=='DQ013' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ013" class="area">天津</a></li>
+                        <li <c:if test="${area=='DQ005' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ005" class="area">四川</a></li>
+                        <li <c:if test="${area=='DQ025' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ025" class="area">山东</a></li>
+                        <li <c:if test="${area=='DQ029' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ029" class="area">湖北</a></li>
+                        <li <c:if test="${area=='DQ015' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ015" class="area">浙江</a></li>
+                        <li <c:if test="${area=='DQ018' }">class="active"</c:if>><a href="javascript:void(0);" id="DQ018" class="area">江苏</a></li>
+                        <li ><a href="${pageContext.request.contextPath}/lesson_main/to_lesson_main.action">其他</a></li>
+
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row" style="clear: both;">
+
+                <div class="panel-default index-article">
+
+                    <div class="panel-body clearfix">
+                        <c:forEach items="${lessonViews2 }" var="l">
+                            <div class="col-md-6">
+                                <a class="lesson_content" href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${l.id }" >
+                                    <span class="pull-left text-muted">${l.community_name }</span>
+                                    <span class="text-center text-muted">${l.grade_name }${l.subjectName }</span>
+                                    <span class="pull-right text-muted" >《${l.name }》</span>
+                                </a>
+
+                            </div>
+                        </c:forEach>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!--各学校课例展示-->
+            <div  class="school_lesson_list row" style="padding-top: 50px;clear: both;">
+
+                <div id="myCarousel1" class="carousel slide">
+
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+
+                        <div class="item active" >
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_wuhan.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="item" >
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="item" >
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_nanjinkuangye.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_nanjinkuangye.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_nanjinkuangye.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_nanjinkuangye.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="item" >
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin_01.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin_01.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin_01.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="#" target="_blank">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/lesson_tianjin_01.jpg" alt="" class="img-responsive" >
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--banner图-->
+    <section class="banner-section">
+
+        <div class="bannerbox lesson_index_banner" style="width: 100%;height: 400px;margin-top: 80px;">
+
+        </div>
+    </section>
+
+    <!--名师-->
+    <section class="teacher-section">
+
+        <div class="container">
+
+            <div class="text-line">
+                <h5>
+                    <span>名师名家</span>
+                    <div class="line"></div>
+                </h5>
+                <!--<div class="subtitle">精选热门课程，满足你的学习兴趣。</div>-->
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">李明</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">王飞龙</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">刘仪</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">李明</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">王飞龙</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">刘仪</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">李明</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">王飞龙</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">刘仪</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">李明</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">王飞龙</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6 attent" >
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="#">
+                                <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/1038582980d2485608.jpg" alt="" >
+                            </a>
+                            <div class="title">
+                                <a class="link-dark" href="#">刘仪</a>
+                            </div>
+                            <div class="position">
+                                专家
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                英语专业八级
+                            </div>
+                            <div class="metas" style="left: 0;right: 0;">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" style="">关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display: none;">已关注</a>
+                                <a class="btn btn-default btn-sm" href="#private-modal" data-toggle="modal" onclick="send_private_messages(2,'abc')">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+</div>
+
+
+
+<script type="text/javascript">
+    $(".area").click(function () {
+        var area=$(this).attr("id");
+        window.location.href="${pageContext.request.contextPath}/lesson_main/to_lesson_home.action?area="+area;
+    })
+
+
+    //轮播图
+    $(document).ready(function() {
+        $('.carousel').carousel({
+            interval: 2000
+        })
+    });
+
+
+
+</script>
+
+
+

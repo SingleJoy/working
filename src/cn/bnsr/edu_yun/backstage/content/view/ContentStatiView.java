@@ -1,0 +1,80 @@
+package cn.bnsr.edu_yun.backstage.content.view;
+
+/**
+ * 内容统计视图
+ * @author heliwei
+ * @date 2017-8-24
+ */
+public class ContentStatiView {
+	private Long id;
+	private String days;//日期
+	private int statiType;//0-评价 1-报名(普通课程) 2-报名(专业培训) 3-报名(进阶培训) 4-学习(普通课程) 5-学习(专业培训) 6-学习(进阶培训)
+	private int source_type;//0-课程 1-培训
+	private int type;//课程 0-普通课程 2-直播课程  培训 0-专业培训 1-进阶培训 
+	private int monthType;//0-本月；1-上月；2-近三月；3-起止时间
+	private String startTime;//起始时间
+	private String endTime;//结束时间
+	private int countNum;//总数
+	private int newNum;//新增数
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getDays() {
+		return days;
+	}
+	public void setDays(String days) {
+		this.days = days;
+	}
+	public int getStatiType() {
+		return statiType;
+	}
+	public void setStatiType(int statiType) {
+		this.statiType = statiType;
+	}
+	public int getMonthType() {
+		return monthType;
+	}
+	public void setMonthType(int monthType) {
+		this.monthType = monthType;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public int getCountNum() {
+		return countNum;
+	}
+	public void setCountNum(int countNum) {
+		this.countNum = countNum;
+	}
+	public int getNewNum() {
+		return newNum;
+	}
+	public void setNewNum(int newNum) {
+		this.newNum = newNum;
+	}
+	public int getSource_type() {
+		return source_type;
+	}
+	public void setSource_type(int source_type) {
+		this.source_type = source_type;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	
+}

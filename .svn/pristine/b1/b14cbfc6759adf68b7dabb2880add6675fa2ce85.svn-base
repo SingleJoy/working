@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/index.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../jq/jquery.1.10.2.js"></script>
+    <script type="text/javascript" src="../js/index.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+
+    <style>
+
+
+    </style>
+</head>
+<body>
+
+
+
+
+<div class="search">
+    <input class="search_input" placeholder="同步课件">
+    <input class="search_button" type="button" value="搜索"><br/>
+    <form action="" class="search_form" method="get">
+        <input type="radio" name="file_attr" checked="checked"><label>全部</label>
+        <input type="radio" name="file_attr"><label>DOC</label>
+        <input type="radio" name="file_attr"><label>PPT</label>
+        <input type="radio" name="file_attr"><label>TXT</label>
+        <input type="radio" name="file_attr"><label>RMVB</label>
+    </form>
+</div>
+
+
+<div class="navbar_page">
+
+   <div class="navbar">
+      <div class="nav_title"><img src="../images/index.png">全部科目资源</div>
+
+        <ul>
+        <li><a href="#">首页</a></li>
+        <li class="personal_space"><a href="#">个人中心</a></li>
+        <li class="notes"><a href="#">通知</a></li>
+        <li><a  href="#">课程列表</a></li>
+        <li><a  href="#">中考资料</a></li>
+        <li><a  href="#">高考资料</a></li>
+    </ul>
+   </div>
+
+</div>
+
+
+
+<div id="flash">
+    <ul id="pic">
+        <li style="display:block"><img src="http://img13.360buyimg.com/da/jfs/t2242/262/578407619/87636/4ffe0c5/56187ed2Nfed9a5b3.jpg" alt=""></li>
+        <li><img src="http://img13.360buyimg.com/da/jfs/t2143/111/577347825/96150/e27180bd/561889b3N42ee62b5.jpg" alt=""></li>
+        <li><img src="http://img20.360buyimg.com/da/jfs/t1825/234/1750370913/97529/b9229832/560b5ad3N054605f7.jpg" alt=""></li>
+        <li><img src="http://img10.360buyimg.com/da/jfs/t2026/215/573306345/95654/a0211937/5618a735N1b3d8423.jpg" alt=""></li>
+        <li><img src="http://img20.360buyimg.com/da/jfs/t2065/362/579832759/78899/6f349917/5618c680N3752bacc.jpg" alt=""></li>
+        <li><img src="http://img10.360buyimg.com/da/jfs/t2023/45/384256123/101565/9b6e5daf/5604bdceN8c7d2ccf.jpg" alt=""></li>
+    </ul>
+    <ol id="num">
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ol>
+    <p class="flash_arrow"><a href="javascript:;" class="arrow" id="left"><</a></p>
+    <p class="flash_arrow"><a href="javascript:;" class="arrow" id="right">></a></p>
+</div>
+
+
+  <div class="subject_list">
+    <ul>
+        <li>
+            <a>语文</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">小学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >语文S版2001</a>
+                            <a   href="" >语文A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">初中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >语文S版2001</a>
+                            <a   href="" >语文A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+
+        <li>
+            <a>数学</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">小学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >数学S版2001</a>
+                            <a   href="" >数学A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">初中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >数学S版2001</a>
+                            <a   href="" >数学A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a href="#">英语</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">小学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >英语S版2001</a>
+                            <a   href="" >英语A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">初中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >英语S版2001</a>
+                            <a   href="" >A英语版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+        <li>
+            <a href="#">物理</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">中学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >物理S版2001</a>
+                            <a   href="" >物理A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">高中</h4>
+                             <div class="item">
+                                 <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >物理S版2001</a>
+                            <a   href="" >物理A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a href="#">化学</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">中学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >化学S版2001</a>
+                            <a   href="" >化学A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">高中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >化学S版2001</a>
+                            <a   href="" >化学A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a href="#">生物</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">中学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >生物S版2001</a>
+                            <a   href="" >生物A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">高中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >生物S版2001</a>
+                            <a   href="" >生物A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a href="#">思想政治</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">中学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >政治S版2001</a>
+                            <a   href="" >政治A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">高中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >政治S版2001</a>
+                            <a   href="" >政治A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a href="#">历史</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">中学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >政治S版2001</a>
+                            <a   href="" >政治A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">高中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >政治S版2001</a>
+                            <a   href="" >政治A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a href="#">地理</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">中学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >地理S版2001</a>
+                            <a   href="" >地理A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">高中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >地理S版2001</a>
+                            <a   href="" >地理A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a href="#">其他</a>
+            <span class="subject_arrow">></span>
+            <div class="subject_content">
+                <div class="phase">
+                    <h4 class="name">中学</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >政治S版2001</a>
+                            <a   href="" >政治A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="phase">
+                    <h4 class="name">高中</h4>
+                    <div class="item">
+                        <em class="tag">教材版本</em>
+                         <span class="links">
+                            <a  class="item_a" href="" >人教版</a>
+                            <a   href="" >政治S版2001</a>
+                            <a   href="" >政治A版2001</a>
+                            <a   href="" >教科版</a>
+                            <a   href="" >沪教版</a>
+                            <a   href="" >沪教版(2015秋)</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+ </div>
+
+<div class="login_information">
+    <div class="login_top">
+        <img src="../images/laoshi.jpg" >
+        <div>Hi</div>
+        <p>欢迎来到求资网</p>
+        <a class="login_info_button  cd-signin" href="#">登录</a>
+        <a class="login_info_register" href="#">注册</a>
+        <div class="upload_file_page_01">
+            <a href="#">上传文档</a>
+        </div>
+    </div>
+
+</div>
+<div class="personal_information"   style="display: none;">
+    <div class="personal_top">
+        <img src="../images/laoshi.jpg">
+        <div>Ghost</div>
+        <p>欢迎来到求资网</p>
+        <a class="sign_out" href="">退出</a>
+     </div>
+        <div class="personal_mid">
+            <div class="per_mid_left">
+                <div class="wealth_num"><a href="#" class="per_wealth">907</a></div>
+                <div><a href="#" class="per_wealth_txt">财富值</a></div>
+            </div>
+
+            <div class="per_mid_mid">
+                <div class="public_file_num"><a href="#"  class="per_public_file_num">18</a></div>
+                <div ><a href="#" class="per_public_file_txt" >公关文档</a></div>
+            </div>
+            <div class="per_mid_right">
+                <div class="file_num" ><a href="#" class="per_file">8</a></div>
+                <div ><a href="#" class="per_file_txt">&nbsp;文辑</a></div>
+            </div>
+        </div>
+
+       <div class="upload_file_page_02">
+        <a href="#">上传文档</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="latest_upload">
+
+    <p class="latest_upload_title">最新上传</p>
+    <ul class="latest_upload_ul">
+        <li class="latest_upload_li"><a class="latest_upload_title_text" href="#">预习学案 生活中的正数和负数</a>
+            <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+        </li>
+        <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+    </ul>
+    <ul class="latest_upload_ul">
+        <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+            <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+        </li>
+        <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+    </ul>
+    <ul class="latest_upload_ul">
+        <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+            <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+        </li>
+        <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+    </ul>
+
+    <ul class="latest_upload_ul">
+        <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+            <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+        </li>
+        <li class="upload_author">&nbsp;&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+    </ul>
+
+</div>
+
+<div class="resource_contribution">
+  <p>资源贡献</p>
+    <div class="resource_ranks_left">
+        <div class="rank_title">今日资源贡献排行榜</div>
+        <ul>
+            <li><span class="rank_no">1</span><span class="rank_name">潇湘夜雨</span><span class="resource_num">5份</span></li>
+            <li><span class="rank_no">2</span><span class="rank_name">潇湘夜雨</span><span class="resource_num">5份</span></li>
+            <li><span class="rank_no">3</span><span class="rank_name">潇湘夜雨</span><span class="resource_num">5份</span></li>
+            <li><span class="rank_no">4</span><span class="rank_name">潇湘夜雨</span><span class="resource_num">5份</span></li>
+            <li><span class="rank_no">5</span><span class="rank_name">潇湘夜雨</span><span class="resource_num">5份</span></li>
+            <li><span class="rank_no">6</span><span class="rank_name">潇湘夜雨</span><span class="resource_num">5份</span></li>
+        </ul>
+    </div>
+    <div class="resource_ranks_right">
+        <div class="rank_name_list">资源贡献获奖名单<a href="#" class="rank_list_1">1-5</a>&nbsp;&nbsp;<a href="#" class="rank_lisst_2">6-10</a></div><br/>
+        <div class="rank_NO"><span class="rank_rank">名次</span><span class="rank_teacher">获奖老师</span><span class="rank_num_txt">资源内容量</span></div>
+        <ul>
+            <li><span class="rank_no">1</span><span class="rank_name">潇湘夜雨</span><span class="rank_num">150份</span></li>
+            <li><span class="rank_no">2</span><span class="rank_name">潇湘夜雨</span><span class="rank_num">52份</span></li>
+            <li><span class="rank_no">3</span><span class="rank_name">潇湘夜雨</span><span class="rank_num">32份</span></li>
+            <li><span class="rank_no">4</span><span class="rank_name">潇湘夜雨</span><span class="rank_num">23份</span></li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="about_us">
+    <div>关于我们</div>
+    <p>求资网是专门为教师设计的服务平台,我们希望让每一位老师的教学更有成效,不再受地域、教学资源和教学水平的限制,
+        让全中国的每位老师都可以得到有效的教学帮助,让每一堂课都上演精彩.</p>
+</div>
+
+<div class="footer">
+    <div class="footer_content">
+        <ul class="footer_content_ul">
+            <li><a class="footer_title">北京市百年树人远程教育有限公司<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="agreement">协议<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="proposal">建议</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+</html>

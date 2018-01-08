@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>批阅试卷</title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+        <div class="cn-section course-manage-header clearfix">
+
+            <img class="picture" src="/files/course/2016/11-24/1353244e4a05862944.jpg?7.0.0">
+
+            <h1 class="title"><a href="/classroom/5">ceshi001</a>
+                <span class="label label-success"> 已发布</span>
+            </h1>
+
+            <div class="toolbar hidden-xs">
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle btn-sm" href="/classroom/5">返回班级主页</a>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                        预览 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/classroom/5/courses?previewAs=guest" target="blank">作为未购买用户</a></li>
+                        <li><a href="/classroom/5/courses?previewAs=auditor" target="blank">作为旁听生</a></li>
+                        <li><a href="/classroom/5/courses?previewAs=member" target="_blank">作为正式学员</a></li>
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级设置</li>
+                        <li class="list-group-item ">
+                            <a href="class-basic-info.html">
+                                <span></span>基本信息
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="class-price-setting.html">
+                                <span></span>价格设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-cover-photo.html">
+                                <span></span>班级图片
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-service-setting.html">
+                                <span></span>服务设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-headmaster.html">
+                                <span></span>班主任设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-teacher-setting.html">
+                                <span></span>教师设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class-assistant.html">
+                                <span></span>助教设置
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级管理</li>
+                        <li class="list-group-item ">
+                            <a href="class-course-management.html">
+                                <span></span>课程管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="class_student_manage.html">
+                                <span></span>学员管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="class_scores_manage.html">
+                                <span></span>成绩管理
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">题库</li>
+                        <li class="list-group-item">
+                            <a href="">
+                                <span></span>题目管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>试卷管理
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="class_mark.html">
+                                <span></span>试卷批阅
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="class_task.html"><span></span>作业批改
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col">
+
+                    <div class="panel-heading">
+                        试卷批阅
+                    </div>
+
+                    <div class="panel-body">
+
+                        <ul class="nav nav-tabs">
+                            <li class="" value="1"><a href="">未批阅</a></li>
+                            <li class="active" value="2"><a href="">已批阅</a></li>
+                            <!-- 未批阅 -->
+                            <!-- <li class="highlight" style="left: 0px; width: 108px; overflow: hidden;"></li> -->
+                            <!-- 已批阅 -->
+                            <li value="3" class="highlight" style="left: 108px; width: 108px; overflow: hidden;"></li>
+                        </ul>
+                        <br>
+                        <!-- 未批阅 -->
+                        <table class="table table-striped table-hover" style="display:none;">
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="" target="_blank">666</a>
+                                        <br>
+                                        <small class="text-muted">来自课程《ceshi》</small>
+                                        <small class="text-muted mhs">•</small>
+                                        <small class="text-muted">共12.0分 / 6道题  </small>
+                                    </td>
+                                    <td>
+                                        <a class="link-dark " href="/user/15">ceshi001</a>
+                                        <br>
+                                        <small class="text-muted">2016年12月08日 16:26 交卷</small>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn-default btn-sm pull-right" target="_blank">批阅</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- 已批阅 -->
+                        <table class="table table-striped table-hover" style="">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="" target="_blank">44</a>
+                                    <br>
+                                    <small class="text-muted">来自课程《ceshi》</small>
+                                    <small class="text-muted mhs">•</small>
+                                    <small class="text-muted">共4.0分 / 2道题   </small>
+                                </td>
+                                <td>
+                                    <a class="link-dark " href="/user/15">ceshi001</a>
+                                    <br>
+                                    <small class="text-muted">2016年12月08日 16:25 交卷</small>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div class="text-warning">总分 <strong>0.0</strong> 分</div>
+                                        <div class="text-muted"><small>客观题0.0分 / 主观题0.0分</small></div>
+                                        <div class="text-success"><small>系统 批于2016年12月08日 16:25</small></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="" target="_blank">666</a>
+                                    <br>
+                                    <small class="text-muted">来自课程《ceshi》</small>
+                                    <small class="text-muted mhs">•</small>
+                                    <small class="text-muted">共12.0分 / 6道题  </small>
+                                </td>
+                                <td>
+                                    <a class="link-dark " href="/user/14">体验管理员1</a>
+                                    <br>
+                                    <small class="text-muted">2016年11月24日 10:16 交卷</small>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div class="text-warning">总分 <strong>5.0</strong> 分</div>
+                                        <div class="text-muted"><small>客观题4.0分 / 主观题1.0分</small></div>
+                                        <div class="text-success"><small>体验管理员1 批于2016年11月24日 10:18</small></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+</div>
+
+
+
+</body>
+</html>

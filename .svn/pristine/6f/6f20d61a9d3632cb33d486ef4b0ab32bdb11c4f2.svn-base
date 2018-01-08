@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/1230633/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>试卷题目管理</title>
+    <link href="./edusoho/bootstrap.css" rel="stylesheet">
+    <link href="./edusoho/es-question.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body class="modal-open">
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                <ul class="list-group">
+                <li class="list-group-heading">课程信息</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>基本信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>详细信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程图片
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课时管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>录播管理</a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程文件
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程设置</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>价格设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>教师设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>学员管理
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">题库</li>
+                <li class="list-group-item active">
+                <a href="">
+                <span></span>题目管理
+                </a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>试卷管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>试卷批阅</a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>作业批改</a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程运营</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程学习数据</a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href=""><span></span>课程订单查询</a>
+                </li>
+                </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">
+                        测试试卷2
+                    </div>
+                    <div class="panel-body clearfix">
+                        <ol class="breadcrumb">
+                            <li><a href="">试卷管理</a></li>
+                            <li class="active">试卷题目管理</li>
+                        </ol>
+                        <div class="clearfix mbm">
+                            <button class="btn btn-info btn-sm pull-right exam-add-question"><span class="glyphicon glyphicon-plus"></span> 新增试题</button>
+                            <ul class="nav nav-pills nav-mini">
+                                <li value="0"><a href="javascript:" class="testpaper-nav-link">单选题</a></li>
+                                <li value="1"><a href="javascript:" class="testpaper-nav-link">多选题</a></li>
+                                <li value="2"><a href="javascript:" class="testpaper-nav-link">不定项选择题</a></li>
+                                <li value="3"><a href="javascript:" class="testpaper-nav-link">填空题</a></li>
+                                <li value="4"><a href="javascript:" class="testpaper-nav-link">判断题</a></li>
+                                <li value="5" class="active"><a href="javascript:" class="testpaper-nav-link">问答题</a></li>
+                                <li value="6"><a href="javascript:" class="testpaper-nav-link">材料题</a></li>
+                            </ul>
+                        </div>
+                        <form method="post" class="form-horizontal">
+                            <div class="text-success">
+                                试卷总分
+                                <strong>18.0</strong>分 
+                                <span class="stats-part">
+                                    材料题<strong>3</strong>子题/<strong>6.0</strong>分
+                                </span>
+                            </div>
+                            <table class="table table-striped table-hover tab-content" id="testpaper-table">
+                                <thead class="testpaper-thead">
+                                  <tr>
+                                    <th></th>
+                                    <th><input type="checkbox" class="subCheckbox checkAll"></th>
+                                    <th>题号</th>
+                                    <th width="40%">题干</th>
+                                    <th>类型</th>
+                                    <th>难度</th>
+                                    <th width="8%">分值</th>
+                                    <th>操作</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="testpaper-table-tbody hide">
+                                    <tr class=" is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox"> 
+                                        </td>
+                                        <td class="seq">1</td>
+                                        <td>
+                                            测试单选
+                                            <div class="text-muted text-sm">
+                                                从属： 本课程
+                                            </div>
+                                        </td>
+                                        <td>单选题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text" >
+                                        </td>
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question" >替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                                <tbody class="hide testpaper-table-tbody">
+                                    <tr class=" is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox" >
+                                        </td>
+                                        <td class="seq">2</td>
+                                        <td>
+                                            测试多选
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>多选题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question" >替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                                <tbody class="hide testpaper-table-tbody">
+                                    <tr class=" is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox" >
+                                        </td>
+                                        <td class="seq">3</td>
+                                        <td>
+                                            测试（）
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>不定项选择题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question">替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                                <tbody class="hide testpaper-table-tbody">
+                                    <tr class=" is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox" >
+                                        </td>
+                                        <td class="seq">4</td>
+                                        <td>
+                                            今天是[[晴|阴|雨]]天.
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>填空题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question" >替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                                <tbody class="testpaper-table-tbody hide">
+                                    <tr class=" is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox" >
+                                        </td>
+                                        <td class="seq">5</td>
+                                        <td>
+                                            测试判断题
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>判断题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text" >
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question">替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                                <tbody class="testpaper-table-tbody sel-div">
+                                    <tr class=" is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox" >
+                                        </td>
+                                        <td class="seq">6</td>
+                                        <td>
+                                            测试问答题
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>问答题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text" >
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question">替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                                <tbody class="testpaper-table-tbody hide">
+                                    <tr class=" have-sub-questions is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox" > 
+                                        </td>
+                                        <td class="seq"><span class="text-muted">~</span></td>
+                                        <td>
+                                            材料题
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>材料题</td>
+                                        <td>一般</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question exam-replace-question">替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class=" is-sub-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td></td>
+                                        <td class="seq">7</td>
+                                        <td>
+                                            测试
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>不定项选择题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text" >
+                                        </td>
+                                        <td>
+                                            <div class="btn-group"> </div>
+                                        </td>
+                                    </tr>
+                                    <tr class=" have-sub-questions is-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td>
+                                            <input class="notMoveHandle subCheckbox" type="checkbox" >
+                                        </td>
+                                        <td class="seq"><span class="text-muted">~</span></td>
+                                        <td>
+                                            测试材料题2
+                                            <div class="text-muted text-sm">
+                                                从属： 本课程
+                                            </div>
+                                        </td>
+                                        <td>材料题</td>
+                                        <td>一般</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" class="notMoveHandle btn btn-default btn-sm show_pop">预览</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm item-delete-btn del-question">删除</a>
+                                                <a href="javascript:" class="notMoveHandle btn btn-default btn-sm exam-replace-question">替换</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class=" is-sub-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td></td>
+                                        <td class="seq">8</td>
+                                        <td>
+                                            子题
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>单选题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="btn-group"></div>
+                                        </td>
+                                    </tr>
+                                    <tr class=" is-sub-question">
+                                        <td><span class="glyphicon glyphicon-resize-vertical sort-handle"></span></td>
+                                        <td></td>
+                                        <td class="seq">9</td>
+                                        <td>
+                                            &nbsp;今天是[[晴|阴|雨]]天.&nbsp;可以插入填空项...
+                                            <div class="text-muted text-sm">
+                                                从属：本课程
+                                            </div>
+                                        </td>
+                                        <td>填空题</td>
+                                        <td>一般</td>
+                                        <td>
+                                            <input name="scores[]" class="notMoveHandle form-control input-sm" type="text" >
+                                        </td>
+                                        <td>
+                                            <div class="btn-group"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <label class="checkbox-inline"><input type="checkbox" class="checkAll subCheckbox"> 全选</label>
+                                <button type="button" class="btn btn-default btn-sm mlm del-sel">删除</button>
+                                <button type="button" style="float:right;" class="btn btn-primary pull-right mlm request-save">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+</div>
+<!-- 弹窗 -->
+<div id="modal" class="modal in" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pop_close">×</button>
+                <h4 class="modal-title">题目预览</h4>
+            </div>
+            <div class="modal-body">
+                <div class="testpaper-question testpaper-question-fill " >
+                    <div class="testpaper-question-body">
+                        <div class="testpaper-question-stem-wrap clearfix">
+                            <div class="testpaper-question-seq-wrap">
+                                <div class="testpaper-question-seq"></div>
+                                <div class="testpaper-question-score">2.0分</div>
+                            </div>
+                            <div class="testpaper-question-stem"><p>测试判断题</p><br></div>
+                        </div>  
+                    </div>
+                    <div class="testpaper-question-footer clearfix">
+                        <div class="testpaper-question-determine-inputs">
+                            <label class="radio-inline "><input type="radio" name="" value="1"> 正确</label>
+                            <label class="radio-inline "><input type="radio" name="" value="0">错误</label>
+                        </div>
+                        <div class="testpaper-question-actions pull-right"></div>
+                    </div>
+                    <div class="testpaper-preview-answer clearfix mtl mbl">
+                        <div class="testpaper-question-result">
+                            正确答案是 <strong class="text-success"> 正确 </strong>
+                        </div>
+                    </div>
+                    <div class="testpaper-question-analysis well">无解析</div>
+                </div>
+            </div>
+            <div class="modal-footer">  
+                <button type="button" class="btn btn-default pop_close" >关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(e){
+      // 预览
+      $(".show_pop").on("click",function(){
+          $('#modal').show();
+          $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+      })
+      // 关闭弹窗
+      $("#modal").on("click",".pop_close",function(){
+          $('#modal').hide();
+          $('.modal-backdrop').remove();
+      })
+      // 全选
+      $(".checkAll").click(function () {
+          var isChecked = $(this).prop("checked");
+          $(".subCheckbox").prop("checked", isChecked);
+      })
+      //删除选中
+      $('.del-sel').click(function(){
+          // var num = $('.nav-pills .active').attr('value');
+          $('.sel-div input:checked').each(function(i,ck){
+              $(ck).parent().parent().remove();
+              // if (num == 6) {}
+          })
+          $(".checkAll").prop("checked", false);
+      })
+      $('.del-question').click(function(){
+          $(this).parent().parent().parent().remove();
+      })
+      // 选择题型
+      $('.nav-pills li').on("click",function(){
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            var num = $(this).attr('value');
+            $('#testpaper-table tbody').eq(num).removeClass('hide');
+            $('#testpaper-table tbody').eq(num).addClass('sel-div');
+            $('#testpaper-table tbody').eq(num).siblings().addClass('hide');
+            $('#testpaper-table tbody').eq(num).siblings().removeClass('sel-div');
+            $('.testpaper-thead').removeClass('hide');
+      })
+      // 添加试题
+      $('.exam-add-question').on("click",function(){
+            $('#modal').html('');
+            $('#modal').append('<div class="modal-dialog  modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close pop_close">×</button><h4 class="modal-title">试卷添加题目</h4></div><div class="modal-body"><form class="form-inline well well-sm" action=""><div class="form-group"><select class="form-control" name="target" style="width:200px;height:32px;"><option value="">--按从属--</option><option value="">本课程</option><option value="">课时1： 111</option></select></div><div class="form-group"><input type="text" id="keyword" name="keyword" class="form-control" value="" placeholder="关键词"></div><button class="btn btn-primary btn-sm">搜索</button></form><table class="table table-condensed"><thead><tr><th width="45%">题干</th><th>类型</th><th>分值</th><th>操作</th></tr></thead><tbody><tr><td>测试试卷添加试题<br><small class="text-muted">从属：本课程</small></td><td>单选题</td><td>21.0</td><td><button class="btn btn-default btn-sm newWindowPreview">预览</button><button type="button" class="btn btn-primary btn-sm">选择</button></td></tr></tbody></table></div><div class="modal-footer">    <button type="button" class="btn btn-default pull-right pop_close" >关闭</button></div></div></div>');
+            $('#modal').show();
+            $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+      })
+      // 替换试题
+      $('.exam-replace-question').on("click",function(){
+            $('#modal').html('');
+            $('#modal').append('<div class="modal-dialog  modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close pop_close">×</button><h4 class="modal-title">试卷添加题目</h4></div><div class="modal-body"><form class="form-inline well well-sm" action=""><div class="form-group"><select class="form-control" name="target" style="width:200px;height:32px;"><option value="">--按从属--</option><option value="">本课程</option><option value="">课时1： 111</option></select></div><div class="form-group"><input type="text" id="keyword" name="keyword" class="form-control" value="" placeholder="关键词"></div><button class="btn btn-primary btn-sm">搜索</button></form><table class="table table-condensed"><thead><tr><th width="45%">题干</th><th>类型</th><th>分值</th><th>操作</th></tr></thead><tbody><tr><td>测试试卷添加试题<br><small class="text-muted">从属：本课程</small></td><td>单选题</td><td>21.0</td><td><button class="btn btn-default btn-sm newWindowPreview">预览</button><button type="button" class="btn btn-primary btn-sm">选择</button></td></tr></tbody></table></div><div class="modal-footer">    <button type="button" class="btn btn-default pull-right pop_close" >关闭</button></div></div></div>');
+            $('#modal').show();
+            $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+      })
+      // 保存试卷  
+      $('.request-save').on("click",function(){
+            $('#modal').html('');
+            $('#modal').append('<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close pop_close">×</button><h4 class="modal-title">确认试卷题目信息</h4></div><div class="modal-body"><table class="table table-bordered"><thead><tr><th>题目类型</th><th>题目数量</th><th>总分值</th></tr></thead><tbody class="detail-tbody"><tr><td>单选题</td><td>1</td><td>2.0</td></tr><tr><td>多选题</td><td>1</td><td>2.0</td></tr><tr><td>不定项选择题</td><td>1</td><td>2.0</td></tr><tr><td>填空题</td><td>1</td><td>2.0</td></tr><tr><td>判断题</td><td>1</td><td>2.0</td></tr><tr><td>问答题</td><td>1</td><td>2.0</td></tr><tr><td>材料题</td><td>0</td><td>0.0</td></tr><tr><td>总计</td><td>6</td><td>12.0</td></tr></tbody></table></div><div class="modal-footer"><button class="btn btn-link pop_close" type="button">关闭</button><button type="button" class="btn btn-primary confirm-submit">确定</button></div></div></div>');
+            $('#modal').show();
+            $('.modal-open').append('<div class="modal-backdrop  in"></div>');
+      })
+  })
+</script>
+</body>
+</html>

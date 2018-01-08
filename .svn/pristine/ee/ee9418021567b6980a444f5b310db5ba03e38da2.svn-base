@@ -1,0 +1,437 @@
+package cn.bnsr.edu_yun.frontstage.resource.controller;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.service.SubjectService;
+import cn.bnsr.edu_yun.backstage.resource.service.FileAmountService;
+import cn.bnsr.edu_yun.frontstage.base.po.Classify;
+import cn.bnsr.edu_yun.frontstage.base.po.Label;
+import cn.bnsr.edu_yun.frontstage.base.po.SubjectList;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.po.UserProperty;
+import cn.bnsr.edu_yun.frontstage.base.po.User_folder;
+import cn.bnsr.edu_yun.frontstage.base.service.ClassifyService;
+import cn.bnsr.edu_yun.frontstage.base.service.LabelService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserFileService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserFolderService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserFile;
+import cn.bnsr.edu_yun.frontstage.resource.po.FileAmount;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_base;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_catalog;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_label;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_property;
+import cn.bnsr.edu_yun.frontstage.resource.po.File_type;
+import cn.bnsr.edu_yun.frontstage.resource.po.TeachingPlan;
+import cn.bnsr.edu_yun.frontstage.resource.po.TeachingPlanFile;
+import cn.bnsr.edu_yun.frontstage.resource.po.User_file;
+import cn.bnsr.edu_yun.frontstage.resource.po.User_file_log;
+import cn.bnsr.edu_yun.frontstage.resource.service.FileLabelService;
+import cn.bnsr.edu_yun.frontstage.resource.service.FilePropertyService;
+import cn.bnsr.edu_yun.frontstage.resource.service.FileTypeService;
+import cn.bnsr.edu_yun.frontstage.resource.service.File_baseService;
+import cn.bnsr.edu_yun.frontstage.resource.service.File_catalogService;
+import cn.bnsr.edu_yun.frontstage.resource.service.LogService;
+import cn.bnsr.edu_yun.frontstage.resource.service.TeachingPlanService;
+import cn.bnsr.edu_yun.frontstage.resource.view.FileBaseView;
+import cn.bnsr.edu_yun.frontstage.resource.view.TeachingPlanView;
+import cn.bnsr.edu_yun.frontstage.xbjy.po.LessonAttachment;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonAttachmentView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonUserTaskView;
+import cn.bnsr.edu_yun.util.ConfigInfo;
+import cn.bnsr.edu_yun.util.ConverPdf;
+import cn.bnsr.edu_yun.util.ConvertSwf;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 文件基础
+ * @author fangxiongwei
+ * @date 2016年8月10日
+ */
+@Controller
+@RequestMapping("/my_file_base")
+public class FileBaseController{
+	@Autowired
+	private File_baseService fileBaseService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private File_catalogService fileCatalogService;
+	@Autowired
+	private ClassifyService classifyService;
+	@Autowired
+	private FileTypeService fileTypeService;
+	@Autowired
+	private UserFolderService userFolderService;
+	@Autowired
+	private LabelService labelService;
+	@Autowired
+	private FileLabelService fileLbaelService;
+	@Autowired
+	private FilePropertyService filePropertyService;
+	@Autowired
+	private LogService logService;
+	@Autowired
+	private UserFileService userFileService;
+	@Autowired
+	private FileAmountService fileAmountService;
+	@Autowired
+	private SubjectService subjectService;
+	@Autowired
+	private TeachingPlanService teachingPlanService;
+	/**
+	 * 跳转文件上传页面
+	 */
+	@RequestMapping("/to_upload_file")
+	public ModelAndView toUploadFile(HttpServletRequest request) throws Exception {
+		
+		List<Classify> columnList = classifyService.queryByParentId(57l);//资源栏目分类
+		List<File_type> fileTypeList = fileTypeService.findAllFileType();//文件类型
+		List<User_folder> userFolderList = userFolderService.findAllUserFolder();//用户文件夹
+		List<Label> labelList = labelService.findAllLabel(0);//资源标签
+		List<FileAmount> amountList = fileAmountService.findAllAmount();//金额
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("columnList",columnList);
+		modelAndView.addObject("fileTypeList",fileTypeList);
+		modelAndView.addObject("userFolderList",userFolderList);
+		modelAndView.addObject("labelList",labelList);
+		modelAndView.addObject("amountList",amountList);
+		modelAndView.setViewName("frontstage/resource/upload_file");
+		modelAndView.addObject("head_title", "上传文档");
+		return modelAndView;
+	}
+	/**
+	 * 文件保存
+	 */
+	@RequestMapping(value="/save_file",method = RequestMethod.POST)
+	public ModelAndView saveFile(HttpServletRequest request,FileBaseView fileBaseView) throws Exception {
+		if(null != fileBaseView){
+			User user = (User) request.getSession().getAttribute("currentUser");
+			String title = fileBaseView.getTitle();
+			int fileType = fileBaseView.getFileType();
+			String profile = fileBaseView.getProfile();
+			String legnth = fileBaseView.getLength();
+			String path = fileBaseView.getPath();
+			String fileName = fileBaseView.getName();
+			String image = fileBaseView.getImage();
+			String type = fileBaseView.getType();//类型
+			String value = fileBaseView.getValue();//类型
+			String folderId = fileBaseView.getFolderId();//我的文档
+			String columnId = fileBaseView.getColumnId();//分类
+			String labelId = fileBaseView.getLabelId();//标签id
+			String classficationId = fileBaseView.getClassficationId();//分栏
+			String rangeId = fileBaseView.getRangeId();
+			int rangeType = fileBaseView.getRangeType();
+			
+			if(fileName.contains(",")){//多文件
+				int lengths = fileName.split(",").length;
+				for(int i=0;i<lengths;i++){
+					File_catalog catalog = new File_catalog();
+					catalog.setTitle(NumUtil.isNotEmpty(title, i));
+					if(profile.replaceAll(",","").equals("")){
+						catalog.setProfile("");
+					}else{
+						catalog.setProfile(NumUtil.isNotEmpty(profile, i));
+					}
+					catalog.setIcon(NumUtil.isNotEmpty(image, i));
+					catalog.setColumn_id(Integer.parseInt(NumUtil.isNotEmpty(columnId, i)));
+	         		catalog.setType(Byte.parseByte(NumUtil.isNotEmpty(type, i)));
+	         		catalog.setFolder_id(Long.parseLong(NumUtil.isNotEmpty(folderId, i)));
+	         		catalog.setClassfication_id(NumUtil.isNotEmpty(classficationId, i));
+	         		catalog.setRange_id(Long.parseLong(NumUtil.isNotEmpty(rangeId, i)));
+					catalog.setRange_type(rangeType);
+	         		fileCatalogService.insert(catalog);
+	         		
+	         		File_property property = new File_property();
+	         		property.setClick_times(0);
+	         		property.setCollection_times(0);
+	         		property.setDownload_times(0);
+	         		property.setScore(0.0);
+	         		filePropertyService.insert(property);
+	         		
+					long fileLength = Long.parseLong(!legnth.split(",")[i].equals("")?legnth.split(",")[i]:"0");
+					File_base base = new File_base();
+					base.setFilename(NumUtil.isNotEmpty(title, i));
+					base.setPath(NumUtil.isNotEmpty(path, i));
+					base.setLength(fileLength);
+					base.setSize(NumUtil.toSize(fileLength));
+					base.setUpload_time(new Date());
+					base.setUpload_user(user.getId());
+					base.setFormat(fileName.substring(fileName.lastIndexOf(".")+1));
+					base.setCatalog_id(catalog.getId());
+					base.setProperty_id(property.getId());
+					base.setStatus((byte)1);//上传状态-未审核
+					base.setFile_type(fileType);
+					base.setValue(Double.parseDouble(NumUtil.isNotEmpty(value, i)));
+	         		fileBaseService.insert(base);
+	         		//user_file
+	         		User_file userFile=new User_file();
+	         		userFile.setFile_id(base.getId());
+	         	   Date date =new Date();
+	         		userFile.setTime(date);
+	         		Byte type1=1;
+	         		userFile.setType(type1);
+	         		userFile.setUser_id(user.getId());
+	         		userService.insertUserFile(userFile);
+	         			//上传日志
+	         		UserProperty userProperty=userService.selectProperty(user.getProperty_id());
+	         		userProperty.setUpload_count(userProperty.getUpload_count()+1);
+	         		if(type.equals("2")){
+	         			userProperty.setPublic_file_count(userProperty.getPublic_file_count()+1);
+	         		}
+	         		if(type.equals("3")){
+	         			userProperty.setPrivate_file_count(userProperty.getPrivate_file_count()+1);
+	         		}
+	         		userService.updateProperty(userProperty);
+	         		 User_file_log log=new User_file_log();
+	         		 log.setFile_id(base.getId());
+	         		 log.setUser_id(user.getId());
+	         		 log.setOperation_time(date);
+	         		 log.setOperation_description("上传了文件 "+base.getFilename());
+	         		 log.setOperation_type(type1);
+	         		 logService.insertUserFileLog(log);
+	         		 if(!labelId.equals("")){
+	         			String labelIds = NumUtil.isNotEmpty(labelId, i);
+	         			if(!labelIds.equals("0")){
+	         				labelIds = labelIds.substring(0, labelIds.length()-1);
+	         				if(labelIds.contains(",")){
+	         					String[] labelStr = labelIds.split(",");
+	         					for(int j=0;j<labelStr.length;j++){
+         							File_label label = new File_label();
+         							label.setFile_id(base.getId());
+         							label.setLabel_id(Integer.parseInt(labelStr[j]));
+         							fileLbaelService.insert(label);
+	         					}
+	         				}else{
+         						File_label label = new File_label();
+         						label.setFile_id(base.getId());
+         						label.setLabel_id(Integer.parseInt(labelIds));
+         						fileLbaelService.insert(label);
+	         				}
+	         			}
+	         		 }
+				}
+			}else{//单文件
+				File_catalog catalog = new File_catalog();
+				catalog.setTitle(title);
+         		catalog.setProfile(profile);
+         		catalog.setColumn_id(Integer.parseInt(columnId));
+         		catalog.setType(Byte.parseByte(type));
+         		catalog.setFolder_id(Long.parseLong(folderId));
+         		catalog.setClassfication_id(classficationId);
+				catalog.setIcon(image);
+				catalog.setRange_id(Long.parseLong(rangeId));
+				catalog.setRange_type(rangeType);
+         		fileCatalogService.insert(catalog);
+         		
+         		File_property property = new File_property();
+         		property.setClick_times(0);
+         		property.setCollection_times(0);
+         		property.setDownload_times(0);
+         		property.setScore(0.0);
+         		filePropertyService.insert(property);
+         	
+         		
+				long fileLength = Long.parseLong(legnth);
+				File_base base = new File_base();
+				base.setFilename(title);
+				base.setPath(path);
+				base.setLength(fileLength);
+				base.setSize(NumUtil.toSize(fileLength));
+				base.setUpload_time(new Date());
+				base.setUpload_user(user.getId());
+				base.setFormat(fileName.substring(fileName.lastIndexOf(".")+1));
+				base.setProperty_id(property.getId());
+				base.setCatalog_id(catalog.getId());
+				base.setStatus((byte) 1);//上传状态-未审核
+				base.setFile_type(fileType);
+				base.setValue(Double.parseDouble(value));
+         		fileBaseService.insert(base);
+         		//user_file
+         		User_file userFile=new User_file();
+         		userFile.setFile_id(base.getId());
+         	    Date date =new Date();
+         		userFile.setTime(date);
+         		Byte type1=1;
+         		userFile.setType(type1);
+         		userFile.setUser_id(user.getId());
+         		userService.insertUserFile(userFile);
+         			//上传日志
+         		UserProperty userProperty=userService.selectProperty(user.getProperty_id());
+         		userProperty.setUpload_count(userProperty.getUpload_count()+1);
+         		if(type.equals("2")){
+         			userProperty.setPublic_file_count(userProperty.getPublic_file_count()+1);
+         		}
+         		if(type.equals("3")){
+         			userProperty.setPrivate_file_count(userProperty.getPrivate_file_count()+1);
+         		}
+         		userService.updateProperty(userProperty);
+         		
+         		User_file_log log=new User_file_log();
+         		log.setFile_id(base.getId());
+         		log.setUser_id(user.getId());
+         		log.setOperation_time(date);
+         		log.setOperation_description("上传了文件 "+base.getFilename());
+         		log.setOperation_type(type1);
+         		logService.insertUserFileLog(log);
+         		if(!labelId.equals("") && !labelId.equals("0")){
+         			String labelIds = labelId.substring(0, labelId.length()-1);
+         			if(labelIds.contains(",")){//多个标签
+     					String[] labelStr = labelIds.split(",");
+     					for(int j=0;j<labelStr.length;j++){
+     						File_label label = new File_label();
+     						label.setFile_id(base.getId());
+     						label.setLabel_id(Integer.parseInt(labelStr[j]));
+     						fileLbaelService.insert(label);
+     					}
+     				}else{//单个标签
+     					File_label label = new File_label();
+     					label.setFile_id(base.getId());
+     					label.setLabel_id(Integer.parseInt(labelIds));
+     					fileLbaelService.insert(label);
+     				}
+         		}
+			}
+		}
+		//保存后清空session
+		request.getSession().setAttribute("userFile", null);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("success_flag", "three");  
+		ModelAndView modelAndView=new ModelAndView("frontstage/resource/upload_file",map);
+		modelAndView.addObject("head_title", "上传文档");
+		return modelAndView;
+	}
+	
+	/**
+	 * 重置文件session
+	 */
+	@RequestMapping("/reform_ession")
+	@ResponseBody
+	public String reformSession(HttpServletRequest request){
+		String path = request.getParameter("path");
+		String name = request.getParameter("name");
+		String length = request.getParameter("length");
+		String image = request.getParameter("image");
+		
+		if(!path.equals("")){
+			UserFile ufile = new UserFile();
+			ufile.setFileNames(name);
+			ufile.setFilePaths(path); 
+			ufile.setFileLengths(length);
+			ufile.setFileImages(image);
+			request.getSession().setAttribute("userFile", ufile);
+		}else{//清空session
+			request.getSession().setAttribute("userFile", null);
+		}
+		
+		return "ok";
+	}
+	/**
+	 * 跳转文件上传选择页面
+	 */
+	@RequestMapping("/to_upload_choose")
+	public ModelAndView toUploadFileChoose(HttpServletRequest request) throws Exception {
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("frontstage/resource/upload_file_choose");
+		modelAndView.addObject("head_title", "上传类型选择");
+		return modelAndView;
+	}
+	/**
+	 * 跳转教案上传页面
+	 */
+	@RequestMapping("/to_teaching_plan")
+	public ModelAndView toTeachingPlan(HttpServletRequest request) throws Exception {
+		List<SubjectList> subjectList = subjectService.selectByPid("XX");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("subjectList",subjectList);
+		modelAndView.setViewName("frontstage/resource/upload_teaching_plan");
+		modelAndView.addObject("head_title", "上传教案");
+		return modelAndView;
+	}
+	/**
+	 * 上传附件方法
+	 * 
+	 * @param file
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/upload")
+	public void upload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		String path = request.getSession().getServletContext().getRealPath(ConfigInfo.getString("attachmentFile"));
+		Date date = new Date();
+		long time = date.getTime();
+		Random ra = new Random();
+		String fastName = "file" + time + ra.nextInt(10);
+		String format = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		String fileName = fastName + format;
+		File targetFile = new File(path, fileName);
+		if (!targetFile.exists()) {
+			targetFile.mkdirs();
+		}
+
+		// 保存
+		try {
+			file.transferTo(targetFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		JSONObject result = new JSONObject();
+		result.put("url", path + "/" + fileName);
+		result.put("fileName", file.getOriginalFilename());
+		ResponseUtil.write(response, result);
+
+	}
+	/**
+	 * 跳转教案上传页面
+	 */
+	@RequestMapping("/upload_teaching_plan")
+	public ModelAndView uploadTeachingPlan(HttpServletRequest request,TeachingPlanView teachingPlanView) throws Exception {
+		TeachingPlan teachingPlan=new TeachingPlan();
+		ModelAndView modelAndView = new ModelAndView();
+		BeanUtils.copyProperties(teachingPlanView, teachingPlan);
+		teachingPlanService.insert(teachingPlan);
+		int i=0;
+		if(teachingPlanView.getFileName()!=null)
+		for(String fileName:teachingPlanView.getFileName()){
+			TeachingPlanFile teachingPlanFile=new TeachingPlanFile();
+			teachingPlanFile.setTeaching_plan_id(teachingPlan.getId());
+			teachingPlanFile.setFilename(fileName);
+			teachingPlanFile.setUrl(teachingPlanView.getFileUrl().get(i));
+			teachingPlanService.insertFile(teachingPlanFile);
+			i++;	
+		}//
+		modelAndView.setViewName("redirect:/my_file_base/to_upload_choose.action");
+		modelAndView.addObject("head_title", "上传教案");
+		return modelAndView;
+	}
+	
+}

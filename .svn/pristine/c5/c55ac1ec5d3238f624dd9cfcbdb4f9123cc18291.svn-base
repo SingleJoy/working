@@ -1,0 +1,265 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<link href="${pageContext.request.contextPath}/frontstage/js/JMEditor/style/default.css" rel="stylesheet" media="screen" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/JMEditor.js"></script>
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+<style>
+    #cke_profile{margin-left:150px;}
+</style>
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+        <c:if test="${source_type==0}"><jsp:include page="community_header.jsp"></jsp:include></c:if>
+        <c:if test="${source_type==1}"><jsp:include page="workshop_header.jsp"></jsp:include></c:if>
+
+        <div class="row">
+
+            <c:if test="${source_type==0}"><jsp:include page="community_left.jsp"></jsp:include></c:if>
+            <c:if test="${source_type==1}"><jsp:include page="workshop_left.jsp"></jsp:include></c:if>
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">信息列表</div>
+
+                    <div class="panel-body">
+                        <form id="messageForm" action="${pageContext.request.contextPath}/message/save_message.action" class="form-horizontal" method="post" novalidate="novalidate">
+                            <input type="hidden" name="source_id" value="${source_id}" >
+                            <input type="hidden" name="source_type" value="${source_type}">
+                            <input type="hidden" name="id" value="${message.id}">
+                            <input type="hidden" name="message_relation_id" >
+                            <input type="hidden" name="message_file_id" value="${message.message_file_id}">
+                            <input type="hidden" name="stamp" value="5">
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><span class="text-danger">*</span>发布类型:</label>
+                                <div class="col-md-7 controls radios">
+                                    <label><input type="radio" name="type" <c:if test="${empty message||message.type==0}">checked="checked"</c:if> value="0" <c:if test="${message.status==1}">disabled="disabled"</c:if>>新闻动态</label>
+                                    <label><input type="radio" name="type" <c:if test="${message.type==1}">checked="checked"</c:if> value="1" <c:if test="${message.status==1}">disabled="disabled"</c:if>>政策文件</label>
+                                    <label><input type="radio" name="type" <c:if test="${message.type==2}">checked="checked"</c:if> value="2" <c:if test="${message.status==1}">disabled="disabled"</c:if>>通知文件</label>
+                                    <label><input type="radio" name="type" <c:if test="${message.type==3}">checked="checked"</c:if> value="3" <c:if test="${message.status==1}">disabled="disabled"</c:if>>使用帮助</label>
+                                    <label><input type="radio" name="type" <c:if test="${message.type==4}">checked="checked"</c:if> value="4" <c:if test="${message.status==1}">disabled="disabled"</c:if>>简报</label>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label><span class="text-danger">*</span>标题:</label></div>
+                                <div class="col-md-6 controls">
+                                    <input type="hidden" name="status"  id="status">
+                                    <input type="text" id="title" name="title" value="${message.title}"  class="form-control" <c:if test="${message.status==1}">disabled="disabled"</c:if>>
+                                    <div class="help-block" style="display: none;">
+                                        <span class="text-danger">请输入标题</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label><span class="text-danger">*</span>内容:</label></div>
+                                <div class="col-md-6 controls">
+                                    <div class="col-md-8 controls editDemo" id="content"  contentEditable="true" <c:if test="${message.status==1}">disabled="disabled"</c:if> ></div>
+                                    <input type="hidden" name="content" value="${message.content}" >
+                                    <!-- <textarea  class="form-control" rows="4"></textarea> -->
+                                    <div class="help-block" style="display: none;">
+                                        <span class="text-danger">请输入内容</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="fileList" class="form-group">
+
+                                <div id="upload_info" class="col-md-2 control-label">
+                                    <label><span class="text-danger">*</span>上传附件:</label>
+                                </div>
+
+                                <div id="new_soul" class="col-md-4 controls" style="display:none;">
+                                    <%-- <img src="${pageContext.request.contextPath}${message.path}" class="img-responsive" style="width: 150px;height: 90px;"> --%>
+                                    ${message.file_name}
+                                </div>
+
+                                <input type="hidden" name="path" id="filepath" value="${message.path}">
+                                <input type="hidden" name="file_name" id="filename" value="${message.file_name}">
+                                <div id="upload_file" class="col-md-4  controls" <c:if test="${message.status==1}">style="display:none"</c:if> >
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-info choose_file" data-toggle="modal">
+                                        <i class="glyphicon glyphicon-plus"></i><c:if test="${!empty message.message_file_id}">更换附件</c:if><c:if test="${empty message}">添加</c:if>
+                                    </a>
+                                </div>
+                                    <div class="help-block" style="display: none;">
+                                        <span class="text-danger">请选择上传附件</span>
+                                    </div>
+
+
+                                <div id="backupload" class="col-md-4 controls col-md-offset-2" style="display: none;">
+                                    <a class="btn btn-primary" href="javascript:void (0);" onclick="backUpload();" >重新选择</a>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group clearfix" <c:if test="${message.status==1}">style="display:none"</c:if>>
+                                <div class="col-md-offset-2 col-md-2 controls">
+                                    <button class="btn btn-fat btn-warning" onclick="doSumbit(0);" type="button">保存并发布</button>
+                                </div>
+                                <div class="col-md-2 controls" style="margin-left: 40px;">
+                                    <button class="btn btn-fat btn-info" onclick="doSumbit(1);" type="button">保存</button>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <button class="btn btn-fat btn-default" onclick="doSumbit(2);" type="button">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var profileVal = $("input[name='content']").val();
+        //给JMEditor赋值
+        var editor = CKEDITOR.replace("content",{
+            skin: "moono-lisa",width:540, height:200,margin:"0,0,0,120"
+        });
+        if(profileVal!=''){
+            editor.setData(profileVal);
+        }
+
+        $("#cke_profile").blur(function(){
+            $("input[name='content']").val(JMEditor.html('content'));
+        });
+    });
+
+
+    var uploader = WebUploader.create({
+        auto: true,
+        // swf文件路径
+        swf: '${pageContext.request.contextPath}/frontstage/js/webuploader/Uploader.swf',
+        // 文件接收服务端。
+        server: '${pageContext.request.contextPath}/cert_model/upload_img.action?realpath=messageFile',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#upload_file',
+
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false,
+        accept: {
+            title: 'files',
+            extensions: 'gif,jpg,jpeg,bmp,png,rar,zip,doc,xls,docx,xlsx,pdf',
+            mimeTypes: 'image/*,.rar,.zip,.doc,.xls,.docx,.xlsx,.pdf'   //修改这行
+        }
+    });
+    /**
+     *上传成功后
+     *file:文件
+     *response:服务器返回
+     */
+    uploader.on( 'uploadSuccess', function( file,response  ) {
+        var $list=$("#upload_file");
+        var $li ;
+        $("#filepath").val("/Message/messageFile/"+file.name);
+        $li =  $(
+            '<div id="' + file.id + '" class="controls">'+
+            file.name+
+            '</div>'
+        );
+		$list.prepend( $li );
+		 $("#backupload").css("display","");
+       /*  $("#new_soul").remove() */
+        $(".choose_file").hide();
+        var filepath = response.filepath;
+        var filename = response.filename;
+        $("#filepath").val(filepath);
+        $("#filename").val(filename);
+        var mime_type = filepath.substr(filepath.indexOf('.'));
+
+    });
+    // 当有文件添加进来的时候
+    uploader.on( 'fileQueued', function( file ) {
+        /* for(i in file){  
+            alert(i+":"+file[i]) //属性：属性值  
+        }  */
+    
+        /* $("#upload_info").css("display","none"); */
+
+       
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+       /*  uploader.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+            $img.attr( 'src', src );
+        }, 480, 270 ); */
+    });
+
+
+    function backUpload(){
+
+        // 移除所有缩略图并将上传文件移出上传序列
+        for (var i = 0; i < uploader.getFiles().length; i++) {
+            // 将图片从上传序列移除
+            uploader.removeFile(uploader.getFiles()[i]);
+            //uploader.removeFile(uploader.getFiles()[i], true);
+            //delete uploader.getFiles()[i];
+            // 将图片从缩略图容器移除
+            var $li = $('#' + uploader.getFiles()[i].id);
+            $li.off().remove();
+        }
+        $("#filepath").val("");
+        $("#upload_file").show();
+        $(".choose_file").show();
+
+        $("#backupload").hide();
+        uploader.setState('pedding');
+        // 重置文件总个数和总大小
+        fileCount = 0;
+        fileSize = 0;
+        // 重置uploader，目前只重置了文件队列
+        uploader.reset();
+        // 更新状态等，重新计算文件总个数和总大小
+        updateStatus();
+    }
+    function confirmType(mimeTypes,extensions){
+        var extension = extensions.split(",");
+        for(var i=0;i<extension.length;i++){
+            if(mimeTypes.indexOf(extension[i])>-1){
+                return true;
+            }
+        }
+        return false;
+    }
+    function doSumbit(value){
+        $("input[name='content']").val(CKEDITOR.instances.content.getData().trim());
+        if(value==0){
+            $("#status").val("1");
+        }else if(value==1){
+            $("#status").val("0");
+        }else{
+            location.replace(location.href);
+        }
+        if($("#title").val()!=""&&CKEDITOR.instances.content.getData().trim()!=""){
+        	 document.getElementById('messageForm').submit(); 
+        }
+    }
+     $(function(){
+        var path = "${message.path}";
+        if(path!=""){
+            /* var mime_type = path.substr(path.indexOf('.'));
+            if(!confirmType(mime_type,"gif,jpg,jpeg,bmp,png")){
+                var filename = path.substr(path.lastIndexOf('/')+1);
+                $("#new_soul>img").remove();
+                $("#new_soul").append(filename);
+            } */
+            $("#new_soul").show();
+        }
+    }) 
+</script>

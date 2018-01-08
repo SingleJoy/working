@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bnsr.edu_yun.frontstage.base.mapper.MySettingMapper">
+    <select id="showMySetting" parameterType="java.lang.Long" resultType="cn.bnsr.edu_yun.frontstage.base.view.MySettingView">
+       select b.id id, a.icon picture,a.username userName,a.phone phone,a.email email,b.profile synopsis,b.pubver_id subjectId from user a inner join user_info b 
+       on a.id = b.user_id where a.id = #{userId}       
+    </select>
+    <update id="updateMySetting" parameterType="cn.bnsr.edu_yun.frontstage.base.view.MySettingView" >
+       
+       <set >
+      <if test="a.icon != null" >
+        a.icon = #{picture},
+      </if>
+      <if test="a.username != null" >
+        a.username = #{userName},
+      </if>
+      <if test="a.phone != null" >
+        a.phone = #{phone},
+      </if>
+      <if test="a.email != null" >
+        a.email = #{email},
+      </if>
+      <if test="b.profile != null" >
+        b.profile = #{synopsis},
+      </if>
+      <if test="b.pubver_id != null" >
+        b.pubver_id = #{subjectId}
+      </if>
+      where a.id = #{userId}
+      </set>       
+    </update>
+    </mapper>

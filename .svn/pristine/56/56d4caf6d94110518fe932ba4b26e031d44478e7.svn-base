@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据统计</title>
+    <style>
+        .main_head{font-size: 16px;  }
+        .main_body{margin-top: 20px;}
+        .time>div{float: left;margin-right:20px;}
+        /*.time{margin-bottom: 20px;}*/
+        .select_time{}
+        .select_time>span>input{width: 100px;}
+        .select_time>span{margin-left: 10px;}
+        .choose_date_01>a,.choose_date_02>a{color:#616161;text-decoration: none;margin-right: 5px;}
+        .choose_date_01>a.active{display: inline-block;background-color: #4da7fd;color: #fff;padding:2px;}
+        .choose_area{margin-right: 15px;}
+        .choose_area>select{min-width: 100px;height: 30px;}
+        .number{font-size: 20px;font-weight: bold;}
+        .user_info{}
+        .user_info>div{margin-right: 20px;display: inline-block;}
+        .table_sta>thead>th,.table_sta>tbody>tr>td{width: 150px;text-align: center;}
+
+    </style>
+</head>
+<body>
+
+
+<div class="main_content">
+    <div class="main_head">用户趋势统计分析</div>
+
+    <div class="main_body">
+
+        <div class="time">
+
+            <div class="choose_date_01">
+                <span>时间：</span>
+                <a class="active" href="javascript:void(0);">今天</a>
+                <a href="javascript:void(0);">昨天</a>
+                <a href="javascript:void(0);">最近7天</a>
+                <a href="javascript:void(0);">最近30天</a>
+            </div>
+
+            <div class="select_time">
+               <span>开始日期：<input type="text"></span>
+               <span>结束日期：<input type="text"></span>
+
+            </div>
+            <div class="choose_date_01">
+                <span>对比时间段：</span>
+                <a class="active" href="javascript:void(0);">按时</a>
+                <a href="javascript:void(0);">按天</a>
+                <a href="javascript:void(0);">按周</a>
+                <a href="javascript:void(0);">按月</a>
+            </div>
+
+        </div>
+        <br/>
+        <br/>
+
+        <div class="time">
+
+            <div class="choose_date_01">
+                <span>来源：</span>
+                <a class="active" href="javascript:void(0);">全部</a>
+                <a href="javascript:void(0);">PC端</a>
+                <a href="javascript:void(0);">移动端</a>
+                <a href="javascript:void(0);">其他</a>
+
+            </div>
+            <div class="choose_date_01 ">
+                <span>地域：</span>
+                <span class="choose_area">省：
+                    <select>
+                    <option>北京</option>
+                    <option>上海</option>
+                    <option>湖南</option>
+                    <option>湖北</option>
+                    <option>江苏</option>
+                    <option>西藏</option>
+                    </select>
+                </span>
+                <span class="choose_area">市：
+                    <select>
+                    <option>市区01</option>
+                    <option>市区02</option>
+
+                    </select>
+                </span>
+                <span class="choose_area">县：
+                    <select>
+                    <option>县01</option>
+                    <option>县02</option>
+
+                    </select>
+                </span>
+
+            </div>
+
+
+
+        </div>
+        <br/>
+        <br/>
+        <div class="time user_info">
+
+           <div>
+               新增用户&nbsp;&nbsp;<span class="number"> 2000</span>个
+           </div>
+            <div>
+               登录数&nbsp;&nbsp;<span class="number"> 2000</span>个
+            </div>
+            <div>
+               平均浏览时间&nbsp;&nbsp;<span class="number"> 2000</span>分钟
+            </div>
+            <div>
+              新用户平均浏览时间 &nbsp;&nbsp;<span class="number"> 2000</span>分钟
+            </div>
+        </div><br/><br/>
+
+        <div class="time">
+            插件显示区域
+        </div>
+        <br/>
+        <br/>
+        <div class="time">
+            <table class="table_sta">
+                <thead>
+
+                    <th>日期</th>
+
+                    <th >新增数</th>
+
+                    <th >登录数</th>
+
+                    <th> 平均访问时长</th>
+                    <th> 新用户平均访问时长</th>
+
+                </thead>
+
+                <tbody>
+
+                <!--数据循环这一部分-->
+                <tr >
+                    <td  >2017-09-20</td>
+                    <td  >2017</td>
+                    <td  >20</td>
+                    <td  >20分钟</td>
+                    <td >20分钟</td>
+
+                </tr>
+
+                <!--当前汇总-->
+
+                <tr >
+                    <td  >当前汇总</td>
+                    <td  >2017</td>
+                    <td  >20</td>
+                    <td  >20分钟</td>
+                    <td >20分钟</td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+</body>
+</html>

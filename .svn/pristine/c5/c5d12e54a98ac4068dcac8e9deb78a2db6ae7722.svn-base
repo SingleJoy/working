@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/register.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../jq/jquery.1.10.2.js"></script>
+    <script type="text/javascript" src="../js/register.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="main_top_content">
+
+    <a href="index.html" class="has_admin">已有账号?</a>
+    <a href="#" class="admin_login">登&nbsp;录</a>
+</div>
+
+<div class="main">
+    <div class="main_content">
+
+        <form id="my_form" action="" method="get">
+
+            <div><label class="username">用户名:</label><input id="username" name="username" type="text"/></div>
+            <div><label class="email">邮箱:</label><input id="email" name="email" data-ideal="required email" type="email"/></div>
+            <div><label class="cellphone">手机号:</label><input  name="cellhpone" data-ideal="required cell" type="cellphone"/></div>
+            <div><label class="password">设置密码:</label><input id="pass" name="password" type="password"/></div>
+            <div><label class="password_again">确认密码:</label><input id="password_again"  type="password"/></div>
+            <div><label class="vary_code">验证码:</label><input  name="" type="text"/></div>
+        </form>
+        <div><input type="button" value="注册" class="user_register"></div>
+        <div class="check_agreement"><input type="checkbox" value="" class="register_checkbox">&nbsp;&nbsp;<span class="main_style_span">你同意</span><span class="register_agreement">求资网协议</span></div>
+        <br/>
+
+    </div>
+</div>
+
+
+
+
+
+
+<div class="footer">
+    <div class="footer_content">
+        <ul class="footer_content_ul">
+            <li><a class="footer_title">北京市百年树人远程教育有限公司<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="agreement">协议<span class="footer_content_span">|</span></a></li>
+            <li><a href="#" class="proposal">意见反馈</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

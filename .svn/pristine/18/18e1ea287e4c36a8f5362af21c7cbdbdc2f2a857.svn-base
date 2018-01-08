@@ -1,0 +1,269 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+<style>
+    #defaultImg{
+        width:540px;height:270px;}
+    .file:hover{color: #fff;}
+    .webuploader-pick>div>label:hover{color: #fff;}
+</style>
+
+<div class="cn-wrap">
+
+    <div id="content-container" class="container">
+        <jsp:include page="/frontstage/train/course/course_header.jsp"></jsp:include>
+
+        <div class="row">
+            <jsp:include page="/frontstage/train/course/course_left.jsp"></jsp:include>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">
+                        <a href="${pageContext.request.contextPath}/testPaper/to_testPaper_add.action?courseId=${courseView.id}&flag=2&sign=11" class="btn btn-info btn-sm pull-right mls">
+                            <span class="glyphicon glyphicon-plus"></span>创建试卷
+                        </a>试卷管理
+                    </div>
+                    <div class="panel-body " id="quiz-table-container">
+                        <table class="table  table-hover" id="quiz-table">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" autocomplete="off" class="checkAll subCheckbox"></th>
+                                <th width="38%">名称</th>
+                                <th>状态</th>
+                                <th>题目统计</th>
+                                <th>时间限制</th>
+                                <th>更新人/时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="sel-div">
+                            <c:forEach items="${testPaperViews }" var="testPaperView">
+                                <tr>
+                                    <td><input value="${testPaperView.id }" type="checkbox" class="subCheckbox"></td>
+                                    <td>
+                                        <a href="testPaper_look.action?id=${testPaperView.id }" target="_blank" id="name${testPaperView.id }">${testPaperView.name }</a>
+                                    </td>
+                                    <td id="status${testPaperView.id }">
+                                        <c:if test="${testPaperView.status==0 }">草稿</c:if>
+                                        <c:if test="${testPaperView.status==1 }">已发布</c:if>
+                                        <c:if test="${testPaperView.status==3 }">已关闭</c:if>
+
+                                    </td>
+                                    <td>
+                                            ${testPaperView.total_number }题 <span class="text-muted">/</span> ${testPaperView.total_score }分
+                                    </td>
+                                    <td>
+                                            ${testPaperView.timeless }分钟
+                                    </td>
+                                    <td>
+                                        <a class="link-dark " href="${testPaperView.user_id }">${testPaperView.username }</a><br>
+                                        <span class="text-muted text-sm">${testPaperView.update_time }</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="testPaper_look.action?id=${testPaperView.id }" class="btn btn-default btn-sm" target="_blank">预览</a>
+                                            <a href="javascript:;" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown-toggle">
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right" id="dropdown-menu${testPaperView.id }">
+                                                <c:if test="${testPaperView.status!=1 }">
+                                                    <li>
+                                                        <a class="open-testpaper" href="javascript:" title="发布试卷${testPaperView.name }" data="${testPaperView.id }"><span class="glyphicon glyphicon-ok"></span> 发布试卷</a>
+                                                    </li>
+                                                </c:if>
+                                                <c:if test="${testPaperView.status==0 }">
+                                                    <li>
+                                                        <a href="${pageContext.request.contextPath}/testPaper/to_testPaper_edit.action?courseId=${courseView.id}&flag=2&sign=11&id=${testPaperView.id }"><span class="glyphicon glyphicon-edit"></span> 编辑试卷信息</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="${pageContext.request.contextPath}/testPaper/testPaper_question.action?id=${testPaperView.id }&courseId=${courseView.id}&flag=2&sign=11"><span class="glyphicon glyphicon-list"></span> 管理题目</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="${pageContext.request.contextPath}/testPaper/to_testPaper_return.action?courseId=${courseView.id}&flag=2&sign=11&id=${testPaperView.id }"><span class="glyphicon glyphicon-repeat"></span> 重新生成题目</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:" class="del-question" data="${testPaperView.id }"><span class="glyphicon glyphicon-remove-circle"></span> 删除试卷</a>
+                                                    </li>
+                                                </c:if>
+                                                <c:if test="${testPaperView.status==1 }">
+                                                    <li>
+                                                        <a class="close-testpaper" href="javascript:" title="关闭试卷${testPaperView.name }" data="${testPaperView.id }">
+                                                            <span class="glyphicon glyphicon-list"></span> 关闭试卷
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <div>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" autocomplete="off" class="checkAll subCheckbox"> 全选
+                            </label>
+                            <button class="btn btn-default btn-sm mlm del-sel" >删除</button>
+                        </div>
+                        <form id="studyCenterForm" action="${pageContext.request.contextPath}/testPaper/to_testPaper.action" method="post">
+                            <input type="hidden" name="page" id="page" value="${testPaperView.page}"/>
+                            <input type="hidden" name="rows" id="rows" value="${testPaperView.rows}"/>
+                            <input type="hidden" name="total" id="total" value="${testPaperView.total}"/>
+                            <input type="hidden" name="totalPage" id="totalPage" value="${testPaperView.totalPage}"/>
+                            <input type="hidden" name="courseId" value="${courseView.id}">
+                        </form>
+                        <div id="test" class="pager" style="padding-top: 0;margin-bottom: 20px;"></div>
+                        <div class="text-muted mtl">
+                            提示：试卷一旦发布不能修改，发布后的试卷需要
+                            <strong>添加到课时</strong>中才能正常使用。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+<!-- 弹窗 -->
+<div id="modal" class="modal in" style="display: none;" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">题目预览</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(e){
+//翻页
+        var total = $("#total").val();
+        var page =  parseInt($("#page").val())+1;
+
+        $("#btn5").on('click', function () {
+            $("#div1").PageChanged(5);
+        });
+
+        $(".pager").pagination({
+            thisPageIndex:page,
+            recordCount: total,       //总记录数
+            pageSize: $("#rows").val(),           //一页记录数
+            onPageChange: function (page) {
+                document.title = page;
+                $("#page").val(page-1);
+                $('#studyCenterForm').submit();
+
+            }
+        });
+
+        //点击下拉框
+        $('.btn-group .dropdown-toggle').click(function(e){
+            e.stopPropagation();
+            if ($(this).siblings(".dropdown-menu").css("display") == "none") {
+                $(".dropdown-menu").hide();
+                $(this).siblings(".dropdown-menu").show();
+            }else{
+                $(".dropdown-menu").hide();
+            }
+        })
+        $(document).click(function(){
+            $(".dropdown-menu").hide();
+        })
+        // 全选
+        $(".checkAll").click(function () {
+            var isChecked = $(this).prop("checked");
+            $(".subCheckbox").prop("checked", isChecked);
+        })
+        //删除选中
+        $('.del-sel').click(function(){
+            if (!confirm('真的要删除选中试卷吗?')) {
+                return ;
+            }
+            var ids="";
+            $('.sel-div input:checked').each(function(i,ck){
+                ids+=$(ck).val();
+                ids+=",";
+            });
+            $.ajax({
+                url : '${pageContext.request.contextPath}/testPaper/ajax_del.action?ids='+ids,
+                dataType : 'json',
+                success : function(response) {
+                    $('.sel-div input:checked').each(function(i,ck){
+                        $(ck).parent().parent().remove();
+                    });
+                }
+
+            });
+            $(".checkAll").prop("checked", false);
+        });
+        $('.del-question').click(function(){
+            if (!confirm('真的要删除该试卷吗?')) {
+                return ;
+            }
+            var id=$(this).attr("data");
+            var this_=$(this);
+            $.ajax({
+                url : '${pageContext.request.contextPath}/testPaper/ajax_change_status.action?status=2&id='+id,
+                dataType : 'json',
+                success : function(response) {
+                    this_.parent().parent().parent().parent().parent().remove();
+                }
+
+            });
+
+        });
+        $(document).on('click',".open-testpaper",function(){
+            var id=$(this).attr("data");
+            var name=$("#name"+id).html();
+            if (!confirm('真的要发布试卷' + name + '吗？ 试卷发布后无论是否关闭都将无法修改。')) {
+                return ;
+            }
+            $.ajax({
+                url : '${pageContext.request.contextPath}/testPaper/ajax_change_status.action?status=1&id='+id,
+                dataType : 'json',
+                success : function(response) {
+                    $("#status"+id).html("已发布");
+                    $("#dropdown-menu"+id).find("li").remove();
+                    var li='<li> <a class="close-testpaper" href="javascript:" title="关闭试卷'+name+'" data="'+id+'">'+
+                            '<span class="glyphicon glyphicon-list"></span> 关闭试卷 </a> </li>';
+                    $("#dropdown-menu"+id).append(li);
+                }
+
+            });
+        });
+        $(document).on('click',".close-testpaper",function(){
+            var id=$(this).attr("data");
+            var name=$("#name"+id).html();
+            if (!confirm('真的要关闭试卷' + name + '吗？ 试卷发布后无论是否关闭都将无法修改。')) {
+                return ;
+            }
+            $.ajax({
+                url : '${pageContext.request.contextPath}/testPaper/ajax_change_status.action?status=3&id='+id,
+                dataType : 'json',
+                success : function(response) {
+                    $("#status"+id).html("已关闭");
+                    $("#dropdown-menu"+id).find("li").remove();
+                    var li='<li> <a class="open-testpaper" href="javascript:" title="发布试卷'+name+'" data="'+id+'">'+
+                            '<span class="glyphicon glyphicon-ok"></span> 发布试卷 </a> </li>';
+                    $("#dropdown-menu"+id).append(li);
+
+                }
+            });
+        });
+    })
+</script>
+

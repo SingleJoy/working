@@ -1,0 +1,317 @@
+package cn.bnsr.edu_yun.frontstage.base.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.po.UserSupport;
+import cn.bnsr.edu_yun.frontstage.base.po.User_attent;
+import cn.bnsr.edu_yun.frontstage.base.service.UserAttentService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.MyAttentionView;
+import cn.bnsr.edu_yun.frontstage.base.view.TeacherCenterView;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicAnswer;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicAnswerService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicQuestionService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserAppraiseService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserCollectService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TopicQuestionView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainView;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonService;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+/**
+ * 个人主页
+ * 
+ * @author Administrator
+ * 
+ */
+@Controller
+@RequestMapping("/teacher_center")
+public class TeacherCenterController {
+
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private UserCollectService userCollectService;
+	@Autowired
+	private UserAttentService userAttentService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private TopicQuestionService topicQuestionService;
+	@Autowired
+	private TopicAnswerService topicAnswerService;
+	@Autowired
+	private LessonService lessonService;
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private UserAppraiseService userAppraiseService;
+	private final Logger log = LoggerFactory.getLogger(TeacherCenterController.class);
+
+	/**
+	 * 跳转个人主页
+	 */
+	@RequestMapping("/to_teacher_center")
+	public ModelAndView toTeacherCenter(HttpServletRequest request, TeacherCenterView teacherCenterView) {
+		User user = userService.selectByUserId(teacherCenterView.getUser_id());
+		HttpSession session = request.getSession();
+		User currentUser = (User) session.getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		if (currentUser != null) {
+			if (currentUser.getId() == user.getId()) {
+				modelAndView.addObject("userAttent", 2);
+			} else {
+				User_attent userAttent = userAttentService.selectattent(currentUser.getId(), user.getId());
+				if (userAttent == null) {
+					modelAndView.addObject("userAttent", 0);
+				} else {
+					modelAndView.addObject("userAttent", 1);
+				}
+			}
+		} else {
+			modelAndView.addObject("userAttent", 0);
+		}
+		try {
+			// 通用
+			teacherCenterView.setRows(12);
+			if (teacherCenterView.getPage() == 0) {
+				teacherCenterView.setStartLine(0);
+			} else {
+				teacherCenterView.setStartLine(teacherCenterView.getPage() * teacherCenterView.getRows());
+			}
+			int rows = teacherCenterView.getRows();
+			int startLine = teacherCenterView.getStartLine();
+			UserInfo userInfo = userInfoService.getByUserId(teacherCenterView.getUser_id());
+			modelAndView.addObject("user", user);
+			modelAndView.addObject("userInfo", userInfo);
+			CourseView courseView = new CourseView();
+			courseView.setType("0");
+			courseView.setUserId(user.getId());
+			int courseTotal = courseService.queryTotalCourse(courseView);// 课程总数
+			modelAndView.addObject("courseTotal", courseTotal);
+			// 收藏总数
+			int collectTotal = userCollectService.countMyAllCollect(user.getId());
+			modelAndView.addObject("collectTotal", collectTotal);
+			// 课程 我创建的 我加入的
+			if (teacherCenterView.getStamp() == 0) {
+				courseView.setStartLine(startLine);
+				courseView.setRows(rows);
+				if (teacherCenterView.getType() == 0) {
+					List<CourseView> courseList = courseService.queryCourse(courseView);
+					int total = courseService.queryTotalCourse(courseView);// 课程总数
+					for(CourseView courseView2:courseList){
+						long totalAppraise = userAppraiseService.selectCountBySourceId(courseView2.getId(), 0);
+						Integer totalScore = userAppraiseService.selectTotalScore(courseView2.getId(), 0);
+						if (totalAppraise != 0 && totalScore != null) {
+							courseView2.setScore((int) (totalScore / totalAppraise));
+						} else {
+							courseView2.setScore(0);
+						}
+					}
+					
+					teacherCenterView.setTotal(total);
+					modelAndView.addObject("courseList", courseList);
+				}
+				if (teacherCenterView.getType() == 1) {
+					List<CourseView> courseList = courseService.queryMyJoinCourse(courseView);
+					int total = courseService.queryMyJoinCourseCount(courseView);// 课程总数
+					for(CourseView courseView2:courseList){
+						long totalAppraise = userAppraiseService.selectCountBySourceId(courseView2.getId(), 0);
+						Integer totalScore = userAppraiseService.selectTotalScore(courseView2.getId(), 0);
+						if (totalAppraise != 0 && totalScore != null) {
+							courseView2.setScore((int) (totalScore / totalAppraise));
+						} else {
+							courseView2.setScore(0);
+						}
+					}
+					teacherCenterView.setTotal(total);
+					modelAndView.addObject("courseList", courseList);
+				}
+			}
+			// 培训 我创建的 我加入的
+			if (teacherCenterView.getStamp() == 1) {
+				TrainView trainView = new TrainView();
+				trainView.setStartLine(startLine);
+				trainView.setRows(rows);
+				trainView.setUser_id(user.getId());
+				if (teacherCenterView.getType() == 0) {
+					List<TrainView> trainList = trainService.queryTrain(trainView);
+					int total = trainService.queryTotalTrain(trainView);// 培训总数
+					for(TrainView trainView2:trainList){
+						long totalAppraise = userAppraiseService.selectCountBySourceId(trainView2.getId(), 1);
+						Integer totalScore = userAppraiseService.selectTotalScore(trainView2.getId(), 1);
+						if (totalAppraise != 0 && totalScore != null) {
+							trainView2.setScore((int) (totalScore / totalAppraise));
+						} else {
+							trainView2.setScore(0);
+						}
+					}
+					teacherCenterView.setTotal(total);
+					modelAndView.addObject("trainList", trainList);
+				}
+				if (teacherCenterView.getType() == 1) {
+					List<TrainView> trainList = trainService.queryMyTrain(trainView);
+					int total = trainService.queryMyTrainCount(trainView);// 培训总数
+					for(TrainView trainView2:trainList){
+						long totalAppraise = userAppraiseService.selectCountBySourceId(trainView2.getId(), 1);
+						Integer totalScore = userAppraiseService.selectTotalScore(trainView2.getId(), 1);
+						if (totalAppraise != 0 && totalScore != null) {
+							trainView2.setScore((int) (totalScore / totalAppraise));
+						} else {
+							trainView2.setScore(0);
+						}
+					}
+					teacherCenterView.setTotal(total);
+					modelAndView.addObject("trainList", trainList);
+				}
+			}
+			// 课例 我创建的 我加入的
+			if (teacherCenterView.getStamp() == 2) {
+				LessonView lessonView = new LessonView();
+				lessonView.setStartLine(startLine);
+				lessonView.setRows(rows);
+				lessonView.setUser_id(user.getId());
+				lessonView.setStatus(-2);
+				if (teacherCenterView.getType() == 0) {
+					List<LessonView> lessonList = lessonService.queryUserLessonCreate(lessonView);
+					int total = lessonService.countUserLessonCreate(lessonView);// 我的课程总数
+					teacherCenterView.setTotal(total);
+					modelAndView.addObject("lessonList", lessonList);
+				}
+				if (teacherCenterView.getType() == 1) {
+					List<LessonView> lessonList = lessonService.queryUserLesson(lessonView);
+					int total = lessonService.countUserLesson(lessonView);// 我的课程总数
+					teacherCenterView.setTotal(total);
+					modelAndView.addObject("lessonList", lessonList);
+				}
+			}
+			// 话题
+			if (teacherCenterView.getStamp() == 3) {
+				CommunityCenterView ccv = new CommunityCenterView();
+				ccv.setStartLine(startLine);
+				ccv.setRows(rows);
+				ccv.setUserId(user.getId());
+				ccv.setSourceType(-1);
+				int total = topicQuestionService.queryTopicCommunityCount(ccv);
+				teacherCenterView.setTotal(total);
+				// 分页总页数
+				ccv.setTotalPage(NumUtil.totalPage(total, ccv.getRows()));
+				List<TopicQuestionView> topicQuestionViews = topicQuestionService.queryTopicCommunity(ccv);
+				for (TopicQuestionView topicQuestionView : topicQuestionViews) {
+					long questionId = Long.parseLong(topicQuestionView.getQuestionId());
+					List<TopicAnswer> topicAnswers = topicAnswerService.selectAnswerByQuestionId(questionId, 0, 3);
+					topicQuestionView.setTopicAnswers(topicAnswers);
+				}
+				modelAndView.addObject("topicQuestionViews", topicQuestionViews);
+			}
+			// 关注
+			if (teacherCenterView.getStamp() == 4) {
+				User_attent user_attent = new User_attent();
+				user_attent.setStartLine(startLine);
+				user_attent.setRows(rows);
+				user_attent.setUser_id(user.getId());
+				if (teacherCenterView.getType() == 0) {
+					int total = userAttentService.queryTotalAttention(user.getId());
+					teacherCenterView.setTotal(total);
+					List<User_attent> attents = userAttentService.myAttenation(user_attent);
+					List<MyAttentionView> list = new ArrayList<MyAttentionView>();
+					for (User_attent u : attents) {
+						MyAttentionView myAttentionView = new MyAttentionView();
+						myAttentionView.setUserId(u.getAttent_user_id());
+						myAttentionView.setSupport(0);
+						myAttentionView.setTeacher(0);
+						User user2 = userService.selectByPrimaryKey(u.getAttent_user_id());
+						myAttentionView.setRealName(user2.getUsername());
+						myAttentionView.setImg(user2.getIcon());
+						UserInfo userInfo2 = userInfoService.getByUserId(u.getAttent_user_id());
+						if (userInfo2 != null) {
+							myAttentionView.setTeacher(1);
+							myAttentionView.setTitles(userInfo2.getTitles());
+							myAttentionView.setSchool(userInfo2.getSchool());
+						}
+						list.add(myAttentionView);
+
+					}
+					modelAndView.addObject("myAttention", list);
+				}
+				if (teacherCenterView.getType() == 1) {
+					int total = userAttentService.queryTotalFans(user.getId());
+					teacherCenterView.setTotal(total);
+					List<User_attent> fans = userAttentService.myFans(user_attent);
+					List<MyAttentionView> list = new ArrayList<MyAttentionView>();
+					for (User_attent u : fans) {
+						MyAttentionView myAttentionView = new MyAttentionView();
+						myAttentionView.setUserId(u.getUser_id());
+						myAttentionView.setSupport(0);
+						myAttentionView.setTeacher(0);
+						User user2 = userService.selectByPrimaryKey(u.getUser_id());
+						myAttentionView.setRealName(user2.getUsername());
+						myAttentionView.setImg(user2.getIcon());
+						UserInfo userInfo2 = userInfoService.getByUserId(u.getAttent_user_id());
+						if (userInfo2 != null) {
+							myAttentionView.setTeacher(1);
+							myAttentionView.setTitles(userInfo2.getTitles());
+							myAttentionView.setSchool(userInfo2.getSchool());
+						}
+						list.add(myAttentionView);
+					}
+					modelAndView.addObject("myAttention", list);
+				}
+
+			}
+			// 分页总页数
+			teacherCenterView.setTotalPage(NumUtil.totalPage(teacherCenterView.getTotal(), teacherCenterView.getRows()));
+			modelAndView.addObject("teacherCenterView", teacherCenterView);
+			modelAndView.addObject("head_title", "个人主页");
+			modelAndView.setViewName("frontstage/base/personalCenter/teacher_center");
+		} catch (Exception e) {
+			log.error("跳转个人主页失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping("/attent")
+	public void attent(HttpServletResponse response, HttpServletRequest request, long id) throws Exception {
+
+		HttpSession session = request.getSession();
+		User currentUser = (User) session.getAttribute("currentUser");
+		User_attent userAttent=null;
+		if(currentUser!=null){
+		 userAttent = userAttentService.selectattent(currentUser.getId(), id);
+		}
+		JSONObject result = new JSONObject();
+		if (userAttent == null) {
+			result.put("userAttent", 0);
+		} else {
+			result.put("userAttent", 1);
+		}
+		ResponseUtil.write(response, result);
+	}
+}

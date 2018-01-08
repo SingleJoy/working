@@ -1,0 +1,110 @@
+$(function(){
+    $(".course_list_main_left a").click(function(){
+        $(this).addClass("curr").siblings().removeClass("curr");
+    })
+});
+
+$(function(){
+    $(".my_course ul li").click(function(){
+        $(".my_course ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+        $(this).addClass("curr").find("a").addClass("curr");
+    }).mouseover(function(){
+        if($(this).hasClass("curr")){}
+        else{
+            $(this).addClass("curr_01").find("a").addClass("curr_01");
+        }
+        }).mouseout(function(){
+
+        if($(this).hasClass("curr")){}
+        else{
+            $(this).removeClass("curr_01").find("a").removeClass("curr_01");
+        }
+        })
+});
+//main_left 布局
+$(function(){
+    $(".course_list_main_left>a").click(function(){
+        $(".course_list_main_left>a").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+        $(this).addClass("curr").find("a").addClass("curr");
+        var index=$(this).index();
+        $(".course_list_tabs").hide().eq(index-1).show();
+    })
+});
+
+
+//     我的课程
+
+$(function(){
+    $(".my_course ul li").click(function(){
+        $(".my_course ul li").removeClass("curr").find("a").removeClass("curr");
+        $(this).addClass("curr").find("a").addClass("curr");
+        var index=$(this).index();
+        $(".ul_tabs").hide().eq(index).show();
+    })
+});
+
+
+//我的话题
+$(function(){
+    $(".my_topic_tabs ul li").click(function(){
+        var index=$(this).index();
+        $(".topic_tabs").hide().eq(index).show();
+        $(".my_topic_tabs ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+        $(this).addClass("curr").find("a").addClass("curr");
+    }).mouseover(function(){
+        if($(this).hasClass("curr")){
+           return false;
+        }else{
+            $(this).addClass("curr_01").find("a").addClass("curr_01");
+        }
+
+    }).mouseout(function(){
+        if($(this).hasClass("curr")){
+            return false;
+        }else{
+            $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+        }
+    })
+});
+//我的笔记
+$(function(){
+    $(".my_notes ul li").mouseover(function(){
+        $(this).find(".view_notes").show();
+    }).mouseout(function(){
+        $(this).find(".view_notes").hide();
+
+    })
+});
+
+//我的考试
+$(function(){
+    $(".course_personal_tabs ul li").click(function(){
+        var index=$(this).index();
+        //$(".test_tabs").hide().eq(index).show();
+        $(".course_personal_tabs ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+        $(this).addClass("curr").find("a").addClass("curr");
+    }).mouseover(function(){
+        if($(this).hasClass("curr")){
+            return false;
+        }else{
+            $(this).addClass("curr_01").find("a").addClass("curr_01");
+        }
+    }).mouseout(function(){
+        if($(this).hasClass("curr")){
+            return false;
+        }else{
+            $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+        }
+    })
+});
+
+
+
+//鼠标滑动表格元素样式
+
+
+
+//奇数项表格添加背景颜色
+$(function(){
+    $(".test_records table tr:even").addClass("curr_01");
+});

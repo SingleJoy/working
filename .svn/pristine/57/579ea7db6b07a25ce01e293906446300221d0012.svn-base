@@ -1,0 +1,151 @@
+package cn.bnsr.edu_yun.backstage.base.view;
+
+import java.util.Date;
+
+public class UserView extends PageBase{
+	private Long id;
+	private Date create_time;
+	private String username;
+	private String password;
+	private String phone;
+	private String newpwd;
+	private String status;//状态
+	private String remarks;//备注
+	private String user_type;//用户类型 0-系统用户；1-前台用户
+	
+	private String ids;
+	private String roleIds;
+	private String roleNames;
+	private String authIds;
+	private String authNames;
+	private String authUrls;
+	private String statusType;//状态
+
+	private String create_timeStart;
+	private String create_timeEnd;
+	
+	private Double wealth;
+	private Long score;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Date getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getNewpwd() {
+		return newpwd;
+	}
+	public void setNewpwd(String newpwd) {
+		this.newpwd = newpwd;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	public String getUser_type() {
+		return user_type;
+	}
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	public String getRoleIds() {
+		return roleIds;
+	}
+	public void setRoleIds(String roleIds) {
+		this.roleIds = roleIds;
+	}
+	public String getRoleNames() {
+		return roleNames;
+	}
+	public void setRoleNames(String roleNames) {
+		this.roleNames = roleNames;
+	}
+	public String getAuthIds() {
+		return authIds;
+	}
+	public void setAuthIds(String authIds) {
+		this.authIds = authIds;
+	}
+	public String getAuthNames() {
+		return authNames;
+	}
+	public void setAuthNames(String authNames) {
+		this.authNames = authNames;
+	}
+	public String getAuthUrls() {
+		return authUrls;
+	}
+	public void setAuthUrls(String authUrls) {
+		this.authUrls = authUrls;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getStatusType() {
+		return statusType;
+	}
+	public void setStatusType(String statusType) {
+		this.statusType = statusType;
+	}
+	public String getCreate_timeStart() {
+		return create_timeStart;
+	}
+	public void setCreate_timeStart(String create_timeStart) {
+		this.create_timeStart = create_timeStart;
+	}
+	public String getCreate_timeEnd() {
+		return create_timeEnd;
+	}
+	public void setCreate_timeEnd(String create_timeEnd) {
+		this.create_timeEnd = create_timeEnd;
+	}
+	public Long getScore() {
+		return score;
+	}
+	public void setScore(Long score) {
+		this.score = score;
+	}
+	public Double getWealth() {
+		return wealth;
+	}
+	public void setWealth(Double wealth) {
+		this.wealth = wealth;
+	}
+	
+}

@@ -1,0 +1,60 @@
+package cn.bnsr.edu_yun.listener;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserDuration;
+import cn.bnsr.edu_yun.frontstage.base.service.UserDurationService;
+
+public class SessionListener implements HttpSessionBindingListener {
+
+	private User currentUser;
+	private ApplicationContext applicationContext = GETApplicationContext.getApplicationContext();
+	private UserDurationService userDurationService = (UserDurationService) applicationContext.getBean("userDurationService");
+
+	public SessionListener(User currentUser) {
+		this.currentUser = currentUser;
+	};
+
+	@Override
+	public void valueBound(HttpSessionBindingEvent arg0) {
+		Date date = new Date();
+		UserDuration userDuration = new UserDuration();
+		userDuration.setUser_id(currentUser.getId());
+		userDuration.setStart_time(date);
+		userDuration.setStatus(0);
+		userDurationService.insert(userDuration);
+	}
+
+	@Override
+	public void valueUnbound(HttpSessionBindingEvent arg0) {
+		Date date = new Date();
+		HttpServletRequest request =  ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		String mobile = request.getParameter("device");
+		int device = 0;//PC
+		if (mobile!=null&&!"".equals(mobile)) {
+			if(mobile.contains("android")){
+				device = 1;//Android
+			}else if(mobile.contains("iPhone")){
+				device = 2;//iPhone客户端日志
+			}
+		} 
+		UserDuration userDuration = new UserDuration();
+		userDuration.setDevice(device);
+		userDuration.setUser_id(currentUser.getId());
+		userDuration = userDurationService.selectByUserId(userDuration);
+		userDuration.setEnd_time(date);
+		userDuration.setStatus(1);
+		Date start = userDuration.getStart_time();
+		userDuration.setTotal_ms(date.getTime() - start.getTime());
+		userDurationService.update(userDuration);
+	}
+}

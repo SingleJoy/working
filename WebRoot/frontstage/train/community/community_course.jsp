@@ -1,0 +1,225 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+<div class="cn-wrap">
+
+	<div id="content-container" class="container" style="margin-top: 20px;">
+		<c:if test="${communityView.source_type==0 }">
+			<jsp:include page="community_header.jsp"></jsp:include>
+		</c:if>
+		<c:if test="${workshopView.source_type==1 }">
+			<jsp:include page="workshop_header.jsp"></jsp:include>
+		</c:if>
+		<div class="row">
+			<c:if test="${communityView.source_type==0 }">
+				<jsp:include page="community_left.jsp"></jsp:include>
+			</c:if>
+			<c:if test="${workshopView.source_type==1 }">
+				<jsp:include page="workshop_left.jsp"></jsp:include>
+			</c:if>
+			<div class="col-md-9">
+
+				<div class="panel panel-default panel-col">
+					<div class="panel-heading">课程列表</div>
+					<c:if test="${!empty communityCourses }">
+						<div class="panel-body">
+							<form class="form-horizontal form-inline well well-sm" action="${pageContext.request.contextPath }/class_belongs/to_community_course.action" method="post" id="communityCourseForm">
+								<input type="hidden" name="id" value="${communityCourseView.source_id }"/>
+								<input type="hidden" name="source_type" value="${communityCourseView.source_type }"/>
+								<input type="hidden" name="stamp" value="${communityCourseView.stamp }"/>
+								<input type="hidden" name="page" id="page" value="${communityCourseView.page}" />
+								<input type="hidden" name="rows" id="rows" value="${communityCourseView.rows}" />
+								<input type="hidden" name="total" id="total" value="${communityCourseView.total}" />
+								<input type="hidden" name="totalPage" id="totalPage" value="${communityCourseView.totalPage}" />
+								<input type="hidden" name="sort_type" id="sort_type" value="${communityCourseView.sort_type}" />
+						    	<input type="hidden" name="sort_desc" id="sort_desc" value="${communityCourseView.sort_desc}" />
+								<div class="form-group">
+									<input type="text" name="name"  class="form-control" value="${communityCourseView.name }" placeholder="关键词">
+									<input type="button" class="btn btn-primary btn-sm" value="搜索" onclick="onSubmit()">
+								</div>
+							</form>
+							<table class="table table-striped">
+								<!--默认箭头向下,即caret,点击重新排序之后箭头向上,即caret_01-->
+								<tbody>
+								<tr class="border">
+									<th  width="4%"><input type="checkbox" class="checkAll"></th>
+
+									<th	 width="15%">课程</th>
+									<th  width="15%">班级</th>
+									<th  width="10%">创建人</th>
+									<th width="10%">分类</th>
+									<th  width="12%">学习人数
+									<c:choose>
+	                                   <c:when test="${communityCourseView.sort_type==1&&communityCourseView.sort_desc==1 }">
+	                                          <span class="caret_01" onclick="communityCourseSort(1,0)"></span>
+	                                   </c:when>
+	                                   <c:otherwise>
+	                                          <span class="caret" onclick="communityCourseSort(1,1)"></span>
+	                                   </c:otherwise>
+	                                </c:choose>
+									</th>
+									<th width="6%" >推荐</th>
+									<th >状态
+										<c:choose>
+	                                       <c:when test="${communityCourseView.sort_type==2&&communityCourseView.sort_desc==1 }">
+	                                          	<span class="caret_01" onclick="communityCourseSort(2,0)"></span>
+	                                       </c:when>
+	                                       <c:otherwise>
+	                                            <span class="caret" onclick="communityCourseSort(2,1)"></span>
+	                                       </c:otherwise>
+	                                    </c:choose>
+									</th>
+									<th >
+										<div class="btn-group" >
+											<a href="#" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">操作</a>
+											<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu pull-right" role="menu">
+												<li><a href="javascript:void (0);" onclick="updateCourseStatus(0)">开启</a></li>
+												<li><a href="javascript:void (0);" onclick="updateCourseStatus(1)">关闭</a></li>
+
+											</ul>
+										</div>
+									</th>
+								</tr>
+
+								<c:choose>
+									<c:when test="${empty communityCourses }">
+										<tr >
+											<td colspan="7" align="center">
+												<span>暂无课程班级信息</span>
+											</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${communityCourses }" var="cc">
+											<tr class="border">
+												<td class="active"><input type="checkbox" name="subId" value="${cc.classifyBelongsId }"/></td>
+												<td style="text-overflow:ellipsis;white-space: nowrap;max-width: 150px;overflow: hidden;" title="${cc.courseName }">${cc.courseName }</td>
+												<td>${cc.name }</td>
+
+												<td>${cc.creator }</td>
+												<td>${cc.classifyName }</td>
+												<td>${cc.total }</td>
+												<td>
+										<c:if test="${cc.recommended==0 }">否</c:if>
+										<c:if test="${cc.recommended!=0 }">是</c:if>
+										</td>
+												<td>
+													<c:choose>
+														<c:when test="${cc.status==0 }">
+															<span class="text-info">开启</span>
+														</c:when>
+														<c:when test="${cc.status==1 }">
+															<span class="text-danger">关闭</span>
+														</c:when>
+													</c:choose>
+												</td>
+												<td>
+													<c:choose>
+														<c:when test="${cc.status==0 }">
+															<span class="text-info"><a href="${pageContext.request.contextPath }/class_belongs/to_update_classbelongs_status.action?id=${communityCourseView.source_id}&source_type=${communityCourseView.source_type}&stamp=${communityCourseView.stamp}&ids=${cc.classifyBelongsId }&status=1">关闭</a></span>
+														</c:when>
+														<c:when test="${cc.status==1 }">
+															<span class="text-danger"><a href="${pageContext.request.contextPath }/class_belongs/to_update_classbelongs_status.action?id=${communityCourseView.source_id}&source_type=${communityCourseView.source_type}&stamp=${communityCourseView.stamp}&ids=${cc.classifyBelongsId }&status=0">开启</a></span>
+														</c:when>
+													</c:choose>
+													<c:if test="${cc.recommended==0 }"> <span class="text-info recommended"  style="cursor: pointer;" data-course="${cc.courseId}">推荐</span></c:if>
+										<c:if test="${cc.recommended!=0 }"> <span class="text-info unrecommended"  style="cursor: pointer;" data-course="${cc.courseId}">取消推荐</span></c:if>
+													
+                                          	</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+								</tbody>
+							</table>
+							<div id="test" class="pager" style="padding-top:10px;"></div>
+						</div>
+					</c:if>
+
+					<c:if test="${empty communityCourses }">
+						<div class="empty">还没有课程，快去添加课程吧！</div>
+					</c:if>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+	    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+<script type="text/javascript">
+	$(".checkAll").click(function(){
+		if($(".checkAll").prop("checked")){
+			$("[name='subId']").prop("checked","checked");
+		}else{
+			$("[name='subId']").removeAttr("checked");
+		}
+	});
+
+	function updateCourseStatus(status){
+		if(status!==0&&status!==1){
+			return ;
+		}
+		var ids="";
+		$("[name='subId']:checked").each(function(){
+			ids+=$(this).val()+","
+		});
+		if(ids.length<=1){
+			return;
+		}
+		ids = ids.substring(0,ids.length-1);
+		window.location.href
+				="${pageContext.request.contextPath }/class_belongs/to_update_classbelongs_status.action?id=${communityCourseView.source_id}&source_type=${communityCourseView.source_type}&stamp=${communityCourseView.stamp}&ids="+ids+"&status="+status;
+	}
+
+	function communityCourseSort(sort_type,sort_desc){
+		$("#sort_type").attr("value",sort_type);
+		$("#sort_desc").attr("value",sort_desc);
+		onSubmit();
+	}
+	
+	function onSubmit(){
+		$("#page").val(0);
+		$('#communityCourseForm').submit();
+	}
+
+	$(function(){
+		//翻页
+		var total = $("#total").val();
+		var page =  parseInt($("#page").val())+1;
+
+		$("#btn5").on('click', function () {
+			$("#div1").PageChanged(5);
+		});
+
+		$(".pager").pagination({
+			thisPageIndex:page,
+			recordCount: total,       //总记录数
+			pageSize: $("#rows").val(),           //一页记录数
+			onPageChange: function (page) {
+				document.title = page;
+				$("#page").val(page-1);
+				$('#communityCourseForm').submit();
+
+			}
+		});
+	});
+	$(".recommended").click(function () {
+	var source_id=  $(this).data("course");
+	$("#recommended_source_id").val(source_id);
+	$("#recommended_source_type").val(3);
+	 $("#recommended_modal").modal("show");
+	
+});
+$(".unrecommended").click(function () {
+	var source_id=  $(this).data("course");
+	unrecommended(source_id,3);
+	
+});
+</script>

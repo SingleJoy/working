@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>培训课程内容设置</title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<style>
+    label{font-weight: normal;}
+</style>
+</head>
+<body class="">
+<div class="es-wrap">
+    <div id="content-container" class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <ul class="list-group">
+                        <li class="list-group-heading">培训设置</li>
+                        <li class="list-group-item ">
+                            <a href="train-basic-info-setting.html">
+                                <span></span>基本信息
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="train-course-content-setting.html">
+                                <span></span>培训内容设置
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="train-price-setting.html">
+                                <span></span>价格设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="train-cover-photo.html">
+                                <span></span>培训封面
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="train-service-setting.html">
+                                <span></span>服务设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="train-headmaster-setting.html">
+                                <span></span>班主任设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="train-teacher-setting.html">
+                                <span></span>教师设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="train-assistant-setting.html">
+                                <span></span>助教设置
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">题库</li>
+                        <li class="list-group-item">
+                            <a href="">
+                                <span></span>题目管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>试卷批阅
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href=""><span></span>作业批改
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级</li>
+                        <li class="list-group-item">
+                            <a href="train-class-management.html">
+                                <span></span>班级管理
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="train_students_manage.html">
+                                <span></span>学员管理
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading clearfix">
+                        培训课程内容设置
+                        <button class="btn btn-success btn-sm pull-right" type="button" id="add-train-stage">新增阶段</button>
+                    </div>
+
+                    <div class="panel-body">
+
+                            <form class="form-horizontal stage-form" method="post" action="" >
+
+                                <div class="course-stage-abbreviation" style="display: none;">
+
+                                    <div class="form-group">
+
+                                        <label class="col-md-2 control-label pull-left">第一阶段：</label>
+                                        <label class="control-label pull-left">教育法律法规54646</label>
+                                        <label class="col-md-2 control-label">学习周期：</label>
+                                        <label class=" control-label pull-left">20天</label>
+                                        <br/><br/><br/>
+                                        <label class="col-md-2 control-label pull-left">阶段目标：</label>
+                                        <label class="col-md-8 controls-label">从班主任工作的实际需要出发，针对班级管理和学生管理等现实问题设计与安排培训内容，重视经验交流，突出案例教学。</label>
+                                        <br/><br/><br/>
+                                        <label class="col-md-2 control-label pull-left">学习要求：</label>
+                                        <label class="control-label pull-left">30学时</label>
+                                        <label class="col-md-2 control-label">包含课程：</label>
+                                        <label class=" control-label pull-left">10门</label><br/><br/>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="course-stage" >
+
+                                    <div class="form-group">
+
+                                        <label class="col-md-2 control-label">第一阶段</label>
+                                        <div class="col-md-8 controls">
+                                            <input type="text"  name="title" required="required" class="form-control" value="" >
+                                            <div class="help-block" style="display:none;">不可为空</div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">学习周期</label>
+                                        <div class="col-md-8 controls">
+                                            <input type="number"   class="form-control width-input width-input-large" value=""> 天
+                                            <div class="help-block">设置该值后，学员只能在有效期内进行课程的相关操作，系统默认会在到期前10天提醒学员。该值为0，则不做此限制。</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">阶段目标</label>
+                                        <div class="col-md-8 controls">
+                                            <textarea id="course_subtitle" name="subtitle" required="required" class="form-control"></textarea>
+                                            <div class="help-block" style="display:none;">不可为空</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">学习要求</label>
+                                        <div class="col-md-4 controls">
+                                            <input type="number" class="form-control width-input width-input-large" value=""> 课时
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">包含课程</label>
+                                        <div class="col-md-4 controls">
+                                            <input type="number" class="form-control width-input width-input-large" value=""> 门
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2 control-label">
+                                            <label>课程类型</label>
+                                        </div>
+                                        <div class="col-md-8 controls radios">
+                                            <label>
+                                                <input  type="radio" value="1" class="compulsory-course" name="course-type"> 必修课程
+                                            </label>
+                                            <label>
+                                                <input  type="radio"  value="0"  class="elective-course" name="course-type"> 选修课程
+                                            </label>
+                                            <div class="alert alert-info">培训课程添加完成之后,不可更改!</div>
+                                        </div>
+
+                                    </div>
+
+                                     <!--必修课程-->
+                                    <div class="form-group">
+                                        <div class="col-md-2 control-label">
+                                            <label>必修课程</label>
+                                        </div>
+                                        <div class="col-md-9 controls ">
+                                            <table class="table table-bordered ">
+                                                <thead>
+                                                <tr>
+                                                    <th>课程名称</th>
+                                                    <th style="width: 35%;">课程对象</th>
+
+                                                    <th >课时</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>与人沟通艺术</td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label pull-left">语文>高中>班主任</label>
+                                                            <div class="col-md-4 controls">
+                                                                <button class="btn  btn-sm pull-right" type="button" href="#choose-train-object"  data-toggle="modal">修改</button>
+                                                                <!--数据不为空,则为修改-->
+                                                                <!--<button class="btn  btn-sm pull-right" type="button" href="#choose-train-object"  data-toggle="modal">修改</button>-->
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>5</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <!--选修课程-->
+                                    <div class="form-group">
+                                        <div class="col-md-2 control-label">
+                                            <label>选修课程</label>
+                                        </div>
+                                        <div class="col-md-9 controls ">
+                                            <table class="table table-bordered ">
+                                                <thead>
+                                                <tr>
+                                                    <th>课程名称</th>
+                                                    <th style="width: 35%;">课程对象</th>
+
+                                                    <th >课时</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>选修如何学好语文</td>
+                                                    <td >
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label pull-left">语文>初中>班主任</label>
+                                                            <div class="col-md-4 controls">
+                                                                <button class="btn  btn-sm pull-right" type="button" href="#choose-train-object"  data-toggle="modal">新增</button>
+                                                                <!--数据不为空,则为修改-->
+                                                                <!--<button class="btn  btn-sm pull-right" type="button" href="#choose-train-object"  data-toggle="modal">修改</button>-->
+                                                            </div>
+                                                        </div>
+
+
+                                                    </td>
+
+                                                    <td>10</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-2 pull-right" >
+                                        <a class="btn btn-default btn-sm delete-choice mlm" href="javascript:void(0)">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-8 col-md-offset-2 controls">
+                                            <button type="submit" class="btn btn-primary submit-btn">保存并继续添加</button>
+                                            <button type="submit" class="btn btn-primary submit-btn">保存</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-2 controls">
+                                        <a href="javascript:;" class="text-success dis_hide_analysis">» 隐藏/显示
+                                            <i class="es-icon es-icon-keyboardarrowup"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+
+</div>
+<!--添加课程-->
+<div id="add-course" class="modal"  data-toggle="modal" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">选择课程</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info" role="alert">
+                    加入班级的课程为选中的原课程复制生成，并与原课程实时同步更新。如需解除同步，请对该课程进行编辑。
+                </div>
+
+                <form class="form-inline form-search" role="search-form">
+                    <div class="form-group ">
+                        <input type="text" class="form-control" name="" id="enterSearch" value="" placeholder="课程名称" >
+                    </div>
+                    <button type="button" class="btn btn-primary" id="" >搜索</button>
+                    <a class="btn btn-primary" id="all-courses" >全部课程</a>
+                </form>
+
+                <div class="row mtl">
+                    <div class="col-md-12">
+                        <div class="courses-list">
+
+                            <ul class="course-wide-list">
+
+                                 <!--必修课程-->
+                                <li class="course-item clearfix compulsory-course-list" >
+                                    <a class="course-picture-link" href="/course/11" target="_blank">
+                                        <img class="course-picture" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-16/115228cc1b1d934782.jpg" alt="EduSoho技术服务套餐">
+                                    </a>
+                                    <div class="course-body">
+                                        <div style="float:right;" class="text-muted mrm mls">
+                                            <span class="course-price">免费</span>
+
+                                            <span class="divider"></span>
+                                            <span class="text-muted mrm mls"><strong>2</strong>学员</span>
+
+                                        </div>
+
+                                        <h4 class="course-title">
+                                            <a href="/course/11" target="_blank">必修课程142啊啊啊</a>
+                                            <span class="label label-danger">录播</span>
+                                        </h4>
+
+                                        <div class="course-about ellipsis"></div>
+
+                                        <div class="course-footer clearfix">
+
+
+                                            <div class="course-meta" style="display:none;">
+                                                <span class="glyphicon glyphicon-ok pull-right" style="z-index:100;color:#02b980;font-size:30px;"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <!--选修课程-->
+                                <li class="course-item clearfix elective-course-list" style="display: none;">
+                                    <a class="course-picture-link" href="/course/11" target="_blank">
+                                        <img class="course-picture" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-16/115228cc1b1d934782.jpg" alt="EduSoho技术服务套餐">
+                                    </a>
+                                    <div class="course-body">
+                                        <div style="float:right;" class="text-muted mrm mls">
+                                            <span class="course-price">免费</span>
+
+                                            <span class="divider"></span>
+                                            <span class="text-muted mrm mls"><strong>2</strong>学员</span>
+
+                                        </div>
+
+                                        <h4 class="course-title">
+                                            <a href="/course/11" target="_blank">选修课程啊啊啊</a>
+                                            <span class="label label-success">直播</span>
+                                        </h4>
+
+                                        <div class="course-about ellipsis"></div>
+
+                                        <div class="course-footer clearfix">
+
+
+                                            <div class="course-meta" style="display:none;">
+                                                <span class="glyphicon glyphicon-ok pull-right" style="z-index:100;color:#02b980;font-size:30px;"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                            <!--翻页-->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button  class="btn btn-primary pull-right" >添加</button>
+                <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--选择课程对象-->
+<div id="choose-train-object" class="modal"  data-toggle="modal" style="display: none;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">选择培训对象</h4>
+            </div>
+            <div class="modal-body">
+                <form  class="form-horizontal" method="post" action="" >
+
+                    <div class="form-group">
+                        <div class="col-md-3 control-label">课程对象</div>
+                        <div class="col-md-2 controls">
+                            <select class="form-control" >
+                                <option value="reason" selected="selected">--请选择科目--</option>
+                                <option value="0">语文</option>
+                                <option value="1">数学</option>
+                                <option value="2">外语</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 controls">
+                            <select class="form-control">
+                                <option value="reason" selected="selected">--请选择年级--</option>
+                                <option value="0">一年级</option>
+                                <option value="1">二年级</option>
+                                <option value="other">三年级</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 controls">
+                            <select class="form-control" >
+                                <option value="reason" selected="selected">--请选择培训对象--</option>
+                                <option value="0">教学老师</option>
+                                <option value="1">校长</option>
+                                <option value="other">年级主任</option>
+                                <option value="other">办主任</option>
+                            </select>
+                        </div>
+                        <textarea class="form-control" name=""  style="margin-top:10px;display:none;"></textarea>
+                        <span class="text-danger warnning"></span>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button  class="btn btn-primary pull-right" >添加</button>
+                <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+//添加课程
+    $(function(){
+        $("#add-train-stage").click(function(){
+            $(".stage-form:last").append($('.stage-form:last').clone(true));
+
+        })
+    });
+
+//必修课程弹窗
+    $(function(){
+     $(".compulsory-course").click(function(){
+         $("#add-course").modal();
+         $(".compulsory-course-list").show();
+         $(".elective-course-list").hide()
+     })
+ });
+
+//选修课程弹窗
+ $(function(){
+     $(".elective-course").click(function(){
+         $("#add-course").modal();
+         $(".elective-course-list").show();
+         $(".compulsory-course-list").hide();
+     })
+ });
+
+//选择课程
+ $(function(){
+     $(".course-footer").click(function(){
+         if($(this).find(".course-meta").css("display")=="none"){
+             $(this).find(".course-meta").show();
+         } else{
+             $(this).find(".course-meta").hide();
+         }
+     })
+ });
+
+
+
+
+//阶段显示与隐藏
+$(function(){
+     $(".dis_hide_analysis").click(function(){
+         if( $(this).parent().parent().prev() .css("display")=="none"){
+             $(this).parent().parent().prev() .slideDown();
+             $(this).parent().parent().prev().prev() .slideUp();
+             $(this).find("i").removeClass("es-icon-keyboardarrowdown").addClass("es-icon-keyboardarrowup");
+         }else{
+             $(this).parent().parent().prev() .slideUp();
+             $(this).parent().parent().prev().prev() .slideDown();
+             $(this).find("i").removeClass("es-icon-keyboardarrowup").addClass("es-icon-keyboardarrowdown");
+         }
+     });
+});
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

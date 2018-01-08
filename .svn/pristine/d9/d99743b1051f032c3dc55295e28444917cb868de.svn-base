@@ -1,0 +1,23 @@
+package cn.bnsr.edu_yun.frontstage.app.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+@Controller
+@RequestMapping("/app")
+public class AppController {
+
+	@RequestMapping("/app_version")
+	public void app_version(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		JSONObject result = new JSONObject();
+		result.put("version", "1.0.2");
+		ResponseUtil.write(response, result);
+	}
+}

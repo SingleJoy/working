@@ -1,0 +1,169 @@
+package cn.bnsr.edu_yun.frontstage.xbjy.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.xbjy.po.ProblemStudy;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonAttachmentService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonProblemService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonTimeService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonUserIdentityService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonUserTaskService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.ProblemStudyService;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonProblemView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonTimeView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonUserTaskView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.ProblemStudyView;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+@Controller
+@RequestMapping("/problem_study")
+public class ProblemStudyController {
+	@Autowired
+	private LessonProblemService lessonProblemService;
+	@Autowired
+	private LessonService lessonService;
+	@Autowired
+	private ProblemStudyService problemStudyService;
+	@Autowired
+	private LessonUserTaskService lessonUserTaskService;
+	@Autowired
+	private LessonTimeService lessonTimeService;
+	@Autowired
+	private LessonUserIdentityService lessonUserIdentityService;
+
+	@RequestMapping("/to_problem")
+	public ModelAndView toProblem(HttpServletRequest request, ProblemStudyView problemStudyView) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("head_title", "问题研讨");
+		LessonProblemView lessonProblemView = lessonProblemService.findByLesson(problemStudyView.getLesson_id());
+		if (problemStudyView.getPage() == 0) {
+			problemStudyView.setStartLine(0);
+		} else {
+			problemStudyView.setStartLine(problemStudyView.getPage() * problemStudyView.getRows());
+		}
+		problemStudyView.setRows(10);
+
+		int total = problemStudyService.selectProblemListCount(problemStudyView);// 总数
+		problemStudyView.setTotal(total);
+		// 分页总页数
+		problemStudyView.setTotalPage(NumUtil.totalPage(total, 10));
+
+		List<ProblemStudyView> problemStudyViews = problemStudyService.selectProblemList(problemStudyView);
+		User user = (User) request.getSession().getAttribute("currentUser");
+		boolean flag = true;// 权限
+		if (user == null) {
+			flag = false;
+		} else {
+			LessonUserTaskView lessonUserTaskView = new LessonUserTaskView();
+			lessonUserTaskView.setUser_id(user.getId());
+			lessonUserTaskView.setLesson_id(problemStudyView.getLesson_id());
+			lessonUserTaskView.setPurview(problemStudyView.getPurview());
+			lessonUserTaskView = lessonUserTaskService.findByLUP(lessonUserTaskView);
+			if (lessonUserTaskView == null) {
+				flag = false;
+			} else {
+				LessonTimeView lessonTimeView = lessonTimeService.findByLesson(problemStudyView.getLesson_id());
+				Date start = null;
+				Date end = null;
+				if (problemStudyView.getPurview() / 100 == 1) {
+					start = lessonTimeView.getPlan_sta();
+					end = lessonTimeView.getPlan_end();
+				}
+				if (problemStudyView.getPurview() / 100 == 2) {
+					start = lessonTimeView.getprepare_sta();
+					end = lessonTimeView.getprepare_end();
+				}
+				if (problemStudyView.getPurview() / 100 == 3) {
+					start = lessonTimeView.getClass_sta();
+					end = lessonTimeView.getClass_end();
+				}
+				if (problemStudyView.getPurview() / 100 == 4) {
+					start = lessonTimeView.getAssessment_sta();
+					end = lessonTimeView.getAssessment_end();
+				}
+				if (problemStudyView.getPurview() / 100 == 5) {
+					start = lessonTimeView.getIntrospection_sta();
+					end = lessonTimeView.getIntrospection_end();
+				}
+				if (start == null || end == null) {
+					flag = false;
+				} else {
+					Date date = new Date();
+					if (date.getTime() < start.getTime() || date.getTime() > end.getTime() + 86400000) {
+						flag = false;
+					}
+				}
+			}
+		}
+		modelAndView.addObject("flag", flag);
+		modelAndView.setViewName("frontstage/xbjy/lesson/lesson_question");
+		modelAndView.addObject("lessonProblemView", lessonProblemView);
+		modelAndView.addObject("problemStudyView", problemStudyView);
+		modelAndView.addObject("problemStudyViews", problemStudyViews);
+		modelAndView.addObject("lesson", lessonService.getById(problemStudyView.getLesson_id()));
+
+		LessonView lessonView = new LessonView();
+		lessonView.setId(problemStudyView.getLesson_id());
+
+		// 等待整合
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		request.setAttribute("state", state);
+		request.setAttribute("stamp", stamp);
+
+		// 获取课例头部统计信息
+		request.setAttribute("lessonHead", lessonUserIdentityService.getLessonHead(problemStudyView.getLesson_id()));
+		// 获取左侧权限部分信息
+		request.setAttribute("lessonLeft", lessonUserIdentityService.getLessonLeft(problemStudyView.getLesson_id(), user));
+
+		return modelAndView;
+
+	}
+
+	@RequestMapping("/comment")
+	public void comment(HttpServletRequest request, HttpServletResponse response, ProblemStudy problemStudy) throws Exception {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		System.out.println(problemStudy.getRoot_id());
+		problemStudy.setUpdate_time(new Date());
+		problemStudy.setUser_id(user.getId());
+		problemStudyService.insert(problemStudy);
+		LessonUserTaskView lessonUserTaskView = new LessonUserTaskView();
+		lessonUserTaskView.setUser_id(user.getId());
+		lessonUserTaskView.setLesson_id(problemStudy.getLesson_id());
+		lessonUserTaskView.setPurview(problemStudy.getPurview());
+		lessonUserTaskView = lessonUserTaskService.findByLUP(lessonUserTaskView);
+		if (lessonUserTaskView != null) {
+			lessonUserTaskView.setStatus(2);
+			lessonUserTaskService.update(lessonUserTaskView);
+		}
+		JSONObject result = new JSONObject();
+
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/delete")
+	public void delete(HttpServletRequest request, HttpServletResponse response, Long id) throws Exception {
+
+		problemStudyService.delete(id);
+
+		JSONObject result = new JSONObject();
+
+		ResponseUtil.write(response, result);
+
+	}
+}

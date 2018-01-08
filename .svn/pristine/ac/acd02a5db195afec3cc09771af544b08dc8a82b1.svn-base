@@ -1,0 +1,42 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.train.mapper.TrainExamStandardMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.TrainExamStandard;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainExamStandardService;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainExamStandardView;
+
+public class TrainExamStandardServiceImpl implements TrainExamStandardService {
+
+	@Autowired
+	private TrainExamStandardMapper standardMapper;
+	
+	@Override
+	public TrainExamStandardView queryByTrainId(Long trainId) {
+		return standardMapper.queryByTrainId(trainId);
+	}
+
+	@Override
+	public void saveOrUpdate(TrainExamStandardView standardView) {
+		if(standardView.getId()!=null){//更新
+			TrainExamStandard standard = new TrainExamStandard();
+			BeanUtils.copyProperties(standardView, standard);
+			standardMapper.updateByPrimaryKeySelective(standard);
+		}else{
+			TrainExamStandard standard = new TrainExamStandard();
+			BeanUtils.copyProperties(standardView, standard);
+			standardMapper.insertSelective(standard);
+		}
+		
+	}
+
+	@Override
+	public List<TrainExamStandardView> queryExamStandard(Long trainId,int type) {
+		return standardMapper.queryExamStandard(trainId,type);
+	}
+
+}

@@ -1,0 +1,103 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.train.view.StudyTimeStatsView;
+import cn.bnsr.edu_yun.comparator.StudyTimeStatsComparator;
+import cn.bnsr.edu_yun.frontstage.train.mapper.UserStudyTimeMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudyTime;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyTimeService;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class UserStudyTimeServiceImpl implements UserStudyTimeService {
+
+	@Autowired
+	private UserStudyTimeMapper userStudyTimeMapper;
+
+	@Override
+	public int insert(UserStudyTime userStudyTime) {
+		
+		return userStudyTimeMapper.insertSelective(userStudyTime);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<StudyTimeStatsView> queryWatchStats(StudyTimeStatsView condition) throws ParseException {
+		Date date = new Date();
+		List<String> list = new ArrayList<String>();
+		int timeType = condition.getTimeType();
+		if (timeType == 0) {// 本月
+			// 获的当前年月
+			condition.setDays(TimeUtil.getDate());
+		} else if (timeType == 1) {// 上月
+			condition.setDays(TimeUtil.getLastDate());
+		} else if (timeType == 2) {// 近三月
+			condition.setStartTime(TimeUtil.getBeforeMarch());
+			condition.setEndTime(TimeUtil.dateToString1(TimeUtil.afterNDay(new Date(), 1)));
+		} else if (timeType == 4) {// 某一天
+			condition.setDays(TimeUtil.dateToString1(TimeUtil.stringFormatDate1(condition.getDays())));
+		}
+		if (timeType == 0 || timeType == 1) {// 本月、上月
+			date = TimeUtil.stringFormatDate(condition.getDays());
+			list = TimeUtil.getAllTheDateOftheMonth(date);
+		} else if (timeType == 4) {
+			list = TimeUtil.getAllTheHourOfTheDay();
+		} else {// 近三月、起止时间
+			list = TimeUtil.getBetweenDates(TimeUtil.stringFormatDate1(condition.getStartTime()),
+					TimeUtil.afterNDay(TimeUtil.stringFormatDate1(condition.getEndTime()), 1));
+		}
+		List<StudyTimeStatsView> studyTimeStatsList = userStudyTimeMapper.queryWatchStats(condition);
+		
+		if (studyTimeStatsList.size() != list.size()) {// 如果不相等，证明有缺少日期
+			// 有数据日期
+			List<String> dataList = new ArrayList<String>();
+			for (int i = 0; i < studyTimeStatsList.size(); i++) {
+				dataList.add(studyTimeStatsList.get(i).getDays());
+			}
+			list.removeAll(dataList);// 差集
+			for (int i = 0; i < list.size(); i++) {// 补全当前月日期
+				StudyTimeStatsView studyTimeStat = new StudyTimeStatsView();
+				studyTimeStat.setDays(list.get(i));
+				studyTimeStat.setWatchNum(0);
+				studyTimeStat.setAverageNum(0);
+				studyTimeStat.setTotalNum(0);
+				studyTimeStat.setTimeType(timeType);
+				studyTimeStatsList.add(studyTimeStat);
+			}
+		}
+		Collections.sort(studyTimeStatsList, new StudyTimeStatsComparator());// 排序
+		return studyTimeStatsList;
+	}
+}

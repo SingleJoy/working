@@ -1,0 +1,113 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+
+
+
+<c:set var="p" value="${pageContext.request.contextPath}"></c:set>
+
+
+<div class="es-wrap">
+
+	<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+	<jsp:include page="course_study_header.jsp"></jsp:include>
+	<div class="container" style="margin-top: 20px;">
+
+		<div class="row">
+			<div class="col-lg-9 col-md-8  course-detail-main">
+
+				<section class="es-section">
+
+					<div class="nav-btn-tab">
+						<ul class="nav nav-tabs" >
+                           <c:if test="${empty currentUser}">
+						   <li class="<c:if test="${tab==6 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(6);">概览</a></li>
+						   </c:if>
+							<li class="<c:if test="${tab==1 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(1);" >课时列表</a></li>
+							<c:if test="${!empty currentUser}">
+								<c:if test="${userStudyStatus == 0 }">
+									<li value="1" class="<c:if test="${tab==2 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(2);">讨论区 <small class="text-muted">( ${totalQuestion} )</small></a></li>
+									<%--<li class="<c:if test="${tab==8 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(8);">主题研讨 <small class="text-muted"></small></a></li>--%>
+									<%--<li value="2" class="<c:if test="${tab==3 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(3);">资料区<small class="text-muted"></small></a></li>--%>
+								</c:if>
+
+								<li class="<c:if test="${tab==5 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(5);">笔记 <small class="text-muted">( ${totalNote} )</small></a></li>
+							</c:if>
+							<li class="<c:if test="${tab==4 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(4);">评价 <small class="text-muted">( ${totalAppraise} )</small></a></li>
+                           <c:if test="${!empty currentUser}">
+							<li class="<c:if test="${tab==6 }">active</c:if>"><a href="javascript:void(0);" onclick="searchTabs(6);">概览</a></li>
+						   </c:if>
+						</ul>
+					</div>
+
+					<div class="course-detail-content" >
+						<!-- 课时列表 -->
+						<c:if test="${tab==1 }">
+							<div class="es-piece" >
+								<jsp:include page="course_chapter.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 讨论区问题-->
+						<c:if test="${tab==2 }">
+							<div>
+								<jsp:include page="course_topic.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 讨论区回答 -->
+						<c:if test="${tab==7 }">
+							<div>
+								<jsp:include page="course_topic_answer.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 资料 -->
+						<c:if test="${tab==3 }">
+							<ul class="media-list" >
+								<jsp:include page="course_data.jsp"></jsp:include>
+							</ul>
+						</c:if>
+						<!--评价-->
+						<c:if test="${tab==4 }">
+							<div class="class-detail-content" >
+								<jsp:include page="course_evaluate.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!--笔记-->
+						<c:if test="${tab==5 }">
+							<div class="nav-filter clearfix" style="border-bottom: none;">
+								<jsp:include page="course_note.jsp"></jsp:include>
+							</div>
+						</c:if>
+						<!-- 概览 -->
+						<c:if test="${tab==6 }">
+
+							<jsp:include page="course_preview.jsp"></jsp:include>
+
+						</c:if>
+					</div>
+				</section>
+
+			</div>
+
+			<jsp:include page="course_study_right.jsp"></jsp:include>
+		</div>
+
+	</div>
+
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+<script type="text/javascript">
+	//标签切换
+	function searchTabs(value){
+		window.location.href='${p}/user_study/to_course_study.action?page=1&learnId='+${courseView.id}+'&sourceType=0&jumpId=${userStudyView.jumpId}&jumpType=${userStudyView.jumpType}&tab='+value+'&is_direct='+${userStudyView.is_direct};
+
+	}
+</script>

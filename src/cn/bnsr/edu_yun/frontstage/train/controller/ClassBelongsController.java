@@ -1,0 +1,176 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.train.service.ClassBelongsService;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityService;
+import cn.bnsr.edu_yun.frontstage.train.service.WorkshopService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityCourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityTrainView;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityView;
+import cn.bnsr.edu_yun.frontstage.train.view.WorkshopView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+/**
+ * 社区(工作坊)课程/培训
+ * @author heliwei
+ * @date 2017年5月27日
+ */
+@Controller
+@RequestMapping("/class_belongs")
+public class ClassBelongsController {
+	private final Logger log = LoggerFactory.getLogger(ClassBelongsController.class);
+
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private ClassBelongsService classBelongsService;
+	@Autowired
+	private WorkshopService workShopService ;
+	
+	
+	/**
+	 * 社区(工作坊)培训
+	 */
+	@RequestMapping("to_community_train")
+	public ModelAndView toCommunityTrain(HttpServletRequest request,CommunityTrainView communityTrainView){
+		ModelAndView mv = new ModelAndView();
+		try{
+			Long id = Long.parseLong(request.getParameter("id"));
+			int source_type = Integer.parseInt(request.getParameter("source_type"));
+			int stamp = Integer.parseInt(request.getParameter("stamp"));
+			List<CommunityTrainView> communityTrains = null;
+			if(source_type==0){
+				CommunityView communityView = communityService.getById(id);
+				communityView.setStamp(stamp);
+				communityView.setSource_type(source_type);
+				mv.addObject("communityView",communityView);
+				mv.addObject("head_title", "社区培训");
+			}else if(source_type==1){
+				WorkshopView workshopView = workShopService.showWorkshopById(id);
+				workshopView.setStamp(stamp);
+				workshopView.setSource_type(source_type);
+				mv.addObject("workshopView",workshopView);
+				mv.addObject("head_title", "工作坊培训");
+			}
+			communityTrainView.setSource_id(id);
+			communityTrainView.setSource_type(source_type);
+			communityTrainView.setStamp(stamp);
+			communityTrainView.setPaging("1");
+			communityTrainView.setRows(10);
+			if(communityTrainView.getPage()==0){
+				communityTrainView.setStartLine(0);
+			}else{
+				communityTrainView.setStartLine(communityTrainView.getRows()*communityTrainView.getPage());
+			}
+			int total = classBelongsService.queryCommunityTrainsTotal(communityTrainView);
+			communityTrainView.setTotal(total);
+			communityTrainView.setTotalPage(NumUtil.totalPage(total, communityTrainView.getRows()));
+			
+			//communityTrainView.setSource_id(id);
+			//communityTrainView.setSource_type(source_type);
+			//communityTrainView.setStamp(stamp);
+			//request.setAttribute("id", id);
+			//request.setAttribute("source_type", source_type);
+			//request.setAttribute("stamp", stamp);
+			
+			communityTrains = classBelongsService.queryCommunityTrains(communityTrainView);
+			mv.addObject("communityTrains", communityTrains);
+			mv.addObject("communityTrainView",communityTrainView);
+			mv.setViewName("frontstage/train/community/community_train");
+		}catch(Exception e){
+			log.error("查询社区培训失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return mv;
+	}
+	
+	/**
+	 * 社区(工作坊)课程
+	 */
+	@RequestMapping("to_community_course")
+	public ModelAndView toCommunityCourse(HttpServletRequest request,CommunityCourseView communityCourseView){
+		ModelAndView mv = new ModelAndView();
+		try{
+			Long id = Long.parseLong(request.getParameter("id"));
+			int source_type = Integer.parseInt(request.getParameter("source_type"));
+			int stamp = Integer.parseInt(request.getParameter("stamp"));
+			List<CommunityCourseView> communityCourses = null;
+			if(source_type==0){
+				CommunityView communityView = communityService.getById(id);
+				communityView.setStamp(stamp);
+				communityView.setSource_type(source_type);
+				mv.addObject("communityView",communityView);
+				mv.addObject("head_title", "社区课程");
+			}else if(source_type==1){
+				WorkshopView workshopView = workShopService.showWorkshopById(id);
+				workshopView.setStamp(stamp);
+				workshopView.setSource_type(source_type);
+				mv.addObject("workshopView",workshopView);
+				mv.addObject("head_title", "工作坊课程");
+			}
+			communityCourseView.setSource_id(id);
+			communityCourseView.setSource_type(source_type);
+			communityCourseView.setStamp(stamp);
+			communityCourseView.setPaging("1");
+			communityCourseView.setRows(10);
+			if(communityCourseView.getPage()==0){
+				communityCourseView.setStartLine(0);
+			}else{
+				communityCourseView.setStartLine(communityCourseView.getRows()*communityCourseView.getPage());
+			}
+			int total = classBelongsService.queryCommunityCoursesTotal(communityCourseView);
+			communityCourseView.setTotal(total);
+			communityCourseView.setTotalPage(NumUtil.totalPage(total, communityCourseView.getRows()));
+			//request.setAttribute("id", id);
+			//request.setAttribute("source_type", source_type);
+			//request.setAttribute("stamp", stamp);
+			communityCourses = classBelongsService.queryCommunityCourses(communityCourseView);
+			mv.addObject("communityCourseView",communityCourseView);
+			mv.addObject("communityCourses", communityCourses);
+			mv.setViewName("frontstage/train/community/community_course");
+		}catch(Exception e){
+			log.error("查询社区课程失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return mv;
+	}
+
+	@RequestMapping("to_update_classbelongs_status")
+	public ModelAndView updateCLassbelongsStatus(HttpServletRequest request){
+		ModelAndView mv = new ModelAndView();
+		try{
+			long id = Long.parseLong(request.getParameter("id"));
+			int source_type = Integer.parseInt(request.getParameter("source_type"));
+			int stamp = Integer.parseInt(request.getParameter("stamp"));
+			String ids = request.getParameter("ids");
+			int status = Integer.parseInt(request.getParameter("status"));
+			if(source_type==0){
+				mv.setViewName("redirect:/class_belongs/to_community_course.action?id="+id+"&source_type="+source_type+"&stamp="+stamp);
+			}else if(source_type==1){
+				mv.setViewName("redirect:/class_belongs/to_community_train.action?id="+id+"&source_type="+source_type+"&stamp="+stamp);
+			}
+			if(ids==null||ids.trim().length()<=0){
+				return mv;
+			}else{
+				String[] idStrs = ids.split(",");
+				long[] idNums = new long[idStrs.length];
+				for(int i=0;i<idStrs.length;i++){
+					idNums[i]=Long.parseLong(idStrs[i]);
+				}
+				classBelongsService.batchUpdateStatus(idNums, status);
+			}
+		}catch(Exception e){
+			log.error("批量更新分类状态失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return mv;
+	}
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据统计</title>
+    <style>
+        .main_head{font-size: 16px;  }
+        .main_body{margin-top: 20px;}
+        .time>div{float: left;margin-right:20px;}
+        /*.time{margin-bottom: 20px;}*/
+        .select_time{}
+        .select_time>span>input{width: 100px;}
+        .select_time>span{margin-left: 10px;}
+        .choose_date_01>a,.choose_date_02>a{color:#616161;text-decoration: none;margin-right: 5px;}
+        .choose_date_01>a.active{display: inline-block;background-color: #4da7fd;color: #fff;padding:2px;}
+        .choose_date_01>a.inactive{display: inline-block;background-color: #d9d2f0;color: #fff;padding:2px;}
+        .choose_area{margin-right: 15px;}
+        .choose_area>select,#isDuration{min-width: 100px;height: 30px;}
+         .time{clear: both;}
+        .user_info{}
+        .user_info>div{margin-right: 20px;display: inline-block;}
+        .table_sta{border:1px solid #ddd;border-left: none;border-bottom: none;}
+        .table_sta>thead>tr>th,.table_sta>tbody>tr>td{width: 150px;text-align: center;border-bottom: 1px solid #ddd;
+            border-left: 1px solid #ddd;font-size: 14px;line-height: 30px;}
+        .compare_info>span{}
+        .compare_info>div{display: inline-block;}
+        #databody>tr>td{font-size: 14px;line-height: 25px;}
+        .calendar_time{margin:80px;float:left;}
+         #usertrend{width: 800px; height: 350px;  float:left;}
+    </style>
+</head>
+<body>
+
+
+<div class="main_content">
+    <div class="main_head"><h3>在线人数分析</h3>
+
+        <a href="#" style="color: orange;margin-left: 50px;font-size: 20px;float:right;">
+            导出数据
+        </a>
+    </div>
+
+    <div class="main_body">
+
+
+        <form id="stupid" action="/edu_yun/back_user/to_user_remain.action">
+
+            <div style="margin-bottom: 100px;">
+                <div>当前在线<span style="color: red;padding:0 10px;">40</span> 秒之后更新数据</div>
+                <div class="calendar_time" >
+                    <div>2017/10/20 16:04:06</div>
+                    <h1 style="text-align: center;font-size: 42px;"><label>20</label></h1>
+                    <div style="text-align: center;">在线访客人数</div>
+                </div>
+                <div id="usertrend" >
+
+                </div>
+            </div>
+
+            <input type="hidden" name="compare" id="compare" value="">
+            <div class="time">
+                <div class="choose_date_01">
+                    <span>时间：</span>
+                    <input type="hidden" name="timeType" id="timeType" value="0">
+                    <a onclick="queryTrendByTimeType(0);" class="active" href="javascript:void(0);">当日</a>
+                    <a onclick="queryTrendByTimeType(0);" class="active" href="javascript:void(0);">次日</a>
+
+                    <a onclick="queryTrendByTimeType(2);" class="" href="javascript:void(0);">七日</a>
+                    <a onclick="queryTrendByTimeType(3);" class="" href="javascript:void(0);">30天</a>
+                </div>
+
+                <div id="single" class="select_time">
+                    <span>
+                        <input id="days" value="2017-10-20" class="easyui-datebox datebox-f combo-f" data-options="onSelect:onSelect,editable:false" style="width: 100px; display: none;" comboname="days">
+                        <span class="combo datebox" style="width: 98px;">
+                            <input type="text" class="combo-text validatebox-text" autocomplete="off" readonly="readonly" style="width: 80px;"><span><span class="combo-arrow"></span></span><input type="hidden" class="combo-value" name="days" value="2017-10-20"></span></span>
+
+                </div>
+
+                <div class="choose_date_01">
+                    <input type="hidden" name="timeUnit" id="timeUnit" value="0">
+                    <span>类别：</span>
+                    <a class="active" onclick="queryTrendByTimeUnit('0');" href="javascript:void(0);">区间</a>
+                    <a class="" onclick="queryTrendByTimeUnit('1');" href="javascript:void(0);">点日</a>
+
+                </div>
+
+            </div>
+            <br>
+            <br>
+
+            <div class="time">
+
+
+                <div class="choose_date_01">
+                    <span>设备：</span>
+                    <input type="hidden" name="device" id="device" value="-1">
+                    <a onclick="queryTrendByDevice('-1');" class="active" href="javascript:void(0);">全部</a>
+                    <a onclick="queryTrendByDevice('0');" class="" href="javascript:void(0);">PC端</a>
+                    <a onclick="queryTrendByDevice('1');" class="" href="javascript:void(0);">移动端</a>
+                </div>
+                <div class="choose_date_01 ">
+                    <span>地域：</span>
+                    <span class="choose_area">
+	                    <select id="province" onchange="queryTrendByArea();" name="province">
+                            <option value="0">全部</option>
+                            <option value="">西藏自治区</option>
+                        </select>
+	                </span>
+                </div>
+                <div class="choose_date_01">
+                    <input type="hidden" name="sex" id="sex" value="0">
+                    <span>性别：</span>
+                    <a class="active" onclick="queryTrendBySex('0');" href="javascript:void(0);">全部</a>
+                    <a class="" onclick="queryTrendBySex('1');" href="javascript:void(0);">男</a>
+                    <a class="" onclick="queryTrendBySex('2');" href="javascript:void(0);">女</a>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="time">
+                <div class="choose_date_01">
+                    <span>指标：</span>
+                    <input type="hidden" name="logType" id="logType" value="0">
+                    <a onclick="queryTrendBylogType('0');" class="active" href="javascript:void(0);">平均在线人数</a>
+                    <a onclick="queryTrendBylogType('1');" class="" href="javascript:void(0);">实时在线</a>
+                    <a onclick="queryTrendBylogType('2');" class="" href="javascript:void(0);">在线峰值</a>
+                    <a onclick="queryTrendBylogType('3');" class="" href="javascript:void(0);">注册用户</a>
+                </div>
+            </div>
+            <br>
+            <br>
+
+            <br>
+            <br>
+        </form>
+
+
+
+
+        <div class="time" style="clear: both;">
+            <table class="table_sta">
+                <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>平均在线人数</th>
+                    <th>实时在线</th>
+                    <th> 在线峰值</th>
+                    <th> 注册用户</th>
+                </tr>
+
+
+                </thead>
+                <tbody id="databody"><tr><td>2017-10-21</td><td>0</td><td>0%</td><td>0</td><td>0%</td></tr><tr><td>汇总</td><td>0</td><td>0%</td><td>0</td><td>0%</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+</body>
+</html>

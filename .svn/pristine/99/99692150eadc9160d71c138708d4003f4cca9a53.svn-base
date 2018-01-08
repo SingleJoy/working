@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>社区展示页-社区首页</title>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+
+
+    <header  style="width: 100%;height: 80px;background-color: #fff;">
+
+        <div class="container" style="z-index: 99;">
+            <div class="media">
+
+                <div class="media-body" style="padding-left: 10px;">
+
+                    <div class="search pull-right">
+                        <input type="text" class="search_input">
+                        <button type="button" class="all_content button">全站</button>
+                        <button type="button" class="this_community button">本社区</button>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <h3 class="pull-left" >北京四中数学组</h3>
+
+                        <div class="pull-left" style="margin-left: 30px;margin-top:15px;">
+                            <!--如果已加入社区的话，按钮变成红色，加入社区变成退出社区-->
+                            <a href="javascript:void(0);" class="btn btn-info btn-sm">加入社区</a>
+                            <!--<a href="#quit_community" class="btn btn-warning btn-lg" data-toggle="modal">退出社区</a>-->
+                        </div>
+                        <span class="cn-share " style="margin-top: 20px;margin-left: 20px;">
+                            <a class="dropdown-toggle btn-link" href="javascript:void(0);" data-toggle="dropdown">
+                                <p><i class="es-icon es-icon-share"></i></p>
+                            </a>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <div style="width: 100%;height: 100px;">
+        <div class="community_banner" style="height: 100px;">
+
+        </div>
+
+    </div>
+    <nav class="navbar " style="background-color: #46bbcd;width: 100%;height:50px;">
+
+        <div class="container" >
+            <ul class="community_index_nav" style="border: none;">
+                <li class="active"><a href="community-index-show.html">社区主页</a></li>
+                <li ><a href="community-course-list.html">社区课程列表</a></li>
+                <li ><a href="community-train-list.html">社区培训列表</a></li>
+                <li ><a href="community-lesson-list.html">社区课例列表</a></li>
+                <li ><a href="community-workshop-list.html">工作坊</a></li>
+                <li ><a href="community-topic-list.html">社区话题</a></li>
+            </ul>
+
+        </div>
+    </nav>
+    <div style="width: 100%;height: 400px;margin-top: -2px;">
+        <div class="banner" style="width: 100%;height: 400px;">
+
+        </div>
+
+    </div>
+    <div class="container" style="margin-top:50px;">
+
+        <div class="panel panel-default panel-col" >
+
+
+            <div class="panel-body">
+
+
+                <!-- 社区课程介绍 -->
+                <div class="community-course-container" style="margin-top: -30px;">
+
+
+
+                    <div class="course-list">
+                        <div class="text-line">
+                            <h5>
+                                <span>社区课程介绍</span>
+                                <div class="line"></div>
+                            </h5>
+                            <div class="subtitle" style="opacity: 0.6;">Introduction of community course</div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="course-info ">
+                                        <div class="title text-center">
+                                            <a class="link-dark text-center" href="javascript:void(0);" target="_blank">
+                                                如何创建课程？
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix text-center">
+                                            <span>创建人:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="course-info ">
+                                        <div class="title text-center">
+                                            <a class="link-dark text-center" href="javascript:void(0);" target="_blank">
+                                                如何创建课程？
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix text-center">
+                                            <span>创建人:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="course-info ">
+                                        <div class="title text-center">
+                                            <a class="link-dark text-center" href="javascript:void(0);" target="_blank">
+                                                如何创建课程？
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix text-center">
+                                            <span>创建人:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="course-info ">
+                                        <div class="title text-center">
+                                            <a class="link-dark text-center" href="javascript:void(0);" target="_blank">
+                                                如何创建课程？
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix text-center">
+                                            <span>创建人:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <a class="pull-right link-dark" style="display: block;" href="javascript:void(0);">更多  &gt;</a>
+                    </div>
+
+                </div>
+
+                <!-- 社区培训介绍 -->
+                <div class="community-train-container">
+                    <div class="text-line">
+                        <h5>
+                            <span>社区培训介绍</span>
+                            <div class="line"></div>
+                        </h5>
+                        <div class="subtitle" style="opacity: 0.6;">Introduction of community train</div>
+
+                    </div>
+
+                    <div class="course-list">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="course-info ">
+                                        <div class="title text-center">
+                                            <a class="link-dark text-center" href="javascript:void(0);" target="_blank">
+                                                如何创建课程？
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix text-center" >
+                                            <span>主办方:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <a class="pull-right link-dark" style="display: block;" href="javascript:void(0);">更多  &gt;</a>
+                    </div>
+                </div>
+
+                <!-- 社区课例介绍 -->
+                <div class="community-lesson-container">
+                    <div class="text-line">
+                        <h5>
+                            <span>社区课例介绍</span>
+                            <div class="line"></div>
+                        </h5>
+                        <div class="subtitle" style="opacity: 0.6;">Introduction of community lesson</div>
+
+                    </div>
+
+                    <div class="course-list">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                            <div class="progress" style="max-width: 240px;margin-left: 10px;margin-top: -20px;z-index: 999;position: relative;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:17.647%">18%</div>
+                                            </div>
+                                            <span class="tags">
+                                                <span class="course_tags" style="color: #fff;padding-left: 5px;">初一语文</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="course-info text-center" style="margin-top: -20px;">
+                                        <div class="title ">
+                                            <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                                林教头风雪山神
+                                            </a><br/>
+                                            <a class="link-dark" href="javascript:void(0);" target="_blank" style="line-height: 35px;">
+                                                北京四中第一教研组
+                                            </a>
+                                        </div>
+                                        <div class="metas clearfix">
+                                            <span>主办方:林冲</span>
+                                            <span class="num" style="margin-left: 30px;"><i class="es-icon es-icon-people"></i>3907</span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <a class="pull-right link-dark" href="javascript:void(0);" style="display: block;">更多  &gt;</a>
+                    </div>
+                </div>
+
+                <!-- 工作坊介绍 -->
+                <div class="community-workshop-container">
+                    <div class="text-line">
+                        <h5>
+                            <span>工作坊介绍</span>
+                            <div class="line"></div>
+                        </h5>
+                        <div class="subtitle" style="opacity: 0.6;">Introduction of workshop</div>
+
+                    </div>
+
+                    <div class="course-list">
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-4 col-xs-6">
+                                <div class="course-item">
+                                    <div class="course-img">
+                                        <a href="javascript:void(0);" target="_blank">
+                                            <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531806af807144.png" alt="如何创建课程？" class="img-responsive">
+                                            <span class="tags">
+                                                <span class="course_tags" style="color: #fff;padding-left: 5px;">初一语文</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="course-info text-center workshop_name">
+                                        <div class="title ">
+                                            <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                                林教头风雪山神
+                                            </a>
+
+                                        </div>
+                                        <div class="metas clearfix">
+                                            <span>坊主:林冲</span>
+                                            <span class="num" style="margin-left: 30px;">
+                                                <i class="es-icon es-icon-people"></i>3907
+                                            </span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <a class="pull-right link-dark" href="javascript:void(0);" style="display: block;">更多  &gt;</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+<div class="modal" id="quit_community" role="dialog" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">退出社区</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="text-center text-warning" style="margin: 30px auto;">确定退出该社区吗?</div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">确定退出</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    function change(value) {
+        var value_01 = value;
+        if (value_01 == 'other') {
+            $(".quit_reason_write").show();
+        }else {
+            $(".quit_reason_write").val("");
+            $(".quit_reason_write").hide();
+
+        }
+    }
+
+</script>
+</body>
+</html>

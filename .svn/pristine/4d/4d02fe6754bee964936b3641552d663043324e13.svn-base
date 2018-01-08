@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>课程展示-课程简介</title>
+
+    <link href="../../../css/bootstrap/main.css" rel="stylesheet">
+
+    <style>
+        .course_score_lever>div{font-size: 16px;line-height: 40px;}
+        .course_score_lever>div>p{padding: 0 16px;display: inline-block;}
+        .class-about img{max-width: 100%;}
+        .course_score_lever{margin-bottom: 15px;border-radius: 4px;
+            background: -webkit-linear-gradient(left,#d57338, #d3cf54,#d57338); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(left,#d57338, #d3cf54,#d57338);/* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(left,#d57338, #d3cf54,#d57338); /* Firefox 3.6 - 15 */
+            background: linear-gradient(left,#d57338, #d3cf54,#d57338); /* 标准的语法 */
+        }
+
+    </style>
+
+</head>
+<body >
+
+<div class="col-lg-9 col-md-8  course-detail-main">
+
+    <section class="cn-section">
+
+        <div class="course-detail-content">
+
+            <div class="cn-piece">
+                <div class="piece-body p-lg clearfix">
+                    <div class="class-about">
+                        课程介绍：
+                        <p>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;可访问的导航会引导用户通过界面中的信息流，帮助他们完成任务，提升你的用户体验和推动你的
+                        网页和移动端的转换。同样，如果用户无法找到所在页面或应用程序，该页面或应用程序就是无用的，
+                        糟糕的导航设计使用户体验变得糟糕，导致用户退出转换渠道。因此，设计不当或忽视用户界面导航
+                        会对你的结果造成灾难性影响，这也并不奇怪。</p>
+                        <img alt="" src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1834975766,26744236&amp;fm=170&amp;s=AE900CCDC6AAD15D0328112A0300A051&amp;w=550&amp;h=704&amp;img.JPEG">
+
+                        <p>对界面友好的导航秘诀是从导航菜单开始。为了让用户在你的网站或应用上从A点到B点，
+                            他们需要一张地图来指引他们。设计导航菜单应优先于设计过程。在开发之前对导航菜单进行
+                            原型化将为你提供从开始实时可视化和交互设计所需的资源。</p>
+
+                        <p>我们来看看5个常见的界面模式。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cn-piece">
+                <div class="piece-body p-lg clearfix">
+                    <div class="class-about">
+                        适合人群：
+                        <p>
+                            &nbsp;&nbsp;&nbsp;&nbsp;产品经理
+                           </p>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="cn-piece">
+                <div class="piece-body p-lg clearfix">
+                    <div class="class-about">
+                        课程目标：
+                        <p>
+                            &nbsp;&nbsp;&nbsp;&nbsp;可访问的导航会引导用户通过界面中的信息流，帮助他们完成任务，提升你的用户体验和推动你的
+                            网页和移动端的转换。同样，如果用户无法找到所在页面或应用程序，该页面或应用程序就是无用的，
+                            糟糕的导航设计使用户体验变得糟糕，导致用户退出转换渠道。因此，设计不当或忽视用户界面导航
+                            会对你的结果造成灾难性影响，这也并不奇怪。</p>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="cn-piece">
+                <div class="piece-header">
+                    考核标准
+                </div>
+                <div class="piece-body">
+                    <h2 class="text-center text-info">考核项占比</h2><br>
+                    <table class="table table-striped" style="text-align: center;font-size: 14px;">
+                        <thead>
+                        <tr>
+                            <th style="width: 20%;font-weight: normal;text-align: center;">考核项</th>
+                            <th style="width: 45%;font-weight: normal;text-align: center;">考核内容</th>
+                            <th style="width: 30%;font-weight: normal;text-align: center;">考核占比( % )</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td>作业 </td>
+                            <td>什么是定位菜单 </td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td>主题讨论 </td>
+                            <td>下拉菜单的利弊 </td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td>考试 </td>
+                            <td>第一章测验 </td>
+                            <td></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+
+            </div>
+
+
+
+            <div class="piece-body certificate_img" style="margin-top: 30px;">
+                <h2 class="text-center text-info">证书获取要求</h2>
+                <div class="row" style="margin:0 20px;">
+
+                    <div class="course_score_lever col-md-8 col-md-offset-2">
+                        <div><p></p>证书：xxxxx<br>
+                            证书成绩：&nbsp;&nbsp;1&nbsp;——&nbsp;60
+                        </div>
+                    </div>
+
+
+                    <div class="course_score_lever col-md-8 col-md-offset-2">
+                        <div><p></p>证书：2016年北京市中小学教师培训<br>
+                            证书成绩：&nbsp;&nbsp;61&nbsp;——&nbsp;80
+                        </div>
+                    </div>
+
+
+                    <div class="course_score_lever col-md-8 col-md-offset-2">
+                        <div><p></p>证书：780978087<br>
+                            证书成绩：&nbsp;&nbsp;81&nbsp;——&nbsp;100
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </section>
+
+
+
+</div>
+
+
+
+
+
+</body>
+</html>

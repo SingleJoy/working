@@ -1,0 +1,22 @@
+package cn.bnsr.edu_yun.frontstage.train.service;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.frontstage.train.po.CourseFile;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseFileView;
+
+public interface CourseFileService {
+
+	Long saveFile(CourseFile courseFile);
+
+	List<CourseFileView> queryCourseFile(Long courseId);
+
+	void deleteCourseFile(String fileIds);
+	
+	CourseFile selectByKey(Long id);
+
+	List<CourseFileView> queryFile(CourseFileView courseFileView);
+
+	int queryTotalFile(CourseFileView courseFileView);
+
+}

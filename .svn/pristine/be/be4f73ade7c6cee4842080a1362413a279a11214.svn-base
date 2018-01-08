@@ -1,0 +1,405 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+
+/**
+ * 课程视图
+ * @author fangxiongwei
+ * @date 2016年10月25日
+ */
+public class CourseView extends PageBase{
+	private Long id;
+	private String ids;
+	private String title;//名称
+	private String subtitle;//副标题
+	private String type;//课程种类0-普通，1-班级
+	private String labelName;//标签名称
+	private String labelId;//标签id
+	private String classifyName;//分类名称
+	private Long classify_id;//分类id
+	private int serial_status;//连载状态 0-非连载；1-更新中；2-已完结//考试状态：0-未交卷；1-未批阅；2-已批阅
+	private String studentNum;//学员数 
+	private String finishedNum;//阶段培训某课程完成学员数 
+	private String unfinishedNum;//阶段培训某课程未完成学员数 
+	private String appraiseNum;
+	private Double income;//收入
+	private String status;//状态  0-未发布；1-已发布；2-已关闭；3-已删除
+	private String createUser;//创建人
+	private Long userId;//创建人id
+	private String create_time;//创建时间
+	private Long courseInfoId;//课程详细id
+	private int isRecommend;//是否推荐 0-是；1-否
+	private String recommendTime;//推荐时间
+	private int recommendSeq;//推荐序号
+	private String flag;//跳转方式 0-创建跳转，1-保存后跳转,2普通跳转
+	private String sign;//标识哪个标签
+	private Integer validity;//有效期天数
+	private String teachers;//老师
+	private String speaker;//主讲教师
+	private String hours;//学时
+	
+	private String profile;//简介
+	private String target;//目标
+	private String crowd;//适应人群
+	private String img;//图片
+	private Double price;//价格
+	private Integer classNum;
+	
+	public Integer getClassNum() {
+		return classNum;
+	}
+
+	public void setClassNum(Integer classNum) {
+		this.classNum = classNum;
+	}
+
+	private Long room_id;//房间id
+	private List<String> list;
+	private Long phaseId;//阶段id
+	private int is_studyed;//是否学完：0-否，1-是//考试类型：0-试卷；1-作业
+	private Long class_id;
+	private Integer class_type;
+	
+	private Long appraiseUserId; //评价人id
+	private String appraiseUserName;//评价人姓名
+	private String appraiseIcon;//评价人头像
+	private String appraiseContent;//评价内存
+	private String appraiseTime;//评价时间
+	private int score;//评分
+	private Long course_hour_id;//课时id,用于添加作业时
+	
+	private int open_class_num;//开班次数
+	private int is_check;//是否设置考核 0-是；1-否
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CourseView other = (CourseView) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getSubtitle() {
+		return subtitle;
+	}
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
+	}
+	public String getLabelName() {
+		return labelName;
+	}
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+	public String getLabelId() {
+		return labelId;
+	}
+	public void setLabelId(String labelId) {
+		this.labelId = labelId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getClassifyName() {
+		return classifyName;
+	}
+	public void setClassifyName(String classifyName) {
+		this.classifyName = classifyName;
+	}
+	public Long getClassify_id() {
+		return classify_id;
+	}
+	public void setClassify_id(Long classify_id) {
+		this.classify_id = classify_id;
+	}
+	public int getSerial_status() {
+		return serial_status;
+	}
+	public void setSerial_status(int serial_status) {
+		this.serial_status = serial_status;
+	}
+	public String getStudentNum() {
+		return studentNum;
+	}
+	public void setStudentNum(String studentNum) {
+		this.studentNum = studentNum;
+	}
+	public String getFinishedNum() {
+		return finishedNum;
+	}
+	public void setFinishedNum(String finishedNum) {
+		this.finishedNum = finishedNum;
+	}
+
+	public String getUnfinishedNum() {
+		return unfinishedNum;
+	}
+
+	public void setUnfinishedNum(String unfinishedNum) {
+		this.unfinishedNum = unfinishedNum;
+	}
+
+	public String getAppraiseNum() {
+		return appraiseNum;
+	}
+	public void setAppraiseNum(String appraiseNum) {
+		this.appraiseNum = appraiseNum;
+	}
+	public Double getIncome() {
+		return income;
+	}
+	public void setIncome(Double income) {
+		this.income = income;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getCreateUser() {
+		return createUser;
+	}
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public String getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
+	}
+	public Long getCourseInfoId() {
+		return courseInfoId;
+	}
+	public void setCourseInfoId(Long courseInfoId) {
+		this.courseInfoId = courseInfoId;
+	}
+	public int getIsRecommend() {
+		return isRecommend;
+	}
+	public void setIsRecommend(int isRecommend) {
+		this.isRecommend = isRecommend;
+	}
+	public String getRecommendTime() {
+		return recommendTime;
+	}
+	public void setRecommendTime(String recommendTime) {
+		this.recommendTime = recommendTime;
+	}
+	public int getRecommendSeq() {
+		return recommendSeq;
+	}
+	public void setRecommendSeq(int recommendSeq) {
+		this.recommendSeq = recommendSeq;
+	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	public Integer getValidity() {
+		return validity;
+	}
+	public void setValidity(Integer validity) {
+		this.validity = validity;
+	}
+	public String getSign() {
+		return sign;
+	}
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	public String getTarget() {
+		return target;
+	}
+	public void setTarget(String target) {
+		this.target = target;
+	}
+	public String getCrowd() {
+		return crowd;
+	}
+	public void setCrowd(String crowd) {
+		this.crowd = crowd;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public String getTeachers() {
+		return teachers;
+	}
+	public void setTeachers(String teachers) {
+		this.teachers = teachers;
+	}
+	public String getSpeaker() {
+		return speaker;
+	}
+	public void setSpeaker(String speaker) {
+		this.speaker = speaker;
+	}
+	public List<String> getList() {
+		return list;
+	}
+	public void setList(List<String> list) {
+		this.list = list;
+	}
+	public String getHours() {
+		return hours;
+	}
+	public void setHours(String hours) {
+		this.hours = hours;
+	}
+	public Long getRoom_id() {
+		return room_id;
+	}
+	public void setRoom_id(Long room_id) {
+		this.room_id = room_id;
+	}
+	public Long getPhaseId() {
+		return phaseId;
+	}
+	public void setPhaseId(Long phaseId) {
+		this.phaseId = phaseId;
+	}
+	public int getIs_studyed() {
+		return is_studyed;
+	}
+	public void setIs_studyed(int is_studyed) {
+		this.is_studyed = is_studyed;
+	}
+	public Long getClass_id() {
+		return class_id;
+	}
+	public void setClass_id(Long class_id) {
+		this.class_id = class_id;
+	}
+	public Integer getClass_type() {
+		return class_type;
+	}
+	public void setClass_type(Integer class_type) {
+		this.class_type = class_type;
+	}
+	public Long getAppraiseUserId() {
+		return appraiseUserId;
+	}
+	public void setAppraiseUserId(Long appraiseUserId) {
+		this.appraiseUserId = appraiseUserId;
+	}
+	public String getAppraiseUserName() {
+		return appraiseUserName;
+	}
+	public void setAppraiseUserName(String appraiseUserName) {
+		this.appraiseUserName = appraiseUserName;
+	}
+	public String getAppraiseIcon() {
+		return appraiseIcon;
+	}
+	public void setAppraiseIcon(String appraiseIcon) {
+		this.appraiseIcon = appraiseIcon;
+	}
+	public String getAppraiseContent() {
+		return appraiseContent;
+	}
+	public void setAppraiseContent(String appraiseContent) {
+		this.appraiseContent = appraiseContent;
+	}
+	public String getAppraiseTime() {
+		return appraiseTime;
+	}
+	public void setAppraiseTime(String appraiseTime) {
+		this.appraiseTime = appraiseTime;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public Long getCourse_hour_id() {
+		return course_hour_id;
+	}
+	public void setCourse_hour_id(Long course_hour_id) {
+		this.course_hour_id = course_hour_id;
+	}
+
+	public int getOpen_class_num() {
+		return open_class_num;
+	}
+
+	public void setOpen_class_num(int open_class_num) {
+		this.open_class_num = open_class_num;
+	}
+
+	public int getIs_check() {
+		return is_check;
+	}
+
+	public void setIs_check(int is_check) {
+		this.is_check = is_check;
+	}
+	
+	
+}

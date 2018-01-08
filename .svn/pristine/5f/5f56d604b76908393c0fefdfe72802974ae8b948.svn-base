@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bnsr.edu_yun.frontstage.resource.mapper.ResourceArrangeMapper" >
+    <select id="showResourceArrange" parameterType="cn.bnsr.edu_yun.frontstage.resource.view.ResourceArrangeView" resultType="cn.bnsr.edu_yun.frontstage.resource.view.ResourceArrangeView">
+ <if test="secondary==0">
+     SELECT b.id id, b.filename filename,a.click_times clickOrDown,d.classify_name columnName, b.upload_time uploadTime FROM file_property  a inner join file_base b on a.id = b.property_id inner join file_catalog c on b.catalog_id
+= c.id inner join classify d on c.column_id = d.id  where b.upload_user = ${userId}
+<if test="start != null">
+     and b.upload_time between '${start}'and  DATE_ADD('${end}',INTERVAL 1 day) 
+</if>
+order by a.click_times desc
+limit 0,10
+ </if>
+ <if test="secondary==1">
+     SELECT b.id id, b.filename filename,a.download_times clickOrDown,d.classify_name columnName, b.upload_time uploadTime FROM file_property  a inner join file_base b on a.id = b.property_id inner join file_catalog c on b.catalog_id
+= c.id inner join classify d on c.column_id = d.id  where b.upload_user = ${userId}
+<if test="start != null">
+      and b.upload_time between '${start}'and  DATE_ADD('${end}',INTERVAL 1 day) 
+</if>
+order by a.download_times desc
+limit 0,10
+ </if>
+ <if test="secondary==2">
+     SELECT b.id id, b.filename filename,a.score score,d.classify_name columnName, b.upload_time uploadTime FROM file_property  a inner join file_base b on a.id = b.property_id inner join file_catalog c on b.catalog_id
+= c.id inner join classify d on c.column_id = d.id  where b.upload_user = ${userId}
+<if test="start != null">
+    and b.upload_time between '${start}'and  DATE_ADD('${end}',INTERVAL 1 day) 
+</if>
+order by a.score desc
+limit 0,10
+ </if>
+        
+    </select>
+    
+    </mapper>

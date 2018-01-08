@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/main.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../jq/jquery.1.10.2.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
+</head>
+<body>
+
+
+<div class="top">
+
+    <ul class="top_txt">
+        <li><a class="admin cd-signin" onclick="return false;" href="javascript:void(0);">登录</a></li>
+        <li><a class="register" href="register.html">注册</a></li>
+        <li><a class="myspace" href="#">我的空间</a></li>
+        <li><a class="recent_browse" href="#">最近浏览</a></li>
+        <li><a class="cooper_organization" href="#">合作机构</a></li>
+    </ul>
+
+</div>
+
+<div class="search">
+        <input class="search_input" placeholder="同步课件">
+        <input class="search_button" type="button" value="搜索"><br/>
+        <form action="" class="search_form" method="get">
+           <input type="radio" name="file_attr" checked="checked"><label>全部</label>
+           <input type="radio" name="file_attr"><label>DOC</label>
+           <input type="radio" name="file_attr"><label>PPT</label>
+           <input type="radio" name="file_attr"><label>TXT</label>
+           <input type="radio" name="file_attr"><label>RMVB</label>
+       </form>
+</div>
+
+<div class="login">
+  <div class="cd-user-modal">
+    <div class="cd-user-modal-container">
+        <div class="login_top_title">教育信息公共服务云平台</div>
+        <img src="../images/login.jpg" class="login_img">
+        <div id="cd-login">
+
+            <form class="cd-form">
+                <a class="cd-form_login" href="#">账号登录</a>
+                <a class="cd-form_phone" href="#">手机动态登录</a>
+
+                <p class="fieldset"  >
+                    <label class="image-replace cd-username" for="signin-username">用户名</label>
+                    <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="手机/邮箱/用户名">
+                </p>
+
+                <p class="fieldset"  >
+                    <label class="image-replace cd-password" for="signin-password">密码</label>
+                    <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="输入密码">
+                </p>
+
+
+                <p class="fieldset phone-admin" style="display: none;">
+                    <input class="full-width has-padding has-border" id="signin-phone" type="text" placeholder="请输入手机号">
+                </p>
+
+                <p class="fieldset var-password" style="display: none;">
+                    <input class="full-width has-padding has-border" id="signin-var-password" type="text"  placeholder="请输入验证码">
+                    <input type="button" class="login_button" value="点击获取验证码">
+                </p>
+
+
+
+                <p class="fieldset remember-state">
+                    <input type="checkbox" id="remember-me" checked>
+                    <label for="remember-me" class="remember_state">记住登录状态</label>
+                    <a href="#" class="login_problem">登录遇到问题</a>
+                </p>
+
+                <p class="fieldset admin">
+                    <input class="full-width2" type="submit" value="登 录"><br/>
+                    <a class="register_now" href="#">立即注册</a>
+                </p>
+            </form>
+
+            <div class="login_border"></div>
+
+            <div class="other_login">
+                    <p>可以使用以下方式登录</p>
+                    <a href="#"><img src="../images/wechat.jpg" class="wechat_login"></a>
+                    <a href="#"><img src="../images/qq.jpg" class="qq_login"></a>
+            </div>
+
+        </div>
+        <a href="#" class="cd-close-form">关闭</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="navbar">
+    <ul class="nav_content">
+        <li><a class="" href="#">小学</a></li>
+        <li><a class="" href="#">初中</a></li>
+        <li><a class="" href="#">高中</a></li>
+    </ul>
+</div>
+
+<div class="main">
+
+    <div id="flash">
+        <ul id="pic">
+            <li style="display:block"><img src="http://img13.360buyimg.com/da/jfs/t2242/262/578407619/87636/4ffe0c5/56187ed2Nfed9a5b3.jpg" alt=""></li>
+            <li><img src="http://img13.360buyimg.com/da/jfs/t2143/111/577347825/96150/e27180bd/561889b3N42ee62b5.jpg" alt=""></li>
+            <li><img src="http://img20.360buyimg.com/da/jfs/t1825/234/1750370913/97529/b9229832/560b5ad3N054605f7.jpg" alt=""></li>
+            <li><img src="http://img10.360buyimg.com/da/jfs/t2026/215/573306345/95654/a0211937/5618a735N1b3d8423.jpg" alt=""></li>
+            <li><img src="http://img20.360buyimg.com/da/jfs/t2065/362/579832759/78899/6f349917/5618c680N3752bacc.jpg" alt=""></li>
+            <li><img src="http://img10.360buyimg.com/da/jfs/t2023/45/384256123/101565/9b6e5daf/5604bdceN8c7d2ccf.jpg" alt=""></li>
+        </ul>
+        <ol id="num">
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+        <p class="flash_arrow"><a href="javascript:;" class="arrow" id="left"><</a></p>
+        <p class="flash_arrow"><a href="javascript:;" class="arrow" id="right">></a></p>
+    </div>
+
+    <div class="personal_information">
+
+        <div class="personal_top"><img src="../images/laoshi.jpg" class="personal_img">
+            <div class="per_name">Ghost</div><br/><br/>
+            <div class="per_txt">&nbsp;&nbsp;&nbsp;每日签到,领取财富</div>
+        </div>
+
+        <div class="personal_mid">
+
+            <div class="per_mid_left">
+                <div class="wealth_num"><a href="#" class="per_wealth">907</a></div>
+                <div><a href="#" class="per_wealth_txt">财富值</a></div>
+            </div>
+
+
+            <div class="per_mid_mid">
+                <div class="public_file_num"><a href="#"  class="per_public_file_num">18</a></div>
+                <div ><a href="#" class="per_public_file_txt" >公关文档</a></div>
+            </div>
+
+            <div class="per_mid_right">
+                <div class="file_num" ><a href="#" class="per_file">8</a></div>
+                <div ><a href="#" class="per_file_txt">&nbsp;文辑</a></div>
+            </div>
+
+        </div>
+
+        <div class="personal_bottom">
+            <div class="per_space">个人中心</div>
+            <ul class="per_page">
+                <li class="per_page_name"><span class="page_txt">●</span><a href="#" class="per_page_name_a">春天在哪里</a></li><span class="per_page_num">4页</span><br/>
+                <li class="per_page_name"><span class="page_txt">●</span><a href="#">离骚</a></li><span class="per_page_num">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2页</span>
+            </ul>
+            <div class="upload_page">
+                <a  href="upload-file.html" >上传我的文档</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="latest_upload">
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <p class="latest_upload_title">最新上传</p>
+      <ul class="latest_upload_ul">
+          <li class="latest_upload_li"><a class="latest_upload_title_text" href="#">预习学案 生活中的正数和负数</a>
+          <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+          </li>
+          <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+      </ul>
+        <ul class="latest_upload_ul">
+            <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+                <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+            </li>
+            <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+        </ul>
+        <ul class="latest_upload_ul">
+            <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+                <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+            </li>
+            <li class="upload_author">&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+        </ul>
+
+        <ul class="latest_upload_ul">
+            <li class="latest_upload_li"><a href="#" class="latest_upload_title_text">在山的那一边 教学设计</a>
+                <p class="upload_formate">格式:<span class="upload_formate_type">PDF</span><span class="latest_upload_page_score">评分:</span><span class="score_num">4.9</span></p>
+            </li>
+            <li class="upload_author">&nbsp;&nbsp;上传人:<a href="#" class="upload_author_name">Ghost</a></li>
+        </ul>
+
+
+    </div>
+
+    <div class="hot_area">
+        <p class="hot_area_name">热门专区</p>
+            <div><p class="hot_area_title">如何让孩子更好的学习数学</p>
+            <div ><img src="../images/mc2.jpg" class="hot_area_img">
+               <div class="hot_area_name"><span class="hot_area_article_title">正数和负数教学设计</span>
+                  <ul class="hot_area_article_ul">
+                      <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                      <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                      <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                      <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                      <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                      <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+
+                 </ul>
+              </div>
+
+                <div class="hot_area_name"><span class="hot_area_article_title" style="margin-left: 320px;margin-top: 60px;">有理数教学方案设计</span>
+                    <ul class="hot_area_article_ul"><br/><br/><br/><br/><br/>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                    </ul>
+                </div>
+            </div>
+            </div><br><br><br>
+        <div><p class="hot_area_title">梦里寻她千百度,那人却在灯火阑珊处</p>
+            <div ><img src="../images/tuoyuan.jpg" class="hot_area_img">
+                <div class="hot_area_name"><span class="hot_area_article_title">正数和负数教学设计</span>
+                    <ul class="hot_area_article_ul">
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" >使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+
+
+                    </ul>
+                </div>
+                <div class="hot_area_name"><span class="hot_area_article_title" style="margin-left: 320px;margin-top: 60px;">有理数教学方案设计</span>
+                    <ul class="hot_area_article_ul"><br/><br/><br/><br/><br/>
+
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                        <li class="hot_area_article_li"><span class="page_txt">●</span><a href="#" class="hot_area_article_src">使学生了解正数和负数是什么</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quality_resources">
+
+            <div class="quality_resources_title"><span class="quality_resources_title_name">&nbsp;精品资料</span>
+                <br/>
+                <br/>
+                <ul class="quality_resources_title_ul">
+                    <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                    <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                    <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                    <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                    <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                    <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                </ul>
+            </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+        <div class="quality_resources_title"><span class="quality_resources_title_name">精品资料</span>
+            <br/>
+            <br/>
+            <ul class="quality_resources_title_ul">
+                <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+                <li class="quality_resources_title_li"><img src="../images/ppt.jpg" class="quality_resources_img"><a href="#">使学生了解正数和负数是什么</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <div class="ads">
+        <img src="../images/ads.jpg" class="ads_img">
+    </div>
+
+    <div class="today_free_file">
+        <div class="free_file_title">
+            <div class="free_file_name">今日免费文档</div>
+            <div class="free_file_page">
+               <a href="#"><img class="free_file_page_img" src="../images/page1.jpg"></a>
+                <div class="free_file_page_title">
+                    <p class="free_file_page_title_txt">精品少儿读物</p>
+                    <textarea class="free_file_page_title_txt_detail">维尼的故事就是从战争废墟中开出的一朵花,是飘扬在战火中的一丝甜蜜,战争迫使人们背井离乡,骨肉分离,让成千上万的生命客死他国...
+                    </textarea>
+                    <div class="free_file_price">0元<span class="free_file_price_today"></span><span class="free_file_price_before">20元</span></div>
+                    <input type="button" value="立即购买" class="free_file_buying">
+                </div>
+
+                <div class="free_file_page" style="margin-left: 500px;margin-top: -210px;">
+                    <a href="#"><img class="free_file_page_img" src="../images/page1.jpg"></a>
+                    <div class="free_file_page_title">
+                        <p class="free_file_page_title_txt">精品少儿读物</p>
+                    <textarea class="free_file_page_title_txt_detail">维尼的故事就是从战争废墟中开出的一朵花,是飘扬在战火中的一丝甜蜜,战争迫使人们背井离乡,骨肉分离,让成千上万的生命客死他国...
+                    </textarea>
+                        <div class="free_file_price">0元<span class="free_file_price_today"></span><span class="free_file_price_before">20元</span></div>
+                        <input type="button" value="立即购买" class="free_file_buying">
+                    </div>
+             </div>
+        </div>
+    </div>
+
+    <div class="hot_search">
+      <div class="hot_search_title"><span class="hot_search_title_name">热搜文档</span></div>
+        <div class="hot_search_main">
+
+                <ul>
+                    <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                    <li class="hot_search_content_title">麦田里的守望者</li>
+                    <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                    <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+                </ul>
+
+
+            <ul style="margin-left: 130px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+
+            <ul style="margin-left: 130px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+
+            <ul style="margin-left: 130px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+            <ul style="margin-left: 120px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+            <ul >
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+
+            <ul style="margin-left: 130px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+
+            <ul style="margin-left: 130px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+
+            <ul style="margin-left: 130px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+            <ul style="margin-left: 120px;">
+                <li><a href=""><img src="../images/maitian.jpg" class="hot_search_content_img"></a></li>
+                <li class="hot_search_content_title">麦田里的守望者</li>
+                <li><span class="hot_search_content_type">文</span><span class="hot_search_content_type_class">预案</span></li>
+                <li class="hot_search_content_reader_num"><span class="hot_search_content_reader_num_show">456869</span>人阅读</li>
+            </ul>
+
+
+
+
+
+
+        </div>
+    </div>
+
+    <div class="author_recommend">
+             <p class="author_recommend_title">作者推荐</p>
+        <div class="author_recommend_content">
+
+                <div class="author_recommend_content_list">
+                    <a href="#"><img src="../images/laoshi.jpg" class="author_recommend_main_img"></a>
+                    <p class="author_recommend_main_author">Ghost</p>
+                    <div class="author_recommend_main_identity ">英语等级考试培训师</div>
+                    <div class="author_recommend_main_num"><span class="author_recommend_main_num_span">86</span>篇文档</div>
+                    <div class="author_recommend_main_img_list">
+                        <img class="author_recommend_main_star main_star_1"  src="../images/icon_star.png">
+                        <img class="author_recommend_main_star"  src="../images/icon_star.png">
+                        <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                        <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                    </div>
+                    <div class="author_recommend_main_author_list">
+                        <ul class="author_recommend_main_author_list_ul">
+                            <li class="author_recommend_main_author_list_li main_author_list_li_01"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span >分</li>
+                            <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                            <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                        </ul>
+                    </div>
+               </div>
+
+            <div class="author_recommend_content_list" style="margin-top: -170px;margin-left: 250px;">
+                <a href="#"><img src="../images/laoshi.jpg" class="author_recommend_main_img"></a>
+                <p class="author_recommend_main_author">Ghost</p>
+                <div class="author_recommend_main_identity ">英语等级考试培训师</div>
+                <div class="author_recommend_main_num"><span class="author_recommend_main_num_span">86</span>篇文档</div>
+                <div class="author_recommend_main_img_list">
+                    <img class="author_recommend_main_star main_star_1"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                </div>
+                <div class="author_recommend_main_author_list">
+                    <ul class="author_recommend_main_author_list_ul">
+                        <li class="author_recommend_main_author_list_li main_author_list_li_01"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span >分</li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="author_recommend_content_list" style="margin-top: -170px;margin-left: 500px;">
+                <a href="#"><img src="../images/laoshi.jpg" class="author_recommend_main_img"></a>
+                <p class="author_recommend_main_author">Ghost</p>
+                <div class="author_recommend_main_identity ">英语等级考试培训师</div>
+                <div class="author_recommend_main_num"><span class="author_recommend_main_num_span">86</span>篇文档</div>
+                <div class="author_recommend_main_img_list">
+                    <img class="author_recommend_main_star main_star_1"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                </div>
+                <div class="author_recommend_main_author_list">
+                    <ul class="author_recommend_main_author_list_ul">
+                        <li class="author_recommend_main_author_list_li main_author_list_li_01"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span >分</li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="author_recommend_content_list" >
+                <a href="#"><img src="../images/laoshi.jpg" class="author_recommend_main_img"></a>
+                <p class="author_recommend_main_author">Ghost</p>
+                <div class="author_recommend_main_identity ">英语等级考试培训师</div>
+                <div class="author_recommend_main_num"><span class="author_recommend_main_num_span">86</span>篇文档</div>
+                <div class="author_recommend_main_img_list">
+                    <img class="author_recommend_main_star main_star_1"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                </div>
+                <div class="author_recommend_main_author_list">
+                    <ul class="author_recommend_main_author_list_ul">
+                        <li class="author_recommend_main_author_list_li main_author_list_li_01"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span >分</li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="author_recommend_content_list" style="margin-left: 250px;margin-top: -170px;">
+                <a href="#"><img src="../images/laoshi.jpg" class="author_recommend_main_img"></a>
+                <p class="author_recommend_main_author">Ghost</p>
+                <div class="author_recommend_main_identity ">英语等级考试培训师</div>
+                <div class="author_recommend_main_num"><span class="author_recommend_main_num_span">86</span>篇文档</div>
+                <div class="author_recommend_main_img_list">
+                    <img class="author_recommend_main_star main_star_1"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                </div>
+                <div class="author_recommend_main_author_list">
+                    <ul class="author_recommend_main_author_list_ul">
+                        <li class="author_recommend_main_author_list_li main_author_list_li_01"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span >分</li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="author_recommend_content_list" style="margin-left: 500px;margin-top: -170px;">
+                <a href="#"><img src="../images/laoshi.jpg" class="author_recommend_main_img"></a>
+                <p class="author_recommend_main_author">Ghost</p>
+                <div class="author_recommend_main_identity ">英语等级考试培训师</div>
+                <div class="author_recommend_main_num"><span class="author_recommend_main_num_span">86</span>篇文档</div>
+                <div class="author_recommend_main_img_list">
+                    <img class="author_recommend_main_star main_star_1"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png">
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                    <img class="author_recommend_main_star"  src="../images/icon_star.png" >
+                </div>
+                <div class="author_recommend_main_author_list">
+                    <ul class="author_recommend_main_author_list_ul">
+                        <li class="author_recommend_main_author_list_li main_author_list_li_01"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span >分</li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                        <li class="author_recommend_main_author_list_li"><a href="#">世界上最美丽的英文</a><span class="author_recommend_main_author_list_p">4.7</span><span >分</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="later_news">
+        <p class="later_news_title">最新动态</p>
+        <div class="later_news_content">
+           <ul class="later_news_content_ul">
+            <li class="later_news_time"><span class="later_news_time_span">8</span>小时前</li>
+            <li class="later_news_author">
+                <a href="#"><img src="../images/laoshi.jpg" class="later_news_author_img"></a>
+                <p class="later_news_author_name">飘雪</p>
+                <p class="later_news_author_identity">一级英语老师</p>
+                <a href="#"><p class="later_news_author_pagename">上传定语从句语法法则</p></a>
+            </li>
+          </ul>
+      </div>
+        <div class="later_news_content">
+            <ul class="later_news_content_ul">
+                <li class="later_news_time"><span class="later_news_time_span">7</span>小时前</li>
+                <li class="later_news_author">
+                    <a href="#"><img src="../images/laoshi.jpg" class="later_news_author_img"></a>
+                    <p class="later_news_author_name">飘雪</p>
+                    <p class="later_news_author_identity">一级英语老师</p>
+                    <a href="#"><p class="later_news_author_pagename">上传定语从句语法法则</p></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+        <div class="later_news_content">
+            <ul class="later_news_content_ul">
+                <li class="later_news_time"><span class="later_news_time_span">8</span>小时前</li>
+                <li class="later_news_author">
+                    <a href="#"><img src="../images/laoshi.jpg" class="later_news_author_img"></a>
+                    <p class="later_news_author_name">飘雪</p>
+                    <p class="later_news_author_identity">一级英语老师</p>
+                    <a href="#"><p class="later_news_author_pagename">上传定语从句语法法则</p></a>
+                </li>
+            </ul>
+        </div>
+</div>
+</div>
+<div class="footer">
+   <div class="footer_content">
+        <ul class="footer_content_ul">
+          <li><a class="footer_title">北京市百年树人远程教育有限公司<span class="footer_content_span">|</span></a></li>
+          <li><a href="#" class="agreement">协议<span class="footer_content_span">|</span></a></li>
+          <li><a href="#" class="proposal">建议</a></li>
+        </ul>
+   </div>
+</div>
+
+</body>
+
+</html>

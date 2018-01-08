@@ -1,0 +1,64 @@
+package cn.bnsr.edu_yun.backstage.base.view;
+
+import java.util.Date;
+
+public class StudyTimeView extends PageBase{
+
+	private String course_title;
+	private String course_hour_title;
+	private Date start_time;
+	private long study_time;
+	private long user_id;
+	private String days;//日期
+	private String endTime;
+	private String startTime;
+	public String getCourse_title() {
+		return course_title;
+	}
+	public void setCourse_title(String course_title) {
+		this.course_title = course_title;
+	}
+	public String getCourse_hour_title() {
+		return course_hour_title;
+	}
+	public void setCourse_hour_title(String course_hour_title) {
+		this.course_hour_title = course_hour_title;
+	}
+	public Date getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(Date start_time) {
+		this.start_time = start_time;
+	}
+	public long getStudy_time() {
+		return study_time;
+	}
+	public void setStudy_time(long study_time) {
+		this.study_time = study_time;
+	}
+	public long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
+	}
+	public String getDays() {
+		return days;
+	}
+	public void setDays(String days) {
+		this.days = days;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	
+}

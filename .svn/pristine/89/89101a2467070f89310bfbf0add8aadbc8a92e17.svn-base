@@ -1,0 +1,263 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://"
+            + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
+<head>
+    <c:if test="${empty head_title}"><title>求资网</title></c:if>
+    <c:if test="${!empty head_title}"><title>${head_title}</title></c:if>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/frontstage/images/qiuzi_ico.ico" media="screen" />
+    <link href="${pageContext.request.contextPath}/frontstage/css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/frontstage/css/bootstrap/font-awesome.min.css" />
+    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/frontstage/css/bootstrap/es-icon.css" />
+    <link href="${pageContext.request.contextPath}/frontstage/css/bootstrap/main-blue-light.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/frontstage/css/bootstrap/main.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/frontstage/css/bootstrap/head-white.css" rel="stylesheet" />
+    <style type="text/css">
+        /*这个方式兼容所有版本的谷歌浏览器*/
+        audio::-webkit-media-controls {
+            overflow: hidden !important
+        }
+        audio::-webkit-media-controls-enclosure {
+            width: calc(100% + 32px);
+            margin-left: auto;
+        }
+        video::-webkit-media-controls-enclosure {
+            overflow:hidden;
+        }
+        video::-webkit-media-controls-panel {
+            width: calc(100% + 30px);
+        }
+    </style>
+
+    <%--boostrap插件--%>
+
+    <link href="${pageContext.request.contextPath}/frontstage/js/JMEditor/style/default.css"
+          rel="stylesheet" media="screen" type="text/css" />
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/JMEditor.js"></script>
+
+    <link href="${pageContext.request.contextPath}/frontstage/css/scrollBar/style.min.css"
+          rel="stylesheet" media="screen" type="text/css" />
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/frontstage/css/scrollBar/mousewheel.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/frontstage/css/scrollBar/scrollbar.min.js"></script>
+    <link  href="${pageContext.request.contextPath}/frontstage/js/sharejs/dist/css/share.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/frontstage/js/sharejs/dist/js/jquery.share.min.js"></script>
+    <script src="${pageContext.request.contextPath}/frontstage/js/bootstrap/bootstrap.min.js"></script>
+
+
+</head>
+<body class="lesson-dashboard-page" >
+
+<div class="cn-wrap" style="overflow-y: scroll;">
+
+    <div class="lesson-dashboard lesson-dashboard-open" id="lesson-dashboard" style="position: absolute;" >
+
+        <div class="dashboard-content">
+
+            <div class="dashboard-header">
+                <div class="pull-left title-group">
+                     <span class="chapter-label">
+                          第<span data-role="chapter-number">1</span>章
+                     </span>
+                    <span class="divider">»</span>
+                    <span class="item-label">课时
+                        <span>:</span></span>
+                    <span class="item-title">第一章第一小节</span>
+                </div>
+            </div>
+
+            <!--视频播放-->
+            <div class="dashboard-body" style="width: 100%;">
+
+                <div class="lesson-content lesson-content-audio" id="lesson-audio-content"  style="background-color: #000;">
+                    <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width: 100%;height: 100%;"
+                           poster="http://video-js.zencoder.com/oceans-clip.png" onended="end()" onplaying="playing()" onpause="pause1()" autoplay oncontextmenu="return false">
+                        <source id="video_source" src="${file_server_path }${courseFile.path }" type='video/mp4' />
+
+                    </video>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        if("${courseHour.hour_type }"==="0" || "${courseHour.hour_type }"==="2"){
+            initvideo();
+        }else if("${courseHour.hour_type }"==="1"){
+            initdoc();
+        }
+
+        /* 视频初始化 */
+        function initvideo(){
+            //创建XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            //配置请求方式、请求地址以及是否同步
+            xhr.open('POST', '${pageContext.request.contextPath}/course_study/read_video.action?id=${courseFile.id }', true);
+            //设置请求结果类型为blob
+            xhr.responseType = 'blob';
+            //请求成功回调函数
+            xhr.onload = function(e) {
+                if (this.status == 200) {//请求成功
+                    //获取blob对象
+                    var blob = this.response;
+                    if("${courseHour.hour_type }"==="0"){
+                        //获取blob对象地址，并把值赋给容器
+                        $("#video_source").attr("src", URL.createObjectURL(blob));
+                    }else{
+                        //音频
+                        $("#audio_player1").attr("src", URL.createObjectURL(blob));
+                        $("#audio_player2").attr("src", URL.createObjectURL(blob));
+                    }
+                }
+            };
+            xhr.send();
+        }
+        
+    });
+    var startTimeFirst;//第一次开始时间
+    var startTime;//每一次开始时间
+    var endTime;//每一次结束时间，含暂停
+    var duration=0;//视频时长
+    var studyTime=0;//学习时间
+
+    $(window).unload(function (){
+        if("${isPreview }"!=='1'){
+            endTime  = new Date();
+            var time=endTime.getTime()-startTime.getTime();
+
+            studyTime+=time;
+
+
+            var dura=parseInt(duration+"");
+            $.ajax({
+                async: false,
+                url : '${pageContext.request.contextPath}/user_study_time/ajax_insert.action',
+                data : {
+                    course_hour_id : '${courseHourStudent.course_hour_id}',
+                    start_time:startTimeFirst,
+                    class_id:'${class_id}',
+                    study_time:studyTime,
+                    duration:dura,
+                },
+                dataType : 'json',
+                success : function(response) {
+
+                }
+            });
+        }
+    });
+
+    function playing(){
+        var status;
+
+        var a=document.getElementById("example_video_1");
+        startTime  = new Date();
+        //改
+        if(startTime==null){
+            startTimeFirst=startTime;
+        }
+
+        duration=a.duration*1000;
+
+        var box=$("#learning_box");
+        if('${courseHourStudent.is_studyed}'!=0){
+            return false;
+        }else{
+            status=2;
+        }
+        if("${isPreview }"!=='1'){
+            $.ajax({
+                url : '${pageContext.request.contextPath}/course_study/studyed.action',
+                data : {
+                    id : '${courseHourStudent.id}',
+                    is_studyed:status,
+                    user_study_id:'${user_study_id}',
+                },
+                dataType : 'json',
+                success : function(response) {
+
+                }
+            });
+        }
+    }
+    function end(){
+        if("${isPreview}"!=='1'){
+            var status;
+            endTime  = new Date();
+            var time=endTime.getTime()-startTime.getTime();
+
+            studyTime+=time;
+
+            var box=$("#learning_box");
+            var dura=parseInt(duration+"");
+            $.ajax({
+                url : '${pageContext.request.contextPath}/user_study_time/ajax_insert.action',
+                data : {
+                    course_hour_id : '${courseHourStudent.course_hour_id}',
+                    start_time:startTimeFirst,
+                    class_id:'${class_id}',
+                    study_time:studyTime,
+                    duration:dura,
+                },
+                dataType : 'json',
+                success : function(response) {
+                    if('${courseHourStudent.is_studyed}'==1){
+                        return false;
+                    }else{
+                        status=1;
+
+                        $.ajax({
+                            url : '${pageContext.request.contextPath}/course_study/studyed.action',
+                            data : {
+                                id : '${courseHourStudent.id}',
+                                is_studyed:status,
+                                user_study_id:'${user_study_id}',
+                            },
+                            dataType : 'json',
+                            success : function(response) {
+
+                                if(response.status==0){
+                                    box.removeClass("glyphicon-check").addClass("glyphicon-unchecked");
+                                }
+                                if(response.status==1){
+                                    box.removeClass("glyphicon-unchecked").addClass("glyphicon-check");
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+    function pause1(){
+        return;
+        endTime  = new Date();
+        var time=endTime.getTime()-startTime.getTime();
+        studyTime+=time;
+        var newTime=new Date(time);
+    }
+
+
+
+</script>
+
+

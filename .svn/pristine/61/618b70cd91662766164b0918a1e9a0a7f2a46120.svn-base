@@ -1,0 +1,152 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+/**
+ * 课程中心视图
+ * @author fangxiongwei
+ * @date 2016年11月21日
+ */
+public class CourseCenterView  extends PageBase{
+	private Long id;
+	private String title;//课程标题
+	private String serialStatus;//连载状态 0-非连载；1-更新中；2-已完结
+	private String type;//课程种类0-普通，1-班级,2-直播
+	private String img;//图片
+	private Double price;//价格
+	private String studentNum;//学员数
+	private String appraiseNum;//评价数
+	private String sortType;//排序字段
+	private List<String> classifyIds;//分类ids
+	private String userName;//创建人 
+	
+	private Long classifyId;//所属分类id
+	private String classifyName;//所属分类名称
+	private Long sonClassifyId;//所属子分类id
+	private String sonClassifyName;//所属子分类名称
+	private int currSignUp;// 可以报名 0-不作为检索条件 1-作为检索条件
+	
+	private String school;//工作单位
+	
+	private String titles;//职称
+	
+	private String true_name;//真实姓名
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getSerialStatus() {
+		return serialStatus;
+	}
+	public void setSerialStatus(String serialStatus) {
+		this.serialStatus = serialStatus;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public String getStudentNum() {
+		return studentNum;
+	}
+	public void setStudentNum(String studentNum) {
+		this.studentNum = studentNum;
+	}
+	public String getAppraiseNum() {
+		return appraiseNum;
+	}
+	public void setAppraiseNum(String appraiseNum) {
+		this.appraiseNum = appraiseNum;
+	}
+	public String getSortType() {
+		return sortType;
+	}
+	public void setSortType(String sortType) {
+		this.sortType = sortType;
+	}
+	public List<String> getClassifyIds() {
+		return classifyIds;
+	}
+	public void setClassifyIds(List<String> classifyIds) {
+		this.classifyIds = classifyIds;
+	}
+	public Long getClassifyId() {
+		return classifyId;
+	}
+	public void setClassifyId(Long classifyId) {
+		this.classifyId = classifyId;
+	}
+	public String getClassifyName() {
+		return classifyName;
+	}
+	public void setClassifyName(String classifyName) {
+		this.classifyName = classifyName;
+	}
+	public Long getSonClassifyId() {
+		return sonClassifyId;
+	}
+	public void setSonClassifyId(Long sonClassifyId) {
+		this.sonClassifyId = sonClassifyId;
+	}
+	public String getSonClassifyName() {
+		return sonClassifyName;
+	}
+	public void setSonClassifyName(String sonClassifyName) {
+		this.sonClassifyName = sonClassifyName;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getSchool() {
+		return school;
+	}
+	public void setSchool(String school) {
+		this.school = school;
+	}
+	public int getCurrSignUp() {
+		return currSignUp;
+	}
+	public void setCurrSignUp(int currSignUp) {
+		this.currSignUp = currSignUp;
+	}
+	public String getTitles() {
+		return titles;
+	}
+	public void setTitles(String titles) {
+		this.titles = titles;
+	}
+	public String getTrue_name() {
+		return true_name;
+	}
+	public void setTrue_name(String true_name) {
+		this.true_name = true_name;
+	}
+	
+}

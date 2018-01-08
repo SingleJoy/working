@@ -1,0 +1,420 @@
+package cn.bnsr.edu_yun.frontstage.xbjy.view;
+
+import java.util.Date;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+public class LessonView extends PageBase{
+	
+	private long id;
+	private String name;
+	private Long workshop_id;
+	private String lesson_num;
+	private String lesson_pic;//展示图片
+	private int period;//学时
+	private double credit;//学分
+	private String stage_id;
+	private String subject_id;
+	private String grade_id;
+	private String press_id;
+	private String research;//研究目标
+	private String research_key;//研究目标关键词
+	private String measures;//研究措施
+	private String self_evaluation;//自我评价
+	private String create_time;
+	private String update_time;
+	private long user_id;
+	private int status;//状态：0未发布 1已发布 2已完成
+	private int excellent;//是否推优:0为不推优1为推优
+	private int scan_count;//浏览数
+	private long user_sk;//上课老师ID
+	private String user_sk_name;//上课老师姓名
+	//教学设计所需要显示
+	private String versionName;
+	private String grade_name;
+	private String subjectName;
+	private String username;
+	private String school;
+	private String stageName;
+	private String list;
+	private int all_count;//总任务数
+	private int finish_count;//完成任务数
+	
+	private Integer identity;//登录用户身份信息
+	private long lessonTotalAppraise;//评价总数
+	private int lessonTotalScore;//评价总分
+	private Integer source_type;
+	private long community_id;//社区id
+	private String community_name;
+	private String workshop_name; //工作坊名称
+	private String lesson_username;//组长
+	private String grade;
+	private String subject;
+	private String search;
+	private String ids;
+	private int open_status;
+	private int recommended;
+	private String area;
+	private String opinion;//指导老师意见
+	private Date opinion_time;
+	private String opinion_user;
+	private String opinion_user_img;
+	private Long opinion_user_id;
+	public long getId() {
+		return id;
+	}
+	public String getStage_id() {
+		return stage_id;
+	}
+	public void setStage_id(String stage_id) {
+		this.stage_id = stage_id;
+	}
+	public String getSubject_id() {
+		return subject_id;
+	}
+	public void setSubject_id(String subject_id) {
+		this.subject_id = subject_id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Long getWorkshop_id() {
+		return workshop_id;
+	}
+	public void setWorkshop_id(Long workshop_id) {
+		this.workshop_id = workshop_id;
+	}
+	public String getLesson_pic() {
+		return lesson_pic;
+	}
+	public void setLesson_pic(String lesson_pic) {
+		this.lesson_pic = lesson_pic;
+	}
+	public int getPeriod() {
+		return period;
+	}
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+	public double getCredit() {
+		return credit;
+	}
+	public void setCredit(double credit) {
+		this.credit = credit;
+	}
+	public String getGrade_id() {
+		return grade_id;
+	}
+	public void setGrade_id(String grade_id) {
+		this.grade_id = grade_id;
+	}
+	public String getPress_id() {
+		return press_id;
+	}
+	public void setPress_id(String press_id) {
+		this.press_id = press_id;
+	}
+	public String getResearch() {
+		return research;
+	}
+	public void setResearch(String research) {
+		this.research = research;
+	}
+	public String getResearch_key() {
+		return research_key;
+	}
+	public void setResearch_key(String research_key) {
+		this.research_key = research_key;
+	}
+	public String getMeasures() {
+		return measures;
+	}
+	public void setMeasures(String measures) {
+		this.measures = measures;
+	}
+	public String getSelf_evaluation() {
+		return self_evaluation;
+	}
+	public void setSelf_evaluation(String self_evaluation) {
+		this.self_evaluation = self_evaluation;
+	}
+	public String getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
+	}
+	public String getUpdate_time() {
+		return update_time;
+	}
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
+	public long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public int getExcellent() {
+		return excellent;
+	}
+	public void setExcellent(int excellent) {
+		this.excellent = excellent;
+	}
+	/**
+	 * @return the lesson_num
+	 */
+	public String getLesson_num() {
+		return lesson_num;
+	}
+	/**
+	 * @param lesson_num the lesson_num to set
+	 */
+	public void setLesson_num(String lesson_num) {
+		this.lesson_num = lesson_num;
+	}
+	public String getVersionName() {
+		return versionName;
+	}
+	public void setVersionName(String versionName) {
+		this.versionName = versionName;
+	}
+	public String getGrade_name() {
+		return grade_name;
+	}
+	public void setGrade_name(String grade_name) {
+		this.grade_name = grade_name;
+	}
+	public String getSubjectName() {
+		return subjectName;
+	}
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getSchool() {
+		return school;
+	}
+	public void setSchool(String school) {
+		this.school = school;
+	}
+	public String getStageName() {
+		return stageName;
+	}
+	public void setStageName(String stageName) {
+		this.stageName = stageName;
+	}
+	/**
+	 * @return the scan_count
+	 */
+	public int getScan_count() {
+		return scan_count;
+	}
+	/**
+	 * @param scan_count the scan_count to set
+	 */
+	public void setScan_count(int scan_count) {
+		this.scan_count = scan_count;
+	}
+	/**
+	 * @return the user_sk
+	 */
+	public long getUser_sk() {
+		return user_sk;
+	}
+	/**
+	 * @param user_sk the user_sk to set
+	 */
+	public void setUser_sk(long user_sk) {
+		this.user_sk = user_sk;
+	}
+	/**
+	 * @return the user_sk_name
+	 */
+	public String getUser_sk_name() {
+		return user_sk_name;
+	}
+	/**
+	 * @param user_sk_name the user_sk_name to set
+	 */
+	public void setUser_sk_name(String user_sk_name) {
+		this.user_sk_name = user_sk_name;
+	}
+	public String getList() {
+		return list;
+	}
+	public void setList(String list) {
+		this.list = list;
+	}
+	public int getAll_count() {
+		return all_count;
+	}
+	public void setAll_count(int all_count) {
+		this.all_count = all_count;
+	}
+	public int getFinish_count() {
+		return finish_count;
+	}
+	public void setFinish_count(int finish_count) {
+		this.finish_count = finish_count;
+	}
+	/**
+	 * @return the lessonTotalAppraise
+	 */
+	public long getLessonTotalAppraise() {
+		return lessonTotalAppraise;
+	}
+	/**
+	 * @param lessonTotalAppraise the lessonTotalAppraise to set
+	 */
+	public void setLessonTotalAppraise(long lessonTotalAppraise) {
+		this.lessonTotalAppraise = lessonTotalAppraise;
+	}
+	/**
+	 * @return the lessonTotalScore
+	 */
+	public int getLessonTotalScore() {
+		return lessonTotalScore;
+	}
+	/**
+	 * @param lessonTotalScore the lessonTotalScore to set
+	 */
+	public void setLessonTotalScore(int lessonTotalScore) {
+		this.lessonTotalScore = lessonTotalScore;
+	}
+	/**
+	 * @return the identity
+	 */
+	public Integer getIdentity() {
+		return identity;
+	}
+	/**
+	 * @param identity the identity to set
+	 */
+	public void setIdentity(Integer identity) {
+		this.identity = identity;
+	}
+	public Integer getSource_type() {
+		return source_type;
+	}
+	public void setSource_type(Integer source_type) {
+		this.source_type = source_type;
+	}
+	public long getCommunity_id() {
+		return community_id;
+	}
+	public void setCommunity_id(long community_id) {
+		this.community_id = community_id;
+	}
+	public String getWorkshop_name() {
+		return workshop_name;
+	}
+	public void setWorkshop_name(String workshop_name) {
+		this.workshop_name = workshop_name;
+	}
+	public String getLesson_username() {
+		return lesson_username;
+	}
+	public void setLesson_username(String lesson_username) {
+		this.lesson_username = lesson_username;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	public int getOpen_status() {
+		return open_status;
+	}
+	public void setOpen_status(int open_status) {
+		this.open_status = open_status;
+	}
+	public int getRecommended() {
+		return recommended;
+	}
+	public void setRecommended(int recommended) {
+		this.recommended = recommended;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getCommunity_name() {
+		return community_name;
+	}
+	public void setCommunity_name(String community_name) {
+		this.community_name = community_name;
+	}
+	public String getOpinion() {
+		return opinion;
+	}
+	public void setOpinion(String opinion) {
+		this.opinion = opinion;
+	}
+	public Date getOpinion_time() {
+		return opinion_time;
+	}
+	public void setOpinion_time(Date opinion_time) {
+		this.opinion_time = opinion_time;
+	}
+	public String getOpinion_user() {
+		return opinion_user;
+	}
+	public void setOpinion_user(String opinion_user) {
+		this.opinion_user = opinion_user;
+	}
+	public String getOpinion_user_img() {
+		return opinion_user_img;
+	}
+	public void setOpinion_user_img(String opinion_user_img) {
+		this.opinion_user_img = opinion_user_img;
+	}
+	public Long getOpinion_user_id() {
+		return opinion_user_id;
+	}
+	public void setOpinion_user_id(Long opinion_user_id) {
+		this.opinion_user_id = opinion_user_id;
+	}
+	
+
+	
+}

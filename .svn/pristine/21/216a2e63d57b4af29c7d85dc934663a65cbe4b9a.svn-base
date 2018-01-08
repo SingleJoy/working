@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>工作坊展示页-工作坊话题详细</title>
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <div class="container">
+
+        <ol class="breadcrumb breadcrumb-o">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">工作坊主页 </a></li>
+        </ol>
+    </div>
+
+    <header  style="width: 100%;height: 240px;margin-bottom: 20px;z-index: 0;position: relative;">
+
+        <div class="banner" style="width: 100%;height: 240px;background-color: #1a2f40;">
+            <div class="banner-picture"></div>
+        </div>
+
+        <div class="container" style="margin-top: -240px;z-index: 99;">
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 160px;height: 180px;margin-top:30px; ">
+                </a>
+                <div class="media-body" style="padding-left: 20px;">
+
+                    <span class="cn-share top pull-right" style="margin-top: 20px;">
+                        <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown" style="color: #fff;">
+                            <p><i class="es-icon es-icon-share"></i></p>
+                            <p>分享</p>
+                        </a>
+
+                    </span>
+                    <h4 class="media-heading" style="color: #fff;margin-top: 30px;">北京四中数学组</h4>
+
+                    <div style="font-size: 20px;color: #fff;margin-top: 20px;">
+
+                        <span style="">
+                            <i class="es-icon es-icon-people" style="font-size: 20px;"></i>&nbsp;:&nbsp;48
+                        </span>
+                        <span class="comment" style="margin-left: 30px;">
+                            <i class="es-icon es-icon-textsms" style="font-size: 20px;"></i>&nbsp;:&nbsp;20
+                        </span>
+
+                        <span class="comment" style="margin-left: 30px;">
+                            <i class="es-icon es-icon-calendar" style="font-size: 20px;"></i>&nbsp;:&nbsp;2017-02-20
+                        </span>
+
+                    </div>
+                    <h4 style="color: #fff;margin-top: 20px;">工作坊管理:李老师</h4>
+                    <div class="pull-left" style="margin-top: 20px;">
+                        <!--如果已加入工作坊的话，按钮变成红色，加入工作坊变成退出工作坊-->
+                        <!--<a href="javascript:void(0);" class="btn btn-warning btn-lg">加入工作坊</a>-->
+                        <a href="#quit_community" class="btn btn-danger btn-lg" data-toggle="modal">退出工作坊</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <div class="container">
+
+        <div class="panel panel-default panel-col">
+            <div class="panel-heading" style="border: none;"></div>
+
+            <div class="panel-body" style="margin-top: -20px;">
+
+
+                <div class="col-md-12 group-main">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="workshop-list.html" class="btn btn-default pull-right">返回社区话题</a>
+                            <h3 class="panel-title">
+                                如何正确的提交问题-让错误日志帮助提供更好的错误定位
+                                <span class="label label-primary">置顶</span>
+                                <span class="label label-danger">精华</span>
+                            </h3>
+
+                        </div>
+                        <div class="panel-body clearfix" style="margin-top: 10px;">
+                            <div class="well well-sm text-sm color-gray clearfix" style="line-height:20px">
+                                <div class="cn-share dropdown pull-right">
+                        <span class="cn-share top" style="font-size:14px;">
+                            <a href="javascript:;" class="gray-dark" data-toggle="dropdown">
+                                <i class="es-icon es-icon-share"></i> 分享
+                            </a>
+                        </span>
+                                </div>
+                                <div class="pull-right mrm" id="thread-list">
+                                    <a href="javascript:;" class="uncollect-btn link-dark">
+                                        <i class="es-icon es-icon-favorite mrs"></i> 已收藏</a>
+                                    <a href="javascript:;" class="collect-btn link-dark" style="display: none;">
+                                        <i class="es-icon es-icon-favoriteoutline mrs"></i>收藏
+                                    </a>
+                                </div>
+                                发表于2014-10-23
+                                <span class="mll"> 3917次查看</span>
+                            </div>
+                            <div class="editor-text">
+                                1，被处理的错误提示。<br>
+                                <br>
+                                网站为了更加友好都会多系统的错误信息进行一下处理，不会直接让c端的用户看到，可以想象如果c端的用户看到这个东东该是多么的莫名其妙<br>
+                                <br>
+                                <br>
+
+                                2，背后到底发生了什么。<br> <br>
+
+                                把上面那个对c端友好的页面提交上来一点也不会帮助到程序猿，这个页面背后到底发生了什么事情呢。其实这些都可以在日志里面找到。<br>
+                                日志在哪呢？就在你的安装目录下面app/logs/prod.log就是这个prod.log（这个家伙知道所有的事情）有的日志文件是dev.log,<br>
+                                这个是开发环境下的日志文件，正常安装都会是prod.log。有tail命令查看下内容吧：<br>
+
+                            </div>
+
+
+                            <div class="mtl text-right">
+
+
+                                <a class="btn btn-default btn-sm mrm" href="javascript:void(0);">只看楼主</a>
+
+                                <a type="button" class="btn btn-default btn-sm mrm" href="javascript:void(0);">倒序查看</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default group-post-list">
+                        <div class="panel-heading">
+                            10回复
+                        </div>
+                        <div class="panel-body">
+                            <ul class="media-list">
+
+                                <li id="post-475" class="media">
+                                    <a href="/user/5308" class="pull-left"><img src="//scc1a8b2s6-static.qiqiuyun.net/files/user/2015/01-23/0931451540f6771779.JPG" class="avatar-sm"></a>
+                                    <div class="media-body">
+                                        <div class="metas ">
+                                    <span class="floor pull-right">
+                                      3楼
+                                  </span>
+                                            <strong>    <a class="link-dark " href="javascript:void(0);">CloudyLi</a>
+                                            </strong>
+                                            <span class="divider mhm">•</span>
+                                            <span>2015-02-27 </span>
+                                        </div>
+
+                                        <div class="content editor-text">
+                                            <p>可是我就是在windows上安装了一下 就出现这样的问题了，而且 linux是啥，我只会点点点，怎么破？</p>
+
+                                            <p>勉强安装了个ubuntu，怎么做才能 搞出 tail -300f prod.log？ 终端怎么弄出来？</p>
+
+                                        </div>
+
+                                        <div class="actions pull-right reply_area">
+
+                                            <a href="javascript:" class="reply">回复(2)</a>
+                                            <a href="javascript:" class="unreply" style="display:none;">收起</a>
+                                        </div>
+                                        <div class="topic_content_in" style="display: none;">
+                                            <div class="well">
+                                                <div class="reply-post-list-475">
+                                                    <ul class="media-list">
+                                                        <li class="media ">
+                                                            <a href="javascript:void (0);" class="pull-left">
+                                                                <img src="//scc1a8b2s6-static.qiqiuyun.net/files/default/2015/05-12/171002aabdd8876310.png" class="avatar-md">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <div class="metas">
+                                                                    <strong>
+                                                                        <a class="link-dark " href="javascript:void (0);">xiaofeiyang</a>
+                                                                    </strong>
+                                                                    <span class="mhm">2015-02-27</span>
+                                                                </div>
+                                                                <div class="content">好吧，其实日志文件是一个文本文件，只要是文本编辑器都可以打开的。window的记事本都可以打开的。其实只要找到那个文件的位置，双击应该都可以打开的（文本编辑器系统应该默认都是有的）。</div>
+                                                                <div class="color-gray text-normal pull-right">
+                                                                    <a href="javascript:void (0);" class="li-reply" postid="475" postname="xiaofeiyang" data-from-user-id="6625"> 回复</a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="media ">
+                                                            <a href="javascript:void (0);" class="pull-left">
+                                                                <img src="//scc1a8b2s6-static.qiqiuyun.net/files/user/2014/12-11/141752045935639052.jpg" class="avatar-md">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <div class="metas">
+                                                                    <strong>    <a class="link-dark " href="javascript:void (0);">JimmyLu</a>
+                                                                    </strong>
+                                                                    <span class="mhm">2015-06-19</span>
+                                                                </div>
+                                                                <div class="content">回复 xiaofeiyang:是的，任何文本编辑器都可以的。</div>
+                                                                <div class="color-gray text-normal pull-right">
+                                                                    <a href="javascript:void (0);" class="li-reply"> 回复</a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <div class="actions">
+                                                            <a class="replyToo btn btn-default btn-xs pull-right" href="javascript:;">我也要说</a>
+                                                    <span class="color-gray">&nbsp;
+                                                    </span>
+                                                        </div>
+                                                    </ul>
+
+                                                </div>
+                                                <div style="margin-top: 10px;display: none;" class="reply_topic">
+                                                    <form class="thread-post-reply-form " method="post" action="" novalidate="novalidate">
+                                                        <div class="form-group">
+                                                            <label class="control-label hide">回复内容</label>
+                                                            <div class="controls">
+                                                                <textarea class="form-control"></textarea>
+                                                            </div>
+                                                            <div id="fromUserIdDiv"></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button class="reply-btn btn btn-xs btn-primary pull-right" style="margin-top:-10px;">发表</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">发表回复</div>
+
+                        <div class="panel-body">
+
+                            <form id="post-thread-form" class="post-thread-form thread-form" method="post" action="" novalidate="novalidate">
+
+                                <div class="form-group">
+                                    <label class="control-label hide">回复内容</label>
+                                    <div class="controls">
+                                        <textarea name="content" value="" rows="10" class="form-control">此处是文本编辑框</textarea>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="form-group">
+
+                                    <div class="controls">
+
+                                        <a class="btn btn-primary js-upload-file" data-toggle="modal" data-backdrop="static" data-target="#attachment-modal" title="上传附件" data-placement="bottom" data-title="上传附件">
+                                            上传附件
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <!--上传附件成功后显示-->
+                                <div class="form-group" style="display: none;">
+                                    <div class="controls">
+
+                                        <div class="js-attachment-list js-attachment-list" style="line-height:60px">
+                                            <div class="well well-sm">
+                                                <img class="mrm" src="//scc1a8b2s6-static.qiqiuyun.net/assets/img/default/cloud_other.png?8.0.13" height="60px" width="107px">
+                                                上传附件文件名
+                                                <button class="btn btn-link js-attachment-delete pull-right" type="button" style="margin-top:13px">删除
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <a class="btn btn-primary js-upload-file" data-toggle="modal" data-backdrop="static" title="上传附件" data-title="上传附件" style="display: none;">
+                                            上传附件
+                                        </a>
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <button id="post-thread-btn" data-loading-text="正在保存..." class="post-thread-btn btn btn-primary pull-right">发表</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    function change(value) {
+        var value_01 = value;
+        if (value_01 == 'other') {
+            $(".quit_reason_write").show();
+        }else {
+            $(".quit_reason_write").val("");
+            $(".quit_reason_write").hide();
+
+        }
+    }
+
+    $(function(){
+        $(".replyToo").click(function(){
+            $(this).parent().parent().parent().siblings(".reply_topic").toggle();
+        });
+        $(".reply_area>a").click(function(){
+            $(this).parent().siblings(".topic_content_in").toggle(1200);
+            $(this).hide().siblings().show();
+            $(this).hide().siblings().show();
+        });
+
+    });
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+package cn.bnsr.edu_yun.backstage.base.service;
+
+import java.text.ParseException;
+import java.util.List;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.UserStatsView;
+import cn.bnsr.edu_yun.backstage.base.view.UserView;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+
+public interface BackUserService {
+
+	DataGrid datagrid(UserView userView) throws ParseException;
+	
+	void save(UserView userView);
+
+	void update(UserView userView);
+	
+	void resetPassword(Long id);
+
+	void delete(String ids);
+
+	User login(User user);
+
+	String checkExis(UserView userView);
+
+	void doChangeStatus(UserView userView);
+
+	void saveRoleEdit(UserView userView);
+
+	List<UserStatsView> queryUserStats(UserStatsView userStats)throws ParseException ;
+	/*
+	 * 后台查询用户登录注册趋势
+	 */
+	List<UserStatsView> queryUserStats1(UserStatsView userStats)throws ParseException ;
+	
+	/*
+	 * 后台查询用户（、）留存趋势
+	 */
+	List<UserStatsView> queryRemainStats(UserStatsView userStats)throws ParseException ;
+
+	
+}

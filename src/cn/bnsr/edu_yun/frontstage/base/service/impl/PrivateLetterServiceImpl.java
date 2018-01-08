@@ -1,0 +1,118 @@
+package cn.bnsr.edu_yun.frontstage.base.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.LetterView;
+import cn.bnsr.edu_yun.frontstage.base.mapper.PrivateLetterMapper;
+import cn.bnsr.edu_yun.frontstage.base.po.PrivateLetter;
+import cn.bnsr.edu_yun.frontstage.base.service.PrivateLetterService;
+import cn.bnsr.edu_yun.frontstage.base.view.PrivateLetterView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class PrivateLetterServiceImpl implements PrivateLetterService {
+
+	@Autowired
+	private PrivateLetterMapper privateLetterMapper;
+	
+	@Override
+	public int insert(PrivateLetter p) {
+		Date date=new Date();
+		p.setSend_time(date);
+		p.setType(1);
+		p.setIs_read(0);
+		PrivateLetter p2=new PrivateLetter();
+		p2.setUser_id(p.getTo_user_id());
+		p2.setTo_user_id(p.getUser_id());
+		p2.setSend_time(date);
+		p2.setType(2);
+		p2.setLetter_content(p.getLetter_content());
+		p2.setIs_read(2);
+		int i=privateLetterMapper.insertSelective(p);
+		privateLetterMapper.insertSelective(p2);
+		return i;
+	}
+
+	@Override
+	public List<PrivateLetterView> queryPrivateLetter(
+			PrivateLetterView privateLetterView) {
+		
+		return privateLetterMapper.queryPrivateLetter(privateLetterView);
+	}
+
+	@Override
+	public List<PrivateLetterView> queryPrivateLetterDetail(PrivateLetterView privateLetterView) {
+		List<PrivateLetterView> privateLetterViews=privateLetterMapper.queryPrivateLetterDetail(privateLetterView);
+		for(PrivateLetterView letterView:privateLetterViews){
+			if(letterView.getType()==2){
+			letterView.setIs_read(1);
+			PrivateLetter privateLetter = new PrivateLetter();
+			privateLetter.setId(letterView.getId());
+			privateLetter.setIs_read(letterView.getIs_read());
+			privateLetterMapper.updateByPrimaryKeySelective(privateLetter);
+			}
+		}
+		
+		return privateLetterViews;
+	}
+
+	@Override
+	public void delete(long id) {
+		
+		privateLetterMapper.deleteByPrimaryKey(id);
+		
+	}
+
+	@Override
+	public void deleteAll(PrivateLetterView privateLetterView) {
+		
+	List<PrivateLetterView> privateLetterViews = privateLetterMapper.queryPrivateLetterId(privateLetterView);
+	for(PrivateLetterView letterView:privateLetterViews){
+		delete(letterView.getId());
+	}
+	}
+
+	@Override
+	public long queryPrivateLetterCount(PrivateLetterView privateLetterView) {
+		
+		return privateLetterMapper.queryPrivateLetterCount(privateLetterView);
+	}
+
+	@Override
+	public long queryPrivateLetterDetailCount(
+			PrivateLetterView privateLetterView) {
+		return privateLetterMapper.queryPrivateLetterDetailCount(privateLetterView);
+	}
+
+	@Override
+	public long queryPrivateLetterNotReaddCount(
+			PrivateLetterView privateLetterView) {
+		// TODO Auto-generated method stub
+		return privateLetterMapper.queryPrivateLetterNotReaddCount(privateLetterView);
+	}
+
+
+	@Override
+	public DataGrid datagrid(LetterView condition) {
+		DataGrid j = new DataGrid();
+		condition.setPage(NumUtil.startingNum(condition.getPage(),condition.getRows()));
+		j.setRows(privateLetterMapper.selectPrivateLetter(condition));
+		j.setTotal(privateLetterMapper.countPrivateLetter(condition));
+		return j;
+	}
+
+	@Override
+	public void delete(String ids) {
+		for(String id :ids.split(",")){
+			Long id1 = Long.parseLong(id.trim());
+			privateLetterMapper.deleteByPrimaryKey(id1);
+		}
+		
+	}
+	
+	
+
+}

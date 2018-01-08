@@ -1,0 +1,24 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<div align="center" style="padding: 5px;overflow: hidden;">
+	<form method="post">
+		<input name="courseInfoId" type="hidden" />
+		<input name="isRecommend" type="hidden" value="0" />
+		<table class="tableForm">
+			<tr><th>&nbsp;<br/>&nbsp;</th></tr>
+			<tr>
+				<th >序号:</th>
+				<td><input name="recommendSeq" class="easyui-numberbox"
+					precision="0" min="0" max="10000" size="5" maxlength="5"
+					data-options="required:true,missingMessage:'请填写序号'"
+					style="width:150px;" /></td>
+			</tr>
+			<tr><th>&nbsp;<br/>&nbsp;</th></tr>
+			<tr>
+				<th>&nbsp;</th>
+				<td>请输入0-10000的整数</td>
+			</tr>
+		</table>
+	</form>
+</div>

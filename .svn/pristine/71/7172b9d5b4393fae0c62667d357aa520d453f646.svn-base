@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>教学计划展示页</title>
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link href="../../css/bootstrap/main.css" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myNav").affix({
+                offset: {
+                    top: 220
+                }
+            });
+        });
+        $(function () {
+            $("li.list-group-item").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+            })
+        })
+    </script>
+    <style>
+        .lesson_list{margin-bottom: 20px;}
+        .lesson_classfiy{padding:7px 0;}
+        .lesson_content_title{font-weight:bold;border-left: 3px solid #46c37b;padding-left: 18px;}
+        .lesson_content_page{background-color:#f4f4f4;padding-left: 10px;}
+        .lesson_content_page>label{margin-top: 20px;padding-left: 15px;}
+        .lesson_content_text{padding-left: 20px;line-height: 2;}
+        ul.container-fluid {
+            top: 20px;
+            position: fixed;
+        }
+        .list-group,.list-group-item{width: 258px;}
+        .list-group>li.active{border-left: 2px solid #46c37b;}
+        .course-manage-header{background-color: #fff;}
+        #myNav{top:10px;}
+    </style>
+
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy" >
+
+<div class="es-wrap" style="background-color: #eaeaea;">
+
+    <div id="content-container" class="container">
+
+        <div class="section course-manage-header clearfix" style="margin-top:  20px;">
+
+            <div class="row">
+
+                <div class="col-md-2 col-lg-2 text-center">
+
+                    <div class="avatar-wrap pull-left" style="margin: 25px;">
+                        <img class="avatar-lg" src="http://www.qiqiuyu.com/files/user/2016/11-18/13225934624f647224.jpg" alt="">
+                    </div>
+
+
+                </div>
+                <div class="col-md-4 col-lg-4">
+
+                    <div class="lesson_content " style="margin: 35px 0;">
+
+                        <h2 class="lesson_name">1. a o e 教学设计 教案
+
+                            <div class="metas">
+
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <span>(1 评论)</span>
+                                </div>
+
+
+                            </div>
+                        </h2>
+                        <div class="lesson_classfiy text-muted">小学语文(人教版) · 一年级上 <span class="mlm mrm text-muted">｜</span> 汉语拼音 · 第 1 课</div>
+                        <div class="lesson_info">李老师 <span style="padding: 0 5px;"></span>北京四中语文老师
+                            <a href="javascript:void(0);" class="btn btn-warning btn-sm" style="margin-left: 20px;"><i class="glyphicon glyphicon-plus"></i>关注</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="pull-right text-center" style="margin-top: 60px;margin-right: 20px;">
+                    <a href="javascript:void(0);" class="btn btn-info" style="padding:6px 30px; "><i class="es-icon es-icon-bookmarkoutline"></i>收藏</a>
+                    <span style="padding: 0 5px;"></span>
+                    <a href="javascript:void(0);" class="btn btn-info"  style="padding:6px 30px; "><i class="es-icon es-icon-download"></i>下载</a>
+                    <div style="margin-top: 20px;">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="text-warning">6235</span>次浏览<span class="mlm mrm text-muted">｜</span>
+                        <i class="es-icon es-icon-download"></i>
+                        <span class="text-warning">562</span>次下载
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+
+            <nav class="col-md-3" id="myScrollspy" style="padding-left: 0;">
+
+                <div class="container-fluid" >
+                    <div class="container-fluid sidenav locked" data-spy="affix" data-offset-top="10" id="myNav">
+
+                        <ul class="list-group">
+                            <li class="list-group-item active" >
+                                <a href="#section1" class="link-dark"> 社区准备</a>
+                            </li>
+                            <li class="list-group-item "><a href="#section2"><span style="padding-left: 20px;"></span>教学目标</a></li>
+                            <li class="list-group-item "><a href="#section3"><span style="padding-left: 20px;"></span>教学重难点</a></li>
+
+                            <li class="list-group-item" ><a href="#section4" class="link-dark">教学过程</a></li>
+
+                            <li class="list-group-item" ><a href="#section5" class="link-dark">教学附件</a></li>
+
+                            <li class="list-group-item" ><a href="#section6" class="link-dark">教学评价</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col" >
+
+                    <div class="panel-heading">
+                        1. a o e 教学设计 教案
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <!--教学准备-->
+                        <div class="lesson_prepare lesson_list" id="section1">
+                            <h4 class="lesson_content_title ">教学准备</h4>
+                            <div class="lesson_content_page" id="section2">
+                                <label>教学目标</label>
+                                <div class="lesson_content_text text-left">
+                                    1、学会三个单韵母的读音，掌握字母的形，能正确书写字母。<br>
+                                    2、掌握单韵母的四个声调。
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--教学重难点-->
+                        <div class="lesson_point lesson_list" id="section3">
+
+                            <div class="lesson_content_page">
+                                <label>教学重难点</label>
+                                <div class="lesson_content_text text-left">
+                                    1、能正确书写3个单韵母。<br/>
+                                    2、能直接读出带调韵母的音。
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--教学过程-->
+                        <div class="lesson_process lesson_list" id="section4">
+                            <h4 class="lesson_content_title ">教学过程</h4>
+                            <div class="lesson_content_page">
+
+                                <div class="lesson_content_text text-left">
+                                    一、谈话激趣
+                                    从今天起我们就开始学习汉语拼音了，在拼音王国里你们将认识许许多多的拼音朋友。你们高兴吗？同学们你们知道吗？汉语拼音的用处可大了，它可以帮助我们识字、学习普通话，读注音读物，是我们学习的好助手。你们想不想学好它呀？要想学好汉语拼音，你们上课就要积极动脑筋，专心听讲才行呢！请你们跟读读这首小儿歌；学习拼音用处大，读书识字要靠它，帮我学好普通话，看谁学得顶呱呱！这节课我们先认识3个朋友“a o e”。<br/>
+                                    二、学习3个单韵母的音形<br/>
+                                    （一）学习单韵母“a”<br/>
+                                    1、出示a的图片：<br/>
+                                    （1）问：图上画的是谁？她们在干什么？你们让医生看过嗓子吗？会发出什么声音？<br/>
+                                    （2）讲：你们看医生在给小女孩看嗓子，小女孩同样也发出“啊”的声音。这个“啊”就是字母“a”的读音。发音时把嘴张大，舌头不动，舌面中间微微隆起，唇不动。自己试试？<br/>
+                                    　（3）教师范读“a”。<br/>
+                                    　（4）学生练读“a”。<br/>
+                                    　2、学习“a”的形<br/>
+                                    （1）问：小女孩的头是什么形状的？她头后梳的是什么小辫子？比较一下“a”的什么地方相似？<br/>
+                                    （2）你们有什么好办法记住它的形？<br/>
+                                    （3）学记忆小儿歌：圆圆脸蛋翘小辫，张大嘴巴“a a a”。<br/>
+                                    （二）学习单韵母“o”<br/>
+                                    1、出示“o”图片<br/>
+                                    （1）观察后提问；图上画的是什么？<br/>
+                                    （2）讲：发出“窝窝”的声音，发音时嘴角隆圆，大小适中，舌头向后缩，舌面后部隆起。<br/>
+                                    （3）教师范读。<br/>
+                                    （4）学生体会读。<br/>
+                                    2、学习“o”的形<br/>
+                                    学儿歌：太阳出来红通通，公鸡一叫“o o o”。<br/>
+                                    （三）学习单韵母“e”<br/>
+                                    1、出示“e”的插图，问：图上画的是什么？<br/>
+                                    （1）师讲：大白鹅的“鹅”平读就是“e”，发音是把嘴角向两边裂开。<br/>
+                                    （2）教师范读。<br/>
+                                    （3）学生体会读。<br/>
+                                    2、学习“e”的形<br/>
+                                    （1）怎么记“e”的形呀？<br/>
+                                    （2）大家看图：（教师出示卡片“e”）与图中的哪一部分很相似？<br/>
+                                    （3）读儿歌：清清池水一只鹅，水中倒影“e e e”。<br/>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--配套资源-->
+                        <div class="lesson_resources lesson_list" id="section5">
+                            <h4 class="lesson_content_title ">配套资源<span class="text-muted">（点击可预览）</span></h4>
+                            <div class="lesson_content_page">
+
+                                <div class="lesson_content_text text-left">
+                                    <a href="javascript:void(0);" title="附件01" style="padding: 0 10px;"> 附件01</a>
+                                    <a href="javascript:void(0);" title="附件02"  style="padding: 0 10px;"> 附件02</a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--教学评价-->
+                        <div class="lesson_evaluate lesson_list" id="section6">
+                            <h4 class="lesson_content_title ">教学评价</h4>
+                            <!--如果已经评价过.则为重新评价-->
+                            <a class="btn btn-primary btn-sm pull-right" href="#evaluate_modal" data-toggle="modal">我也要评价</a>
+                            <div class="lesson_content_page" style="margin-top: 50px;">
+
+                                <div class="js-reviews">
+                                    <div class="media media-evaluate">
+                                        <div class="media-left">
+                                            <a class=" js-user-card" href="">
+                                                <img class="avatar-sm" src="http://www.qiqiuyu.com/files/user/2016/11-18/13225934624f647224.jpg">
+                                            </a>
+                                        </div>
+                                        <div class="media-body thread-post">
+                                            <div class="title">
+                                                <a class="link-dark" href="">ceshi</a>
+                                                <span>2017-6-23</span>
+                                            </div>
+
+                                            <div class="score">
+
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                <i class="es-icon es-icon-star color-warning"></i>
+
+                                            </div>
+
+                                            <div class="content">
+                                                <div class="short-content">wweweeeeeeeeeee</div>
+                                                <div class="full-content" style="display: none;">wweweeeeeeeeeee</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="empty" style=" margin-top: 30px;display: none;">暂无评价</div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<!--评价-->
+<div id="evaluate_modal" class="modal in" aria-hidden="false" data-backdrop="static" style="display: none;" >
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">评价</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal"  action="" method="post" novalidate="novalidate" >
+                    <div class="evaluation_again_content">
+                        <span>请打分&nbsp;:</span>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+                        <i class="es-icon es-icon-star color-warning"></i>
+
+                    </div>
+                    <div class="form-group controls col-md-10" style="margin-top: 20px;">
+                        <textarea class="form-control col-md-10 col-md-offset-1" rows="6" ></textarea>
+                        <div class="help-block" style="display:none;"></div>
+                    </div>
+
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button  type="submit" class="btn btn-primary" data-toggle="form-submit" >保存</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

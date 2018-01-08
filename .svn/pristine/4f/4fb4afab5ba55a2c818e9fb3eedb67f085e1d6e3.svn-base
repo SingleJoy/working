@@ -1,0 +1,221 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import java.util.List;
+
+
+
+/**
+ * 培训课程视图
+ * @author fangxiongwei
+ * @date 2017年1月5日
+ */
+public class TrainCourseView{
+	private Long id;
+	private String ids;
+	private Long source_id;//培训\阶段培训 课程
+	private Long course_id;
+	private String courseIds;
+	private int is_required;//是否必修：0-是；1-否
+	private String requireds;//
+	private int credit;//学分
+	private int seq;//排序
+	private String seqs;
+	private int source_type;//来源类型：0-培训；1-培训阶段
+	private String title;//标题
+	private String studentNum;//学员数 
+	private int validity;//有效期天数
+	private int hourNum;//课时数
+	private String img;//图片
+	private Double coursePrice;//课程原价
+	private Long courseScore;//课程评分
+	
+	private String flag;//跳转方式 0-创建跳转，1-保存后跳转,2普通跳转
+	private String sign;//标识哪个标签
+	
+	private List<String> list;
+	private Long phaseId;//阶段id
+	private Long userId;//用户id
+	private int is_studyed;//是否学完：0-否，1-是
+	private int is_join;//是否加入 0-是；1-否
+	
+	private int not_do_count;//未完成人数
+	private int do_count;//完成人数
+	private Long user_id;//创建人id
+	private String username;//创建人名称
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	public Long getSource_id() {
+		return source_id;
+	}
+	public void setSource_id(Long source_id) {
+		this.source_id = source_id;
+	}
+	public Long getCourse_id() {
+		return course_id;
+	}
+	public void setCourse_id(Long course_id) {
+		this.course_id = course_id;
+	}
+	public String getCourseIds() {
+		return courseIds;
+	}
+	public void setCourseIds(String courseIds) {
+		this.courseIds = courseIds;
+	}
+	public int getIs_required() {
+		return is_required;
+	}
+	public void setIs_required(int is_required) {
+		this.is_required = is_required;
+	}
+	public String getRequireds() {
+		return requireds;
+	}
+	public void setRequireds(String requireds) {
+		this.requireds = requireds;
+	}
+	public int getCredit() {
+		return credit;
+	}
+	public void setCredit(int credit) {
+		this.credit = credit;
+	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public String getSeqs() {
+		return seqs;
+	}
+	public void setSeqs(String seqs) {
+		this.seqs = seqs;
+	}
+	public int getSource_type() {
+		return source_type;
+	}
+	public void setSource_type(int source_type) {
+		this.source_type = source_type;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getStudentNum() {
+		return studentNum;
+	}
+	public void setStudentNum(String studentNum) {
+		this.studentNum = studentNum;
+	}
+	public int getValidity() {
+		return validity;
+	}
+	public void setValidity(int validity) {
+		this.validity = validity;
+	}
+	public int getHourNum() {
+		return hourNum;
+	}
+	public void setHourNum(int hourNum) {
+		this.hourNum = hourNum;
+	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	public String getSign() {
+		return sign;
+	}
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public Double getCoursePrice() {
+		return coursePrice;
+	}
+	public void setCoursePrice(Double coursePrice) {
+		this.coursePrice = coursePrice;
+	}
+	public Long getCourseScore() {
+		return courseScore;
+	}
+	public void setCourseScore(Long courseScore) {
+		this.courseScore = courseScore;
+	}
+	public List<String> getList() {
+		return list;
+	}
+	public void setList(List<String> list) {
+		this.list = list;
+	}
+	public Long getPhaseId() {
+		return phaseId;
+	}
+	public void setPhaseId(Long phaseId) {
+		this.phaseId = phaseId;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public int getIs_studyed() {
+		return is_studyed;
+	}
+	public void setIs_studyed(int is_studyed) {
+		this.is_studyed = is_studyed;
+	}
+	public int getIs_join() {
+		return is_join;
+	}
+	public void setIs_join(int is_join) {
+		this.is_join = is_join;
+	}
+	public int getNot_do_count() {
+		return not_do_count;
+	}
+	public void setNot_do_count(int not_do_count) {
+		this.not_do_count = not_do_count;
+	}
+	public int getDo_count() {
+		return do_count;
+	}
+	public void setDo_count(int do_count) {
+		this.do_count = do_count;
+	}
+	public Long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+}

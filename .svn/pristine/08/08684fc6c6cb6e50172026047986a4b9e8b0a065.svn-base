@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content=" width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>首页</title>
+  <meta name="keywords" content="EduSoho网络课堂,在线教育,在线教学,开源教学软件">
+     		
+  <link href="./edusoho/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" media="screen" href="./edusoho/edusoho-icon.css">
+
+  <link href="./edusoho/es-homepage.css" rel="stylesheet">
+  <link href="./edusoho/es-kefu.css" rel="stylesheet">
+  <link href="./edusoho/es-footer.css" rel="stylesheet">
+
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+  <script type="text/javascript" src="./edusoho/lunbotu.js"></script>
+
+</head>
+<body class="homepage">
+
+<div class="es-wrap">
+    <!-- js轮播图 -->
+    <section class="es-poster swiper-container">
+        <div id="flash">
+            <ul id="pic">
+                <li style="display:block"><img src="edusoho/094844caca67527539.png" alt=""></li>
+                <li><img src="edusoho/164332443847097647.jpg" alt=""></li>
+                <li><img src="edusoho/09480994b6b9674166.jpg" alt=""></li>
+                <li><img src="edusoho/164332443847097647.jpg" alt=""></li>
+                <li><img src="edusoho/09480994b6b9674166.jpg" alt=""></li>
+            </ul>
+            <ol id="num">
+                <li class="active swiper-pagination-switch"></li>
+                <li class="swiper-pagination-switch"></li>
+                <li class="swiper-pagination-switch"></li>
+                <li class="swiper-pagination-switch"></li>
+                <li class="swiper-pagination-switch"></li>
+            </ol>
+            <p class="flash_arrow"><a href="javascript:;" class="arrow" id="left"><</a></p>
+            <p class="flash_arrow"><a href="javascript:;" class="arrow" id="right">></a></p>
+        </div>
+    </section>
+
+    <!-- 推荐班级 -->
+    <section class="course-list-section " id="course-list-section">
+        <br />
+        <div class="container section-title">推荐班级</div>
+        <div class="container">
+            <div class="course-list">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="" target="_blank">
+                                <img src="./edusoho/course.png" alt="ceshi" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="link-dark" href="" target="_blank">
+                                    ceshi
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+                                    <span class="num"><i class="es-icon es-icon-people"></i>0</span>
+                                    <span class="comment"><i class="es-icon es-icon-textsms"></i>0</span>
+                                    <span class="course-price-widget">
+                                    <span class="price">
+                                    <span class="text-success">免费</span>  
+                                    </span>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="" target="_blank">
+                                <img src="./edusoho/1809553e8965154774.jpg" alt="网校运营指南" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="link-dark" href="" target="_blank">
+                                    网校运营指南
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+                                    <span class="num"><i class="es-icon es-icon-people"></i>2</span>
+                                    <span class="comment"><i class="es-icon es-icon-textsms"></i>0</span>
+                                    <span class="course-price-widget">
+                                    <span class="price">
+                                    <span class="text-success">免费</span>  
+                                    </span>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="" target="_blank">
+                                <img src="./edusoho/115228cc1b1d934782.jpg" alt="EduSoho技术服务套餐" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                               <a class="link-dark" href="" target="_blank">
+                                    EduSoho技术服务套餐
+                                    </a     >
+                                </div>
+                                <div class="metas clearfix">
+                                    <span class="num"><i class="es-icon es-icon-people"></i>2</span>
+                                    <span class="comment"><i class="es-icon es-icon-textsms"></i>1</span>
+                                    <span class="course-price-widget">
+                                    <span class="price">
+                                    <span class="text-success">免费</span>  
+                                    </span>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                      <div class="course-item">
+                        <div class="course-img">
+                          <a href="" target="_blank">
+                          <img src="./edusoho/115202245c2a453490.jpg" alt="EduSoho开源版和商业版的区别" class="img-responsive">
+                          </a>
+                        </div>
+                        <div class="course-info">
+                          <div class="title">
+                            <a class="link-dark" href="" target="_blank">
+                            EduSoho开源版和商业版的区别
+                            </a>
+                          </div>
+                          <div class="metas clearfix">
+                            <span class="num"><i class="es-icon es-icon-people"></i>1</span>
+                            <span class="comment"><i class="es-icon es-icon-textsms"></i>0</span>
+
+
+                            <span class="course-price-widget">
+
+
+                            <span class="price">
+                            <span class="text-success">免费</span>  
+                            </span>
+                            </span>    
+                          </div>
+                        </div>
+                      </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="" target="_blank">
+                                <img src="./edusoho/115228cc1b1d934782.jpg" alt="EduSoho技术服务套餐" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                               <a class="link-dark" href="" target="_blank">
+                                    EduSoho技术服务套餐
+                                    </a     >
+                                </div>
+                                <div class="metas clearfix">
+                                    <span class="num"><i class="es-icon es-icon-people"></i>2</span>
+                                    <span class="comment"><i class="es-icon es-icon-textsms"></i>1</span>
+                                    <span class="course-price-widget">
+                                    <span class="price">
+                                    <span class="text-success">免费</span>  
+                                    </span>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                      <div class="course-item">
+                        <div class="course-img">
+                          <a href="" target="_blank">
+                          <img src="./edusoho/115202245c2a453490.jpg" alt="EduSoho开源版和商业版的区别" class="img-responsive">
+                          </a>
+                        </div>
+                        <div class="course-info">
+                          <div class="title">
+                            <a class="link-dark" href="" target="_blank">
+                            EduSoho开源版和商业版的区别
+                            </a>
+                          </div>
+                          <div class="metas clearfix">
+                            <span class="num"><i class="es-icon es-icon-people"></i>1</span>
+                            <span class="comment"><i class="es-icon es-icon-textsms"></i>0</span>
+
+
+                            <span class="course-price-widget">
+
+
+                            <span class="price">
+                            <span class="text-success">免费</span>  
+                            </span>
+                            </span>    
+                          </div>
+                        </div>
+                      </div>          
+                    </div>
+                </div>
+            </div>
+            <div class="section-more-btn">
+                <a href="" class="btn btn-default btn-lg">
+                更多班级 <i class="mrs-o es-icon es-icon-chevronright"></i>
+                </a>
+            </div>
+        </div>
+    </section>		    
+
+	  <!-- 推荐课程 -->
+    <section class="course-list-section " id="course-list-section">
+        <br />
+        <div class="container section-title">推荐课程</div>
+        <div class="container">
+            <div class="course-list">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="" target="_blank">
+                                <img src="./edusoho/course.png" alt="ceshi" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="link-dark" href="" target="_blank">
+                                    ceshi
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+                                    <span class="num"><i class="es-icon es-icon-people"></i>0</span>
+                                    <span class="comment"><i class="es-icon es-icon-textsms"></i>0</span>
+                                    <span class="course-price-widget">
+                                    <span class="price">
+                                    <span class="text-success">免费</span>  
+                                    </span>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="" target="_blank">
+                                <img src="./edusoho/1809553e8965154774.jpg" alt="网校运营指南" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                                    <a class="link-dark" href="" target="_blank">
+                                    网校运营指南
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+                                    <span class="num"><i class="es-icon es-icon-people"></i>2</span>
+                                    <span class="comment"><i class="es-icon es-icon-textsms"></i>0</span>
+                                    <span class="course-price-widget">
+                                    <span class="price">
+                                    <span class="text-success">免费</span>  
+                                    </span>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="" target="_blank">
+                                <img src="./edusoho/115228cc1b1d934782.jpg" alt="EduSoho技术服务套餐" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="course-info">
+                                <div class="title">
+                               <a class="link-dark" href="" target="_blank">
+                                    EduSoho技术服务套餐
+                                    </a     >
+                                </div>
+                                <div class="metas clearfix">
+                                    <span class="num"><i class="es-icon es-icon-people"></i>2</span>
+                                    <span class="comment"><i class="es-icon es-icon-textsms"></i>1</span>
+                                    <span class="course-price-widget">
+                                    <span class="price">
+                                    <span class="text-success">免费</span>  
+                                    </span>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>          
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                      <div class="course-item">
+                        <div class="course-img">
+                          <a href="" target="_blank">
+                          <img src="./edusoho/115202245c2a453490.jpg" alt="EduSoho开源版和商业版的区别" class="img-responsive">
+                          </a>
+                        </div>
+                        <div class="course-info">
+                          <div class="title">
+                            <a class="link-dark" href="" target="_blank">
+                            EduSoho开源版和商业版的区别
+                            </a>
+                          </div>
+                          <div class="metas clearfix">
+                            <span class="num"><i class="es-icon es-icon-people"></i>1</span>
+                            <span class="comment"><i class="es-icon es-icon-textsms"></i>0</span>
+
+
+                            <span class="course-price-widget">
+
+
+                            <span class="price">
+                            <span class="text-success">免费</span>  
+                            </span>
+                            </span>    
+                          </div>
+                        </div>
+                      </div>          
+                    </div>
+                </div>
+            </div>
+            <div class="section-more-btn">
+                <a href="" class="btn btn-default btn-lg">
+                更多课程 <i class="mrs-o es-icon es-icon-chevronright"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+   
+    <!-- 推荐教师 -->
+    <section class="recommend-teacher ">
+        <br />
+        <div class="container section-title">推荐教师</div>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="">
+                                <img class="avatar-lg" src="./edusoho/09245240ec3e065465.jpg" alt="">
+                            </a>
+                            <h3 class="title">
+                                <a class="link-dark" href="">Phil</a>
+                            </h3>
+                            <div class="position">
+                                阔知网络联合创始人
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                主要负责好知网的运营工作。 英国卡迪夫大学新闻学硕士，原浙江...
+                            </div>
+                            <div class="metas">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" >关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display:none;">已关注</a>
+                                <a class="btn btn-default btn-sm">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="">
+                                <img class="avatar-lg" src="./edusoho/161605514826925213.JPG" alt="">
+                            </a>
+                            <h3 class="title">
+                                <a class="link-dark" href="">Jason</a>
+                            </h3>
+                            <div class="position">
+                                ES产品总监
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                负责好知网和EduSoho的产品设计和规划。曾经就职于恒生电...
+                            </div>
+                            <div class="metas">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" >关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;"  style="display:none;">已关注</a>
+                                <a class="btn btn-default btn-sm">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="">
+                                <img class="avatar-lg" src="./edusoho/155036c81c6c142598.jpg" alt="">
+                            </a>
+                            <h3 class="title">
+                                <a class="link-dark" href="">Tony</a>
+                            </h3>
+                            <div class="position">
+                                技术部教学主任
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                                拥有超过10年在外企进行软件开发、项目管理的经验， 带领团队...
+                            </div>
+                            <div class="metas">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" >关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display:none;">已关注</a>
+                                <a class="btn btn-default btn-sm" >私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="teacher-item">
+                        <div class="teacher-top">
+                            <a class="teacher-img" href="">
+                                <img class="avatar-lg" src="./edusoho/154902e67253351649.jpg" alt="">
+                            </a>
+                            <h3 class="title">
+                                <a class="link-dark" href="">Kent</a>
+                            </h3>
+                            <div class="position">
+                                EduSoho校长
+                            </div>
+                        </div>
+                        <div class="teacher-bottom">
+                            <div class="about">
+                               负责好知网和EduSoho的产品设计和规划。曾担任全球500...
+                            </div>
+                            <div class="metas">
+                                <a class="btn btn-primary btn-sm follow-btn" href="javascript:;" >关注</a>
+                                <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;" style="display:none;">已关注</a>
+                                <a class="btn btn-default btn-sm">私信</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section-more-btn">
+                <a href="" class="btn btn-default btn-lg">
+                更多教师 <i class="mrs-o es-icon es-icon-chevronright"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部连接 -->
+    <div class="es-footer-link">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 footer-main clearfix">
+                    <div class="link-item ">
+                        <h3>我是学生</h3>
+                        <ul>
+                            <li>
+                                <a href="" target="_blank">如何注册</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">如何学习</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">如何互动</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="link-item ">
+                        <h3>我是老师</h3>
+                        <ul>
+                            <li>
+                                <a href="" target="_blank">发布课程</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">使用题库</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">教学资料库</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="link-item ">
+                        <h3>我是管理员</h3>
+                        <ul>
+                            <li>
+                                <a href="" target="_self">修改底部链接</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">系统设置</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">课程设置</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="link-item hidden-xs">
+                        <h3>商业应用</h3>
+                        <ul>
+                            <li>
+                                <a href="" target="_blank">会员专区</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">题库增强版</a>
+                            </li>
+                            <li>
+                                <a href="" target="_blank">用户导入导出</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="link-item hidden-xs">
+                        <h3>关于我们</h3>
+                        <ul>
+                            <li>
+                                <a href="http://www.edusoho.com/" target="_blank">ES官网</a>
+                            </li>
+                            <li>
+                                <a href="http://www.qiqiuyu.com/" target="_blank">教程网站</a>
+                            </li>
+                            <li>
+                                <a href="http://demo.edusoho.com/" target="_blank">产品演示站</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 footer-logo hidden-sm hidden-xs">
+                    <a class="" href="http://www.edusoho.com/" target="_blank"><img src="./edusoho/bottom_logo.png" alt="建议图片大小为233*64"></a>
+                    <div class="footer-sns">
+                        <a href="http://weibo.com/edusoho" target="_blank"><i class="es-icon es-icon-weibo"></i></a>
+                        <a class="qrcode-popover top">
+                            <i class="es-icon es-icon-weixin"></i>
+                            <div class="qrcode-content">
+                                <img src="./edusoho/block_picture_1441519788.jpg" alt="">  
+                            </div>
+                        </a>
+                        <a class="qrcode-popover top">
+                            <i class="es-icon es-icon-apple"></i>
+                            <div class="qrcode-content">
+                                <img src="./edusoho/block_picture_1441521835.png" alt=""> 
+                            </div>
+                        </a>
+                        <a class="qrcode-popover top">
+                            <i class="es-icon es-icon-android"></i>
+                            <div class="qrcode-content">
+                                <img src="./edusoho/block_picture_1441521844.png" alt=""> 
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="es-footer">
+        <div class="copyright">
+            <div class="container">
+                Powered by <a href="http://www.edusoho.com/" target="_blank">EduSoho v7.0.0</a>
+                ©2014-2016 <a class="mlm" href="http://www.howzhi.com/" target="_blank">好知网</a>      
+                <a class="mlm" href="http://13661239841.test.edusoho.com.cn/archive/course">课程存档</a>
+                <div class="mts"></div>
+            </div>
+        </div>
+    </footer> 
+
+</div>
+
+             
+
+<!-- 客服 -->
+<div id="float-consult" class="float-consult hidden-xs" style="margin-top: -43.5px; visibility: visible;">
+    <div class="btn-group-vertical">
+        <span class="btn btn-consult-default float-consult-qq-btn" title="">
+            <span class="icon icon-qq"></span>
+            <div class="popover fade left in qq-div" style="top: -22px; left: -250px;">
+                <div class="arrow"></div>
+                <h3 class="popover-title">QQ客服</h3>
+                <div class="popover-content">
+                <p>
+                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2774182652&amp;site=qq&amp;menu=yes">
+                <img class="mrs" src="./edusoho/bar_qq.png" alt="" title="点击这里给我发消息">产品咨询</a>
+                </p>
+                </div>
+            </div>
+        </span>
+        <span class="btn btn-consult-default float-consult-phone-btn" title=""><span class="icon icon-phone"></span>
+            <div class="popover fade left in phone-div" style="top: -37px; left: -250px;">
+                <div class="arrow"></div>
+                <h3 class="popover-title">电话客服</h3>
+                <div class="popover-content">
+                    <p><strong>服务时间：</strong> 9:00 - 17:00</p>
+                    <p>外研在线： 4008-987-008</p>
+                </div>
+            </div>
+        </span>
+    </div>
+    <div class="consult-contents">
+        <div id="consult-qq-content">
+            <p>
+                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=2774182652&amp;site=qq&amp;menu=yes"><img class="mrs" src="./edusoho/bar_qq.png" alt="" title="点击这里给我发消息">外研社Unipus产品咨询</a>
+            </p>
+        </div>
+        <div id="consult-qqgroup-content">
+        </div>
+        <div id="consult-phone-content">
+            <p><strong>服务时间：</strong> 9:00 - 17:00</p>
+            <p>外研在线： 4008-987-008</p>
+        </div>
+        <div id="consult-weixin-content">
+            <img src="/?6.17.26.7" class="qrcode center-block">
+        </div>
+        <div id="consult-email-content">
+            <a href="mailto:"></a>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

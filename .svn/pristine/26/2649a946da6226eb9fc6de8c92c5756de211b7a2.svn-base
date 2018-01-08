@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            $(".create_course_page button").mouseenter(function(){
+                $(this).addClass("curr");
+
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+        });
+        $(function(){
+
+            $(".create_course_page_txt").children().addClass("curr");
+        });
+    </script>
+
+   <style>
+       * {margin:0;padding:0;text-decoration:none;color:#6d6d6d;}
+       body {background-color:#f5f5f5;font-family:"Microsoft YaHei";}
+       li{list-style:none;}
+
+       input,button,select,textarea{outline:none;box-shadow: none;}
+       img,button{outline:none;box-shadow: none;border: none;}
+    .create_course_page{width: 755px;height: 500px;background-color:#fff;margin: 30px auto; }
+    .create_course_page h1{font-size: 25px;margin: 50px;padding-top: 50px;}
+       .create_course_page_txt p{margin-left: 160px;font-size: 14px;padding-top: 10px;}
+    .create_course_page_txt span{font-size: 14px;margin-left: 110px;}
+    .curr{color: #a94442;}
+    .create_course_page_txt input{width: 420px;height: 34px;border: 1px solid #ccc;margin-left: 20px;border-radius: 5px;padding-left: 10px;}
+    .create_course_page_txt input.curr{border: 1px solid #a94442;box-shadow:#a94442; }
+    .create_course_page button{width: 90px;height: 34px;border: 1px solid #3ebbce;text-align: center;border-radius: 30px;background-color: #fff;margin-left: 165px;margin-top: 40px;cursor: pointer;}
+    .create_course_page button.curr{background-color: #3ebbce;color: #fff}
+   </style>
+</head>
+<body>
+
+<div class="create_course_page">
+
+    <h1>创建课程</h1>
+
+    <div class="create_course_page_txt curr" >
+        <span>标题:</span>
+        <input type="text" ><br/>
+        <p>请输入标题</p>
+    </div>
+
+    <button>创建</button>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>

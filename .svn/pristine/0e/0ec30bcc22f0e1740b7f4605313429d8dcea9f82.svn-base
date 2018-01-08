@@ -1,0 +1,46 @@
+
+.community_list{margin-bottom: 15px;border-radius: 4px;}
+.student_num>i,.message_num>i{padding-right: 5px;opacity: 0.8;}
+.student_num,.message_num{line-height: 25px;}
+.more_data{color: #616161;}
+.num_num{background: #3ebbce;padding: 0 10px;border-radius: 20px;color: #fff;}
+.homework_page{clear: both;padding-left: 15px;}
+.homework_list{width: 100%;line-height: 30px;}
+.homework_name{color: #616161;opacity: 0.8;}
+.area_content>ul>li{line-height: 25px;text-align: center;list-style: none;width: 62px;margin-top: 5px;display: inline-block;}
+.area_content>ul>li.active{border-bottom: 2px solid #3ebbce;}
+.area_content>ul>li.active>a{color:#3ebbce;}
+.area_content>ul>li>a{font-size: 14px;color: #616161;padding:10px;}
+.community_join_list{border: 1px solid #ddd;max-width: 190px;margin-right: 15px;}
+.dianzan{position: relative;margin-top: -2px;padding-right: 5px;}
+.topic_text{padding: 0 3px;opacity: 0.8;}
+.topic_time{padding-top: 15px;}
+.topic_content,.topic_full_content{background-color:#f9f9f9;}
+.topic_time{padding-top: 5px;}
+.topic_reply_time{padding: 6px;opacity: 0.8;}
+
+.caret_01{border-bottom: 4px solid;display: inline-block;width:0;height: 0; margin-left: 2px;vertical-align: middle;
+    border-right: 4px solid transparent;border-left: 4px solid transparent;cursor: pointer;}
+.caret{cursor: pointer;}
+.community_course_management_edit,.community_add_son{color: #616161;width:100px;padding-right: 20px;display: inline-block;}
+.community_add_son>span{width:15px;height: 15px;background: url("../images/add_button.png") no-repeat;padding-right: 20px;}
+
+.workshop_name{background: url("../images/workshop.png") 40px 0 no-repeat;}
+.course_tags{background: url("../images/course_tags.png")  no-repeat;width:75px;display: inline-block; }
+.community_index_nav{}
+.community_index_nav>li>a{color: #fff;line-height: 50px;font-size: 16px;}
+.community_index_nav>li{border: none;width:100px;display: inline-block;text-align: center;}
+.community_index_nav>li.active>a{color: #68b96d;}
+.community_index_nav>li.active{background-color: #fff;}
+.search{margin-top:25px;}
+.search>input{width: 235px;height: 38px;padding-left:15px;border: 1px solid #ddd;border-radius: 4px;line-height: 38px;background: url("http://wkstatic.bdimg.com/pcyouke/static/youke_comm/widget/topbar/images/images_186f589.png?v=1") 205px -43px no-repeat;cursor: pointer;}
+.search>button{color: #fff;cursor: pointer;line-height: 30px;margin: 0 5px;display: inline-block;width: 60px;text-align: center;border: none;}
+.all_content{background-color: #46bbcd;}
+.this_community{background-color: #dcdcdc;}
+.workshop_banner{background: url("../images/workshop_banner.png") no-repeat;}
+.community_banner{background: url("../images/community_banner.png")  no-repeat;}
+.join_community{padding: 10px 16px;font-size: 14px;line-height: 1.33333;border-radius: 4px;border: 1px solid #3ebbce;color: #3ebbce;text-align: center;display: inline-block;}
+.community_name{font-size: 26px;margin-top: 10px;color: #fff;}
+.community_mask{height: 360px;width: 100%;z-index: 2;background-color: #181818;opacity:0.7;margin-top: -360px;position: relative;}
+.community_container{z-index: 999;margin-top: -360px;position: relative;}
+.community_index_header{background: url("../images/community_index_header.jpg") top center no-repeat;height: 360px;width: 100%;z-index: 1;position: relative;}

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/qiuzi_ico.ico" media="screen" />
+    <link href="../css/course-info.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../js/course-info.js"></script>
+    <script type="text/javascript">
+        //学员管理
+        $(function(){
+            $(".student_management_main_right>button").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+        });
+
+
+
+
+        $(function(){
+            $(".student_management_main_right>a").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+        });
+
+        $(function(){
+            $(".student_management_content>form>button").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+        });
+
+
+
+        $(function(){
+            $(".send_private_messages").mouseover(function(){
+                $(this).addClass("send_private_messages_curr_01");
+            }).mouseout(function(){
+                $(this).removeClass("send_private_messages_curr_01");
+            })
+        });
+
+        $(function(){
+            $(".student_management_operation>a").mouseover(function(){
+                $(this).addClass("curr");
+            }).mouseout(function(){
+                $(this).removeClass("curr");
+            })
+        });
+
+        $(function(){
+            $(".student_management_operation>a").click(function(){
+                if($(this).siblings("ul").css("display")=="none"){
+                    $(this).siblings("ul").show();
+                }else{
+                    $(this).siblings("ul").hide();
+                }
+            })
+        });
+
+        $(function(){
+           $(".student_management_operation ul li").mouseover(function(){
+               $(".student_management_operation ul li").removeClass("curr").find("a").removeClass("curr");
+                    $(this).addClass("curr").find("a").addClass("curr");
+            }).mouseout(function(){
+               $(".student_management_operation ul li").removeClass("curr").find("a").removeClass("curr");
+           })
+        });
+
+        $(function(){
+            $(".view_students_data").mouseover(function(){
+                $(this).addClass("view_students_data_curr");
+            }).mouseout(function(){
+                $(this).removeClass("view_students_data_curr");
+            })
+        });
+
+
+        $(function(){
+            $(".send_private_messages").click(function(){
+                if($(".send_private_messages_popup").css("display")=="none"){
+                    $(".send_private_messages_popup").show();
+                    $("body").css("background-color","#e1e0e0");
+                }else{
+
+
+                }
+
+            })
+        });
+        $(function(){
+            $(".view_students_data").click(function(){
+                if($(".send_private_messages_popup").css("display")=="none"){
+                    $(".students_personal_info_popup").show();
+
+                    $("body").css("background-color","#e1e0e0");
+                }else{
+
+
+                }
+
+            })
+        });
+
+
+        $(function(){
+            $(".send_private_messages_popup>button").click(function(){
+                $(".send_private_messages_popup").hide();
+                $("body").css("background-color","#eaeaea");
+            })
+        });
+
+        $(function(){
+            $(".students_personal_info_popup>button").click(function(){
+                $(".students_personal_info_popup").hide();
+                $("body").css("background-color","#eaeaea");
+            })
+        });
+
+        $(function(){
+            $(".students_personal_info_popup>a").click(function(){
+                $(".students_personal_info_popup").hide();
+                $("body").css("background-color","#f5f5f5");
+            })
+        });
+
+
+
+
+
+        $(function(){
+            $(".student_notes_content_save").mouseover(function(){
+                $(this).addClass("student_notes_content_save_curr");
+            }).mouseout(function(){
+                $(this).removeClass("student_notes_content_save_curr");
+            })
+        });
+
+        //学生备注
+        $(function(){
+            $(".add_course_students_save").mouseover(function(){
+                $(this).addClass("add_course_students_save_curr");
+            }).mouseout(function(){
+                $(this).removeClass("add_course_students_save_curr");
+            })
+        });
+
+
+        $(function(){
+            $(".student_notes").click(function(){
+                if($(".student_notes_content").css("display")=="none"){
+                    $(".student_notes_content").show();
+                    $("body").css("background-color","#e1e0e0");
+                }else{
+                    $(".student_notes_content").hide();
+                    $("body").css("background-color","#f5f5f5");
+                }
+            })
+        });
+
+        $(function(){
+            $(".student_notes_content>button").click(function(){
+                $(".student_notes_content").hide();
+                $("body").css("background-color","#f5f5f5");
+            })
+        });
+
+        $(function(){
+            $(".student_notes_content_quit").click(function(){
+                $(".student_notes_content").hide();
+                $("body").css("background-color","#f5f5f5");
+            })
+        });
+
+
+         //       添加学员
+        $(function(){
+            $(".student_management_main_right>button").click(function(){
+                if($(".add_course_students").css("display")=="none"){
+                    $(".add_course_students").show();
+                    $("body").css("background-color","#e1e0e0");
+                }else{
+                    $(".add_course_students").hide();
+                }
+            })
+        });
+
+        $(function(){
+            $(".add_course_students>button").click(function(){
+                $(".add_course_students").hide();
+                $("body").css("background-color","#f5f5f5");
+            })
+        });
+        $(function(){
+            $(".add_course_students_quit").click(function(){
+                $(".add_course_students").hide();
+                $("body").css("background-color","#f5f5f5");
+            })
+        });
+
+
+     //学生信息
+        $(function(){
+            $(".students_img").mouseover(function(){
+                $(this).parent().next().show();
+            }).mouseout(function(){
+                $(".teacher_intro").hide();
+
+
+            })
+        })
+
+        $(function(){
+            $(".teacher_intro").mouseover(function(){
+                $(this).show();
+            }).mouseout(function(){
+                $(this).hide();
+
+            })
+        })
+
+        //增加学生有限日期
+        $(function(){
+            $(".add_validity_period_content_save").mouseover(function(){
+                $(this).addClass("add_validity_period_content_save_curr");
+            }).mouseout(function(){
+                $(this).removeClass("add_validity_period_content_save_curr");
+            })
+        });
+
+
+        $(function(){
+            $(".add_validity_period").click(function(){
+                if($(".add_validity_period_content").css("display")=="none"){
+                    $(".add_validity_period_content").show();
+                    $("body").css("background-color","#e1e0e0");
+                }else{
+                    $(".add_validity_period_content").hide();
+                    $("body").css("background-color","#f5f5f5");
+                }
+            })
+        });
+
+        $(function(){
+            $(".add_validity_period_content>button").click(function(){
+                $(".add_validity_period_content").hide();
+                $("body").css("background-color","#f5f5f5");
+            })
+        });
+
+        $(function(){
+            $(".add_validity_period_content_quit").click(function(){
+                $(".add_validity_period_content").hide();
+                $("body").css("background-color","#f5f5f5");
+            })
+        });
+
+
+    </script>
+
+</head>
+<body>
+<div class="course_info_top">
+    <img src="../images/course_img.png" class="course_img">
+    <div class="course_name">111<span class="course_states">未发布</span></div>
+    <div class="course_teacher_name">教师:<span >admin</span></div>
+    <button class="course_preview">预览<span class="triangle_down" ></span></button>
+
+    <ul class="user_states" style="display: none;">
+        <li><a href="javascript:return false;">作为已购买用户</a></li>
+        <li><a href="javascript:return false;">作为未购买用户</a></li>
+    </ul>
+
+    <button class="course_release"><span>发布课程</span></button>
+
+
+</div>
+
+<div class="course_info_main">
+
+    <div class="course_info_main_left">
+
+        <ul>
+            <li class="course_info">课程信息</li>
+            <li class="curr"><a href="javascript:return false;" class="curr">详细信息</a></li>
+            <li class=""><a href="javascript:return false;">课程图片</a></li>
+            <li class=""><a href="javascript:return false;">课时管理</a></li>
+            <li class=""><a href="javascript:return false;">文件管理</a></li>
+        </ul>
+
+
+        <ul>
+            <li class="course_setting">课程设置</li>
+            <li class=""><a href="javascript:return false;">价格设置</a></li>
+            <li class=""><a href="javascript:return false;">教师设置</a></li>
+            <li class=""><a href="javascript:return false;">学员设置</a></li>
+        </ul>
+
+        <ul>
+            <li class="question_library">题库</li>
+            <li class=""><a href="javascript:return false;">题目管理</a></li>
+            <li class=""><a href="javascript:return false;">试卷管理</a></li>
+            <li class=""><a href="javascript:return false;">试卷批阅</a></li>
+        </ul>
+
+        <ul>
+            <li class="course_operation">课程运营</li>
+            <li class=""><a href="javascript:return false;">课程学习数据</a></li>
+        </ul>
+
+
+
+    </div>
+
+
+    <div class="student_management_main_right">
+        <p>学员</p>
+        <a href="javascript:return false;">导出学员</a>
+        <button>添加学员</button>
+
+        <div class="student_management_content">
+            <form>
+                <input type="text" placeholder="请输入用户名">
+                <button>搜索</button>
+            </form>
+        </div>
+
+        <div class="student_management_content_table">
+           <table>
+
+               <tr style="height: 30px;">
+                   <td style="width: 280px;font-weight: bold;padding-left: 10px;">学员</td>
+                   <td style="width: 210px;font-weight: bold;padding-left: 10px;">进度学习</td>
+                   <td style="width: 210px;font-weight: bold;padding-left: 10px;">操作</td>
+               </tr>
+s
+
+
+               <tr style="height: 80px;">
+                   <td style="width: 280px;">
+                       <a href="javascript:return false;"><img src="../images/dog.jpg" class="students_img"></a>
+                       <div class="teacher_intro" style="display:none;margin-top: -280px;margin-left: -130px;">
+                           <p>
+                               <a href="javascript:return false;"><img src="../images/teacher.jpg">
+                                   <label>admin</label>
+                                   <span>李老师</span>
+                               </a>
+                               <!--<button class="follow curr">关注</button>-->
+                               <button class="follow  curr" style="background-color:#7c7c7c;color: #fff;width:60px;">已关注</button>
+                               <button class="private_letter">私信</button>
+                           </p>
+                           <div class="autograph">
+                               <p>天空不曾留下我的痕迹,但我已飞过.</p>
+                           </div>
+                           <ul>
+                               <li>
+                                   <a href="javascript:return false;">10</a><br/>
+
+                                   <a href="javascript:return false;">在学</a>
+                               </li>
+                               <li>
+                                   <a href="javascript:return false;">6</a><br/>
+
+                                   <a href="javascript:return false;">关注</a>
+                               </li>
+                               <li>
+                                   <a href="javascript:return false;">9</a><br/>
+
+                                   <a href="javascript:return false;">粉丝</a>
+                               </li>
+
+                           </ul>
+                       </div>
+                       <a href="javascript:return false;" class="students_title">李学生<span class="remark">(学生1)</span></a>
+                       <label>加入时间&nbsp;:&nbsp;2016-10-28 15:27</label><br/>
+                       <span>有效日期&nbsp;:&nbsp;2016-10-28 15:27(5天)</span>
+                   </td>
+                   -                  <td style="width: 180px;">
+                   <div class="progress_bar"></div>
+               </td>
+                   <td style="width: 220px;" class="student_management_operation">
+                       <button class="send_private_messages"><span>发私信</span></button>
+                       <button class="view_students_data">查看资料</button>
+                       <a href="javascript:return false;">管理</a>
+                       <ul style="display: none;" class="student_management_operation_tabs">
+                           <li><a href="javascript:return false;" class="student_notes">备注</a></li>
+                           <!--<li><a href="javascript:return false;">关注</a></li>-->
+                           <li style="background-color: #37b97d;"><a href="javascript:return false;">已关注</a></li>
+                           <li><a href="javascript:return false;" class="add_validity_period">增加有效期</a></li>
+                           <li><a href="javascript:return false;">移除</a></li>
+                       </ul>
+                   </td>
+               </tr>
+
+           </table>
+        </div>
+    </div>
+
+
+
+</div>
+<!--发私信-->
+<div class="send_private_messages_popup" style="display: none;" >
+    <p>发送私信</p>
+    <button>x</button>
+    <label>收件人</label><input type="text"><br/>
+    <span>内容</span>
+    <textarea></textarea>
+    <div>
+        <button>发送</button>
+    </div>
+</div>
+
+<!--个人信息-->
+<div class="students_personal_info_popup" style="display:none;" >
+    <p>个人详细信息</p>
+    <button type="button">x</button>
+
+    <table>
+
+        <tr>
+            <th width="25%;">用户名</th>
+            <td width="75%;"><a href="javascript:return false;">个人主页</a>xxx</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">Email</th>
+            <td width="75%;">hgg@163.com</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">用户名</th>
+            <td width="75%;">xxx</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">姓名</th>
+            <td width="75%;">李明</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">性别</th>
+            <td width="75%;">男</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">公司</th>
+            <td width="75%;">xxxx</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">职业</th>
+            <td width="75%;">老师</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">头衔</th>
+            <td width="75%;">xxxx</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">电话</th>
+            <td width="75%;">12345648</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">个性签名</th>
+            <td width="75%;">早起的鸟儿有虫吃</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">个人网站</th>
+            <td width="75%;">www.123.com</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">微博</th>
+            <td width="75%;">测试</td>
+        </tr>
+
+        <tr>
+            <th width="25%;">微信</th>
+            <td width="75%;">wechat</td>
+        </tr>
+
+        <tr>
+                <th width="25%;">QQ</th>
+            <td width="75%;">12345678</td>
+        </tr>
+    </table>
+   <a href="javascript:return false;">关闭</a>
+</div>
+
+
+<!--添加学员-->
+<div class="add_course_students" style="display: none;">
+    <p>添加学员</p>
+    <button>x</button>
+    <form>
+        <label>学员</label><input type="text" placeholder="邮箱/手机/昵称"><br/><span>只能添加系统中已注册的用户</span>
+        <!--<span>请输入学员</span>-->
+        <br/><br/><br/>
+        <label style="margin-left: 35px;">购买价格</label><input type="text"><br/><span>本课程的价格为11.00元</span>
+        <br/><br/><br/>
+        <label>备注</label><input type="text"><br/><span>选填</span><br/>
+    </form>
+    <div>
+        <button class="add_course_students_save button_hover">保存</button>
+        <button class="add_course_students_quit">取消</button>
+    </div>
+</div>
+
+<!--学员备注-->
+<div class="student_notes_content" style="display: none;">
+    <p>学员备注</p>
+    <button>x</button>
+    <input type="text"><br/>
+    <span>请填写学员的备注信息</span>
+    <div>
+        <button class="student_notes_content_save button_hover">保存</button>
+        <button class="student_notes_content_quit">取消</button>
+    </div>
+</div>
+
+<!--增加学员课程有效期-->
+<div class="add_validity_period_content" style="display: none;">
+    <p>增加学员课程有效期</p>
+    <button>x</button>
+    <label>课程标题</label><input type="text"><br/>
+    <label>学员昵称</label><input type="text"><br/>
+    <label>增加天数</label><input type="text"><br/>
+    <div>
+        <button class="add_validity_period_content_save button_hover">保存</button>
+        <button class="add_validity_period_content_quit">取消</button>
+    </div>
+</div>
+
+</body>
+
+</html>

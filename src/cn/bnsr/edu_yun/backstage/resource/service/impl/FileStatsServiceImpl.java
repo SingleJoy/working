@@ -1,0 +1,66 @@
+package cn.bnsr.edu_yun.backstage.resource.service.impl;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.resource.service.FileStatsService;
+import cn.bnsr.edu_yun.backstage.resource.view.FileStatsView;
+import cn.bnsr.edu_yun.comparator.FileStatsComparator;
+import cn.bnsr.edu_yun.frontstage.resource.mapper.File_baseMapper;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class FileStatsServiceImpl  implements FileStatsService	{
+	@Autowired 
+	private File_baseMapper fileBaseMapper;
+
+	@Override
+	public List<FileStatsView> queryFileStats(FileStatsView fileStats) throws ParseException {
+		Date date = new Date();
+		List<String> list = new ArrayList<String>();
+		if(fileStats.getYear().equals("")){//年月没选
+			//获的当前年月
+			fileStats.setDays(TimeUtil.getDate());
+			date = TimeUtil.stringFormatDate(fileStats.getDays());
+			list = TimeUtil.getAllTheDateOftheMonth(date);
+		}else{
+			if(fileStats.getMonth().equals("")){//只选年
+				for(int i=1;i<=12;i++){
+					String month = i>=10?i+"":"0"+i;
+					list.add(fileStats.getYear()+"-"+month);
+				}
+				fileStats.setDays(fileStats.getYear());
+			}else{//年月都选
+				fileStats.setDays(fileStats.getYear()+"-"+fileStats.getMonth());
+				date = TimeUtil.stringFormatDate(fileStats.getDays());
+				list = TimeUtil.getAllTheDateOftheMonth(date);
+			}
+		}
+		
+		List<FileStatsView> fileStatsList = fileBaseMapper.queryFileStats(fileStats);
+		if(fileStatsList.size()!=list.size()){//如果不相等，证明有缺少日期
+			List<String> fileList = new ArrayList<String>();
+			for(FileStatsView f : fileStatsList){
+				fileList.add(f.getDays());
+			}
+			list.removeAll(fileList);//差集
+			for(int i=0;i<list.size();i++){//补全当前月日期
+				FileStatsView file = new FileStatsView();
+				file.setClickNum(0);
+				file.setCollectionNum(0);
+				file.setUploadNum(0);
+				file.setDownLoadNum(0);
+				file.setDays(list.get(i));
+				fileStatsList.add(file);
+			}
+		}
+		
+//		Collections.sort(fileStatsList, new FileStatsComparator());// 排序
+		
+		return fileStatsList;
+	}
+}

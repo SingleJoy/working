@@ -1,0 +1,114 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+
+	<!-- 可以扫描controller、service、...
+	这里让扫描controller，指定controller的包
+	 -->
+	<context:component-scan base-package="cn.bnsr.edu_yun.*.*.controller"></context:component-scan>
+	
+		
+	<!--注解映射器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/> -->
+	<!--注解适配器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> -->
+	
+	<!-- 使用 mvc:annotation-driven代替上边注解映射器和注解适配器配置
+	mvc:annotation-driven默认加载很多的参数绑定方法，
+	比如json转换解析器就默认加载了，如果使用mvc:annotation-driven不用配置上边的RequestMappingHandlerMapping和RequestMappingHandlerAdapter
+	实际开发时使用mvc:annotation-driven
+	 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+
+	<!-- 视图解析器-解析jsp解析，默认使用jstl标签，classpath下的得有jstl的包-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 配置jsp路径的前缀 -->
+		<property name="prefix" value="/"/>
+		<!-- 配置jsp路径的后缀 -->
+		<property name="suffix" value=".jsp"/>
+		<property name="contentType" value="text/html;charset=UTF-8" /> 
+	</bean>
+	
+	<!-- 自定义参数绑定 -->
+	<!-- <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		转换器
+		<property name="converters">
+			<list>
+				日期类型转换
+				<bean class="cn.itcast.ssm.controller.converter.CustomDateConverter"/>
+			</list>
+		</property>
+		
+	
+	</bean> -->
+	 <!-- 文件上传表单的视图解析器 -->  
+   <bean id="multipartResolver"  
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+    <!-- one of the properties available; the maximum file size in bytes -->  
+    <property name="maxUploadSize" value="10737418240" />  
+  </bean>  
+  
+  <!--配置拦截器, 多个拦截器,顺序执行 -->  
+	<mvc:interceptors>    
+	    <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->
+	    <!-- 后台权限拦截 -->
+	    <mvc:interceptor>    
+	        <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
+	        <mvc:mapping path="/back_*/**" />  
+	        <mvc:exclude-mapping path="/back_user/to_login.action"/>  
+	        <bean class="cn.bnsr.edu_yun.interceptor.AuthInterceptor"></bean> 
+	    </mvc:interceptor>  
+	   	<!-- 前台session拦截 -->
+        <mvc:interceptor>    
+	        <mvc:mapping path="/my_*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor> 
+	     <mvc:interceptor>    
+	        <mvc:mapping path="/course*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor> 
+	    <mvc:interceptor>    
+	        <mvc:mapping path="/school_center*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor> 
+	     <mvc:interceptor>    
+	        <mvc:mapping path="/private_letter*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor> 
+	    <mvc:interceptor>    
+	        <mvc:mapping path="/noti*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor>
+	    <mvc:interceptor>    
+	        <mvc:mapping path="/community*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor>  
+	    <mvc:interceptor>    
+	        <mvc:mapping path="/train*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor>
+	     <mvc:interceptor>    
+	        <mvc:mapping path="/teacher_center*/**" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor>  
+	       <mvc:interceptor>    
+	        <mvc:mapping path="/lesson/to_my_lesson*" />  
+	        <bean class="cn.bnsr.edu_yun.interceptor.SessionInterceptor"></bean> 
+	    </mvc:interceptor>     
+	</mvc:interceptors>  
+	
+	<aop:aspectj-autoproxy expose-proxy="true"></aop:aspectj-autoproxy>
+	
+</beans>

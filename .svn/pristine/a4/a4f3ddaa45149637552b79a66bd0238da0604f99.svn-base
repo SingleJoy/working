@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>登录</title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+
+
+    
+
+
+
+
+
+    <link href="../../css/resource-list.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div class="es-wrap">
+
+
+
+
+    <section class="search-banner es-live-poster swiper-container">
+        <div class="swiper-slide swiper-hidden" style="background: #ffffff url(http://www.qiqiuyu.com/assets/img/placeholder/banner_search.jpg?version=8.2.0) no-repeat; background-size: cover;">
+        </div>
+        <div class="cloud-search-box " >
+            <form class="input-group search-input-group "  action="" method="get" style="margin-left: 10%;">
+                <div class="input-wrap ">
+                    <input type="text" name="q" class="form-control" placeholder="可搜索课程、培训、教研、社区、工作坊" value="数学">
+                    <i class="js-btn-clear es-icon es-icon-close01" style="display: inline;"></i>
+                </div>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">搜索</button>
+                </span>
+
+            </form>
+        </div>
+    </section>
+
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="es-section">
+                    <ul class="nav nav-tabs" id="search-nav-tabs" role="tablist">
+                        <li class="active"><a href="#" >课程</a></li>
+                        <li><a href="#" >培训</a></li>
+                        <li><a href="#" >教研</a></li>
+                        <li><a href="#" >资源</a></li>
+                        <li><a href="#" >工作坊</a></li>
+                        <li><a href="#" >社区</a></li>
+
+                    </ul>
+
+                    <div class="search-result" id="search-result">
+                        <div class="alert alert-blank alert-sm">
+                            为您找到课程结果约
+                            <span class="color-danger">2</span>个
+
+                        </div>
+                        <div class="search-course-list" id="search-course">
+
+                            <div class="course-item clearfix" style="border: none;padding: 0;">
+                                <a class="course-picture-link pull-left" href="#" target="_blank" title="ceshi贡献">
+                                    <img class="avatar-lg" src="https://image.woshipm.com/wp-files/2016/09/WD_U_201604_20160417000536_1193.png" style="margin: 15px 0 0 15px;"><br>
+
+                                </a>
+
+                                <div class="" style="margin:20px 10px 20px 160px;">
+
+
+                                    <h4 class="">
+
+                                        <a href="#" target="_blank" class="link-dark">课程（培训）名</a>
+                                        <span class="lesson_plan">标签（没有可为空）</span>
+
+                                    </h4>
+                                    <div class="col-md-10" style="height: 40px;overflow: hidden;font-size: 14px;line-height: 20px;">
+                                        君不见，黄河之水天上来⑵，奔流到海不复回。
+                                        君不见，高堂明镜悲白发，朝如青丝暮成雪⑶。
+                                        人生得意须尽欢⑷，莫使金樽空对月。
+                                        天生我材必有用，千金散尽还复来。
+                                        烹羊宰牛且为乐，会须一饮三百杯⑸。
+                                        岑夫子，丹丘生⑹，将进酒，杯莫停⑺。
+                                        与君歌一曲⑻，请君为我倾耳听⑼。
+                                        钟鼓馔玉不足贵⑽，但愿长醉不复醒⑾。
+                                        古来圣贤皆寂寞，惟有饮者留其名。
+                                        陈王昔时宴平乐，斗酒十千恣欢谑⑿。
+
+
+                                    </div>
+
+                                    <div class="course-footer clearfix " style="margin-top: 60px;">
+                                        <span title="评论" class="text-muted"><i class="glyphicon glyphicon-comment"></i>&nbsp;0次评论 </span>
+                                        <span class="mlm mrm text-muted"></span>
+                                        <span title="收藏" class="text-muted"><i class="es-icon es-icon-bookmarkoutline"></i>&nbsp;0位收藏 </span>
+                                        <span class="mlm mrm text-muted"></span>
+                                        <span class="text-muted">&nbsp;2017-10-28创建</span>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="course-item clearfix" style="border: none;padding: 0;">
+                                <a class="course-picture-link pull-left" href="#" target="_blank" title="ceshi贡献">
+                                    <img class="avatar-lg" src="https://image.woshipm.com/wp-files/2016/09/WD_U_201604_20160417000536_1193.png" style="margin: 15px 0 0 15px;"><br>
+
+                                </a>
+
+                                <div class="" style="margin:20px 10px 20px 160px;">
+
+
+                                    <h4 class="">
+
+                                        <a href="#" target="_blank" class="link-dark">课程（培训）名</a>
+                                        <span class="lesson_plan">标签（没有可为空）</span>
+
+                                    </h4>
+                                    <div class="col-md-10" style="height: 40px;overflow: hidden;font-size: 14px;line-height: 20px;">
+                                        君不见，黄河之水天上来⑵，奔流到海不复回。
+                                        君不见，高堂明镜悲白发，朝如青丝暮成雪⑶。
+                                        人生得意须尽欢⑷，莫使金樽空对月。
+                                        天生我材必有用，千金散尽还复来。
+                                        烹羊宰牛且为乐，会须一饮三百杯⑸。
+                                        岑夫子，丹丘生⑹，将进酒，杯莫停⑺。
+                                        与君歌一曲⑻，请君为我倾耳听⑼。
+                                        钟鼓馔玉不足贵⑽，但愿长醉不复醒⑾。
+                                        古来圣贤皆寂寞，惟有饮者留其名。
+                                        陈王昔时宴平乐，斗酒十千恣欢谑⑿。
+
+
+                                    </div>
+
+                                    <div class="course-footer clearfix " style="margin-top: 60px;">
+                                        <span title="评论" class="text-muted"><i class="glyphicon glyphicon-comment"></i>&nbsp;0次评论 </span>
+                                        <span class="mlm mrm text-muted"></span>
+                                        <span title="收藏" class="text-muted"><i class="es-icon es-icon-bookmarkoutline"></i>&nbsp;0位收藏 </span>
+                                        <span class="mlm mrm text-muted"></span>
+                                        <span class="text-muted">&nbsp;2017-10-28创建</span>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <nav class="text-center">
+
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+</body>
+</html>

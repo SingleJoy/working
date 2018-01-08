@@ -1,0 +1,11 @@
+package cn.bnsr.edu_yun.frontstage.resource.service;
+
+import cn.bnsr.edu_yun.frontstage.resource.po.TeachingPlan;
+import cn.bnsr.edu_yun.frontstage.resource.po.TeachingPlanFile;
+
+public interface TeachingPlanService {
+
+	int insert(TeachingPlan teachingPlan);
+	
+	int insertFile(TeachingPlanFile teachingPlanFile);
+}

@@ -1,0 +1,409 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <c:if test="${!empty workshopView.id}">
+            <jsp:include page="workshop_header.jsp"></jsp:include>
+        </c:if>
+        <c:if test="${empty workshopView.id}">
+            <jsp:include page="community_header.jsp"></jsp:include>
+        </c:if>
+
+        <div class="row row-3-9">
+            <c:if test="${!empty workshopView.id}">
+                <jsp:include page="workshop_left.jsp"></jsp:include>
+            </c:if>
+            <c:if test="${empty workshopView.id}">
+                <jsp:include page="community_left.jsp"></jsp:include>
+            </c:if>
+
+            <div class="col-lg-9 col-md-8  course-detail-main" >
+
+                <div class="panel panel-default panel-col course-data">
+                    <div class="panel-heading">
+                        创建工作坊
+                    </div>
+                    <div class="panel-body">
+
+                        <form  method="post"
+                                <c:if test="${empty workshopView.id}">
+                                    action="${pageContext.request.contextPath}/workshop/add_workshop.action?community_id=${communityView.id}&source_type=0"
+                                </c:if>
+                                <c:if test="${!empty workshopView.id}">
+                                    action="${pageContext.request.contextPath}/workshop/update_workshop.action"
+                                </c:if>
+                               class="form-horizontal" id="workshopForm">
+                            <c:if test="${!empty workshopView.id}">
+                                <input type="hidden"  class="form-control" name="id" value="${workshopView.id }">
+                            </c:if>
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>坊名称:</label></div>
+                                <div class="col-md-6 controls">
+                                    <input type="text"  class="form-control" name="name" value="${workshopView.name }">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>坊简介:</label></div>
+                                <div class="col-md-6 controls">
+                                    <textarea  class="form-control" rows="4" name="profile">${workshopView.profile }</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>坊头像:</label></div>
+                                <div class="col-md-4 controls">
+                                    <div id="fileList" class="uploader-list" style="width: 150px;height: 150px;">
+                                        <c:if test="${!empty workshopView.img}">
+                                            <div id="WU_FILE_0" class="file-item thumbnail"><img style="" src="${pageContext.request.contextPath}${workshopView.img}" height="108px" width="108px"></div>
+                                        </c:if>
+                                    </div>
+
+                                    <div class="help-block">请选择jpg,jig格式,小于2M的图片</div>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <a  class="btn btn-info  btn-sm" id="file">
+                                        <i class="glyphicon glyphicon-plus"></i>添加
+                                    </a>
+                                </div>
+                                <input type="hidden" id="img" name="img" value="${workshopView.img}">
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>学段:</label></div>
+                                <div class="col-md-4 controls">
+                                    <select id="stage" class="form-control" name="period"  onchange="_stage(this.value);">
+                                        <option id="nullStage"
+                                                value="">--请选择学段--</option>
+                                        <option value="XX"  <c:if test="${workshopView.period =='XX'}">selected="selected"</c:if>
+                                        >小学</option>
+                                        <option value="CZ" <c:if test="${workshopView.period =='CZ'}">selected="selected"</c:if>
+                                        >初中</option>
+                                        <option value="GZ" <c:if test="${workshopView.period =='GZ'}">selected="selected"</c:if>
+                                        >高中</option>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择学段</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label"><label>学科:</label></div>
+                                <div class="col-md-4 controls">
+                                    <select id="subject"  class="form-control" name="subject">
+                                        <c:if test="${empty subjectList}">
+                                            <option  value="">--请选择学科--</option>
+                                        </c:if>
+                                        <c:forEach items="${subjectList}" var="sub">
+                                            <c:if test="${workshopView.subject == sub.id}">
+                                                <option selected="selected" value="${sub.id}">${sub.subjectName}</option>
+                                            </c:if>
+                                            <c:if test="${workshopView.subject!= sub.id}">
+                                                <option value="${sub.id}">${sub.subjectName}</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                    <div class="text-warning" style="display: none;">请选择学科</div>
+                                </div>
+                            </div>
+
+
+                            <c:if test="${empty workshopView.id}">
+                                <div class="form-group">
+                                    <div class="col-md-2 control-label"><label>坊主:</label></div>
+                                    <div class="col-md-4 controls">
+                                        
+                                        <ul class="nav nav-pills clearfix tutor_list" id="username">
+                                    </ul>
+                                        <input type="hidden" name="workshop_user_ids" value="" id="workshop_user_id">
+
+
+                                    </div>
+                                    <div class="col-md-4 controls">
+                                    <a href="#add-students" class="btn btn-info  btn-sm" data-toggle="modal">
+                                        <i class="glyphicon glyphicon-plus"></i>添加
+                                    </a>
+                                    </div>
+                                </div>
+                            </c:if>
+
+                            <div class="form-group clearfix" style="margin-top: 80px;">
+                                <div class="col-md-offset-2 col-md-2 controls">
+                                    <button class="btn btn-fat btn-primary"  type="submit" id="btn_save">保存</button>
+                                </div>
+
+                                <div class="col-md-offset-1 col-md-2 controls">
+                                <c:if test="${empty workshopView.id}">
+                                    <button class="btn btn-fat btn-danger"  type="button" id="quit">取消</button>
+                              </c:if>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- 添加坊员弹窗 -->
+<div id="add-students" class="modal" data-toggle="modal" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">选择坊主</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal form-inline well well-sm" >
+
+                    <div class="form-group">
+                        <input type="text"   class="form-control" value="" placeholder="关键词">
+                        <button class="btn btn-primary btn-sm">搜索</button>
+                    </div>
+
+                    <div class="user_list">
+                        <h5>用户列表:</h5>
+                        <table class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <td class="active"><input type="checkbox"></td>
+                                <td class="active">用户名</td>
+                                <td class="active">真实姓名</td>
+                                <td class="active">性别</td>
+                                <td class="active">工作单位</td>
+                                <td class="active">学段学科</td>
+                                <td class="active">手机号</td>
+                            </tr>
+                            </thead>
+                            <tbody >
+                            <c:forEach items="${studentRelationViews }" var="view">
+                                <tr>
+                                    <td><input type="checkbox" value="${view.user_id}" class="one_checkbox" data-username="${view.username }"></td>
+                                    <td>${view.username }</td>
+                                    <td>${view.true_name }</td>
+                                    <td>
+                                        <c:if test="${view.sex==0 }">女</c:if>
+                                        <c:if test="${view.sex==1 }">男</c:if>
+                                    </td>
+                                    <td>${view.school }</td>
+                                    <td>${view.course }</td>
+                                    <td>${view.phone }</td>
+
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </form>
+                <div class="modal-footer">
+                    <button onclick="return false" type="button" class="btn btn-info pull-right tutor_confirm" data-dismiss="modal" id="setUser">保存</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+	$("#workshop_user_id").val("");
+});
+
+    $("#setUser").click(function(){
+        var ids=$("#workshop_user_id").val().split(",");
+        if(ids.length>3){
+            alert("只能设置3个坊主");
+            return false;
+        }
+        $(".one_checkbox").each(function () {
+            var isChecked = $(this).prop("checked");
+            if(isChecked){
+                var username=$(this).data("username");
+                var id=$(this).val();
+                ids=$("#workshop_user_id").val().split(",");
+                var flag=true;
+                if(ids.length>3){
+                    alert("只能设置3个坊主");
+                    $("#workshop_user_id").val("");
+                    $("#username").html("");
+                    return false;
+                }
+                for(var i=0;i<ids.length;i++){
+                    if(ids[i]==id){
+                        flag=false;
+                    }
+                }
+                if(flag){
+                    $("#workshop_user_id").val($("#workshop_user_id").val()+","+id);
+                 var html='<li class="active" id="teacher'+id+'"><a href="javascript:;">'+username+'&nbsp;&nbsp;<span class="tutor_del" onclick="delTeacher('+id+');">X</span></a></li></ul>';
+                    $("#username").html(html+" "+$("#username").html());
+                }
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#workshopForm').bootstrapValidator({
+            message: '此值无效',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    message: '工作坊名称',
+                    validators: {
+                        notEmpty: {
+                            message: '工作坊名称不能为空'
+                        },
+                        stringLength: {
+                            min: 4,
+                            max: 20,
+                            message: '工作坊名称长度4-20'
+                        }
+                    }
+                },
+                subject:{
+                    message: '学科',
+                    validators: {
+                        notEmpty: {
+                            message: '学科不能为空'
+                        },
+                    }
+                },
+                period:{
+                    message: '学段',
+                    validators: {
+                        notEmpty: {
+                            message: '学段不能为空'
+                        },
+                    }
+                },
+            }
+        }).on('success.form.bv', function(e) {
+        var flag='${empty workshopView.id}';
+       			if(flag=="true"){
+          	 if($("#workshop_user_id").val()==null||$("#workshop_user_id").val()==""){
+                $("#btn_save").removeAttr("disabled");
+                alert("坊主不能为空");
+                return false;
+            }
+				}
+            if(e.type){//验证成功
+                //document.getElementById('workshopForm').submit();
+            }else{
+                // 防止表单提交
+                e.preventDefault();
+            }
+        });
+        var uploader = WebUploader.create({
+            auto: true,
+            // swf文件路径
+            swf: '${pageContext.request.contextPath}/frontstage/js/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: '${pageContext.request.contextPath}/workshop/upload_img.action',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#file',
+
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        /**
+         *上传成功后
+         *file:文件
+         *response:服务器返回
+         */
+        uploader.on( 'uploadSuccess', function( file,response  ) {
+//		var hidden=$('<input type="hidden" value="'+response.fileName+'" name="lesson_pic" class="hidden">' );
+//		var $form=$("#saveLessonPlan");
+//		$form.append(hidden);
+            $("#img").val(response.fileName);
+        });
+
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+
+            // <input type="hidden">
+            var $img;
+            var $li = $(
+                    '<div id="' + file.id + '" class="file-item thumbnail">' +
+                    '<img style="">' +
+                    /*  '<div class="info">' + file.name + '</div>' + */
+                    '</div>'
+                ),
+                $img = $li.find('img');
+            var   $list=$("#fileList");
+            $list.html("");
+            // $list为容器jQuery实例
+            $list.append( $li );
+
+
+            $("#save_course_picture_content").css("display","");
+
+
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+
+                $img.attr( 'src', src );
+
+            },108,108 );
+        });
+    });
+    function _stage(value){
+        //       alert(value);
+        $("#subject").find("option").remove();
+
+        $.ajax({
+            url : "${pageContext.request.contextPath}/subject/query_subject.action?subId="+value,
+            dataType:'json',
+            success : function(json) {
+                var a = JSON.stringify(json);
+                var o = eval( "(" + a + ")" );
+                var sub = o[0].subjectList;
+                var edi = o[0].editionList;
+                var gra = o[0].gradeList;
+                for(var i in sub){
+                    $("#subject").append('<option   value='+sub[i].id+' >'+sub[i].subjectName+'</option>');
+                }
+
+            }
+        });
+
+    }
+    function delTeacher(id) {
+		$("#teacher"+id).remove();
+var replace=$("#workshop_user_id").val().replace(","+id,"");
+		$("#workshop_user_id").val(replace);
+	}
+	$("#quit").click(function () {
+		window.location.href="${pageContext.request.contextPath}/workshop/to_workshop.action?community_id=${communityView.id}&source_type=0";
+	});
+</script>

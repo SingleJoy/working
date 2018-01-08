@@ -1,0 +1,51 @@
+
+
+/*上传资源页面重构 css代码*/
+
+.circle{border-radius: 50%;border: 1px solid #ddd;width: 50px;height: 50px;text-align: center;}
+.circle>span{line-height: 50px;text-align: center;}
+.stage_step>div.active{background-color: #3ebbce;}
+.stage_step>div.active>span{color: #fff}
+.stage_step>span{text-align: center;}
+.stage_step>span.active{color: #3ebbce;}
+.stage_step>p{width:83%;height: 10px;margin-left: 48px;margin-top:-50px;}
+.stage_step>p.active{background-color: #3ebbce;}
+
+.lesson_list{margin-bottom: 20px;}
+.lesson_content_title{font-weight:bold;border-left: 3px solid #46c37b;padding-left: 18px;}
+.lesson_content_page{background-color:#f4f4f4;padding-left: 10px;}
+.lesson_content_page>label{margin-top: 20px;padding-left: 15px;}
+.lesson_content_text{padding-left: 20px;line-height: 2;min-height:40px;}
+
+
+.course-manage-header{background-color: #fff;margin-top: 20px;}
+#myNav{top:10px;}
+.square{width:50px;height: 50px;background-color: #ce1c00;text-align: center;cursor: pointer;position: relative;z-index: 99;}
+.square>span{font-size: 14px;color: #fff;line-height: 50px;text-align: center;display: inline-block;}
+.arrow_down{ width: 0;  height: 0;  border-left: 25px solid transparent;
+    border-right: 25px solid transparent;  border-top:25px solid #ce1c00; }
+.isosceles_right_triangle_left{width: 0;height: 0;border-bottom: 28px solid #ce1c00;border-right: 29px solid transparent;display: inline-block;}
+.isosceles_right_triangle_right{width: 0;height: 0;border-bottom: 28px solid #ce1c00;border-left: 28px solid transparent;display: inline-block;}
+.teaching_plan_name{font-size: 20px;margin: 35px 0 0 0;}
+.comment_content>button{margin-bottom: 20px;}
+.container-fluid>ul>li{border: none;}
+.container-fluid>ul>li>a{width: 100%;display: inline-block;color: #616161;}
+.container-fluid>ul>li.active>a{color: #fff;}
+.container-fluid-list{background-color: #fff;position: fixed;}
+@media (min-width: 1200px) {
+    .container-fluid-list{width:270px;}
+}
+@media (min-width: 1024px) and (max-width: 1199px){
+    .container-fluid-list{width:225px;}
+}
+
+@media (min-width: 992px) and (max-width: 1023px) {
+    .container-fluid-list{width:215px;}
+
+}
+@media (max-width: 991px) {
+    .container-fluid-list{position: relative;}
+    .container-fluid{position: relative;}
+    .container-fluid-list>li{display: inline-block;}
+    .container-fluid-content{width: 100%;}
+}

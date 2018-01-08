@@ -1,0 +1,326 @@
+package cn.bnsr.edu_yun.backstage.base.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.view.DataGrid;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.backstage.base.view.UserView;
+import cn.bnsr.edu_yun.frontstage.base.po.Area;
+import cn.bnsr.edu_yun.frontstage.base.po.Grade;
+import cn.bnsr.edu_yun.frontstage.base.po.Notification;
+import cn.bnsr.edu_yun.frontstage.base.po.PubverList;
+import cn.bnsr.edu_yun.frontstage.base.po.Recommended;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserCertificated;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.service.AreaService;
+import cn.bnsr.edu_yun.frontstage.base.service.ClassifyService;
+import cn.bnsr.edu_yun.frontstage.base.service.GradeService;
+import cn.bnsr.edu_yun.frontstage.base.service.NotificationService;
+import cn.bnsr.edu_yun.frontstage.base.service.PubverListService;
+import cn.bnsr.edu_yun.frontstage.base.service.RecommendedService;
+import cn.bnsr.edu_yun.frontstage.base.service.SchoolService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.CertificateView;
+
+@Controller
+@RequestMapping("back_certification")
+public class BackCertificationController  extends BaseController{
+	
+	private static final String ID_number = null;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private GradeService gradeService;
+	@Autowired
+	private PubverListService pubverService;
+	@Autowired
+	private SchoolService schoolService;
+	@Autowired
+	private AreaService areaService;
+	@Autowired
+	private NotificationService notificationService;
+	@Autowired
+	private ClassifyService classifyService;
+	@Autowired
+	private RecommendedService recommendedService;
+	
+	
+	/**
+	 *跳转后台审核页面
+	 */
+	@RequestMapping("/to_certificate")
+	public ModelAndView to_certificate(HttpServletRequest request,UserView userView) {
+		
+		return new ModelAndView("backstage/base/certificate/certificate");
+	}
+	//管理员
+	@RequestMapping("/to_certificate1")
+	public ModelAndView to_certificate1(HttpServletRequest request,UserView userView) {
+		
+		return new ModelAndView("backstage/base/certificate/certificate1");
+	}
+     /**
+      * 认证申请
+      * @param request
+      * @param view
+      * @param response
+      */
+     @RequestMapping("/certificating")
+  	public void certificating(HttpServletRequest request,CertificateView view,HttpServletResponse response){
+    	 DataGrid j = new DataGrid();
+ 		int pageSize=view.getRows();
+ 		int page=view.getPage();
+ 		int start=pageSize*(page-1);
+ 		view.setStart(start);
+ 		if(view.getCertificated()!=null&&view.getCertificated()==-1){
+ 			view.setCertificated(null);
+ 		}else if(view.getCertificated()==null){
+ 			view.setCertificated(0);
+ 		}
+ 		if(view.getS_area()==null){
+ 			view.setS_area("");
+ 		}
+ 		if(view.getS_school()==null){
+ 			view.setS_school("");
+ 		}
+ 		if(view.getS_username()==null){
+ 			view.setS_username("");
+ 		}
+ 		if(view.getS_phone()==null){
+ 			view.setS_phone("");
+ 		}
+ 		long total=userInfoService.selectCountByBack(view);
+ 		List<UserInfo> userInfoList=userInfoService.selectByBack(view);
+ 		
+ 		j.setRows(userInfoList);
+ 		j.setTotal(total);
+ 		super.writeJson(j,response);
+ 		
+     }
+     @RequestMapping("/selectGrade")
+ 	@ResponseBody
+ 	public JSONObject selectGrade(int id){
+ 		
+    	 JSONObject obj=JSONObject.fromObject(gradeService.selectById(id));
+ 		return obj;
+ 	}
+     @RequestMapping("/getPubver")
+  	@ResponseBody
+  	public JSONObject getPubver(String id){
+  		JSONObject obj=JSONObject.fromObject(pubverService.selectById(id));
+  		
+  		return obj;
+  	}
+     @RequestMapping("/certificated")
+   	public void certificated(HttpServletRequest request,int status,HttpServletResponse response,String ids,String reason){
+    
+    	 Json j = new Json();
+    	 String[] idsList=ids.split(",");
+    	 Date date = new Date();
+ 		for(String str:idsList){
+ 			if(str!=null&&!str.trim().equals("")){
+ 				long id=Long.parseLong(str);
+ 				UserInfo userInfo = userInfoService.selectById(id);
+ 					Long user_id=userInfo.getUser_id();
+ 					UserCertificated userCertificated=new UserCertificated();
+ 					userInfo.setReview_time(date);
+ 					Notification notification=new Notification();
+				if(status==2){
+					userInfo.setCertificated(2);
+					userCertificated.setCertificated(2);
+					if(reason==null){
+						reason="";
+					}
+					userCertificated.setReason(reason);
+ 					//不通过
+ 				    notification.setIs_read(1);
+ 		    		notification.setCreate_time(date);
+ 		    		notification.setNotice_time(date);
+ 		    		notification.setUser_id(user_id);
+ 		    		if(userInfo.getType()!=0){
+ 		    			notification.setNotice_type_id(6);
+ 		    		}else{
+ 		    			notification.setNotice_type_id(4);
+ 		    		}
+ 		    		
+ 		    		
+ 				}else{
+ 					//通过
+ 					userInfo.setCertificated(1);
+ 					userCertificated.setCertificated(1);
+ 				
+ 		     	    notification.setIs_read(1);
+ 		    		notification.setCreate_time(date);
+ 		    		notification.setNotice_time(date);
+ 		    		notification.setUser_id(user_id);
+ 		    		User user=userService.selectByPrimaryKey(user_id);
+ 		    		if(userInfo.getType()!=0){
+ 		    			notification.setNotice_type_id(5);
+ 		    			user.setUser_type("2");
+ 		    		}else{
+ 		    			notification.setNotice_type_id(3);
+ 		    			user.setUser_type("3");
+ 		    		}
+ 		    	
+					userService.updateUser(user);
+ 		    		
+ 				}
+ 				
+ 				userCertificated.setReview_time(date);
+ 				//userInfoService.updateUserCertificated(userCertificated);
+ 				String school=userInfo.getSchool();
+				userCertificated.setSchool(school);
+ 				String course=userInfo.getCourse();
+				userCertificated.setCourse(course);
+				if(userInfo.getTitles_id()!=null){
+				String titles=	classifyService.selectById(userInfo.getTitles_id()).getClassify_name();
+				userCertificated.setTitles(titles);
+				}
+ 				String pubver_id=userInfo.getPubver_id();
+				userCertificated.setPubver_id(pubver_id);
+ 				Long school_id=userInfo.getSchool_id();
+				userCertificated.setSchool_id(school_id);
+ 				Integer grade_id=userInfo.getGrade_id();
+				userCertificated.setGrade_id(grade_id);
+ 				String true_name=userInfo.getTrue_name();
+				userCertificated.setTrue_name(true_name);
+ 				Integer sex=userInfo.getSex();
+				userCertificated.setSex(sex);
+				String number = userInfo.getID_number();
+ 				userCertificated.setID_number(number);
+ 				String picture1= userInfo.getPicture1();
+				userCertificated.setPicture1(picture1);
+ 				String picture2= userInfo.getPicture2();
+				userCertificated.setPicture2(picture2);
+ 				String picture3= userInfo.getPicture3();
+				userCertificated.setPicture3(picture3);
+ 				Date apply_time= userInfo.getApply_time();
+				userCertificated.setApply_time(apply_time);
+ 				Integer type= userInfo.getType();
+				userCertificated.setType(type);
+ 				Integer position_id= userInfo.getPosition_id();
+				userCertificated.setPosition_id(position_id);
+ 				String area_id= userInfo.getArea_id();
+				userCertificated.setArea_id(area_id);
+ 				Integer titles_id= userInfo.getTitles_id();
+				userCertificated.setTitles_id(titles_id);
+ 				Integer certificate_type= userInfo.getCertificate_type();
+				userCertificated.setCertificate_type(certificate_type);
+				userInfoService.updateUserInfo(userInfo);
+ 				userInfoService.insertUserCertificated(userCertificated);
+ 				notification.setCourse_hour_id(userCertificated.getId());
+ 				notificationService.insert(notification);
+ 		
+     }
+ 		}
+ 		j.setSuccess(true);
+    	j.setMsg("操作成功！");
+    	super.writeJson(j,response);
+     }
+ 	@RequestMapping("/to_msg1")
+ 	public ModelAndView to_msg1(HttpServletRequest request) {
+ 		return new ModelAndView("backstage/base/certificate/msg1");
+ 	}
+ 	@RequestMapping("/to_msg")
+ 	public ModelAndView to_msg(HttpServletRequest request,long id) {
+ 	
+ 		UserInfo userInfo=userInfoService.selectById(id);
+ 		User user=userService.selectByPrimaryKey(userInfo.getUser_id());
+ 		request.setAttribute("userInfo", userInfo);
+ 		request.setAttribute("user", user);
+ 		Grade grade = null;
+ 		if(userInfo.getGrade_id()!=null){
+ 	grade=	gradeService.selectById(userInfo.getGrade_id());
+ 	request.setAttribute("grade", grade.getGrade_name());
+ 		}
+ 		if(userInfo.getPubver_id()!=null){
+  PubverList pubver	=pubverService.selectById(userInfo.getPubver_id());
+  request.setAttribute("pubver", pubver.getVersionName());
+ 		}
+ 		if(userInfo.getTitles_id()!=null){
+ 	String titles=	classifyService.selectById(userInfo.getTitles_id()).getClassify_name();
+ 	request.setAttribute("titles",titles);
+ 		}
+ 		if(userInfo.getPosition_id()!=null){
+ 		String position = classifyService.selectById(userInfo.getPosition_id()).getClassify_name();
+ 		request.setAttribute("position",position);
+ 		}
+  Area province=null;
+  Area city=null;
+  Area county=null;
+  String area_id=userInfo.getArea_id();
+  if(area_id.length()>2){
+	  province= areaService.selectByArea_id(area_id.substring(0, 5));
+  }
+  if (area_id.length()>5){
+	  city=  areaService.selectByArea_id(area_id.substring(0, 8));
+  }
+  if(area_id.length()>8){
+	  county=areaService.selectByArea_id(area_id.substring(0, 11));
+  }
+
+  		 request.setAttribute("province", province==null?"":province.getArea_name());
+ 		 request.setAttribute("city", city==null?"":city.getArea_name());
+ 		 request.setAttribute("county", county==null?"":county.getArea_name());
+ 		return new ModelAndView("backstage/base/certificate/msg");
+ 	}
+ 	 @RequestMapping("/recommended")
+    	public void recommended(HttpServletRequest request,Recommended recommended,long valid_day,HttpServletResponse response){
+ 		
+     	 Json j = new Json();
+   
+     	UserInfo userInfo=userInfoService.selectById(recommended.getSource_id());
+     	recommended.setSource_id(userInfo.getUser_id());
+   List<Recommended> recommendeds = recommendedService.selectByUserId(recommended.getSource_id());
+       Date date =new Date();
+     Date valid_time=new Date(date.getTime()+valid_day*86400000);
+     recommended.setRecommended_time(date);
+     recommended.setValid_time(valid_time);
+     if(recommendeds.size()<1){   
+    	
+    	 recommendedService.insert(recommended);
+     }
+
+    
+     	//无，创
+  		j.setSuccess(true);
+     	j.setMsg("操作成功！");
+     	super.writeJson(j,response);
+      }
+ 	 @RequestMapping("/unRecommended")
+ 	public void unRecommended(HttpServletRequest request,long id,HttpServletResponse response){
+  
+  	 Json j = new Json();
+  	UserInfo userInfo=userInfoService.selectById(id);
+ 	List<Recommended> recommendeds = recommendedService.selectByUserId(userInfo.getUser_id());
+  	 for(Recommended recommended:recommendeds){
+  		recommendedService.delete(recommended.getId());
+  	 }
+ 
+  
+  	
+		j.setSuccess(true);
+  	j.setMsg("操作成功！");
+  	super.writeJson(j,response);
+   }
+ 	@RequestMapping("/to_recommended")
+ 	public ModelAndView to_recommended(HttpServletRequest request) {
+ 		return new ModelAndView("backstage/base/certificate/recommend");
+ 	}
+}

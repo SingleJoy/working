@@ -1,0 +1,156 @@
+
+/*教学中心   teaching_center*/
+
+/*main_right布局*/
+.teaching_center_main_right{width: 850px;height: 730px;background-color:#fff;float: left;margin-top: 20px;margin-left: 20px;border-radius: 5px;}
+.teaching_center_main_right>p{font-size: 14px;font-weight: bold;padding:15px 0;border-bottom: 1px solid #ddd;width: 820px;margin-left: 15px;}
+.create_course{float: right;display: inline;position: relative;margin-top: -35px;margin-right: 20px;}
+.create_course a{padding: 5px 10px;font-size: 12px;line-height: 1.5;border-radius: 5px;color: #fff;background-color:#3ebbce; margin-right: 5px;}
+.course_type{margin-top: 30px;}
+.course_type ul{margin-left: 15px;}
+.course_type ul li{width: 90px;padding-bottom: 20px;display:inline-block;text-align: center;margin-right: 5px;}
+.course_type ul li.curr{border-bottom: 1px solid #3ebbce;}
+.course_type ul li.curr_01{border-bottom: 1px solid #3ebbce;}
+.course_type ul li a{font-size: 16px;}
+.course_type ul li a.curr{color: #3ebbce}
+.course_type ul li a.curr_01{color: #3ebbce;}
+
+
+
+/*在教课程*/
+/*普通课程*/
+.ordinary_course{clear: both;}
+.ordinary_course table{margin-left: 15px;}
+.ordinary_course table tr{height: 80px;border-bottom: 1px solid #ddd;}
+.ordinary_course table tr th{font-size: 14px;font-weight: bold;line-height: 37px;padding-top: 20px;border-bottom: 2px solid #ddd;padding-bottom: 10px;}
+.ordinary_course table tr th,.ordinary_course table tr td{font-size: 14px;text-align: left;}
+.ordinary_course table tr td{border-bottom:1px solid #ddd;}
+.ordinary_course table tr td a img{width: 100px;height: 56px;}
+.course_title_name{position: absolute;margin-left: 10px;}
+.course_operation{width: 62px;height: 30px;border: 1px solid #ddd;border-radius: 30px 0 0 30px;font-size: 14px;text-align: center;line-height: 32px;display: inline-block;opacity: 0.8;}
+.course_operation:hover{border: 1px solid #3ebbce;color: #3ebbce;}
+.triangle{width: 26px;height: 30px;border:1px solid #ddd;border-radius: 0 30px 30px 0;display: inline-block;position: absolute;}
+.triangle:hover{border:1px solid #3ebbce;}
+.triangle_down{border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 10px solid #a5a5a5;position: absolute;line-height:32px;margin-left: 5px;margin-top: 10px;}
+.triangle_down:hover{border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 10px solid #3ebbce;}
+.course_operation_list{position:absolute;width: 120px;height: 120px;border-radius: 5px;margin-left: -30px;border: 1px solid #ddd;z-index: 999;background-color: #fff;}
+.course_operation_list li{width: 100px;height: 40px;padding-left: 20px;line-height: 40px;}
+.course_operation_list li:hover{background-color: #3ebbce;color: #fff;}
+.course_operation_list li a{font-size: 14px;}
+.course_operation_list li a:hover{color: #fff;}
+
+/*学员问答*/
+.students_question_main_content{}
+.students_question_main_content ul{}
+.students_question_main_content ul>li{border-bottom: 1px solid #ddd;height:80px;margin-left: 15px;width: 820px;}
+.students_question_main_content ul>li>label{font-size: 12px;background-color: #39a1f1;color: #fff;padding:2px 8px;margin-right: 10px;margin-top: 15px;display: inline-block;}
+.students_question_main_content ul>li>p{font-size: 12px;margin-top: 10px;}
+.question_title{font-size: 14px;color: #3ebbce;font-weight: bold;display: inline-block;margin-top: 20px;}
+.question_num{width: 21px;height: 21px;border-radius: 50%;font-size: 12px;background-color: #e0e0e0;line-height: 21px;float: right;text-align: center;color: #fff;margin-top: 30px;}
+.point{padding: 0 5px;opacity: 0.8;}
+.question_title_from,.question_answer{color: #9AB2CF;padding: 0 3px;}
+.question_answer{}
+
+/*学员话题*/
+.topics_type{margin-top: 30px;}
+.topics_type>ul{margin-left: 15px;}
+.topics_type>ul>li{padding-bottom: 20px;display:inline-block;text-align: center;margin-right: 5px;width: 120px;}
+.topics_type>ul>li.curr{border-bottom: 1px solid #3ebbce;}
+.topics_type>ul>li.curr_01{border-bottom: 1px solid #3ebbce;}
+.topics_type>ul>li>a{font-size: 16px;}
+.topics_type>ul>li>a.curr{color:#3ebbce;}
+.topics_type>ul>li>a.curr_01{color:#3ebbce;}
+/*课程学员话题*/
+.course_students_topic{}
+/*班级学员话题*/
+.class_students_topic{}
+
+/*试卷批阅*/
+.correcting_type{}
+.correcting_type{margin-top: 30px;}
+.correcting_type>ul{margin-left: 15px;}
+.correcting_type>ul>li{padding-bottom: 20px;display:inline-block;text-align: center;margin-right: 5px;width: 60px;}
+.correcting_type>ul>li.curr{border-bottom: 1px solid #3ebbce;}
+.correcting_type>ul>li.curr_01{border-bottom: 1px solid #3ebbce;}
+.correcting_type>ul>li>a{font-size: 16px;}
+.correcting_type>ul>li>a.curr{color:#3ebbce;}
+.correcting_type>ul>li>a.curr_01{color:#3ebbce;}
+
+/*我的课程*/
+.course_type{}
+.course_type{margin-top: 10px;}
+.course_type>ul{margin-left: 15px;}
+.course_type>ul>li{padding-bottom: 20px;display:inline-block;text-align: center;margin-right: 5px;width: 90px;}
+.course_type>ul>li.curr{border-bottom: 2px solid #3ebbce;}
+.course_type>ul>li:hover{border-bottom: 2px solid #3ebbce;}
+.course_type>ul>li>a{font-size: 16px;}
+.course_type>ul>li>a.curr{color:#3ebbce;}
+.course_type>ul>li>a:hover{color:#3ebbce;}
+/*学习中*/
+.course_learning>ul>li>a>div{width:250px;height: 20px;background-color: #3ebbce;border-radius: 5px;margin-left: 2px;}
+.course_learning>ul>li>a>span{width:86px;height: 30px;border-radius: 30px;margin-left: 80px;border: 1px solid #3ebbce;color: #3ebbce;display: inline-block;text-align: center;font-size: 14px;line-height: 30px;margin-top: 10px;}
+
+
+.course_learning,.course_collected,.course_topic,.my_notes_content{margin-top: 10px;margin-left: 15px;}
+.course_collected>ul{}
+.course_collected>ul>li,.course_learning>ul>li{width:255px;height:260px;border: 1px solid #ddd;border-radius: 5px;float: left;margin-right: 20px;margin-top: 15px;}
+.course_collected>ul>li>a{}
+.course_learning>ul>li>a>img{width: 255px;height:140px;border-radius: 5px 5px 0 0;}
+.course_collected>ul>li>a>b,.course_learning>ul>li>a>b{font-size: 14px;font-weight: bolder;padding:10px 0 0 10px;line-height: 30px;width: 200px;overflow: hidden;display: inline-block;}
+.course_collected>ul>li>a>p{margin-top: 10px;}
+.course_collected>ul>li>a>p>img{width: 30px;height: 30px;margin-left: 10px;}
+.course_collected>ul>li>a>div{border-bottom: 1px solid #ddd;padding-bottom: 15px;margin-top: 10px;}
+.course_collected>ul>li>a>div>span{display: inline-block;width: 70px;}
+.course_collected>ul>li>a>div>span>span{font-size:12px;}
+.course_collected>ul>li>a>p>label{font-size:12px;position: absolute;}
+.course_collected>ul>li>a>p>span{font-size:12px;margin-top: -17px;position: absolute;margin-left: 45px;}
+.icon_star{width: 10px;height:10px;}
+.course_collected>ul>li>a>img{width: 255px;height:108px;border-radius: 5px 5px 0 0;}
+
+
+/*我的话题*/
+.course_topic{}
+.course_topic>ul{}
+.course_topic>ul>li{width: 750px;height: 60px;border-bottom: 1px solid #ddd;}
+.course_topic>ul>li>a{font-size: 14px;color: #3ebbce;display: inline-block;margin-top: 10px;}
+.course_topic>ul>li>div{font-size: 12px;opacity: 0.8;margin-top: 10px;}
+.course_topic>ul>li>div>a{color: #9AB2CF;padding: 0 3px;}
+.course_topic>ul>li>div>span{padding: 0 3px;opacity: 0.6;}
+
+
+/*我的笔记*/
+
+.my_notes_content>ul{}
+.my_notes_content>ul>li{width: 820px;height: 100px;border-bottom:1px solid #ddd;}
+.my_notes_content>ul>li>a{}
+.my_notes_content>ul>li>a>label{float: right;font-size: 14px;color: #3ebbce;margin-top: 55px;display: none;}
+.my_notes_content>ul>li>a>img{width: 150px;height: 78px;}
+.my_notes_content>ul>li>a>div{margin-left: 160px;margin-top: -80px;}
+.my_notes_content>ul>li>a>div>label{font-size: 16px;}
+.my_notes_content>ul>li>a>div>p{opacity: 0.8;font-size: 14px;margin-top: 5px;}
+.my_notes_content>ul>li>a>div>span{opacity: 0.8;font-size: 14px;margin-top: 5px;display: inline-block;}
+/*笔记详细*/
+.my_notes_content_detail{margin-left: 15px;margin-top: 15px;}
+.my_notes_info{width: 750px;height: 70px;background-color: #f3f3f3;border: 1px solid #ddd;}
+.my_notes_info>a{width: 60px;height:30px;border: 1px solid #ddd;border-radius: 30px;display: inline-block;float: right;margin-top: 20px;margin-right:20px;text-align: center;font-size: 14px;line-height: 32px;}
+.my_notes_info>a:hover{border: 1px solid #3ebbce;color: #3ebbce;}
+.my_notes_info>img{width: 80px;height: 45px;margin-top: 12px;margin-left: 10px;}
+.my_notes_info>label{font-size: 14px;margin-top: 20px;position: absolute;margin-left: 10px;}
+.my_notes_info_list{}
+.my_notes_info_list>ul{}
+.my_notes_info_list>ul>li{width: 750px;height: 75px;border: 1px solid #ddd;}
+.my_notes_info_list>ul>li>label{font-size: 14px;margin-top: 10px;float: right;margin-right: 20px;}
+.my_notes_title{font-size: 14px;color: #3ebbce;padding-top: 15px;display: inline-block;padding-left:15px;font-weight: bold; }
+.my_notes_title>span{color: #3ebbce;font-weight: bold;padding: 0 5px;}
+.my_notes_info_list>ul>li>p{font-size: 14px;padding: 15px;display: inline-block;}
+.my_notes_delete{float: right;margin-right: 30px;margin-top: 10px;display: none;}
+.my_notes_delete img{width: 14px;height: 16px;}
+
+
+
+
+
+
+
+
+/*footer*/

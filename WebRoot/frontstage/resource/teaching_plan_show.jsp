@@ -1,0 +1,592 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<link  href="${pageContext.request.contextPath}/frontstage/js/sharejs/dist/css/share.min.css" rel="stylesheet">
+<link  href="${pageContext.request.contextPath}/frontstage/css/upload_file.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/frontstage/js/sharejs/dist/js/jquery.share.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#myNav").affix({
+            offset: {
+                top: 220
+            }
+        });
+    });
+    $(function () {
+        $("li.list-group-item").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+        })
+    })
+</script>
+<style>
+
+</style>
+<c:if test="${!flag }">
+    <div class="cn-wrap" style="background-color: #eaeaea;">
+        <div class="panel  panel-col" id="threePage" >
+            <div class="panel-body">
+                <form class="form-horizontal" method="post" novalidate="novalidate" >
+
+                    <h2 class="text-center text-success" style="margin: 80px 0;">
+                            ${error_title }
+                    </h2>
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</c:if>
+
+<c:if test="${flag }">
+
+    <div class="cn-wrap" >
+
+        <div id="content-container" class="container">
+
+            <div class="cn-section" style="margin-top: 20px;">
+
+                <div class="row">
+
+                    <div class="col-md-2 col-lg-2 text-center">
+
+                        <div class="avatar-wrap pull-left">
+                            <img class="avatar-lg" src="${pageContext.request.contextPath}${teachingPlanView.icon }" alt="">
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+
+                        <div class="lesson_content " style="margin: 15px 0;">
+
+                            <div class="lesson_name">
+                                <span>${file_base.filename }</span>
+
+                                <div class="metas" style="margin-top: 5px;">
+
+                                    <div class="score">
+                                        <c:forEach begin="1" end="${avgScore}">
+                                            <i class="es-icon es-icon-star color-warning"></i>
+                                        </c:forEach>
+                                        <span>(${totalAppraise } 评论)</span>
+                                    </div>
+
+                                </div>
+                            </div>
+							<div class="text-muted" style="line-height: 25px;">${teachingPlanView.stage_name }${teachingPlanView.subject_name }(${teachingPlanView.edition_name }) · ${teachingPlanView.grade_name } <span class="mlm mrm text-muted">｜</span> ${teachingPlanView.unit_name } · ${teachingPlanView.lesson_name }</div>
+                            <div class="text-muted" style="line-height: 25px;">  ${teachingPlanView.username } <span style="padding: 0 5px;"></span>${teachingPlanView.titles }
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="pull-right text-center" style="margin-top:40px;margin-right: 20px;">
+                        <c:if test="${userAttent!=1 }">
+                            <a href="javascript:void(0);" class="btn btn-warning follow-btn pull-right" data-user="${teachingPlanView.user_id }">
+                                <i class="glyphicon glyphicon-plus"></i>关注</a>
+                        </c:if>
+                        <c:if test="${userAttent==1 }">
+                            <a href="javascript:void(0);" class="btn btn-warning pull-right"  data-user="${teachingPlanView.user_id }">
+                                <i class="glyphicon glyphicon-plus"></i>已关注</a>
+                        </c:if>
+
+
+                        <div style="margin-top: 40px;" class="clearfix">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span class="text-warning">${file_base.file_property.click_times }</span>次浏览
+                            <span class="mlm mrm text-muted">｜</span>
+                            <span >
+                                    <i class="es-icon es-icon-bookmarkoutline"></i>
+                                    ${file_base.file_property.collection_times }次收藏
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+
+
+                <div class="col-md-3 col-lg-3 container-fluid-content" id="myScrollspy">
+
+                        <div class="container-fluid" >
+                            <div class="container-fluid " data-spy="affix"  id="myNav" data-offset-top="20" >
+
+                                <ul class="list-group container-fluid-list" >
+
+                                <li class="list-group-item active" ><a href="#section1" ><label> 教学信息</label></a></li>
+                                <li class="list-group-item" ><a href="#section2" >&nbsp;&nbsp;&nbsp;&nbsp;教学目标</a></li>
+                                <li class="list-group-item" ><a href="#section3">&nbsp;&nbsp;&nbsp;&nbsp;教学重难点</a></li>
+                                <c:if test="${!empty teachingPlanView.teaching_tool}">
+                                    <li class="list-group-item" ><a href="#section4" >&nbsp;&nbsp;&nbsp;&nbsp;教学用具</a></li>
+                                </c:if>
+                                <li class="list-group-item" ><a href="#section5" ><label>教学过程</label></a></li>
+                                <c:if test="${!empty  teachingPlanView.typography_design }">
+                                    <li class="list-group-item" ><a href="#section6" ><label>板书设计</label></a></li>
+                                </c:if>
+                                <c:if test="${!empty teachingPlanView.summary }">
+                                    <li class="list-group-item" ><a href="#section7" ><label>课堂小结</label></a></li>
+                                </c:if>
+                                <c:if test="${!empty  teachingPlanView.homework }">
+                                    <li class="list-group-item" ><a href="#section8" ><label>课堂习题</label></a></li>
+                                </c:if>
+                                <li class="list-group-item" ><a href="#section9" ><label>配套资源</label></a></li>
+                                <li class="list-group-item" ><a href="#section10" ><label>教学评价</label></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="panel panel-default" >
+
+                        <div class="pull-right">
+                            <div class="square collect_btn">
+                                <span><c:if test="${!empty userCollect }">已</c:if>收藏</span>
+                            </div>
+                            <div class="arrow_down"></div>
+                        </div>
+
+                        <div class="text-center teaching_plan_name" ><label>${teachingPlanView.resource_name }</label></div>
+
+                        <div class="panel-body" >
+
+                            <div style="border-top: 1px solid #ddd;margin: 20px 0;"></div>
+
+                            <!--教学准备-->
+                            <div class="lesson_prepare lesson_list" id="section1">
+                                <h4 class="lesson_content_title ">教学信息</h4>
+                                <div class="lesson_content_page" id="section2">
+                                    <label>教学目标</label>
+                                    <div class="lesson_content_text text-left">
+                                            ${teachingPlanView.edu_goal }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--教学重难点-->
+                            <div class="lesson_point lesson_list" id="section3">
+
+                                <div class="lesson_content_page">
+                                    <label>教学重难点</label>
+                                    <div class="lesson_content_text text-left">
+                                            ${teachingPlanView.focus_difficulty }
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--教学用具-->
+
+                            <c:if test="${!empty  teachingPlanView.teaching_tool }">
+                                <div class="lesson_point lesson_list" id="section4">
+
+                                    <div class="lesson_content_page">
+                                        <label>教学用具</label>
+                                        <div class="lesson_content_text text-left">
+                                                ${teachingPlanView.teaching_tool }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </c:if>
+
+                            <!--教学过程-->
+                            <div class="lesson_process lesson_list" id="section5">
+                                <h4 class="lesson_content_title ">教学过程</h4>
+                                <div class="lesson_content_page">
+
+                                    <div class="lesson_content_text text-left">
+                                            ${teachingPlanView.teaching_process }
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--板书设计-->
+                                <%--非必填项，为空时不显示--%>
+                            <c:if test="${!empty  teachingPlanView.typography_design }">
+                                <div class="lesson_process lesson_list" id="section6">
+                                    <h4 class="lesson_content_title ">板书设计</h4>
+                                    <div class="lesson_content_page">
+
+                                        <div class="lesson_content_text text-left">
+                                                ${teachingPlanView.typography_design }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </c:if>
+
+                            <!--课堂小结-->
+
+                            <c:if test="${!empty teachingPlanView.summary }">
+                                <div class="lesson_process lesson_list" id="section7">
+                                    <h4 class="lesson_content_title ">课堂小结</h4>
+                                    <div class="lesson_content_page">
+
+                                        <div class="lesson_content_text text-left">
+                                                ${teachingPlanView.summary }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </c:if>
+
+                            <!--课堂习题-->
+
+                            <c:if test="${!empty  teachingPlanView.homework }">
+                                <div class="lesson_process lesson_list" id="section8">
+                                    <h4 class="lesson_content_title ">课堂习题</h4>
+                                    <div class="lesson_content_page">
+
+                                        <div class="lesson_content_text text-left">
+                                                ${teachingPlanView.homework }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </c:if>
+
+                            <!--配套资源-->
+                            <div class="lesson_resources lesson_list" id="section9">
+                                <h4 class="lesson_content_title ">配套资源<span class="text-muted">（点击可预览）</span></h4>
+                                <div class="lesson_content_page">
+
+                                    <div class="lesson_content_text text-left">
+                                        <c:forEach items="${teachingPlanFile }" var="file">
+                                            <a href="${pageContext.request.contextPath}/userFile/see.action?id=${file.id }" title="${file.filename }" style="padding: 0 10px;" target="_blank"> ${file.filename }</a>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="border-bottom: 1px solid #ddd; margin: 35px auto;" ></div>
+
+                            <div id="share-2"  class="social-share text-center" data-sites="weibo,qq,qzone,wechat"></div>
+
+                            <div class="pull-right" style="margin-top: -20px;">
+
+                                <img src="${pageContext.request.contextPath}/frontstage/images/isosceles_right_triangle_right.png">
+                                <div class="square collect_btn" >
+                                    <span><c:if test="${!empty userCollect }">已</c:if>收藏</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="panel panel-default" >
+
+                        <div class="panel-heading" style="border: none;">
+
+                            <div class="pull-left"><img src="${pageContext.request.contextPath}/frontstage/images/user_comments.png"></div>
+
+                            <!--如果已经评价过.则为重新评价-->
+                            <a class="btn btn-primary btn-sm pull-right" href="#evaluate_modal" data-toggle="modal">
+                                <i class="glyphicon glyphicon-plus"></i>&nbsp;我要评论
+                            </a>
+
+                        </div>
+
+                        <div class="panel-body">
+
+                            <!--教学评价-->
+                            <div class="lesson_evaluate lesson_list" id="section10" style="margin-top: 40px;">
+
+                                <div  id="appraise_form" >
+                                    <c:if test="${!empty appraise }">
+                                        <c:forEach items="${appraise }" var="app">
+                                            <div class="js-reviews">
+                                                <div class="media media-evaluate">
+                                                    <div class="media-left">
+                                                        <a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${app.user_id}">
+                                                            <img class="avatar-sm" src="${pageContext.request.contextPath}${app.icon }">
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body thread-post">
+                                                        <div class="title">
+                                                            <a class="link-dark" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id=${app.user_id}">${app.username }</a>
+                                                            <span><fmt:formatDate value="${app.appraise_time }" type="date" /></span>
+                                                        </div>
+
+                                                        <div class="score">
+                                                            <c:forEach begin="1" end="${app.score }">
+                                                                <i class="es-icon es-icon-star color-warning"></i>
+                                                            </c:forEach>
+
+                                                        </div>
+
+                                                        <div class="content">
+
+                                                            <div class="full-content" >${app.appraise_content}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty appraise }">
+                                        <div class="empty" >暂无评价</div>
+                                    </c:if>
+
+                                </div>
+                                <c:if test="${totalAppraise>5}">
+                                    <br>
+                                    <div class="text-center" id="pointer_more" style="cursor: pointer;">加载更多</div>
+                                    <input type="hidden" id="pointer_number" value="2">
+                                </c:if>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+    </div>
+
+</c:if>
+
+<!--评价-->
+<div id="evaluate_modal" class="modal in" aria-hidden="false" data-backdrop="static" style="display: none;" >
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">评价</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal"  action="" method="post" novalidate="novalidate" >
+                    <div class="evaluation_again_content">
+                        <span>请打分&nbsp;:</span>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+                        <i class="es-icon es-icon-star color-warning star"></i>
+
+                    </div>
+                    <div class="comment_content" style="margin-top: 20px;">
+                       <c:forEach items="${appraiseReasonViews }" var="reason">
+                    <button type="button" class="btn btn-default" data-reason="${reason.id }">${reason.title }(${reason.count })</button>
+                        <span class="mlm mrm text-muted"></span>
+                    </c:forEach>
+                    </div>
+                    <input type="hidden" name="score" value="5" id="score_value">
+
+                    <div class="form-group controls col-md-10" >
+                        <textarea class="form-control col-md-10 col-md-offset-1" rows="6"  id="appraise_content" name=""></textarea>
+                        <div class="help-block" style="display:none;"></div>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button  type="button" class="btn btn-primary" data-toggle="form-submit"  id="appraise_button">保存</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function () {
+    
+      $(".comment_content>button").each(function () {
+		
+		if($(this).is(".btn-success")){
+		return false;
+		}else{
+		  $(this).removeClass("btn-default").addClass("btn-success");
+		  return false;
+		}
+	});
+    
+        $(".comment_content>button").click(function () {
+            if($(this).is(".btn-default")){
+                $(this).removeClass("btn-default").addClass("btn-success");
+            }else if($(this).is(".btn-success")){
+            if($(".comment_content>.btn-success").length==1){
+            alert("必须有一个评价项");
+            return false;
+            }
+                $(this).removeClass("btn-success").addClass("btn-default");
+            }else {
+                return false;
+            }
+        })
+    })
+
+    $(".follow-btn").click(function () {
+        if(flag){
+            check_login();
+            return false;
+        }
+        var id=$(this).data("user");
+        send_attent(id);
+        location.reload();
+    });
+    $(".star").click(function () {
+        $(this).prevUntil("span").addClass("color-warning");
+        $(this).addClass("color-warning");
+        $(this).nextAll().removeClass("color-warning");
+        $("#score_value").val($(this).prevAll().length);
+
+    });
+    $(".collect_btn").click(function () {
+        if(flag){
+            check_login();
+            return false;
+        }
+        var source_id='${file_base.id}';
+        var source_type= 3;
+
+        $.ajax({
+            url : '${pageContext.request.contextPath}/user_collect/collect.action',
+            data : {
+                source_id : source_id,
+                source_type : source_type,
+            },
+            dataType : 'json',
+            success : function(response) {
+                if(response.msg==1){
+                    $(".collect_btn").find("span").html("已收藏");
+                }
+                if(response.msg==2){
+                    $(".collect_btn").find("span").html("收藏");
+                }
+                //  window.location.reload();
+            }
+        });
+    });
+    $("#appraise_button").click(
+        function() {
+            if(flag){
+                check_login();
+                return false;
+            }
+            var score = $("#score_value").val();
+
+            if (score == "") {
+                alert("请打分");
+                return false;
+            }
+            if (typeof(score) == "undefined") {
+                alert("请打分");
+                return false;
+            }
+            var content = $("#appraise_content").val();
+            if (content == "") {
+                alert("请评论");
+                return false;
+            }
+             var reason="";
+             $(".comment_content>.btn-success").each(function () {
+             
+             reason+=$(this).data("reason");
+             reason+=",";
+             });
+		
+            $.ajax({
+                url : '${pageContext.request.contextPath}/user_appraise/appraise.action',
+                data : {
+                    appraise_content : content,
+                    score : score,
+                    id:'${userAppraiseId}',
+                    source_id : '${file_base.id}',
+                    source_type : 4,
+                      reason : reason,
+                },
+                dataType : 'json',
+                success : function(response) {
+                    window.location.reload();
+                }
+            });
+        });
+    $("#pointer_number").val(2);
+    $("#pointer_more").click(function(){
+
+        var _this=$(this);
+        var number=$("#pointer_number").val();
+        var page_size="${pageSize}";
+        $.ajax({
+            type:'get',
+            url : "${pageContext.request.contextPath}/userFile/ajax_more.action?page_size="+page_size+"&id=${file_base.id}&page="+number,
+            dataType:'json',
+            success : function(response) {
+
+                if(!response.flag){
+                    _this.remove();
+                }
+                var appraise_form=$("#appraise_form");
+                for(var i=0;i<response.appraise.length;i++){
+
+                    var userAppraise=response.appraise[i];
+                    var appraise_content=userAppraise.appraise_content;
+                    var appraise_score=userAppraise.score;
+                    var myDate=new Date();
+                    myDate.setTime(userAppraise.appraise_time.time);
+                    var year=myDate.getFullYear();
+                    var month=myDate.getMonth()+1;
+                    var date=myDate.getDate();
+                    var time=year+"-"+month+"-"+date;
+                    var html="";
+                    html+=('<div class="js-reviews" id="appraise_'+userAppraise.user_id+'"><div class="media media-evaluate">');
+                    html+=('<div class="media-left">');
+                    html+=('<a class=" js-user-card" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id='+userAppraise.user_id+'">');
+                    html+=('<img class="avatar-sm" src="${pageContext.request.contextPath}'+userAppraise.icon+'"></a></div>');
+                    html+=('<div class="media-body thread-post"><div class="title">');
+                    html+=('<a class="link-dark" href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?user_id='+userAppraise.user_id+'">'+userAppraise.username+'</a>');
+                    html+=('<span>'+time+'</span></div>');
+                    html+=('<div class="score">');
+                    //<c:forEach begin="1" end="${app.score }">
+                    //     <i class="es-icon es-icon-star color-warning"></i>
+                    //</c:forEach>
+                    for(var j=0;j<appraise_score;j++){
+                        html+=('<i class="es-icon es-icon-star color-warning"></i>');
+                    }
+                    html+=('</div><div class="content">');
+                    html+=('<div class="full-content" >'+appraise_content+'</div>');
+                    html+=('</div></div></div></div>');
+
+                    appraise_form.append(html);
+                    $("#pointer_number").val(parseInt(number)+1);
+
+                }
+
+            },
+            error :function(response) {
+
+            }
+        });
+
+    });
+</script>
+
+

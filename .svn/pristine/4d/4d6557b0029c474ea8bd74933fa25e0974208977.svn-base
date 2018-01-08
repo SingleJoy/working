@@ -1,0 +1,517 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/JMEditor.js"></script>
+
+<c:set var="p" value="${pageContext.request.contextPath}"></c:set>
+
+<style>
+    /*评分显示样式 */
+    .star1{width: 85px;height:17px;background:url('${p}/frontstage/images/score_star_icon_black.png') repeat-x left center;}
+    .star2{height:17px;background:url('${p}/frontstage/images/score_star_icon.png') repeat-x left center;float: left;}
+    .course_tags{line-height: 20px;font-size: 12px;position: absolute;}
+    .tags{position:absolute;top: 0;left: 10px;}
+    .course-show>i{font-size: 18px;opacity: 0.6;}
+    .test_standard{font-size: 20px;margin-top: 10px; }
+
+</style>
+
+<div class="es-wrap">
+
+    <jsp:include page="train_detail_header.jsp"></jsp:include>
+
+    <div  class="container" style="margin-top: 20px;">
+        <div class="class-detail row" id="detail-content">
+
+            <div class="col-lg-9 col-md-8 class-detail-main">
+
+                <section class="es-section">
+
+                    <div class="nav-btn-tab">
+                        <ul class="nav nav-tabs">
+                            <c:if test="${userStudyStatus != 3}">
+                                <li class=<c:if test="${trainView.sign==0}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(0);">介绍</a></li>
+                                <li class=<c:if test="${trainView.sign==1}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(1);">课程 <c:if test="${trainView.type==0}">( ${trainView.courseCount} )<small class="text-muted"></small></c:if></a></li>
+                            </c:if>
+                            <c:if test="${userStudyStatus== 3}">
+                                <li class=<c:if test="${trainView.sign==0}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(1);">介绍</a></li>
+                                <li class=<c:if test="${trainView.sign==1}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(0);">课程 <c:if test="${trainView.type==0}">( ${trainView.courseCount} )<small class="text-muted"></small></c:if></a></li>
+                            </c:if>
+                            <li class=<c:if test="${trainView.sign==5}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(5);">师资</a></li>
+                            <li class=<c:if test="${trainView.sign==3}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(3);">讨论 </a></li>
+                            <c:if test="${trainView.type==0}">
+                                <li class=<c:if test="${trainView.sign==4}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(4);">笔记 </a></li>
+                            </c:if>
+                            <li class=<c:if test="${trainView.sign==2}"> "active" </c:if>><a href="javascript:void(0);" onclick="searchTabs(2);">评价 </a></li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="class-detail-content">
+                        <form id="trainDetailForm" action="${p}/train/to_train_detail.action" method="post">
+                            <input type="hidden" name="page" id="page" value="${trainDetailView.page}" />
+                            <input type="hidden" name="rows" id="rows" value="${trainDetailView.rows}" />
+                            <input type="hidden" name="total" id="total" value="${trainDetailView.total}" />
+                            <input type="hidden" name="totalPage" id="totalPage" value="${trainDetailView.totalPage}" />
+                            <input type="hidden" name="sign"  value="${trainView.sign}" />
+                            <input type="hidden" name="sort" id="sort" value="${trainDetailView.sort}" />
+                            <input type="hidden" name="courseId" id="courseId" value="${trainDetailView.courseId}" />
+                            <input type="hidden" name="courseName" id="courseName" value="${trainDetailView.courseName}" />
+                            <input type="hidden" name="id"  value="${trainView.id}" />
+                            <input type="hidden" id="trainType" value="${trainView.type}" />
+                        </form>
+
+                        <!--介绍-->
+                        <c:if test="${trainView.sign==0}">
+
+                            <div class="class-about" >
+                                    ${trainView.profile}
+                                <c:if test="${trainView.is_check==0 }">
+                                    <div class="es-piece">
+                                        <div class="piece-header">考核标准</div>
+                                        <div class="piece-body">
+                                            <div class="test_standard">
+                                                <div class="test_standard_content">
+                                                    <c:choose>
+
+                                                        <c:when test="${trainView.type==0}">
+                                                            总&nbsp;<span class="text-warning">${trainExamStandardView.totalHours }</span>&nbsp;学时,
+                                                            需完成&nbsp;<span class="text-warning">${trainExamStandardView.total_required}</span>&nbsp;学时<br/>
+                                                            <%--必修课&nbsp;<span class="text-warning">${trainExamStandardView.required_course_total}</span>&nbsp;门,--%>
+                                                            <%--选修课&nbsp;<span class="text-warning">${trainExamStandardView.elective_course_total}</span>&nbsp门；--%>
+                                                        </c:when>
+
+                                                        <c:when test="${trainView.type==1}">
+                                                            <c:if test="${!empty tPList }">
+                                                                <c:forEach var="tpcount" items="${tPList }" varStatus="vs">
+                                                                    第&nbsp;<span class="text-warning">${vs.index+1 }</span>&nbsp;
+                                                                    阶段:${tpcount.name }</span>&nbsp; <br/>
+                                                                    总&nbsp;<span class="text-warning">${tpcount.totalHourNum }</span>&nbsp;学时，
+                                                                    需完成&nbsp;<span class="text-warning">${tpcount.hour_require}</span>&nbsp;学时<br/>
+                                                                    <%--必修课&nbsp;<span class="text-warning">${tpcount.requiredCount }</span>&nbsp;门，--%>
+                                                                    <%--占&nbsp;<span class="text-warning">${tpcount.requiredHours }</span>&nbsp;学时，--%>
+                                                                    <%--选修课&nbsp;<span class="text-warning">${tpcount.optionCount }</span>&nbsp;门，--%>
+                                                                    <%--占&nbsp;<span class="text-warning">${tpcount.optionHours }</span>&nbsp;学时；--%>
+                                                                    <br/>
+                                                                </c:forEach>
+                                                            </c:if>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </div>
+                        </c:if>
+                        <!-- 课程 -->
+                        <c:if test="${trainView.sign==1}">
+                            <%--专业培训--%>
+                            <c:if test="${trainView.type==0}">
+                                <c:if test="${!empty currentUser }">
+                                    <c:if test="${userStudyStatus == 3}">
+                                        <div style="margin-left: 20px;font-size: 16px;">
+                                            已选<span class="text-danger">&nbsp;${userTrainClassView.course_total }&nbsp;</span>门课
+                                            <span class="mlm mrm">｜</span>
+                                            已学<span class="text-danger">&nbsp;${userTrainClassView.finish_hours_total }&nbsp;</span>学时,
+                                            还剩<span class="text-danger">&nbsp;${userTrainClassView.unfinish_hours_total }&nbsp;</span>学时
+                                        </div>
+                                    </c:if>
+                                </c:if>
+                            </c:if>
+
+                            <div class="class-course-list" >
+                                <c:if test="${trainView.type==1}">
+
+                                    <jsp:include page="train_phase_course.jsp"></jsp:include>
+
+                                </c:if>
+
+                                <c:if test="${trainView.type==0}">
+
+                                    <c:forEach items="${trainCourseList}" var="tcv">
+                                        <div class="course-item">
+                                            <div class="media">
+
+                                                <a class="media-left" onclick="doSearchCourse(${tcv.course_id},0);" href="javascript:void(0);">
+                                                    <span class="tags">
+                                                        <img class="tag-types" src="${pageContext.request.contextPath}/frontstage/images/<c:if test="${tcv.is_required==0}">required-course.png</c:if><c:if test="${tcv.is_required==1}">selected-course.png</c:if>" style="width: 30px;height: 37px;"/>\
+                                                    </span>
+
+                                                    <img src="${p}${tcv.img}"  style="height: 90px;">
+
+                                                </a>
+
+                                                <div class="media-body">
+
+                                                    <div class="title">
+                                                        <a onclick="doSearchCourse(${tcv.course_id},0);" href="javascript:void(0);" >${tcv.title }</a>
+                                                    </div>
+
+                                                    <div class="score">
+                                                        <div class="star1" >
+                                                            <div class="star2" style="width:${tcv.courseScore}%"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="title">主讲人：
+                                                    	<c:forEach items="${tcv.courseTeaRealNames }" var="teaRealName" varStatus="vs">
+                                                    		<c:if test="${vs.index!=0 }">、</c:if>${teaRealName }
+                                                   		 </c:forEach>
+                                                    </div>
+                                                    <c:if test="${!empty currentUser }">
+                                                        <c:if test="${tcv.is_studyed==1}">
+                                                            <img src="${pageContext.request.contextPath}/frontstage/images/course_OK.png">
+                                                        </c:if>
+                                                    </c:if>
+
+                                                    <div class="price hidden-xs">
+                                                        <c:if test="${tcv.is_join==1 && tcv.is_required==1 && userStudyStatus == 3}">
+                                                            <a href="javascript:void(0);" onclick="joinOptionCourse(${tcv.course_id});" class="btn btn-info btn-sm">加入课程</a>
+                                                        </c:if>
+                                                        <c:if test="${tcv.is_join == 0 && userStudyStatus == 3}">
+                                                            <a href="javascript:void(0);" class="btn btn-default disabled btn-sm">已加入</a>
+                                                        </c:if>
+                                                    </div>
+
+                                                    <span class="course-show">
+                                                   <i class="glyphicon glyphicon-chevron-right"></i>
+                                               </span>
+                                                </div>
+                                            </div>
+
+                                            <ul class="period-list"  style="display: none;">
+                                                <c:forEach items="${chapterList}" var="chapter">
+                                                    <c:if test="${tcv.course_id==chapter.course_id}">
+                                                        <li class="chapter clearfix">
+                                                            <i class="es-icon es-icon-toc"></i>
+                                                            <span class="title">
+	                               	                          第${chapter.hour_seq }章节：${chapter.hour_title}
+	                                                     </span>
+                                                            <span class="period-show">
+	                                                        <i class="es-icon es-icon-anonymous-iconfont"></i>
+	                                                   </span>
+                                                        </li>
+                                                        <c:forEach items="${hourList}" var="hour" varStatus="status">
+                                                            <!--课时-->
+                                                            <c:if test="${chapter.id==hour.parent_id}">
+                                                                <li class="period lesson-item " style="display: list-item;">
+                                                                    <a onclick="doSearchCourse(${tcv.course_id},0);" href="javascript:void(0);">                                                                    <!-- <i class="es-icon es-icon-doing color-primary status-icon"></i> -->
+                                                                        <span class="title"> ${hour.hour_seq}
+                                                                    	<c:if test="${hour.attribute_type==2}">课时</c:if>
+                                                                    	<c:if test="${hour.attribute_type==0}">试卷</c:if>
+                                                                    	<c:if test="${hour.attribute_type==3}">讨论</c:if>
+                                                                    	<c:if test="${hour.attribute_type==4}">作业</c:if>
+                                                                    	<c:if test="${hour.attribute_type==5}">直播课时</c:if>：${hour.hour_title}</span>
+                                                                        <!-- 紧跟标题 -->
+                                                                        <!-- 右边图标 -->
+                                                                        <span class="course-type">
+                                                                        <i class="es-icon es-icon-graphicclass" ></i>
+                                                                    </span>
+                                                                    </a>
+                                                                </li>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </c:forEach>
+                                </c:if>
+                            </div>
+                        </c:if>
+                        <!-- 评价 -->
+                        <c:if test="${trainView.sign==2}">
+
+                            <jsp:include page="train_evaluate.jsp"></jsp:include>
+
+                        </c:if>
+                        <!-- 话题提问 -->
+                        <c:if test="${trainView.sign==3}">
+
+                            <jsp:include page="train_topic.jsp"></jsp:include>
+
+                        </c:if>
+                        <!-- 话题回答 -->
+                        <c:if test="${trainView.sign==6}">
+
+                            <jsp:include page="train_topic_answer.jsp"></jsp:include>
+
+                        </c:if>
+                        <!-- 笔记 -->
+                        <c:if test="${trainView.sign==4}">
+                            <div class="note-list"   id="note-list">
+                                <div class="note-filter nav-filter clearfix">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                ${trainDetailView.courseName}
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li <c:if test="${trainDetailView.courseId==null}">class="active"</c:if>>
+                                                <a href="javascript:void(0);" onclick="searchCourseNote(-1,'全部课时');">全部课时</a>
+                                            </li>
+                                            <c:forEach items="${trainCourseList}" var="trainCourse">
+                                                <li <c:if test="${trainDetailView.courseId==trainCourse.course_id}">class="active"</c:if>>
+                                                    <a href="javascript:void(0);" onclick="searchCourseNote(${trainCourse.course_id},'${trainCourse.title}');">${trainCourse.title}</a>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
+
+                                    <ul class="nav nav-pills nav-pills-sm">
+                                        <li class="dropdown hidden-xs">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                <span>排序：</span>
+                                                <c:if test="${trainDetailView.sort==0}">最新笔记</c:if>
+                                                <c:if test="${trainDetailView.sort==1}">点赞最多</c:if>
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu hidden-xs">
+                                                <li <c:if test="${trainDetailView.sort==0}">class="active"</c:if>><a href="javascript:void(0);" onclick="searchSort(0);">最新笔记</a></li>
+                                                <li <c:if test="${trainDetailView.sort==1}">class="active"</c:if>><a href="javascript:void(0);" onclick="searchSort(1);">点赞最多</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <c:forEach items="${courseNoteList}" var="courseNote">
+
+                                    <div class="media note-item">
+                                        <div class="media-left">
+                                            <a class=" js-user-card" href="${courseNote.user_id }" >
+                                                <img class="avatar-sm" src="${p}${courseNote.user_icon}">
+                                            </a>
+
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="content">
+                                                <p>${courseNote.note_content}</p>
+                                            </div>
+
+                                            <div class="metas clearfix">
+                                                <a class="link-dark name" href="/user/14">${courseNote.author_name}</a>
+                                                · <span>${fn:substring(courseNote.note_time,0,16)}</span>
+                                                · <a href="${courseNote.course_id}" class="period" target="_blank">${courseNote.course_name }</a>
+                                                <span class="metas-sns">
+                                                   <span class="icon-favour">
+                                                      <a href="javascript:void(0);" class="js-like color-primary" >
+                                                          <i class="es-icon es-icon-thumbup"></i>
+                                                          <span class="js-like-num">${courseNote.agree}</span>
+                                                      </a>
+                                                  </span>
+                                              </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </c:forEach>
+                                <c:if test="${empty courseNoteList }">
+                                    <div class="empty">暂无数据</div>
+                                </c:if>
+                                <c:if test="${!empty courseNoteList }">
+                                    <div id="test" class="pager" style="clear: both;"></div>
+                                </c:if>
+                            </div>
+                        </c:if>
+                        <!-- 师资 -->
+                        <c:if test="${trainView.sign==5}">
+
+                            <div class="teacher-list no-shadow row">
+                                <c:forEach items="${teacherList}" var="teacher">
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="teacher-item" >
+                                            <div class="teacher-top">
+                                                <a class="teacher-img" href="${teacher.userId }">
+                                                    <img class="avatar-lg" src="${p}${teacher.icon}" alt="">
+                                                </a>
+                                                <div class="title">
+                                                    <a class="link-dark" href="/user/1">${teacher.teacherName}</a>
+                                                    <c:if test="${teacher.type==0 }">
+                                                        <i class="es-icon es-icon-school color-primary" data-toggle="tooltip" data-placement="top" title="班主任" ></i>
+                                                    </c:if>
+                                                    <c:if test="${teacher.type==1 }">
+                                                        <i class="es-icon es-icon-school color-info" data-toggle="tooltip" data-placement="top" title="助教"></i>
+                                                    </c:if>
+                                                    <c:if test="${teacher.type==2 }">
+                                                        <i class="es-icon es-icon-school color-danger" data-toggle="tooltip" data-placement="top" title="教师"></i>
+                                                    </c:if>
+                                                </div>
+                                                <div class="position">
+                                                        ${teacher.titles }
+                                                </div>
+                                            </div>
+                                            <div class="teacher-bottom">
+                                                <div class="about">
+                                                        ${teacher.profile}
+                                                </div>
+                                                <div class="metas">
+                                                    <a class="btn btn-primary btn-sm follow-btn" href="javascript:void(0);" data-url="/user/1/follow" data-loggedin="1">关注</a>
+                                                    <a class="btn btn-default btn-sm unfollow-btn" href="javascript:void(0);" data-url="/user/1/unfollow" style="display:none;">已关注</a>
+                                                    <a class="btn btn-default btn-sm text-center" data-toggle="modal" data-target="#modal" data-url="/message/create/1">私信</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </c:forEach>
+                            </div>
+
+                        </c:if>
+                    </div>
+                </section>
+            </div>
+
+
+            <jsp:include page="train_detail_right.jsp"></jsp:include>
+
+            <div class="modal access-intercept-modal" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">提示</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4>您尚未成为班级成员，请先成为班级成员。</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-primary">加入旁听生</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+
+
+<script type="text/javascript">
+    $(function(){
+        //翻页
+        var total = $("#total").val();
+        var page =  parseInt($("#page").val())+1;
+
+        $("#btn5").on('click', function () {
+            $("#div1").PageChanged(5);
+        });
+
+        $(".pager").pagination({
+            thisPageIndex:page,
+            recordCount: total,       //总记录数
+            pageSize:  $("#rows").val(),            //一页记录数
+            onPageChange: function (page) {
+                document.title = page;
+                $("#page").val(page-1);
+                $('#trainDetailForm').submit();
+
+            }
+        });
+    });
+
+    //标签切换
+    function searchTabs(value){
+        window.location.href="${p}/train/to_train_detail.action?id="+${trainView.id}+"&jumpId=${trainView.jumpId}&jumpType=${trainView.jumpType}&sign="+value+"&classId="+${trainView.classId};
+    }
+    //笔记排序
+    function searchSort(value){
+        $("#sort").val(value);
+        $('#trainDetailForm').submit();
+    }
+    //笔记课程搜索
+    function searchCourseNote(value,name){
+        $("#courseId").val(value);
+        $("#courseName").val(name);
+        $('#trainDetailForm').submit();
+    }
+    //查询课程
+    function doSearchCourse(courseId,trainType){
+        var closeTime = $("#closeTime").val();
+        var openTime = $("#openTime").val();
+        if("${userStudyStatus!=3}"=="true"){
+            alert("请先报名学习！");
+            return false;
+        }
+
+        if(!compareTime(openTime,0)){
+            alert("培训班未开始！");
+            return false;
+        }
+        if(compareTime(closeTime,1)){
+            alert("培训班已结束！");
+            return false;
+        }
+
+        window.location.href="${p}/user_study/to_course_study.action?page=1&learnId="+courseId+"&sourceType=0&tab=1&is_direct=1&trainType="+trainType+"&id=${userStudyView.id}";
+    }
+
+    //加入选修课
+    function joinOptionCourse(courseId){
+        var phaseId = "";
+        if(courseId==0){
+            var	a = document.getElementsByName("phase_course");
+            for(var i = 0;i<a.length;i++){
+                phaseId += a[i].value+",";
+            }
+        }
+
+        $.ajax({
+            url : '${pageContext.request.contextPath}/user_study/join_option_course.action',
+            data : {
+                trainId : '${trainView.id}',
+                courseId : courseId,
+                phaseId : phaseId,
+                userStudyId : '${userStudyView.id}'
+            },
+            dataType : 'JSON',
+            success : function(response) {
+                if (response.msg) {
+                    alert("加入学习!");
+                    window.location.reload();
+                }
+            }
+        });
+
+    }
+    $(".course-show").click(function(){
+        if($(this).parent().parent().next().css("display")=="none"){
+            $(this).parent().parent().next().slideDown();
+            $(this).find("i").removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-down");
+        }else{
+            $(this).parent().parent().next().slideUp();
+            $(this).find("i").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-right");
+        }
+
+    });
+
+    $("li.chapter").click(function(){
+        if($(this).nextUntil("li.chapter").css("display")=="none"){
+            $(this).nextUntil("li.chapter").slideDown(1200);
+            $(this).find("span").find(".es-icon-remove").addClass("es-icon-anonymous-iconfont").removeClass("es-icon-remove")
+        }else{
+            $(this).nextUntil("li.chapter").slideUp(1200);
+            $(this).find("span").find(".es-icon-anonymous-iconfont").addClass("es-icon-remove").removeClass("es-icon-anonymous-iconfont")
+        }
+    });
+
+
+
+    //班次选择
+    $(function(){
+        $("#class-list>button").click(function(){
+            $(this).addClass("disabled").siblings().removeClass("disabled");
+        })
+    });
+</script>

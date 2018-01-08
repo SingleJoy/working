@@ -1,0 +1,419 @@
+package cn.bnsr.edu_yun.backstage.train.controller;
+
+import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.controller.BaseController;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.backstage.base.view.StudyTimeView;
+import cn.bnsr.edu_yun.frontstage.train.po.Course;
+import cn.bnsr.edu_yun.frontstage.train.po.Train;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseExamStandardService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseHourService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseInfoService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicQuestionService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainCourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainExamStandardService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainPhaseService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyTimeService;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassView;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.frontstage.train.view.TrainExamStandardView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.ExportExcel;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+import net.sf.json.JSONObject;
+
+/**
+ * 后台课程管理
+ * @author fangxiongwei
+ * @date 2016年11月17日
+ */
+@Controller
+@RequestMapping("/back_course")
+public class BackCourseController extends BaseController{
+	private final Logger log = LoggerFactory.getLogger(BackCourseController.class);
+	
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private CourseInfoService courseInfoService;
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private CourseHourService courseHourService;
+	@Autowired
+	private CourseExamStandardService courseExamStandardService;
+	@Autowired
+	private TrainExamStandardService trainExamStandardService;
+	@Autowired
+	private TrainCourseService trainCourseService;
+	@Autowired
+	private TrainPhaseService trainPhaseService;
+	@Autowired
+	private UserStudyTimeService userStudyTimeService;
+	@Autowired
+	private TopicQuestionService topicQuestionService;
+	/**
+	 *跳转课程管理页面
+	 */
+	@RequestMapping("/to_back_course")
+	public ModelAndView toBackCourse(){
+		return new ModelAndView("backstage/train/course/course");
+	}
+	
+	/**
+	 * 获得课程管理datagrid
+	 */
+	@RequestMapping("/datagrid")
+	public void datagrid(HttpServletResponse response,
+			HttpServletRequest request, CourseView courseView) {
+		super.writeJson(courseService.datagrid(courseView),response);
+	}
+	
+	/**
+	 * 课程删除、关闭
+	 */
+	@RequestMapping("/update_status") 
+	public void updateStatus(HttpServletResponse response,CourseView courseView){
+		Json j = new Json();
+		try{
+			courseService.updateStatus(courseView);
+			j.setSuccess(true);
+			j.setMsg("操作成功！");
+		} catch (Exception e) {
+			log.error("课程管理操作失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("操作失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	/**
+	 *跳转推荐课程页面
+	 */
+	@RequestMapping("/to_recommend_course")
+	public ModelAndView toRecommendCourse(){
+		return new ModelAndView("backstage/train/course/recommend_course");
+	}
+	
+	/**
+	 *查询最大推荐课程序号
+	 */
+	@RequestMapping("/get_max_seq")
+	public void getMaxSeq(HttpServletRequest request,HttpServletResponse response){
+		Json j = new Json();
+		try {
+			int seq = courseInfoService.getMaxSeq();
+			j.setObj(seq+1); 
+			j.setMsg("查询成功！");
+			j.setSuccess(true);
+		} catch (Exception e) {
+			log.error("查询失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("查询失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	/**
+	 * 课程推荐、取消推荐
+	 */
+	@RequestMapping("/is_recommend_course") 
+	public void isRecommendCourse(HttpServletResponse response,CourseView courseView){
+		Json j = new Json();
+		try{
+			courseInfoService.isRecommendCourse(courseView);
+			j.setSuccess(true);
+			j.setMsg("操作成功！");
+		} catch (Exception e) {
+			log.error("课程操作失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("操作失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	/**
+	 * fangxiongwei
+	 * 20170221
+	 * 异步查询是否有班级
+	 */
+	@RequestMapping("/is_exist_class")
+	public String isExistClass(HttpServletResponse response,ClassView classView) {
+		JSONObject result = new JSONObject();
+		try {
+			int ck_total_required=-1;
+			//Integer num = classService.countClass(classView);
+			int cur_ck=0;
+			Course c = null;
+			Train t = null;
+			if(classView.getSource_type()==0){
+				c = courseService.getById(classView.getSource_id());
+				cur_ck = c.getIs_check();
+			}else if(classView.getSource_type()==1){
+				t = trainService.getById(classView.getSource_id());
+				cur_ck = t.getIs_check();
+			}
+		 	int set_check=1;
+			if(cur_ck==1){
+				set_check=0;
+			}else{
+			 	if(classView.getSource_type()==0){
+			 		int cource_hours = -1;
+			 		if(c.getHours()!=null&&(!"".equals(c.getHours().trim())&&Integer.parseInt(c.getHours())>0)){
+			 			cource_hours=1;
+			 		}
+					int courseHour_num = courseHourService.queryHourOfCourseCount(classView.getSource_id());
+					result.put("courseHour_num", courseHour_num);
+					int total_ratio = courseExamStandardService.queryTotalRatioByCouId(classView.getSource_id());
+					result.put("total_ratio", total_ratio);
+					result.put("cource_hours", cource_hours);
+					System.out.println(classView.getSource_type()+"===="+courseHour_num);
+				}else if(classView.getSource_type()==1){
+					int train_of_num = 0;
+					List<TrainExamStandardView> tesvList = trainExamStandardService.queryExamStandard(classView.getSource_id(),classView.getTrainType());
+					TrainExamStandardView tesv = new TrainExamStandardView();
+					if(tesvList.size()>0){//有课程
+						tesv = tesvList.get(0);//赋值考核标准
+					}
+					for(int i=0;i<tesvList.size();i++){//赋值学时
+						if(tesvList.get(i).getType()==0){//必修
+							tesv.setRequiredHours(tesvList.get(i).getTotalHours());//必修学时
+						}else{//选修
+							tesv.setOptionHours(tesvList.get(i).getTotalHours());//选修学时
+						}
+					}
+					//总学时
+					tesv.setTotalHours(tesv.getRequiredHours()+tesv.getOptionHours());
+					
+					if(tesv.getId()==null){//没有课程 只查询考核标准
+						tesv = trainExamStandardService.queryByTrainId(classView.getSource_id());
+					}
+					if(classView.getTrainType()==0){
+						train_of_num=trainCourseService.queryTrainCourseOfTrainCount(classView);
+						System.out.println(classView.getSource_type()+"===="+classView.getTrainType()+"------"+train_of_num);
+					}else if(classView.getTrainType()==1){
+						//查询该培训所有阶段总学时要求
+						int total_required = trainPhaseService.searchTotalHours(classView.getSource_id());
+						tesv.setTotal_required(total_required);
+						train_of_num=trainPhaseService.queryPhaseOfTrainPhaseCount(classView.getSource_id());
+						System.out.println(classView.getSource_type()+"===="+classView.getTrainType()+"------"+train_of_num);
+					}
+					if(tesv.getTotal_required()>0){
+						if(tesv.getTotalHours()>=tesv.getTotal_required()&&tesv.getRequiredHours()<=tesv.getTotal_required()){
+							ck_total_required=1;
+						}
+					}
+					System.out.println(ck_total_required+"----"+tesv.getTotalHours()+"----"+tesv.getTotal_required()+"--=="+tesv.getRequiredHours());
+					result.put("trainType", classView.getTrainType());
+					result.put("train_of_num", train_of_num);
+					result.put("ck_total_required", ck_total_required);
+				}
+			}
+			result.put("set_check",set_check);
+			//result.put("num", num);
+			ResponseUtil.write(response, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("查询班级失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return null;
+	}
+	
+	/**
+	 *跳转课程概况页面
+	 */
+	@RequestMapping("/to_general_course")
+	public ModelAndView toGeneralCourse(){
+		return new ModelAndView("backstage/train/courseAnalyze/general_course");
+	}
+	
+	/**
+	 * 获得课程概况datagrid
+	 */
+	@RequestMapping("/general_course_datagrid")
+	public void generalCourseDatagrid(HttpServletResponse response,
+			HttpServletRequest request, CourseView courseView) {
+		try {
+			super.writeJson(courseService.generalCourseDatagrid(courseView),response);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			log.error("查询课程概况失败", ExceptionUtil.getExceptionMessage(e));
+		}
+	}
+	
+	/**
+	 * 跳转课程排行页面
+	 */
+	@RequestMapping("/to_course_ranking")
+	public ModelAndView toCourseRanking(HttpServletRequest request) {
+		try {
+			String sort = request.getParameter("sort");
+			request.setAttribute("sort", sort);
+		} catch (Exception e) {
+			log.error("跳转课程排行失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return new ModelAndView("backstage/train/courseAnalyze/course_ranking");
+	}
+	
+	/**
+	 * 查询课程排行数据
+	 */
+	@RequestMapping("/query_course_ranking")
+	public void queryArealDistribution(HttpServletResponse response, String sort) {
+		JSONObject result = new JSONObject();
+		try {
+			List<CourseView> list = courseService.queryCourseRanking(sort);
+			result.put("list", list);
+			ResponseUtil.write(response, result);
+		} catch (Exception e) {
+			log.error("查询课程排行数据失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+
+	}
+	
+	@RequestMapping("/export_course_ranking")
+	public void exportOnlineStats(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String sort = request.getParameter("sort");
+			List<CourseView> list = courseService.queryCourseRanking(sort);
+			String temp = "";
+			if("0".equals(sort)){
+				temp = "报名人数";
+			}else if("1".equals(sort)){
+				temp = "视频观看人数";
+			}else if("2".equals(sort)){
+				temp = "好评度";
+			}else if("3".equals(sort)){
+				temp = "活跃度";
+			}
+			String[] head = { "课程","报名人数","视频观看人数","好评度","活跃度"};
+			String[] fieldNames = { "title", "studentNum", "vediowatchNum", "score", "activeNum"};
+			String fileName = "课程"+temp+"排行.xls";
+			response.setContentType("application/msexcel");
+			ExportExcel<CourseView> excel = new ExportExcel<CourseView>();
+			response.setHeader("Content-Disposition", excel.getFileName(fileName, excel.getExplorer(request)));
+			OutputStream out = response.getOutputStream();
+			excel.exportExcel("课程排行", head, fieldNames, list, out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 *跳转推荐课程页面
+	 */
+	@RequestMapping("/to_course_static")
+	public ModelAndView toCourseStatic(Long course_id){
+		ModelAndView mv = new ModelAndView("backstage/train/course/course_static"); 
+		mv.addObject("course_id", course_id);
+		return mv;
+	}
+	
+	
+	@RequestMapping("/get_chart")
+	public void getChart(HttpServletRequest request, HttpServletResponse response, StudyTimeView studyTimeView) throws Exception {
+		JSONObject result = new JSONObject();
+		chart(studyTimeView);
+		List<StudyTimeView> studyTimeViews =userStudyTimeService.selectSumByCourseId(studyTimeView);
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+	
+	public void chart(StudyTimeView studyTimeView) throws ParseException{
+		
+		if (studyTimeView.getGroup() == null) {
+			studyTimeView.setGroup("1");
+			
+		}
+		if(studyTimeView.getTimeType()==0){//今天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date()));
+		}
+		else if(studyTimeView.getTimeType()==1){//昨天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-24*60*60*1000)));
+		}else if(studyTimeView.getTimeType()==2){//三天
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+			Date date =new Date();
+			 studyTimeView.setEndTime(s.format(date)+" 23:59:59");
+			 Date otherDate=new Date(new Date().getTime()-24*60*60*1000*2);
+			 studyTimeView.setStartTime(s.format(otherDate)+" 00:00:00");
+		}else if(studyTimeView.getTimeType()==3){//七天
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+			Date date =new Date();
+			 studyTimeView.setEndTime(s.format(date)+" 23:59:59");
+			 Date otherDate=new Date(new Date().getTime()-24*60*60*1000*6);
+			 studyTimeView.setStartTime(s.format(otherDate)+" 00:00:00");
+		}else if(studyTimeView.getTimeType()==4){//三十天
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+			Date date =new Date();
+			 studyTimeView.setEndTime(s.format(date)+" 23:59:59");
+			 Date otherDate=new Date(new Date().getTime()-new Long(24*60*60*1000)*29);
+			 studyTimeView.setStartTime(s.format(otherDate)+" 00:00:00");
+		}else if(studyTimeView.getTimeType()==5){
+			 studyTimeView.setStartTime(studyTimeView.getStartTime()+" 00:00:00");
+			 
+			 studyTimeView.setEndTime(studyTimeView.getEndTime()+" 23:59:59");
+		}
+	
+	}
+	
+	
+	@RequestMapping("/get_chart_compare")
+	public void getChartCompare(HttpServletRequest request, HttpServletResponse response, StudyTimeView studyTimeView,int index) throws Exception {
+		JSONObject result = new JSONObject();
+		chartCompare(studyTimeView, index);
+		List<StudyTimeView> studyTimeViews =userStudyTimeService.selectSumByCourseId(studyTimeView);
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+
+	public void chartCompare(StudyTimeView studyTimeView,int index) throws ParseException{
+		if (studyTimeView.getGroup() == null) {
+			studyTimeView.setGroup("1");
+		}
+		int timeType=studyTimeView.getTimeType();
+		if(index==0&&timeType==0){//昨天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-24*60*60*1000)));
+		}else if(index==1&&timeType==0){//7天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-new Long(24*60*60*1000)*7)));
+		}else if(index==0&&timeType==1){//昨天昨天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-new Long(24*60*60*1000)*2)));
+		}else{//昨天 7天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-new Long(24*60*60*1000)*7)));
+		}
+	}
+	
+	@RequestMapping("/get_chart1")
+	public void getChart1(HttpServletRequest request, HttpServletResponse response, StudyTimeView studyTimeView) throws Exception {
+		JSONObject result = new JSONObject();
+		chart(studyTimeView);
+		List<StudyTimeView> studyTimeViews =topicQuestionService.selectTopicChart(studyTimeView);
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+	
+	@RequestMapping("/get_chart_compare1")
+	public void getChartCompare1(HttpServletRequest request, HttpServletResponse response, StudyTimeView studyTimeView,int index) throws Exception {
+		JSONObject result = new JSONObject();
+		chartCompare(studyTimeView, index);
+		List<StudyTimeView> studyTimeViews =topicQuestionService.selectTopicChart(studyTimeView);
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/WebRoot/frontstage/html/home.html" value="file://$PROJECT_DIR$/WebRoot/frontstage/html" />
+        <entry key="file://$PROJECT_DIR$/WebRoot/frontstage/train/course/course_living.jsp" value="file://$PROJECT_DIR$/WebRoot/frontstage/train/course" />
+        <entry key="file://$PROJECT_DIR$/WebRoot/frontstage/train/train_home.jsp" value="file://$PROJECT_DIR$/WebRoot/frontstage/train" />
+      </map>
+    </option>
+  </component>
+</project>

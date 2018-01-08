@@ -1,0 +1,43 @@
+
+.course-list-section{background: url("../images/teacher_banner.jpg") top center no-repeat;}
+
+.nav-btn-tab>ul>li.active{border-bottom: 2px solid #46c37b}
+.topic_reply_time{margin-left: 62px;}
+.full-content{padding: 10px;}
+.topic_list_page{padding-left: 20px;margin-bottom: 10px;}
+.teachers-course-tabs{margin-top: -30px;}
+.teacher_intro{margin-right:20px;overflow: hidden;height: 130px;width:400px; }
+.teacher_intro>span{font-size:16px;color: #fff;}
+.teacher_name{font-size: 16px;color: #fff;}
+.teacher_index_info_tabs{float: left;height: 100%;width: 45px;margin-top: -45px;}
+.teacher_index_info_tabs>ul{margin-left: -50px;}
+.teacher_index_info_tabs>ul>li{list-style: none;width: 45px;text-align: center;background-color: #f5f5f5;margin-top: -5px;}
+.teacher_index_info_tabs>ul>li.active{background-color: #fff;}
+.teacher_index_info_tabs>ul>li>a{font-size: 16px;color:#616161;font-weight: bold;padding-top: 15px;}
+.triangle-topright{width: 0;height: 0;border-top: 25px solid #fff;border-left: 45px solid #f5f5f5;}
+.triangle-topleft{ width: 0;  height: 0;  border-top: 25px solid #f5f5f5; border-right: 45px solid #fff;}
+.teacher_index_line{background: url("../images/teacher_index_left_line.jpg") no-repeat;height: 210px;width: 20px;}
+.teacher_index_line_info>span{margin-left: 20px;font-size: 12px;margin-top: -210px;}
+.teacher_content_page{margin-left: 75px;}
+.teacher_content_page_list{height: 180px;margin: 30px auto;}
+.course_info{margin-left:140px; margin-top: -230px;}
+.course_intro{max-height: 60px;overflow:hidden;margin-right: 20px;min-height: 40px;margin-top: 10px;line-height: 25px;}
+.teacher_index_banner{background: url("../images/teacher_index_flower.jpg") no-repeat;height: 120px;width: 160px;}
+.container_background{background:#fff url("../images/teacher_index_background.png") repeat-y; }
+
+.content_tag{background-color:#000;opacity: 0.5;font-size: 12px;border-radius: 30px;height: 22px;  min-width: 70px;z-index: 99;
+    text-align: center;color: #fff;display:inline-block;margin-top: -35px;line-height: 22px;position: absolute; margin-left: 20px; }
+.media_content{border-bottom: 1px solid #ddd;padding-bottom: 30px;margin-right: 20px;margin-top: 10px;!important;}
+.lesson_lever{background: url("../images/triangle_background.png") no-repeat;
+    width: 40px;font-size: 16px;color: #fff;height: 40px;z-index: 999;display:block;margin-left:160px;margin-top:-150px;position: relative;}
+
+.media-object{z-index: 1;position: relative;}
+
+
+
+ .search-info{margin:10px 10px 10px 0;width: 83%;}
+/*.search-into{max-height: 40px;overflow: hidden;font-size: 14px;line-height: 23px;margin-top: 10px;}*/
+.search_button>i{font-size: 20px;z-index: 999;margin-top: -103px;float: right;margin-right: 20px;}
+.search_input{}
+.search-title{font-size: 16px;padding-top: 10px;}
+

@@ -1,0 +1,154 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/canvas_picture/canvas_picture.js"></script>
+<style>
+    .course_score_lever{max-width: 30%;position: absolute;height: 148px;}
+    .class-about img{max-width: 100%;height: auto;}
+</style>
+
+<div class="es-piece">
+    <div class="piece-body p-lg clearfix">
+        <div  class="class-about">${courseInfo.profile}</div>
+    </div>
+</div>
+
+<div class="es-piece">
+    <div class="piece-header">
+        课程目标
+    </div>
+    <div class="piece-body">
+        <ul class="piece-body-list">
+            <li>
+                <i class="es-icon es-icon-chevronright"></i> ${courseInfo.target}
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="es-piece">
+    <div class="piece-header">
+        适合人群
+    </div>
+    <div class="piece-body">
+        <ul class="piece-body-list">
+            <li>
+                <i class="es-icon es-icon-chevronright"></i> ${courseInfo.crowd}
+            </li>
+        </ul>
+    </div>
+</div>
+<c:if test="${courseInfo.is_check==0}">
+    <div class="es-piece" >
+        <div class="piece-header">
+            考核标准
+        </div>
+        <div class="piece-body">
+            <p>各项考核占比及合格分数</p>
+            <table class="table table-striped" style="text-align: center;font-size: 14px;">
+                <thead>
+                <tr>
+                    <th style="width: 15%;font-weight: normal;text-align: center;">考核项</th>
+                    <th  style="width: 55%;font-weight: normal;text-align: center;">考核内容</th>
+                    <th  style="width: 30%;font-weight: normal;text-align: center;">考核占比( % )</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${jobStandard}" var="job">
+                    <tr>
+                        <td>作业 </td>
+                        <td>${job.source_name } </td>
+                        <td>${job.ratio }</td>
+                    </tr>
+                </c:forEach>
+                <c:forEach items="${discussionStandard}" var="discussion">
+                    <tr>
+                        <td>主题讨论 </td>
+                        <td >${discussion.source_name } </td>
+                        <td>${discussion.ratio}</td>
+                    </tr>
+                </c:forEach>
+                <c:forEach items="${examStandard}" var="exam">
+                    <tr>
+                        <td>考试 </td>
+                        <td>${exam.source_name } </td>
+                        <td>${exam.ratio }</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <c:if test="${!empty certificatesViews}">
+
+            <div class="piece-body certificate_img" style="margin-top: 30px;margin-bottom: 50px;min-height: 500px;">
+                <div class="text-center text-info" style="font-size: 25px;">证书对应成绩要求</div>
+                <div class="row " style="margin-top: 50px;">
+                    <c:forEach items="${certificatesViews}" var="certificate" varStatus="i" >
+
+                        <div class="course_score_lever " style="margin-left: 20%;margin-top: 40px">
+                            <c:if test="${certificate.cert_name=='良好证书'}">
+                                <div class="text-info">科目成绩达到&nbsp;${certificate.down_score }&nbsp;分</div><br/>
+
+                                <img src="${pageContext.request.contextPath}/frontstage/images/course_ok_01.png">
+                            </c:if>
+                        </div>
+                        <div class="course_score_lever " style="margin-left: 42%;margin-top:-30px;">
+                            <c:if test="${certificate.cert_name=='优秀证书'}">
+
+                                <div class="text-danger">科目成绩达到&nbsp;${certificate.down_score }&nbsp;分</div><br/>
+                                <img src="${pageContext.request.contextPath}/frontstage/images/course_ok_02.png">
+                            </c:if>
+                        </div>
+                        <div class="course_score_lever" style="margin-left: 64%;margin-top: 80px;">
+                            <c:if test="${certificate.cert_name=='及格证书'}">
+
+                                <div class="text-warning">科目成绩达到&nbsp;${certificate.down_score }&nbsp;分</div><br/>
+                                <img src="${pageContext.request.contextPath}/frontstage/images/course_ok_03.png">
+
+                            </c:if>
+                        </div>
+                    </c:forEach>
+                    <div class="text-center" style="margin-top:10px;">
+                        <img src="${pageContext.request.contextPath}/frontstage/images/course_desk.png" >
+                    </div>
+
+                </div>
+
+
+            </div>
+        </c:if>
+    </div>
+</c:if>
+
+<script>
+    $(document).ready( function(){
+        $(".certificate_img").on("click", function(event) {
+            event.preventDefault();
+            html2canvas(this, {
+                allowTaint: true,
+                taintTest: false,
+                onrendered: function(canvas) {
+                    canvas.id = "mycanvas";
+                    //document.body.appendChild(canvas);
+                    //生成base64图片数据
+                    var dataUrl = canvas.toDataURL();
+                    var newImg = document.createElement("img");
+                    newImg.src =  dataUrl;
+
+
+
+                    $(".certificate_img").before(newImg).remove();
+
+                }
+            });
+
+
+        });
+        $(".certificate_img").trigger("click");
+
+    });
+</script>

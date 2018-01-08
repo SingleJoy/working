@@ -1,0 +1,368 @@
+
+.show-introhelp {
+    position: relative;
+}
+.show-introhelp .introhelp-icon-help {
+    position: relative;
+    color: #ff8a0c;
+    z-index: 9999999!important;
+}
+.show-introhelp .introhelp-icon-drag {
+    position: relative;
+    color: #fff;
+    z-index: 9999999!important;
+}
+.show-introhelp .popover {
+    display: none;
+    font-size: 12px;
+    color: #313131;
+}
+.show-introhelp .popover .title {
+    color: #919191;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 10px;
+}
+.show-introhelp .popover.bottom {
+    top: 18px;
+    left: -92px;
+}
+.show-introhelp .popover.left {
+    left: -230px;
+    top: 90px;
+}
+.show-introhelp .introhelp-img {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: #fff;
+    font-size: 14px;
+}
+.show-introhelp .introhelp-img img {
+    display: block;
+    margin-left: 50px;
+}
+.show-introhelp .close-introhelp {
+    float: right;
+    color: #919191;
+    cursor: pointer;
+}
+.show-introhelp.show .popover {
+    display: block;
+}
+.introhelp-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    background-color: #000;
+}
+.marker-preview {
+    height: 100%;
+    background-color: #f1f4f6;
+}
+.marker-preview .marker-preview-content {
+    position: relative;
+    height: 100%;
+    padding-top: 20px;
+    color: #313131;
+    text-align: center;
+}
+@media (max-width: 1199px) {
+    .marker-preview .marker-preview-content {
+        padding-top: 10px;
+    }
+}
+.marker-preview .marker-preview-content .title {
+    font-size: 20px;
+    line-height: 1;
+}
+.marker-preview .marker-preview-content .marker-preview-player {
+    position: absolute;
+    left: 120px;
+    right: 120px;
+    top: 60px;
+    bottom: 20px;
+}
+@media (max-width: 1199px) {
+    .marker-preview .marker-preview-content .marker-preview-player {
+        bottom: 10px;
+        top: 40px;
+    }
+}
+.mark-questions-modal {
+    width: 756px;
+}
+.mark-questions-modal .modal-header {
+    position: relative;
+    padding: 20px 30px;
+    color: #fff;
+    border-color: #fff;
+    border-bottom: 1px solid #F5F8FA;
+}
+.mark-questions-modal .modal-header .close {
+    margin-top: -25px;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    font-size: 26px;
+    color: #616161;
+}
+.mark-questions-modal .modal-title {
+    font-size: 18px;
+    line-height: 18px;
+    text-align: left;
+    color: #313131;
+}
+.mark-questions-modal .modal-content {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.mark-questions-modal .modal-body {
+    padding: 15px 30px;
+}
+.mark-questions-modal .topic-bottom {
+    padding-bottom: 20px;
+    font-size: 14px;
+    color: #616161;
+    line-height: 40px;
+    text-align: left;
+    background-color: #F5F8FA;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.mark-questions-modal .topic-bottom .topic-bottom-info {
+    line-height: 34px;
+    padding: 20px 30px 0;
+    color: #919191;
+}
+.mark-questions-modal .topic-bottom .topic-bottom-info .btn {
+    float: right;
+    margin-left: 20px;
+}
+.mark-questions-modal .popup-topic {
+    padding: 0;
+    margin: 0;
+    height: 300px;
+    overflow: auto;
+    list-style-type: none;
+}
+.mark-questions-modal .popup-topic img {
+    max-width: 100%;
+    vertical-align: top;
+}
+.mark-questions-modal .popup-topic p {
+    margin-bottom: 0;
+}
+.mark-questions-modal .popup-topic .title {
+    margin-bottom: 14px;
+    line-height: 30px;
+    font-size: 18px;
+    color: #313131;
+}
+.mark-questions-modal .popup-topic .list {
+    padding: 10px 0 10px 40px;
+    line-height: 30px;
+    cursor: pointer;
+    cursor: default;
+    position: relative;
+}
+.mark-questions-modal .popup-topic .list .num {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 1px solid #c1c1c1;
+    color: #c1c1c1;
+    font-size: 14px;
+    text-align: center;
+    line-height: 22px;
+}
+.mark-questions-modal .popup-topic.topic-resolve .list {
+    min-height: 200px;
+    padding: 20px;
+    margin-bottom: 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    cursor: default;
+    background-color: #f5f8fa;
+}
+.mark-questions-modal .question-stem-fill-blank {
+    color: #313131;
+}
+.caption-uploader {
+    height: 34px;
+    background: transparent;
+    display: inline-block;
+}
+.caption-notify {
+    line-height: 28px;
+}
+.text-track-overview {
+    overflow-y: scroll;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.text-track-overview p {
+    font-size: 14px;
+    line-height: 30px;
+    color: #919191;
+}
+.text-track-overview p.active {
+    color: #f5f5f5;
+}
+.text-track-select-form-group {
+    margin-bottom: 0px !important;
+}
+.track-select-parent {
+    position: relative;
+}
+.track-select-parent .track-select-show {
+    width: 100%;
+    background: white;
+    border: 1px solid #CCC;
+    color: #919191;
+    font-size: 14px;
+    line-height: 32px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.track-select-parent .track-select-show.active {
+    border-color: #46c37b;
+}
+.track-select-parent .track-select-show .data-show {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-height: 32px;
+    padding-right: 20px;
+}
+.track-select-parent .track-select-show .track-selcet-open-arrow,
+.track-select-parent .track-select-show .track-selcet-close-arrow {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+.track-select-parent .track-selcet-list {
+    padding-left: 0px;
+    position: absolute;
+    top: 34px;
+    width: 100%;
+    background: white;
+    border-radius: 2px;
+    border: 1px solid #CCC;
+}
+.track-select-parent .track-selcet-list li {
+    position: relative;
+    list-style: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #919191;
+    line-height: 34px;
+}
+.track-select-parent .track-selcet-list li .value {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 110px;
+}
+.track-select-parent .track-selcet-list li .convertStatus {
+    position: absolute;
+    line-height: 1.2;
+    padding: 2px 10px;
+    border-radius: 5px;
+    right: 40px;
+    top: 8px;
+    color: white;
+}
+.track-select-parent .track-selcet-list li .convertStatus.convert-success {
+    background: #46c37b;
+}
+.track-select-parent .track-selcet-list li .convertStatus.convert-error {
+    background: red;
+}
+.track-select-parent .track-selcet-list li .convertStatus.convert-doing {
+    background: blue;
+}
+.track-select-parent .track-selcet-list li .convertStatus.convert-waiting {
+    background: #AAA;
+}
+.track-select-parent .track-selcet-list li .convertStatus.convert-none {
+    background: #AAA;
+}
+.track-select-parent .track-selcet-list li:hover {
+    background: #f5f5f5;
+}
+.track-select-parent .track-selcet-list li:hover .delete {
+    display: inline;
+}
+.track-select-parent .track-selcet-list li .delete {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+.track-select-parent .track-selcet-list li.active {
+    color: #46c37b;
+}
+.subtitle-transcode-status {
+    color: white;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 3px;
+    line-height: 1;
+    text-align: center;
+    min-width: 72px;
+}
+.subtitle-transcode-status.waiting,
+.subtitle-transcode-status.none {
+    background: #919191;
+}
+.subtitle-transcode-status.doing {
+    background: #2db7f5;
+}
+.subtitle-transcode-status.success {
+    background: #4bbbfa;
+}
+.subtitle-transcode-status.error {
+    background: #e83d2c;
+}
+.subtitle-name {
+    width: 300px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+
+
+.media-preview .media-preview-content .title {
+    padding-top: 35px;
+    text-align: center;
+    font-size: 30px;
+}
+.media-preview .media-preview-content .media-preview-player {
+    position: absolute;
+    top: 120px;
+    bottom: 60px;
+    left: 120px;
+    right: 120px;
+}
+html {
+    height: 100%;
+}

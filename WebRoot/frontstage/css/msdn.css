@@ -1,0 +1,30 @@
+div.pager {
+    
+	text-align:center;padding-bottom: 4px; padding-right:3px; font-family: verdana,tahoma,arial,helvetica,sans-serif; color: #333232; font-size: 13px; margin-top:30px;position: relative;
+}
+div.pager a {
+	margin: 0px 3px;  color: #0030ce; text-decoration: none;border:1px solid #cbcbcb;background:#f6f6f6;position:relative;
+}
+
+div.pager a.thispage {
+	padding:8px 11px;background-color:#468bc4;
+}
+
+div.pager a:hover {
+	border:1px solid #cbcbcb;background-color: #468bc4; color: #fff;
+}
+div.pager a:active {
+	border:1px solid #cbcbcb;background-color: #468bc4; color: #fff;
+}
+div.pager span.current {
+	 background-color: #468bc4; margin: 0px 3px; color: #fff;font-weight: bold;
+}
+div.pager span.disabled {
+	display: none;
+}
+div.pager span.prev2{background:
+url(../images/left_y1.png) #f6f6f6 9px 12px no-repeat; font-size:14px;font-family:"宋体";border:1px solid #cbcbcb;padding:9px 5px 9px 21px;margin:0 3px;}
+div.pager span.prev3 {background:url(../images/right_y1.png) #f6f6f6 56px 11px no-repeat; font-size:14px;font-family:"宋体";border:1px solid #cbcbcb;padding:9px 16px 9px 10px;margin:0 3px;}
+.navi{padding:8px 11px; }
+.cssTxt{text-align:center;width:31px;border:1px solid #cbcbcb;}
+.sure2{padding:6px 7px 6px 3px;border:1px solid #cbcbcb;background-color: #468bc4;color:#fff;margin-left:6px;}

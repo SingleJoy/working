@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/qiuzi_ico.ico" media="screen" />
+    <link href="../css/course-info.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript" src="../js/course-info.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            $(".video_time_add_info").children().addClass("curr");
+            $(".video_time_add_info span").removeClass("curr");
+        });
+
+        $(function(){
+
+            $(".edit_content_main").children().addClass("curr");
+
+        });
+
+    </script>
+
+</head>
+<body>
+<div class="course_info_top">
+    <img src="../images/course_img.png" class="course_img">
+    <div class="course_name">111<span class="course_states">未发布</span></div>
+    <div class="course_teacher_name">教师:<span >admin</span></div>
+    <button class="course_preview">预览<span class="triangle_down" ></span></button>
+
+    <ul class="user_states" style="display: none;">
+        <li><a href="javascript:return false;">作为已购买用户</a></li>
+        <li><a href="javascript:return false;">作为未购买用户</a></li>
+    </ul>
+
+    <button class="course_release"><span>发布课程</span></button>
+
+</div>
+
+<div class="course_info_main">
+
+    <div class="course_info_main_left">
+
+        <ul>
+            <li class="course_info">课程信息</li>
+            <li class="curr"><a href="javascript:return false;" class="curr">详细信息</a></li>
+            <li class=""><a href="javascript:return false;">课程图片</a></li>
+            <li class=""><a href="javascript:return false;">课时管理</a></li>
+            <li class=""><a href="javascript:return false;">文件管理</a></li>
+        </ul>
+
+
+        <ul>
+            <li class="course_setting">课程设置</li>
+            <li class=""><a href="javascript:return false;">价格设置</a></li>
+            <li class=""><a href="javascript:return false;">教师设置</a></li>
+            <li class=""><a href="javascript:return false;">学员设置</a></li>
+        </ul>
+
+        <ul>
+            <li class="question_library">题库</li>
+            <li class=""><a href="javascript:return false;">题目管理</a></li>
+            <li class=""><a href="javascript:return false;">试卷管理</a></li>
+            <li class=""><a href="javascript:return false;">试卷批阅</a></li>
+        </ul>
+
+        <ul>
+            <li class="course_operation">课程运营</li>
+            <li class=""><a href="javascript:return false;">课程学习数据</a></li>
+        </ul>
+
+    </div>
+
+
+    <div class="class_management_main_right">
+
+        <p>课时管理</p>
+
+        <div class="class_management_operation" style="margin-top: 18px;">
+            <button class="add_class_hour_button"><i>+</i>课时</button>
+            <!-- <button class="add_test_paper"><i>+</i>试卷</button> -->
+            <button class="add_chapter"><i>+</i>章/节
+                <ul style="display: none;" >
+                    <li class="add_chapter_popup"><i>+</i><a href="javascript:void(0);">添加 章</a></li>
+                    <li class="add_section_popup"><i>+</i><a href="javascript:void(0);" >添加 节</a></li>
+                </ul>
+            </button>
+        </div>
+
+        <div  class="class_management_main_right_content">
+            <div class="page_content_list">
+
+                    <p style="text-align: center;margin-top: 50px;">暂无数据</p>
+
+
+                    <!--章-->
+                    <div class="page_list page_section_01">第<span>${chapter.hour_seq }</span>章&nbsp;:<span>${chapter.hour_title}</span>
+                        <div class="add_page_style add_page_add">
+                            <button>添加
+                                <p style="display: none;">
+                                    <a href="javascript:void(0);" class="add_section_popup"><i>+</i>添加&nbsp;节</a>
+                                    <a href="javascript:void(0);" class="add_class_hour_button"><i>+</i>添加&nbsp;课时</a>
+                                    <!-- 	                            <a href="javascript:void(0);" class="add_test_paper"><i>+</i>添加&nbsp;试卷</a>
+                                     -->	                        </p>
+                            </button>
+                        </div>
+
+                        <div class="add_page_style add_page_edit" onclick="doEdit(${chapter.id},0);"><button>编辑</button></div>
+                        <div class="add_page_style add_page_delete"><button>删除</button></div>
+                    </div>
+                    <b class="line"></b>
+                    <br/>
+
+                    <c:forEach items="${sectionList}" var="section">
+                        <!--节-->
+                        <c:if test="${chapter.id==section.parent_id}">
+                            <div class="page_list page_section_02">第<span>${section.hour_seq }</span>节&nbsp;:<span>${section.hour_title}</span>
+                                <div class="add_page_style add_page_add">
+                                    <button>添加
+                                        <p style="display: none;">
+                                            <a href="javascript:void(0);" class="add_class_popup"><i>+</i>添加&nbsp;课时</a>
+                                            <!-- 			                            <a href="javascript:void(0);" class="add_test_paper"><i>+</i>添加&nbsp;试卷</a>
+                                             -->			                        </p>
+                                    </button>
+                                </div>
+
+                                <div class="add_page_style add_page_edit"  onclick="doEdit(${section.id},1);"><button>编辑</button></div>
+                                <div class="add_page_style add_page_delete"><button>删除</button></div>
+                            </div>
+                            <b class="line_01"></b>
+                            <br/>
+
+                            <c:forEach items="${hourList}" var="hour" varStatus="status">
+                                <!--课时-->
+                                <c:if test="${section.id==hour.parent_id}">
+                                    <b class="line_02"></b>
+                                    <b class="line_03"></b>
+                                    <div class="page_list page_section_03">课时&nbsp;<span>${status.index+1} </span>&nbsp;:
+					            	<span>
+					            		<c:if test="${hour.is_free == 0}"><span style="background-color:red;color:#fff;">免费</span></c:if>
+					            		${hour.hour_title}
+					            	</span>
+
+                                        <div class="add_page_edit_01"><a href="javascript:void(0);" >编辑</a></div>
+
+                                        <div class="add_page_preview"><a href="javascript:void(0);">预览</a></div>
+                                        <div class="add_page_read_more"><a href="javascript:void(0);">更多</a>
+                                            <ul style="display: none;">
+                                                <li class="add_data add_data_content"><a href="javascript:void(0);">添加资料</a></li>
+                                                <li class="cancel_release"><a href="javascript:void(0);">取消发布</a></li>
+                                                <li class="delete_course"><a href="javascript:void(0);">删除</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--章编辑-->
+<form id="chapterAdd" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+    <input type="hidden" name="course_id" value="${courseView.id}"/>
+    <input type="hidden" name="sign" value="${courseView.sign}"/>
+    <input type="hidden" name="chapter_type" value="0"/>
+    <input type="hidden" name="parent_id" value="0"/>
+    <input type="hidden" name="id" value=""/>
+    <div class="add_chapter_edit_content" style="display: none;">
+        <p>编辑章</p>
+        <button type="button" class="close_page">×</button>
+
+        <div class="edit_content_main">
+            <label>章标题</label>
+            <input type="text" id="chapter_title" name="hour_title" onblur="doSeq(0);" value=""/>
+            <span class="title_val" style="margin-left:150px;display:none;">请输入章标题</span><br/>
+            <label>章序号</label>
+            <input type="text" name="hour_seq" value=""/>
+        </div>
+        <div class="edit_content_main_bottom">
+            <button type="button" onclick="doSubmitCha();">添加</button>
+            <a href="javascript:void(0);">取消</a>
+        </div>
+    </div>
+</form>
+
+<!--节编辑-->
+<form id="sectionAdd" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+    <input type="hidden" name="course_id" value="${courseView.id}"/>
+    <input type="hidden" name="sign" value="${courseView.sign}"/>
+    <input type="hidden" name="chapter_type" value="1"/>
+    <input type="hidden" name="id" value=""/>
+    <div class="add_section_edit_content" style="display: none;">
+        <p>编辑节</p>
+        <button type="button" class="close_page">×</button>
+
+        <div class="edit_content_main">
+            <label>节标题</label>
+            <input type="text" id="section_title" name="hour_title" value="">
+            <span class="title_val" style="margin-left:150px;display:none;">请输入节标题</span>
+            <br/>
+            <label>所属章</label>
+            <select id="chapter_parent_id" name="parent_id" onChange="doSeq(this.value);">
+                <option value="0">请选择所属章</option>
+                <c:forEach items="${chapterList }" var="chapter">
+                    <option value="${chapter.id}">${chapter.hour_title }</option>
+                </c:forEach>
+            </select><br/>
+            <span class="chapter_val" style="margin-left:150px;display:none;">请选择所属章</span>
+
+            <label>节序号</label>
+            <input type="text" id="section_seq" name="hour_seq" value="${courseHour.hour_seq}"/>
+        </div>
+        <div class="edit_content_main_bottom">
+            <button type="button" onclick="doSubmitSec();">添加</button>
+            <a href="javascript:void(0);">取消</a>
+        </div>
+    </div>
+</form>
+<%--课时编辑--%>
+<div class="add_class_hour_page" style="display: none;">
+    <div class="add_class_hour_top">
+        <p>添加课时</p>
+        <button type="button" class="close_page">×</button>
+    </div>
+
+
+    <div class="add_class_hour_content">
+        <form id="hourAdd" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+            <input type="hidden" name="course_id" value="${courseView.id}"/>
+            <input type="hidden" name="sign" value="${courseView.sign}"/>
+            <input type="hidden" name="chapter_type" value="2"/>
+            <input type="hidden" name="id" value=""/>
+            <input type="hidden" name="course_file_id" id="course_file_id" value=""  >
+            <div class="class_hour_type">
+                <p>类型</p>
+                <input style="margin-left:161px;" type="radio" name="hour_type" value="0" checked><span>视频</span>
+                <!-- 	                 <input type="radio" name="class_hour_type"><span>音频</span>
+                                     <input type="radio" name="class_hour_type"><span>Flash</span>
+                                     <input type="radio" name="class_hour_type"><span>图文</span>
+                                     <input type="radio" name="class_hour_type"><span>PPT</span>
+                                     <input type="radio" name="class_hour_type"><span>文档</span>
+                 -->	          </div>
+
+            <div class="class_hour_title">
+                <p>标题</p>
+                <input type="text" id="hour_title" name="hour_title" value="" class="class_hour_title_input">
+                <input type="checkbox" id="free" onclick="doChecked();" class="class_hour_title_checkbox"><span>免费课时</span><br/><br/>
+                <input type="hidden" id="is_free" name="is_free" value="1"/>
+                <p class="title_val" style="margin-left:170px;display:none;">请输入标题</p>
+            </div>
+
+            <div class="class_hour_abstract">
+                <p>摘要</p>
+                <textarea name="remarks">${courseHour.remarks}</textarea>
+            </div>
+
+            <div class="class_hour_upload_video">
+                <p>视频</p>
+                <ul>
+                    <li class="curr"><a href="javascript:void(0);" class="curr">上传视频</a></li>
+                    <%--<li class=""><a href="javascript:void(0);">从课程文件中选择</a></li>--%>
+                    <%--<li class=""><a href="javascript:void(0);">导入网络视频</a></li>--%>
+                </ul><br/><br/>
+
+                <div id="fileList" class="class_hour_upload_video_plug upload_video_tabs">
+                    <div id="uploadFile" class="file">
+                        <p >选择你要上传的视频文件:</p>
+                        <!-- 	                  <button type="button" class="file" >选择要上传的视频文件</button>
+                         -->	             </div>
+                </div>
+
+                <div class="class_hour_upload_video_plug upload_video_tabs" style="display: none;">
+                    <p style="text-align: center;">暂无视频文件，请先上传。</p>
+                </div>
+
+                <div class="import_network_video upload_video_tabs" style="display: none;">
+                    <input type="text" placeholder="支持优酷、土豆、网易公开课的视频页面地址导入">
+                </div>
+                <span class="file_val" style="margin-left:160px;display:none;">请选择上传文件</span>
+            </div>
+
+            <div class="class_hour_upload_video_time">
+                <p>视频时长</p>
+                <div class="video_time_add_info">
+                    <input type="text" id="minute" name="minute" class="time_minute"><span>分</span>
+                    <input type="text" id="second" name="second" class="time_second"><span>秒</span>
+                    <b id="times_">( 时长必须为整数。)</b><br/>
+                    <p class="time_val" style="margin-left:170px;display:none;margin-top: -10px;">请输入时长</p>
+                </div>
+            </div>
+            <div class="edit_section">
+                <p>所属节</p>
+                <select id="section_parent_id"  name="parent_id">
+                    <option value="0">请选择所属节</option>
+                    <c:forEach items="${sectionList }" var="section">
+                        <option value="${section.id}">${section.hour_title }</option>
+                    </c:forEach>
+                </select><br/>
+                <span class="section_val" style="margin-left:165px;display:none;font-size: 14px;margin-top: -10px;">请选择所属节</span>
+            </div>
+        </form>
+        <div class="add_class_hour_content_bottom">
+
+            <button type="button" onclick="doSubmitHour();">添加</button>
+            <a href="javascript:void(0);">取消</a>
+        </div>
+    </div>
+</div>
+
+<!--添加试卷-->
+<div class="add_page_edit_page add_test_paper_content" style="display: none;">
+    <p>添加试卷课时</p>
+    <button class="close_page">×</button>
+    <div><a href="javascript:void(0);">取消</a></div>
+</div>
+
+<!--添加资料-->
+<div class="add_data_content_popup" style="display: none;">
+    <form>
+    <p>添加资料</p>
+    <button class="close_page">×</button>
+    <%--<span>暂无资料，请上传。</span>--%>
+    <br/>
+       <!--新增加 -->
+        <ul>
+            <li></li>
+        </ul>
+
+
+    <button class="close_page">×</button>
+    <div class="upload_data_content">
+        <p>选择你要上传的文件：</p>
+        <button>上传</button>
+    </div>
+    <textarea placeholder="填写资料简介 (可选)"></textarea>
+    <li><button>添加</button></li>
+    </form>
+</div>
+
+<!--课时编辑-->
+<div class="add_page_edit_course" style="display: none;">
+    <p>编辑课时</p>
+    <button type="button" class="close_page">×</button>
+
+    <div class="edit_course_main">
+        <form id="hourEdit" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+            <input type="hidden" name="course_id" value="${courseView.id}"/>
+            <input type="hidden" name="sign" value="${courseView.sign}"/>
+            <input type="hidden" name="chapter_type" value="2"/>
+            <input type="hidden" name="id" value=""/>
+            <div class="class_hour_title_">
+                <p>标题</p>
+                <input type="text" id="hour_title_" onblur="validate_();" name="hour_title" value="" class="class_hour_title_input">
+                <input type="checkbox" id="free_" onclick="doChecked();" class="class_hour_title_checkbox"><span>免费课时</span><br/><br/>
+                <input type="hidden" id="is_free_" name="is_free" value="1"/>
+                <p class="title_val" style="margin-left:170px;display:none;">请输入标题</p>
+            </div>
+            <div class="class_hour_abstract_">
+                <p>摘要</p>
+                <textarea id="remarks_" name="remarks"></textarea><br/><br/>
+            </div>
+            <div class="class_hour_upload_video_time_">
+                <p>视频时长</p>
+                <div class="video_time_add_info">
+                    <input type="text" id="minute_" name="minute" class="time_minute"><span>分</span>
+                    <input type="text" id="second_" name="second" class="time_second"><span>秒</span>
+                    <b id="times">时长必须为整数。</b><br/>
+                    <p class="time_val" style="margin-left:170px;display:none;">请输入时长</p>
+                </div>
+            </div>
+            <div class="edit_section_">
+                <p>所属节</p>
+                <select id="section_parent_id_" name="parent_id">
+                    <option value="0">请选择所属节</option>
+                    <c:forEach items="${sectionList }" var="section">
+                        <option value="${section.id}">${section.hour_title }</option>
+                    </c:forEach>
+                </select><br/>
+                <span class="section_val" style="margin-left:150px;display:none;">请选择所属节</span>
+            </div>
+        </form>
+    </div>
+
+    <div class="edit_course_main_bottom">
+        <a href="javascript:void(0);">取消</a>
+        <button type="button" onclick="doEditHour();">保存</button>
+
+    </div>
+</div>
+
+</div>
+
+<div class="add_class_hour_page" style="display: none;">
+    <div class="add_class_hour_top">
+        <p>添加课时</p>
+        <button class="close_page">×</button>
+    </div>
+
+
+    <div class="add_class_hour_content">
+          <div class="class_hour_type">
+              <p>类型</p>
+              <form>
+                 <input type="radio" name="class_hour_type" checked><span>视频</span>
+                 <input type="radio" name="class_hour_type"><span>音频</span>
+                 <input type="radio" name="class_hour_type"><span>Flash</span>
+                 <input type="radio" name="class_hour_type"><span>图文</span>
+                 <input type="radio" name="class_hour_type"><span>PPT</span>
+                 <input type="radio" name="class_hour_type"><span>文档</span>
+              </form>
+          </div>
+
+        <div class="class_hour_title">
+            <p>标题</p>
+            <form>
+                <input type="text" class="class_hour_title_input"> <input type="checkbox" class="class_hour_title_checkbox"><span>免费课时</span>
+            </form>
+        </div>
+
+        <div class="class_hour_abstract">
+            <p>摘要</p>
+            <textarea></textarea>
+
+        </div>
+
+        <div class="class_hour_upload_video">
+            <p>视频</p>
+
+             <ul>
+                 <li class="curr"><a href="javascript:return false;" class="curr">上传视频</a></li>
+                 <li class=""><a href="javascript:return false;">从课程文件中选择</a></li>
+                 <li class=""><a href="javascript:return false;">导入网络视频</a></li>
+             </ul><br/><br/>
+
+            <div class="class_hour_upload_video_plug upload_video_tabs">
+                  <p>选择你要上传的视频文件:</p>
+            </div>
+
+            <div class="class_hour_upload_video_plug upload_video_tabs" style="display: none;">
+                <p style="text-align: center;">暂无视频文件，请先上传。</p>
+            </div>
+
+            <div class="import_network_video upload_video_tabs" style="display: none;">
+                <input type="text" placeholder="支持优酷、土豆、网易公开课的视频页面地址导入">
+            </div>
+
+        </div>
+
+        <div class="class_hour_upload_video_time">
+            <p>视频时长</p>
+             <div class="video_time_add_info">
+
+
+            <input type="text" class="time_minute"><span>分</span>
+            <input type="text" class="time_second"><span>秒</span>
+
+            <!--<b>时长必须为整数。</b>-->
+            <b>请输入时长</b>
+             </div>
+        </div>
+
+        <div class="add_class_hour_content_bottom">
+
+            <button>添加</button>
+            <a href="javascript:return false;">取消</a>
+        </div>
+    </div>
+
+
+</div>
+<!--课时编辑-->
+<div class="add_page_edit_course" style="display: none;">
+    <p>编辑课时(草稿已于<span>9时21分48秒</span>保存)</p>
+    <button class="close_page">×</button>
+
+    <div class="edit_course_main">
+        <label>标题</label><input type="text" value="" class="abstract_input"><input type="checkbox" class="abstract_checkbox"><span>免费课时</span>
+        <br/><br/><br/>
+        <label>摘要</label><textarea></textarea><br/>
+        <br/> <br/> <br/>
+        <label>内容</label>
+          <!--文本编辑插件-->
+    </div>
+
+    <div class="edit_course_main_bottom">
+        <a href="javascript:return false;">取消</a>
+        <button>保存</button>
+
+    </div>
+</div>
+
+</body>
+
+</html>

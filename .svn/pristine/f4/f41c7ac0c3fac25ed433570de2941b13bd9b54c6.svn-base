@@ -1,0 +1,191 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.train.mapper.CertificateMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.Certificate;
+import cn.bnsr.edu_yun.frontstage.train.service.CertificateService;
+import cn.bnsr.edu_yun.frontstage.train.view.CertificatesView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserCertificateView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+public class CertificateServiceImpl implements CertificateService {
+
+	@Autowired
+	private CertificateMapper certificateMapper;
+
+	@Override
+	public List<CertificatesView> findAll(CertificatesView certificatesView) {
+		return certificateMapper.findAll(certificatesView);
+	}
+
+	@Override
+	public void saveOrUpdate(CertificatesView certificatesView) {
+		String source_id = certificatesView.getSource_id();
+		if (source_id != null) {
+			if (source_id.contains(",")) {//至少有两个对象
+				String[] sourceId = certificatesView.getSource_id().split(",");
+				if(certificatesView.getCertificate_id()!=null){//至少有一个id不空，即要更新
+					String[] certificateId = certificatesView.getCertificate_id().split(",");
+					for (int i = 0; i < certificateId.length; i++) {//更新
+						Certificate certificate = new Certificate();
+						certificate.setId(Long.parseLong(certificateId[i]));
+						certificateMapper.updateByPrimaryKeySelective(multiTransform(certificatesView,certificate,i));
+					}
+					if(sourceId.length-certificateId.length>0){//id的length小于对象的个数，有一部分要保存
+						for(int j = certificateId.length;j<sourceId.length;j++){
+							Certificate certificate = new Certificate();
+							certificateMapper.insertSelective(multiTransform(certificatesView,certificate,j));
+						}
+					}
+				}else{//id为空，全部保存
+					for(int i = 0; i < sourceId.length; i++){
+						Certificate certificate = new Certificate();
+						certificateMapper.insertSelective(multiTransform(certificatesView,certificate,i));
+					}
+				}
+				
+			} else {//一个对象
+				if(certificatesView.getCertificate_id()!=null){//id不空，更新
+					Certificate certificate = new Certificate();
+					certificate.setId(Long.parseLong(certificatesView.getCertificate_id()));
+					certificateMapper.updateByPrimaryKeySelective(singleTransform(certificatesView,certificate));
+				}else{//id为空，保存
+					Certificate certificate = new Certificate();
+					certificateMapper.insertSelective(singleTransform(certificatesView,certificate));
+				}
+			}
+		}
+	}
+
+	public Certificate multiTransform(CertificatesView certificatesView,Certificate certificate,int i){
+		if(certificatesView.getSource_id()!=null){
+			certificate.setSource_id(Long.parseLong(NumUtil.isNotEmpty(certificatesView.getSource_id(), i)));
+		}
+		if(certificatesView.getSource_type()!=null){
+			certificate.setSource_type(Integer.parseInt(NumUtil.isNotEmpty(certificatesView.getSource_type(), i)));
+		}
+		if(certificatesView.getDown_score()!=null){
+			certificate.setDown_score(Integer.parseInt(NumUtil.isNotEmpty(certificatesView.getDown_score(), i)));
+		}
+		if(certificatesView.getUp_score()!=null){
+			certificate.setUp_score(Integer.parseInt(NumUtil.isNotEmpty(certificatesView.getUp_score(), i)));
+		}
+		if(certificatesView.getCert_name()!=null){
+			certificate.setCert_name(NumUtil.isNotEmpty(certificatesView.getCert_name(), i));
+		}
+		if(certificatesView.getIs_every()!=null){
+			certificate.setIs_every(Integer.parseInt(NumUtil.isNotEmpty(certificatesView.getIs_every(), i)));
+		}
+		if(certificatesView.getCert_model_id()!=null){
+			certificate.setCert_model_id(Long.parseLong(NumUtil.isNotEmpty(certificatesView.getCert_model_id(), i)));
+		}
+		return certificate;
+	}
+	public Certificate singleTransform(CertificatesView certificatesView,Certificate certificate) {
+		if(certificatesView.getSource_id()!=null){
+			certificate.setSource_id(Long.parseLong(certificatesView.getSource_id()));
+		}
+        if(certificatesView.getSource_type()!=null){
+        	certificate.setSource_type(Integer.parseInt(certificatesView.getSource_type()));
+		}
+        if(certificatesView.getDown_score()!=null){
+        	certificate.setDown_score(Integer.parseInt(certificatesView.getDown_score()));
+		}
+        if(certificatesView.getUp_score()!=null){
+        	certificate.setUp_score(Integer.parseInt(certificatesView.getUp_score()));
+		}
+        if(certificatesView.getCert_name()!=null){
+        	certificate.setCert_name(certificatesView.getCert_name());
+		}
+		if(certificatesView.getIs_every()!=null){
+			certificate.setIs_every(Integer.parseInt(certificatesView.getIs_every()));
+		}
+		if(certificatesView.getCert_model_id()!=null){
+			if("".equals(certificatesView.getCert_model_id())){
+				certificate.setCert_model_id(null);
+			}else{
+				certificate.setCert_model_id(Long.parseLong(certificatesView.getCert_model_id()));
+			}
+		}
+		return certificate;
+	}
+
+	@Override
+	public void deleteCertificates(String ids) {
+		for(String id : ids.split(",")){
+			certificateMapper.deleteByPrimaryKey(Long.parseLong(id));
+		}
+	}
+
+	@Override
+	public List<UserCertificateView> findMyCourseCert(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.findMyCourseCert(userCertificateView);
+	}
+
+	@Override
+	public Integer countUserCertificate(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.countUserCertificate(userCertificateView);
+	}
+
+	@Override
+	public List<UserCertificateView> findMyTrainCert(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.findMyTrainCert(userCertificateView);
+	}
+
+	@Override
+	public List<Long> queryCommonTrainCourseId(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.queryCommonTrainCourseId(userCertificateView);
+	}
+
+	@Override
+	public Integer queryMyCourseScore(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.queryMyCourseScore(userCertificateView);
+	}
+
+	@Override
+	public List<Long> queryPhaseTrainCourseId(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.queryPhaseTrainCourseId(userCertificateView);
+	}
+
+	@Override
+	public List<UserCertificateView> findMyCert(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.findMyCert(userCertificateView);
+	}
+
+	@Override
+	public Integer countMyCert(UserCertificateView userCertificateView) {
+		// TODO Auto-generated method stub
+		return certificateMapper.countMyCert(userCertificateView);
+	}
+
+	@Override
+	public Certificate selectOne(Long id) {
+		// TODO Auto-generated method stub
+		return certificateMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void saveOrUpdate1(CertificatesView certificatesView) {
+		String id = certificatesView.getCertificate_id();
+		if(id!=null&&!"".equals(id)){//id不空，更新
+			Certificate certificate = new Certificate();
+			certificate.setId(Long.parseLong(certificatesView.getCertificate_id()));
+			certificateMapper.updateByPrimaryKey(singleTransform(certificatesView,certificate));
+		}else{//id为空，保存
+			Certificate certificate = new Certificate();
+			certificateMapper.insertSelective(singleTransform(certificatesView,certificate));
+		}
+		
+	}
+
+}

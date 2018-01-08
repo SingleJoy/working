@@ -1,0 +1,13 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<div style="text-align: center;background-color: #4a7b9d;
+	color: #FFFFFF;
+	height: 16px;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	font-family: Arial, '宋体';
+	font-size: 12px;
+	text-align: center;
+	padding-top: 4px;">
+	 <span style="font-family: '宋体'; font-size: 12px;">2016 北京百年树人软件技术有限公司 </span>
+</div>

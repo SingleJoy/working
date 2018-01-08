@@ -1,0 +1,98 @@
+* {  margin: 0; padding: 0;  text-decoration: none;  }
+body { background-color: #eaeaea;  font-family: "Microsoft YaHei";  }
+li{list-style:none;}
+a{color: #000000;}
+a:hover{color:red}
+input,button,select,textarea{outline:none;}
+/*顶端*/
+.top{  width: 100%;  height: 30px;  background-color:#3ebbce;  position: relative;  }
+.top_txt{width: 1000px;margin: 0 auto;}
+.top_txt li{  float: left;  }
+.top_txt li a{  font-size: 12px;  color: #ffffff;  }
+.admin{  margin-left:2px;margin-top: 4px;}
+.register{  margin-left: 18px;  }
+.myspace{  margin-left: 730px;  }
+.recent_browse{  margin-left: 18px;  }
+.cooper_organization{ margin-left: 18px;  }
+/*main*/
+.main_exercises{background-color:#e3e3e3;height: 1900px;}
+.position span{font-size: 14px;}
+
+/*main_read_top  主内容头部*/
+.main_top_exercises{width: 100%;height:180px;background-color: #3ebbce;margin-top: 20px;}
+.main_top_exercises_content{width: 1000px;height:180px;background-color: #3ebbce;}
+.main_top_exercises_content ul li{color: #ffffff;}
+.exercises_title{font-size: 16px;padding-top: 40px;}
+.exercises_describe{font-size: 14px;padding-top: 22px;}
+.exercises_describe_info ul li{font-size: 14px;margin-top: 5px;}
+.exercises_describe_info ul li img{width: 16px;height: 16px;display: inline;}
+.exercises_describe_info ul li:first-child{margin-left: 120px;}
+.exercises_describe_info ul li span{color:#ff9a00}
+.exercises_describe_info ul li p{display: inline;}
+.exercises_describe_info ul{margin-left: 800px;margin-top: -100px;}
+.exercises_info{font-size: 14px;padding-top: 35px;}
+.main_top_span{padding-left: 10px;}
+
+
+/*main_read_content 主内容 */
+.exercises_page{}
+.exercises_page_list ul li{float:left;width: 786px;height: 250px;border: 1px solid #ffffff;margin-top: 20px;background-color: #ffffff;}
+.exercises_page_list ul li span{font-size: 16px;position: absolute;z-index: 999;padding-left: 10px;padding-top: 10px;color: #ffffff;}
+
+/*main_read_right 主内容右边相关资源 */
+.main_read_right{position:relative;width: 200px;height: 280px;border: 1px solid #ddd;margin-top: -1600px;margin-left: 14px;background-color: #f5f5f5;}
+.main_read_right p{font-size: 14px;padding-top: 10px;padding-left: 20px;position:relative;}
+.main_read_right ul{font-size: 14px;margin-top: 10px;width: 160px;height:50px;border-top:1px solid #ddd;margin-left: 14px;}
+.main_read_right ul li{padding-top: 10px;font-size: 12px;}
+.main_read_right ul:first-child{padding-top: 10px;}
+.main_read_right ul li a{padding-left: 15px;}
+.resources_download_num{padding-left: 20px;}
+
+/*翻页 flip_page*/
+.flip_page{position:absolute;margin-top: 1380px;margin-left: 500px;}
+.flip_page ul li{float: left;padding-right: 5px;line-height: 16px;}
+.left_num a,.right_num a{color:#ffffff;}
+.left_num,.right_num{width: 12px;height:16px;background-color: #3ebbce;font-size: 14px;text-align: center;}
+
+/*main_content_bottom 主内容下面评论*/
+.main_read_content_operation{position: absolute;margin-top: 1370px;}
+.main_read_content_operation ul{;}
+.main_read_content_operation ul li{display: inline;}
+.main_read_content_operation ul li img{padding-left: 10px;}
+
+
+/*border*/
+.border{width:780px;border:1px solid #c7c7c7;position:relative;margin-top: 1430px;}
+
+
+
+/*评论*/
+.my_comment{position: relative;margin-top: 20px;}
+.my_comment p{font-size:14px;margin-top: 10px;}
+.my_comment textarea{width: 780px;height: 135px;margin-top: 10px;overflow:hidden; resize:none;font-size: 16px;}
+.my_comment input{width:80px;height:30px;margin-top:160px;font-size:12px;color:#ffffff;background-color:#3dbbcd;border-radius:5px;position: absolute;margin-left: -80px;}
+
+/*转发*/
+.forward_page{position:absolute;background: rgba(155, 155, 155, 0.9);cursor: pointer;margin-top: -590px;display:none;height:330px;}
+#tabbox{ width:318px;margin-top: 14px; }
+.tabs{height: 32px;}
+.tabs li{width:95px;height:31px;line-height:31px;float:left;border:1px solid #999;border-left:none;background: #efefef;overflow: hidden;position: relative;}
+.tabs li:first-child{margin-left: 30px;}
+.tabs li a {display: block;padding: 0 20px;border: 1px solid #fff;outline: none;}
+.tabs li a:hover {background: #ccc;}
+.tabs .thistab,.tabs .thistab a:hover{background: #fff;}
+.forward_title{width:436px;height:30px;margin-top:14px;font-size:14px;padding-left:14px;margin-left:30px;}
+#tabbox textarea{width:450px;height: 120px;margin-top: 14px;overflow:hidden; resize:none;font-size: 14px;margin-left:30px;}
+.forward_button{width: 70px;height:30px;background-color: #fe9900;border-radius: 5px;font-size: 14px;color: #ffffff;text-align: center;margin-left:410px;}
+.forward_content{font-size: 14px;width: 510px;border-bottom: 1px solid #000000;padding-bottom: 10px;padding-left: 30px;margin-top: 14px;}
+
+
+
+
+/*尾部 ---footer*/
+.footer{width:100%;height:100px;background-color:#3ebbce;position:relative;}
+.footer_content{padding-top:42px;}
+.footer_title,.agreement,.proposal{font-size:14px;color:#ffffff;}
+.footer_content_span{padding-left:20px;padding-right:20px;}
+.footer_content_ul li{display:inline;}
+

@@ -1,0 +1,143 @@
+
+* {margin:0;padding:0;text-decoration:none;color: #6d6d6d;}
+body {background-color:#eaeaea;font-family:"Microsoft YaHei";overflow-x: hidden;}
+li{list-style:none;}
+input,button,select,textarea{outline:none;box-shadow: none;}
+img{outline:none;box-shadow: none;border: none;}
+/*主内容区域*/
+.main_teacher{position: relative;margin:20px auto;width: 1100px;}
+/*导航栏*/
+.main_top{ width: 1100px;height: 180px; background-color: #fff; position: relative;margin: 0 auto;border-radius: 5px;}
+.main_top_content{width: 1100px;margin:20px auto;}
+.main_content ul li span{font-size: 14px;}
+.author_img{width: 100px;height:100px;border-radius: 50%;float: left;position: relative;margin-top: 40px;margin-left: 20px;}
+.author_name,.author_title,.page_num{padding-left: 20px;}
+.author_info{font-size: 16px;padding-top: 45px;}
+.author_info_ul_li{font-size: 14px;padding-top: 17px;}
+.page_reader_num,.page_num,.page_download_num {color: #fe9a00;padding-right:5px;}
+.page_style_span{padding: 0 16px;}
+.author_title_describe{font-size: 12px;width:480px;overflow:hidden; margin-top: 10px; margin-left:20px;line-height: 20px;display: inline-block;}
+.author_follow_button{position: relative;width: 60px;height:30px;background-color:#ff9a00;float: right;margin-top: -40px;font-size: 14px;color: #ffffff;text-align: center;cursor: pointer;margin-right: 20px;}
+.author_from_school,.author_subject{font-size: 12px;float: right;}
+.author_info_bas{margin-top: -40px;margin-right: 20px;}
+.author_from_school{}
+.author_subject{padding-right: 10px;}
+
+/*主内容左边区域*/
+.main_teacher_left{width: 230px;height:775px;position: relative;background-color: #fff;float: left;border-radius: 5px;}
+.main_teacher_left>ul{}
+.main_teacher_left>ul>li{width: 200px;margin-left: 15px;height: 40px;line-height: 40px;}
+.main_teacher_left>ul>li:first-child{margin-top:40px;}
+.main_teacher_left>ul>li.curr{font-weight: bold;border-left:2px solid #3ebbce;background-color:#eaeaea;}
+.main_teacher_left>ul>li>a{font-size: 14px;padding-left: 35px;}
+.main_teacher_left>ul>li>a.curr{color: #3ebbce;}
+
+.file_classify{margin-top: 20px;margin-left: 15px;}
+.file_classify>ul{}
+.file_classify>ul>li{width:100px;font-size: 14px;line-height: 40px;height: 40px;margin-right: 15px;display: inline-block;text-align: center;}
+.file_classify ul li.curr{background-color:#eaeaea;}
+.file_classify>ul>li>a{color: #6d6d6d;padding-left: 15px;}
+.file_classify>ul>li>a.curr{color:#3ebbce;}
+
+
+
+.hot_page{border-bottom: 1px solid #ddd;position: relative;margin-top: -80px;height: 250px;}
+.hot_page_title_name{font-size: 16px;font-weight: bold;padding-left:30px;}
+.hot_page ul li{width: 200px;font-size: 14px;padding-left: 30px;color: #6d6d6d;overflow: hidden;line-height: 45px;height: 45px;}
+.hot_page ul li a{color: #6d6d6d;overflow: hidden;}
+.hot_page ul li:first-child{padding-top: 20px;}
+.hot_page ul li p{width: 30px;height:30px;background-color: #3ebbce;border: 1px solid #3ebbce;color: #fff;line-height: 30px;}
+.hot_page_title{padding-left: 20px;width: 100px;}
+.hot_page_NO{}
+
+.author_follow{height: 240px;position: relative;}
+.latest_follow_title{font-size: 14px;font-weight: bold;padding-left: 30px;margin-top: 35px;}
+.author_follow ul{margin-top: 13px;margin-left: 30px;}
+.author_follow ul li{width:30px;height: 50px;margin-top: 10px;}
+.author_follow ul li a{color: #6d6d6d;}
+.author_follow ul li img{ width: 40px;height:40px;display: inline;}
+.author_follow ul li span{font-size: 12px;width: 150px;display: inline;overflow:hidden;height: 30px;line-height: 30px;position: absolute;margin-top: -50px;margin-left: 55px;}
+
+
+/*右边主内容区域*/
+.main_teacher_right{width: 850px;height:775px;margin-left: 20px;background-color: #fff;position: relative;float: left;border-radius: 5px;}
+.author_content_classify{position:relative;}
+.author_content_classify>ul{width: 820px;border-bottom: 1px solid #ddd;margin-left: 15px;padding-bottom: 33px;}
+.author_content_classify>ul>li>a.curr{color: #3ebbce;border-bottom: 2px solid #3ebbce;font-size: 14px;padding-bottom: 7px;}
+.author_content_classify>ul>li{font-size: 14px;padding-left: 8px;width: 80px;line-height: 32px;margin-left: -3px;color: #6d6d6d;text-align: center;float: left;padding-bottom: 10px;}
+.author_content_classify>ul>li:first-child{margin-left:460px;}
+.author_content_classify>ul>li>a{color: #6d6d6d;}
+.author_content_classify>ul>li>a>img{padding-left: 5px;}
+.main_right_resource_content{position:relative;margin-top: 10px;}
+.main_right_resource_content>ul{margin-left: 35px;}
+.main_right_resource_content>ul>li{float:left;margin-left:45px;width: 160px;height: 250px;margin-top: 40px;}
+.author_content_page_img{width: 160px;height:200px;margin-top:20px;border: 1px solid #acacac;}
+.main_right_resource_content>ul>li>span{font-size: 14px;padding-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width: 150px;text-align: center;display: inline-block;}
+.author_content_page_time{font-size: 14px;padding-top: 5px;text-align: center;width: 100px;}
+
+/*我的课程*/
+.main_right_course_content,.main_right_follow_content{margin-top: 20px;}
+.teacher_course_type{margin-top: 20px;}
+.teacher_course_type>ul,.teacher_follow_type>ul{margin-left: 15px;}
+.teacher_course_type>ul>li{width:80px;text-align: center;padding-bottom: 15px;margin-right: 15px;display: inline-block;}
+.teacher_course_type>ul>li.curr{border-bottom: 2px solid #3ebbce;}
+.teacher_course_type>ul>li>a{font-size:14px;}
+.teacher_course_type>ul>li>a.curr{color: #3ebbce}
+.course_sort_list{margin-top: 30px;}
+.sort_list_page{width: 250px;height: 230px;float: left;position: relative;background-color: #fff;margin-left: 23px;margin-bottom:30px;border: 1px solid #ddd;}
+.open_class_img{width: 230px;height: 150px;position: relative;margin: 10px;}
+.open_class_type{font-size: 12px;line-height: 20px;color: #ffffff;left:10px;background: rgba(0,0,0,0.5);padding: 1px 5px;position: absolute;top:10px;opacity: 0.6;}
+.open_class_time{background: rgba(0,0,0,0.53);font-size:12px;width: 250px;text-align:center;margin-top: -30px;line-height: 30px;position: relative;color: #ffffff;}
+.open_class_theme{line-height: 20px;margin-left: 10px;font-size: 14px;}
+.open_class_price span{margin-right: 10px;line-height: 30px;float: right;margin-top: -25px;}
+.open_class_price_num{color:#9a4449;}
+.open_class_price_free{color:#3ebbce;}
+.line_style{padding: 0 10px;}
+.applicants_num{margin-left: 10px;margin-top: 10px;}
+.applicants_num span{font-size: 12px;padding-left: 20px;}
+.applicants_num label{font-size: 12px;padding-left: 20px;}
+.applicants_num img{width: 14px;height: 14px;margin-top: 2px;position: absolute;}
+ /*关注/粉丝*/
+.teacher_follow_type{}
+.teacher_follow_type>ul{}
+.teacher_follow_type>ul>li{width: 60px;height: 40px;line-height:40px;text-align: center;display: inline-block;}
+.teacher_follow_type>ul>li.curr{background-color: #3ebbce;}
+.teacher_follow_type>ul>li>a{font-size: 14px;}
+.teacher_follow_type>ul>li>a.curr{color:#fff;}
+.teacher_follow_page{margin-left: 15px;margin-top: 10px;}
+.teacher_follow_page_list,.teacher_class_page_list{width: 250px;height: 240px;border: 1px solid #ddd;border-radius: 5px;float: left;margin: 10px 15px;}
+.teacher_follow_page_list_top,.teacher_class_page_list_top{background-color:#f5f8fa;width: 250px;height: 160px;}
+.teacher_follow_page_list_top>a>img{width:80px;height: 80px;border-radius: 50%;margin-top:20px;margin-left: 85px;}
+.teacher_follow_page_list_top>h4{text-align: center;width: 250px;margin-top: 15px;}
+.teacher_follow_page_list_bottom>a{width: 50px;height: 30px;font-size: 14px;line-height: 30px;text-align: center;border-radius: 5px;border: 1px solid #ddd;margin-right:20px;display: inline-block;}
+.teacher_follow_page_list_bottom>p{font-size: 14px;line-height: 20px;text-align: center;width: 210px;margin-left: 20px;}
+/*在教班级*/
+.teacher_class_page_list_bottom{}
+.mask_over{width: 250px;height: 160px;background-color: #2d2d2d;position:absolute;margin-top: -160px;opacity: 0.7;z-index: 9;display: none;}
+.teacher_class_page_list_top{z-index: -1}
+.teacher_class_page_list_top>a>img{width: 250px;height: 160px;border-radius: 5px 5px 0 0;}
+.teacher_class_page_list>h4{margin-top: 70px;margin-left:90px;display: none;z-index: 99;position: absolute;}
+.teacher_class_page_list>h4>a{font-size: 14px;padding: 5px 12px;background-color: #e27550;font-weight: normal;color: #fff;border-radius: 5px;}
+.teacher_class_page_list_bottom{position: relative;}
+.teacher_class_page_list_bottom>a{display: inline-block;text-align: center;width: 100%;margin-top:15px;font-size: 16px;}
+.teacher_class_page_list_bottom>p{text-align: center;width: 100%;margin-top:10px;font-size: 14px;opacity: 0.9;}
+
+/*加入小组/管理小组*/
+.teacher_club_list{margin-left: 15px;margin-top: 20px;}
+.teacher_club_page{width: 250px;height: 60px;margin-left: 20px;float: left;}
+.teacher_club_page>a>img{width:60px;height: 60px;}
+.teacher_club_page>a>p{font-size:14px;margin-left: 80px;margin-top: -70px;}
+.teacher_club_page>label{margin-left:80px;margin-top: -15px;position: absolute;}
+.teacher_club_page>label>span{font-size:12px;padding-right: 15px;}
+
+
+
+
+
+
+
+
+
+
+
+/*.footer*/

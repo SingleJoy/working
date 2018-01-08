@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>试卷批阅结果</title>
+	<link href="./edusoho/bootstrap.css" rel="stylesheet">
+	<link href="./edusoho/es-question.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body>
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="es-section testpaper-heading">
+            <div class="testpaper-titlebar clearfix">
+                <h1 class="testpaper-title">666 <br><small class="text-sm">答题人：体验管理员1 交卷时间：2016-11-24 10:16 用时：01:04</small></h1>
+                <div class="testpaper-status">      
+                    <div class="label label-success">批阅完成</div>
+                </div>
+            </div>
+            <div class="media testpaper-result">
+                <div class="testpaper-result-total">
+                    <div class="well">
+                      <div class="testpaper-result-total-score">5.0 <small>分</small></div>
+                      <small class="text-muted">总分 12.0 分</small>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-condensed testpaper-result-table">
+                        <thead>
+                            <tr><th></th>
+                            <th>单选题 <small class="text-muted">(1道)</small></th>
+                            <th>填空题 <small class="text-muted">(1道)</small></th>
+                            <th>问答题 <small class="text-muted">(1道)</small></th>
+                            <th>材料题 <small class="text-muted">(3道)</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th>答对</th>
+                            <td><span class="text-success">0 <small>道</small></span></td>
+                            <td><span class="text-success">0 <small>道</small></span></td>
+                            <td><span class="text-success">0 <small>道</small></span></td>
+                            <td><span class="text-success">2 <small>道</small></span></td>
+                            </tr>
+                            <tr>
+                            <th>答错</th>
+                            <td><span class="text-danger">1 <small>道</small></span></td>
+                            <td><span class="text-danger">1 <small>道</small></span></td>
+                            <td><span class="text-danger">1 <small>道</small></span></td>
+                            <td><span class="text-danger">1 <small>道</small></span></td>
+                            </tr>
+                            <tr>
+                            <th>未答</th>
+                            <td><span class="text-muted">0 <small>道</small></span></td>
+                            <td><span class="text-muted">0 <small>道</small></span></td>
+                            <td><span class="text-muted">0 <small>道</small></span></td>
+                            <td><span class="text-muted">0 <small>道</small></span></td>
+                            </tr>
+                            <tr>
+                            <th>得分</th>
+                            <td><span class="text-score">0 <small>分</small></span></td>
+                            <td><span class="text-score">0 <small>分</small></span></td>
+                            <td><span class="text-score">0 <small>分</small></span></td>
+                            <td><span class="text-score">5 <small>分</small></span></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-danger">
+                您未通过考试，请<a href="/lesson/218/test/3/redo">重新参加考试</a>，或者重新学习课程。
+            </div>
+            <div id="testpaper-navbar" class="testpaper-navbar affix-top" >
+                <ul class="nav nav-pills clearfix">
+                    <li class="active"><a href="#testpaper-questions-single_choice">单选题</a></li>
+                    <li class=""><a href="#testpaper-questions-fill">填空题</a></li>
+                    <li><a href="#testpaper-questions-essay">问答题</a></li>
+                    <li><a href="#testpaper-questions-material">材料题</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9 prevent-copy">
+                <div class="testpaper-body">
+                    <form id="teacherCheckForm" autocomplete="off" novalidate="novalidate">
+                    <div class="panel panel-default testpaper-question-block" id="testpaper-questions-single_choice">
+                        <div class="panel-heading">
+                            <strong class="">单选题</strong>
+                            <small class="text-muted">共1题，共2分            </small>
+                        </div>
+                        <div class="panel-body">
+                            <div class="testpaper-question testpaper-question-choice " id="question1">
+                                <div class="testpaper-question-body">
+                                    <div class="testpaper-question-stem-wrap clearfix">
+                                        <div class="testpaper-question-seq-wrap">
+                                            <div class="testpaper-question-seq">1</div>
+                                            <div class="testpaper-question-score">2.0分</div>
+                                        </div>
+                                        <div class="testpaper-question-stem"><p>111</p><br></div>
+                                    </div>
+                                    <ul class="testpaper-question-choices">
+                                        <li class=""><span class="testpaper-question-choice-index">A.</span> <p>2</p></li>
+                                        <li class=""><span class="testpaper-question-choice-index">B.</span> <p>3</p></li>
+                                        <li class="testpaper-question-choice-right"><span class="testpaper-question-choice-index">C.</span> <p>4</p></li>
+                                        <li class=""><span class="testpaper-question-choice-index">D.</span> <p>5</p></li>
+                                    </ul>
+                                </div>
+                                <div class="testpaper-question-footer clearfix">
+                                    <div class="testpaper-question-result">
+                                        正确答案是 <strong class="text-success">C</strong>，你的答案是 <strong class="text-danger">D</strong>。回答错误
+                                    </div>
+                                    <div class="testpaper-question-actions pull-right">
+                                        <button class="btn btn-link btn-sm unfavorite-btn"><span class="glyphicon glyphicon-star"></span> 取消收藏</button>
+                                        <a class="btn btn-sm btn-link analysis-btn dis-anay" value="1"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+                                        <a class="btn btn-sm btn-link unanalysis-btn dis-anay" value="2" style="display: none;"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+                                    </div>
+                                </div>
+                                <div class="testpaper-question-analysis well" style="display:none;">
+                                    <p>1111</p><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default testpaper-question-block" id="testpaper-questions-fill">
+                        <div class="panel-heading">
+                            <strong class="">填空题</strong>
+                            <small class="text-muted">共1题，共2分            </small>
+                        </div>
+                        <div class="panel-body">
+                            <div class="testpaper-question testpaper-question-fill " id="question2">
+                                <div class="testpaper-question-body">
+                                    <div class="testpaper-question-stem-wrap clearfix">
+                                        <div class="testpaper-question-seq-wrap">
+                                            <div class="testpaper-question-seq">2</div>
+                                            <div class="testpaper-question-score">2.0分</div>
+                                        </div>
+                                        <div class="testpaper-question-stem">
+                                            <p>111111<span class="question-stem-fill-blank">(1)</span></p><br>
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div class="testpaper-question-footer clearfix">
+                                    <div class="testpaper-question-result">
+                                        <ul>
+                                        <li>
+                                        填空(1)： 正确答案 <strong class="text-success">111 或 </strong>
+                                        ，你的答案　<strong class="text-danger">555</strong>。
+                                        </li>
+                                        </ul>
+                                        <p class="text-danger">回答错误。</p>
+                                    </div>
+                                    <div class="testpaper-question-actions pull-right">
+                                        <button class="btn btn-sm btn-default favorite-btn"><span class="glyphicon glyphicon-star-empty"></span> 收藏</button>
+                                        <a class="btn btn-sm btn-link analysis-btn dis-anay" value="1"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+                                        <a class="btn btn-sm btn-link unanalysis-btn dis-anay" value="2" style="display: none;"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+                                    </div>
+                                </div>
+                                <div class="testpaper-question-analysis well" style="display:none;">
+                                    <p>2222222222dfsgdsfg</p><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default testpaper-question-block" id="testpaper-questions-essay">
+                        <div class="panel-heading">
+                            <strong class="">问答题</strong>
+                            <small class="text-muted">共1题，共2分</small>
+                        </div>
+                        <div class="panel-body">
+                            <div class="testpaper-question testpaper-question-essay " id="question3">
+                                <div class="testpaper-question-body">
+                                    <div class="testpaper-question-stem-wrap clearfix">
+                                        <div class="testpaper-question-seq-wrap">
+                                            <div class="testpaper-question-seq">3</div>
+                                            <div class="testpaper-question-score">2.0分</div>
+                                        </div>
+                                        <div class="testpaper-question-stem"><p>12www</p><br></div>
+                                    </div>  
+                                </div>
+                                <div class="testpaper-question-footer clearfix">
+                                    <div class="testpaper-question-result">
+                                        <div class="testpaper-question-result-suggested">
+                                            <div class="testpaper-question-result-title">参考答案：</div>
+                                            <div><p>qwqqdqw</p></div>
+                                        </div>
+                                        <div class="testpaper-question-result-your">
+                                            <div class="testpaper-question-result-title">你的回答：</div>
+                                            <div><p>5555</p></div>
+                                        </div>
+                                        <div class="testpaper-question-result-score mtl">
+                                            <div class="testpaper-question-result-title">得分：<strong>0.0 分</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="testpaper-question-actions pull-right">
+                                        <button class="btn btn-sm btn-default favorite-btn"><span class="glyphicon glyphicon-star-empty"></span> 收藏</button>
+                                    </div>
+                                </div>
+                            </div>                                                    
+                        </div>
+                    </div>
+                    <div class="panel panel-default testpaper-question-block" id="testpaper-questions-material">
+                        <div class="panel-heading"><strong class="">材料题</strong>
+                            <small class="text-muted">
+                              共2题，共4分            </small>
+                        </div>
+                        <div class="panel-body">
+                            <div class="material right-question">
+                                <div class="well testpaper-question-stem-material"><p>hhhh</p></div>
+
+                                <div class="testpaper-question testpaper-question-fill " id="question7">
+                                    <div class="testpaper-question-body">
+                                        <div class="testpaper-question-stem-wrap clearfix">
+                                            <div class="testpaper-question-seq-wrap">
+                                                <div class="testpaper-question-seq">4</div>
+                                                <div class="testpaper-question-score">2.0分</div>
+                                            </div>
+                                            <div class="testpaper-question-stem"><p>qqq</p><br></div>
+                                        </div>  
+                                    </div>
+                                    <div class="testpaper-question-footer clearfix">
+                                        <div class="testpaper-question-result">
+                                            正确答案是 <strong class="text-success"> 正确 </strong>，你答对了
+                                        </div>
+                                        <div class="testpaper-question-actions pull-right">
+                                            <button class="btn btn-sm btn-default favorite-btn"><span class="glyphicon glyphicon-star-empty"></span> 收藏</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="testpaper-question testpaper-question-fill "  id="question8">
+                                    <div class="testpaper-question-body">
+                                        <div class="testpaper-question-stem-wrap clearfix">
+                                            <div class="testpaper-question-seq-wrap">
+                                                <div class="testpaper-question-seq">5</div>
+                                                <div class="testpaper-question-score">2.0分</div>
+                                            </div>
+                                            <div class="testpaper-question-stem"><p>qqqqwwe</p><br></div>
+                                        </div>  
+                                    </div>
+
+                                    <div class="testpaper-question-footer clearfix">
+                                        <div class="testpaper-question-result">正确答案是 <strong class="text-success"> 错误 </strong>，你答对了 </div>
+                                        <div class="testpaper-question-actions pull-right">
+                                            <button class="btn btn-sm btn-default favorite-btn"><span class="glyphicon glyphicon-star-empty"></span> 收藏</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                                                                 
+                            <div class="material">
+                                <div class="well testpaper-question-stem-material"><p>fghfghfhf</p></div>
+                                <div class="testpaper-question testpaper-question-essay " id="question5">
+                                    <div class="testpaper-question-body">
+                                        <div class="testpaper-question-stem-wrap clearfix">
+                                            <div class="testpaper-question-seq-wrap">
+                                                <div class="testpaper-question-seq">6</div>
+                                                <div class="testpaper-question-score">2.0分</div>
+                                            </div>
+                                            <div class="testpaper-question-stem"><p>1asxxx</p><br>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    <div class="testpaper-question-footer clearfix">
+                                        <div class="testpaper-question-result">
+                                            <div class="testpaper-question-result-suggested">
+                                                <div class="testpaper-question-result-title">参考答案：</div>
+                                                    <div><p>xxxxx</p>
+                                                </div>
+                                            </div>
+                                            <div class="testpaper-question-result-your">
+                                                <div class="testpaper-question-result-title">你的回答：</div>
+                                                    <div><p>11111111111</p>
+                                                </div>
+                                            </div>
+                                            <div class="testpaper-question-result-score mtl">
+                                                <div class="testpaper-question-result-title">得分：<strong>1.0 分</strong></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="testpaper-question-actions pull-right">
+                                            <button class="btn btn-sm btn-default favorite-btn"><span class="glyphicon glyphicon-star-empty"></span> 收藏</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                                    
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="testpaper-card affix-top">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#question1" class="btn btn-default btn-index pull-left wrong btn-danger">1</a>
+                            <div class="clearfix mtm mbm"></div>
+                            <a href="#question2" class="btn btn-default btn-index pull-left wrong btn-danger">2</a>
+                            <div class="clearfix mtm mbm"></div>
+                            <a href="#question3" class="btn btn-default btn-index pull-left wrong btn-danger">3</a>
+                            <div class="clearfix mtm mbm"></div>
+                            <a href="#question4" class="btn btn-default btn-index pull-left right btn-success">4</a>
+                            <a href="#question5" class="btn btn-default btn-index pull-left right btn-success">5</a>
+                            <a href="#question6" class="btn btn-default btn-index pull-left wrong btn-danger">6</a>
+                            <div class="clearfix mtm mbm"></div>
+                            <div class="testpaper-card-explain clearfix">
+                                <a href="javascript:;" class="btn btn-success btn-index"></a><small class="text-muted">正确</small>
+                                <a href="javascript:;" class="btn btn-danger btn-index"></a><small class="text-muted">错误</small>
+                                <a href="javascript:;" class="btn btn-warning btn-index"></a><small class="text-muted">待批阅</small>
+                                <a href="javascript:;" class="btn btn-default btn-index"></a><small class="text-muted">未做</small>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" id="showWrong">
+                                <span class="text-info">只看错题</span>
+                              </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>                                                                               
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(e){
+        $('.testpaper-navbar .nav-pills li').on("click",function(){
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+        })
+        $('.testpaper-question-footer .testpaper-question-actions a').on("click",function(){
+            var num = $(this).attr('value');
+            // console.log(num);
+            $(this).hide();
+            $(this).siblings('.dis-anay').show();
+            if (num == 1) {
+                $(this).parent().parent().next(".testpaper-question-analysis").eq(0).show();
+            }else if (num == 2) {
+                $(this).parent().parent().next(".testpaper-question-analysis").eq(0).hide();
+            }
+        })
+        // 只看错题
+        $('#showWrong').on('click',function(){
+            if ($(this).is(':checked')) {
+                $('.right-question').hide();
+            }else{
+                $('.right-question').show();
+            }
+        })
+    })
+</script>
+</body>
+</html>

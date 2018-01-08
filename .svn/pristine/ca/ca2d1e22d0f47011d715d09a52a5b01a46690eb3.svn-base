@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>教研主页</title>，
+    <meta content="Sqx6qipk9NH8dJTUxLAkpVGuO1y2RgO4S2i6Uxuqq-4" name="csrf-token">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.12" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.12">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.12" rel="stylesheet">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.12" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){
+            $(".js-search").focus(function(){
+                $(this).css("width","150px");
+            }).blur(function(){
+                $(this).css("width","100px");
+            });
+        });
+
+        $(function(){
+            $(".hover_show").mouseover(function(){
+                $(this).siblings("ul").show();
+            }).mouseout(function(){
+                $(this).siblings("ul").hide();
+            });
+            $(".dropdown-menu").mouseover(function(){
+                $(this).show();
+            }).mouseout(function(){
+                $(this).hide();
+            })
+
+        });
+
+        $(function(){
+            $(".more_categories").click(function(){
+                if($(this).next().css("display")=='none'){
+                    $(".more_categories_list").slideUp(1200);
+                    $(this).next().slideDown(1200);
+                    $(".more_categories").find("a").find("span").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-right");
+                    $(this).find("a").find("span").removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-down");
+                }else{
+                    $(".more_categories_list").slideUp(1200);
+                    $(".more_categories").find("a").find("span").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-right");
+                }
+
+            })
+        });
+
+
+
+    </script>
+    <style>
+
+        .study_section{background: url("../../images/study_section.png") no-repeat;margin-left: 20px;margin-top: 10px;}
+        .grade{background: url("../../images/grade.png") no-repeat;margin-left: 20px;margin-top: 10px;}
+        .subject{background: url("../../images/subject.png") no-repeat;margin-left: 20px;margin-top: 10px;}
+        .textbooks{background: url("../../images/textbooks.png") no-repeat;margin-left: 20px;margin-top: 10px;}
+        .area{background: url("../../images/area.png") no-repeat;margin-left: 20px;margin-top: 10px;}
+        .lesson_info{position: absolute;margin-top: -40px;padding-left: 15px;background-color: #353535;opacity: 0.6;width: 248px;}
+        .lesson_info>span{color: #ddd;}
+        .lesson_teacher{padding-left:30px; }
+    </style>
+</head>
+<body >
+
+<div class="es-wrap " style="background-color: #f3f3f3;">
+
+    <!--头 -->
+    <div class="train_main_top container" >
+
+        <div class="train_main_top_left pull-left" >
+
+            <ul class="nav navbar-nav">
+                <li class=""><a href="javascript:void(0);">培训</a></li>
+                <li class=""><a href="javascript:void(0);">教研</a></li>
+                <li class=""><a href="javascript:void(0);">资源</a></li>
+                <li class=""><a href="javascript:void(0);">题库</a></li>
+                <li class=""><a href="javascript:void(0);">作业</a></li>
+                <li class=""><a href="javascript:void(0);">百科</a></li>
+            </ul>
+
+        </div>
+
+        <div class="container" style="z-index: 9999;">
+            <ul class="nav user-nav">
+                <li class="user-avatar-li nav-hover">
+                    <a href="javascript:;" class="dropdown-toggle hover_show">
+                        <img class="avatar-xs" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                    </a>
+
+                    <ul class="dropdown-menu" >
+                        <li role="presentation" class="dropdown-header">杜塞尔多夫</li>
+                        <li><a href="javascript:void(0);"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                        <li><a href="javascript:void(0);"><i class="es-icon es-icon-setting"></i>个人设置</a></li>
+                        <li class="hidden-lg user-nav-li-my">
+                            <a href="javascript:void(0);" style="color: #000;">
+                                <i class="es-icon es-icon-eventnote"></i>我的学习
+                            </a>
+                        </li>
+
+                        <li><a href="javascript:void(0);" style="color: #000;"><i class="es-icon es-icon-accountwallet"></i>账户中心</a></li>
+
+                        <li class="hidden-lg">
+                            <a href="javascript:void(0);">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>通知
+                            </a>
+                        </li>
+
+                        <li class="hidden-lg">
+                            <a href="javascript:void(0);"><span class="pull-right num"></span>
+                                <i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+
+                        <li class="user-nav-li-logout">
+                            <a href="javascript:void(0);">
+                                <i class="es-icon es-icon-power"></i>退出登录</a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <li class="visible-lg">
+                    <a href="" style="color: #000;">我的学习</a>
+                </li>
+
+                <li class="visible-lg ">
+
+                    <a style="color: #000;" class="hover_show"><i class="es-icon es-icon-mail"></i></a>
+
+                    <ul class="dropdown-menu" role="menu" style="z-index: 9999;">
+                        <li>
+                            <a href="">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-notificationson"></i>通知
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="pull-right num"></span>
+                                <i class="es-icon es-icon-mail"></i>私信
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <!--导航栏-->
+    <header style="background-color:#5396e4;;">
+
+        <nav class="collapse navbar-collapse container" style="max-width: 1120px;margin: 0 auto;">
+
+            <form class="navbar-form navbar-right hidden-xs hidden-sm pull-right" action="" method="get">
+                <div class="form-group" style="margin-top: 5px;">
+                    <input class="form-control js-search" name="q" placeholder="搜索">
+                    <button class="button es-icon es-icon-search"></button>
+                </div>
+            </form>
+            
+        </nav>
+
+    </header>
+
+    <div id="content-container" class="container">
+
+        <!-- 分类 -->
+        <div class="tabs-wrapper">
+
+                <div class="tabs-group">
+                    <div class="title study_section" ><span style="padding-left: 60px;">学段:</span></div>
+                    <ul class="content clearfix" style="margin-top: 10px;">
+                        <li class=""><a class="nav-link" href="">小学</a></li>
+                        <li class=""><a class="nav-link" href="">初中</a></li>
+                        <li class=""><a class="nav-link" href="">高中</a></li>
+                    </ul>
+                </div>
+
+
+                <div class="tabs-group">
+                    <div class="title grade"><span style="padding-left: 60px;">年级:</span></div>
+                    <ul class="content clearfix" style="margin-top: 10px;">
+                        <li class=""><a class="nav-link tag" href="">一年级</a></li>
+                        <li class=""><a class="nav-link tag" href="">二年级</a></li>
+                        <li class=""><a class="nav-link tag" href="">三年级</a></li>
+                        <li class=""><a class="nav-link tag" href="">四年级</a></li>
+                        <li class=""><a class="nav-link tag" href="">五年级</a></li>
+                        <li class=""><a class="nav-link tag" href="">六年级</a></li>
+                    </ul>
+                </div>
+
+                <div class="tabs-group">
+                    <div class="title subject"><span style="padding-left: 60px;">学科:</span></div>
+                    <ul class="content clearfix" style="margin-top: 10px;">
+                        <li class=""><a class="nav-link tag" href="">全部</a></li>
+                        <li class=""><a class="nav-link tag" href="">语文</a></li>
+                        <li class=""><a class="nav-link tag" href="">数学</a></li>
+                        <li class=""><a class="nav-link tag" href="">英语</a></li>
+                        <li class=""><a class="nav-link tag" href="">科学</a></li>
+                        <li class=""><a class="nav-link tag" href="">音体美</a></li>
+                        <li class=""><a class="nav-link tag" href="">其他</a></li>
+                    </ul>
+                    <div class="pull-right more_categories" style="margin-top: -32px;cursor: pointer;"><a href="javascript:"><span class="glyphicon glyphicon-chevron-right"></span></a></div>
+                    <ul class="content clearfix more_categories_list" style="padding-left: 15px;display: none;">
+                        <li class=""><a class="nav-link tag" href="">001</a></li>
+                        <li class=""><a class="nav-link tag" href="">002</a></li>
+                        <li class=""><a class="nav-link tag" href="">003</a></li>
+                        <li class=""><a class="nav-link tag" href="">004</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="tabs-group">
+                    <div class="title textbooks"><span style="padding-left: 60px;">教材:</span></div>
+                    <ul class="content clearfix " style="margin-top: 10px;">
+                        <li class=""><a class="nav-link tag" href="">全部</a></li>
+                        <li class=""><a class="nav-link tag" href="">人教版</a></li>
+                        <li class=""><a class="nav-link tag" href="">北师大</a></li>
+                        <li class=""><a class="nav-link tag" href="">鲁教版</a></li>
+                        <li class=""><a class="nav-link tag" href="">其他</a></li>
+
+                    </ul>
+                    <div class="pull-right more_categories" style="margin-top: -32px;cursor: pointer;"><a href="javascript:"><span class="glyphicon glyphicon-chevron-right"></span></a></div>
+                    <ul class="content clearfix more_categories_list" style="padding-left: 15px;display: none;">
+                        <li class=""><a class="nav-link tag" href="">粤教版</a></li>
+                        <li class=""><a class="nav-link tag" href="">苏教版</a></li>
+                        <li class=""><a class="nav-link tag" href="">沪教版</a></li>
+                        <li class=""><a class="nav-link tag" href="">川大版</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="tabs-group">
+                    <div class="title area"><span style="padding-left: 60px;">区域:</span></div>
+                    <ul class="content clearfix " style="margin-top: 10px;">
+                        <li class=""><a class="nav-link tag" href="">全国</a></li>
+                        <li class=""><a class="nav-link tag" href="">北京</a></li>
+                        <li class=""><a class="nav-link tag" href="">天津</a></li>
+                        <li class=""><a class="nav-link tag" href="">山西</a></li>
+                        <li class=""><a class="nav-link tag" href="">湖南</a></li>
+
+                    </ul>
+                    <div class="pull-right more_categories" style="margin-top: -32px;cursor: pointer;"><a href="javascript:"><span class="glyphicon glyphicon-chevron-right"></span></a></div>
+                    <ul class="content clearfix more_categories_list" style="padding-left: 15px;display: none;">
+                        <li class=""><a class="nav-link tag" href="">湖北</a></li>
+                        <li class=""><a class="nav-link tag" href="">四川</a></li>
+                        <li class=""><a class="nav-link tag" href="">上海</a></li>
+                        <li class=""><a class="nav-link tag" href="">江苏</a></li>
+
+                    </ul>
+                </div>
+
+            </div>
+
+        <div class="es-filter">
+
+            <ul class="nav nav-sort clearfix">
+                <li><a href="" class="">最新</a></li>
+                <li><a href="" class="active">最热</a></li>
+                <li><a href="" class="">推荐</a></li>
+            </ul>
+
+            <div class="filter hidden-xs">
+
+                <label class="checkbox-inline">
+                    <!--分类为已完成课例添加class为text-info-->
+                    <span class="text-info">已完成课例</span>
+                </label>
+                <label class="checkbox-inline">
+                   <span>优秀课例</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 最新培训 -->
+        <div class="course-list">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="course-item">
+                        <div class="course-img">
+                            <a href="" target="_blank">
+                                <img src="http://scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-27/10332664ecc0228241.png" alt="EduSoho安装配置要求及环境选择" class="img-responsive">
+                            </a>
+                        </div>
+
+                        <div class="course-info">
+                            <div class="title">
+                                <div class="lesson_info">
+                                    <span class="lesson_grade">五年级语文</span>
+                                    <span class="lesson_teacher">主讲老师:&nbsp;李明博</span>
+                                </div>
+
+                                <a class="link-dark" href="#" target="_blank" style="padding-left: 10px;">
+                                   林教头风雪山神
+                                </a>
+                            </div>
+                        </div>
+                        <div class="progress" style="width: 245px;margin-left: 10px;margin-top: 10px;">
+                            <div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:30%">30%</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="es-footer-link" style="background: #393b56;">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 footer-main clearfix">
+                <div class="link-item ">
+                    <h3>我是学生</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">如何注册</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">如何学习</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">如何互动</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item ">
+                    <h3>我是老师</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">发布课程</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">使用题库</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">教学资料库</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item ">
+                    <h3>我是管理员</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_self">修改底部链接</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">系统设置</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">课程设置</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item hidden-xs">
+                    <h3>商业应用</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">会员专区</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">题库增强版</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">用户导入导出</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item hidden-xs">
+                    <h3>关于我们</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">ES官网</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">教程网站</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">产品演示站</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="col-md-4 footer-logo hidden-sm hidden-xs">
+
+                <a class="" href="http://www.edusoho.com" target="_blank">
+                    <img src="../../images/qiuzi_index.png" alt="建议图片大小为233*64">
+                </a>
+
+                <div class="footer-sns">
+                    <a href="#" target="_blank">
+                        <i class="es-icon es-icon-weibo"></i>
+                    </a>
+                    <a class="qrcode-popover top">
+                        <i class="es-icon es-icon-weixin"></i>
+                        <div class="qrcode-content">
+                            <img src="#" alt="">
+                        </div>
+                    </a>
+                    <a class="qrcode-popover top">
+                        <i class="es-icon es-icon-apple"></i>
+                        <div class="qrcode-content">
+                            <img src="#" alt="">
+                        </div>
+                    </a>
+                    <a class="qrcode-popover top">
+                        <i class="es-icon es-icon-android"></i>
+                        <div class="qrcode-content">
+                            <img src="#" alt="">
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<footer class="es-footer">
+    <div class="copyright">
+        <div class="container">
+            Powered by <a href="#" target="_blank">求资网 1.0.0</a>
+            ©1998-2017 <a class="mlm" href="#" target="_blank"></a>
+            <a class="mlm" href="#">课程存档</a>
+            <div class="mts"></div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body>
+
+</html>

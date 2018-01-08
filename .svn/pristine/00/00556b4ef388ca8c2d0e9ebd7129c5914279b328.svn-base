@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>材料题弹窗</title>
+	<link href="./edusoho/bootstrap.css" rel="stylesheet">
+
+	<link href="./edusoho/es-question.css" rel="stylesheet">
+
+</head>
+<body class="">
+
+<div id="modal" class="modal" aria-hidden="true" style="display: block;">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close">×</button> -->
+                <h4 class="modal-title">题目预览</h4>
+            </div>
+            <div class="modal-body">
+                <div class="material">
+                    <div class="well testpaper-question-stem-material"><p>材料题</p></div>
+                    <div class="testpaper-question testpaper-question-choice "  id="question45">
+                        <div class="testpaper-question-body">
+                            <div class="testpaper-question-stem-wrap clearfix">
+                                <div class="testpaper-question-seq-wrap">
+                                    <div class="testpaper-question-seq"></div>
+                                    <div class="testpaper-question-score">2.0分</div>
+                                </div>
+                                <div class="testpaper-question-stem"><p>测试</p><br> </div>
+                            </div>
+                            <ul class="testpaper-question-choices">
+                                <li class=""><span class="testpaper-question-choice-index">A.</span> <p>1</p></li>
+                                <li class=""><span class="testpaper-question-choice-index">B.</span> <p>2</p></li>
+                                <li class=""><span class="testpaper-question-choice-index">C.</span> <p>3</p></li>
+                                <li class=""><span class="testpaper-question-choice-index">D.</span> <p>4</p></li>
+                            </ul>
+                        </div>
+                        <div class="testpaper-question-footer clearfix">
+                            <div class="testpaper-question-choice-inputs">
+                                <label class="checkbox-inline ">
+                                    <input type="checkbox" name="" value="0">A 
+                                </label>
+                                <label class="checkbox-inline ">
+                                    <input type="checkbox" name="" value="1">B
+                                </label>
+                                <label class="checkbox-inline ">
+                                    <input type="checkbox" name="" value="2">C
+                                </label>
+                                <label class="checkbox-inline ">
+                                    <input type="checkbox" name="" value="3">D
+                                </label>
+                            </div>
+                            <div class="testpaper-question-actions pull-right"></div>
+                        </div>
+                        <div class="testpaper-preview-answer clearfix mtl mbl">
+                            <div class="testpaper-question-result">
+                                正确答案是 <strong class="text-success">D</strong>
+                            </div>
+                        </div>
+                        <div class="testpaper-question-analysis well"><p>解析</p><br></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">  
+                <button type="button" class="btn btn-default" >关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

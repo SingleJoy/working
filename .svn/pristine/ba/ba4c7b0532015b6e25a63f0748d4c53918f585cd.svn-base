@@ -1,0 +1,222 @@
+package cn.bnsr.edu_yun.util;
+
+import java.lang.reflect.Method;
+import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.aspectj.lang.JoinPoint;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.backstage.base.po.SysLog;
+import cn.bnsr.edu_yun.backstage.base.service.BackUserService;
+import cn.bnsr.edu_yun.backstage.base.service.SysLogService;
+import cn.bnsr.edu_yun.backstage.base.view.SessionInfo;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import nl.bitwalker.useragentutils.Browser;
+import nl.bitwalker.useragentutils.UserAgent;
+/**
+ * 日志管理
+ * @author fangxiongwei
+ * @date 2017年6月24日
+ */
+public class LogAspect {
+	private Log logger = LogFactory.getLog(LogAspect.class);
+	@Autowired
+	private SysLogService  sysLogService;
+	@Autowired
+	private BackUserService  backUserService;
+	
+	//TODO完善优化
+	private long startTimeMillis = 0; // 开始时间  
+    private long endTimeMillis = 0; // 结束时间  
+	
+   /** 
+     * 方法调用前触发   记录开始时间  
+     */ 
+    public void before(JoinPoint joinPoint){ 
+        //System.out.println("被拦截方法调用之后调用此方法，输出此语句");  
+		HttpServletRequest request = RequestUtil.getHttpServletRequest(); 
+        //fileName  为例子
+        startTimeMillis = System.currentTimeMillis(); //记录方法开始执行的时间  
+        System.out.println("开始>>"+startTimeMillis);
+    }  
+    
+	/**
+	 * 添加日志（after method done）
+	 */
+	public void doSystemLog(JoinPoint joinPoint){
+		HttpServletRequest request = RequestUtil.getHttpServletRequest(); 
+		try {
+			String requestPath = RequestUtil.getRequestPath(request);
+			String methodName = joinPoint.getSignature().getName();
+			String targetName = joinPoint.getTarget().getClass().getName();
+			// 目标方法不为空
+			if (StringUtils.isNotEmpty(methodName)) {
+				// 只拦截除去这些之外请求
+				if (!(methodName.contains("to_")||methodName.equals("doNotNeedSession_tree"))) {
+					 Class targetClass = null;
+			         try {
+			            targetClass = Class.forName(targetName);
+			         } catch (ClassNotFoundException e) {
+			            e.printStackTrace();
+			         }
+			        Method[] methods = targetClass.getDeclaredMethods();  
+		            for (Method method : methods) {  
+		            	//方法名相同，并且有aop注解
+		            	if(methodName.equals(method.getName()) && method.isAnnotationPresent(UserLog.class)){
+		                  //获取日志内容
+							UserLog annotation = method.getAnnotation(UserLog.class);
+							String methodDescp = annotation.description();
+							String do_id = annotation.do_id();
+							//用户使用的浏览器类型
+							UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+							//浏览器类型
+							Browser browser = userAgent.getBrowser();
+							//操作系统类型
+							String os = null;
+							//日志请求URL
+							String do_url = requestPath;
+							//获取用户登录的外网IP
+							String networkIp = IpUtil.getIpAddr(request);
+							//地理位置 省市
+							String address = "";
+							if("".equals(networkIp)){ 
+							     networkIp = request.getRemoteAddr();
+							}
+							networkIp = StringUtils.isBlank(networkIp) ? "":networkIp; 
+							if(!"".equals(networkIp)){
+								Map<String,String> addressMap = AddressUtils.getAddress(networkIp, "utf-8");
+								if(addressMap!=null&&(addressMap.get("region")!=null||addressMap.get("city")!=null)){
+									address = addressMap.get("region")+addressMap.get("city");
+								}
+							}
+							String do_from = "";// 日志来源
+							//验证请求是否为手机端
+							String mobile = request.getParameter("device");
+							if (mobile==null || "".equals(mobile)) {
+								if (requestPath.indexOf("front") != -1) {
+									do_from = "1";//web前台日志
+								} else {
+									do_from = "2";//web后台日志
+								}
+								os = userAgent.getOperatingSystem().toString();//操作系统
+							} else {
+								if(mobile.contains("android")){
+									do_from = "3";//Android客户端日志
+									os = "Android操作系统";
+								}
+								if(mobile.contains("iPhone")){
+									do_from = "4";//iPhone客户端日志
+									os = "iPhone操作系统";
+								}
+							}
+							
+							Long userId = null;// 登录用户Id
+							String userName = "";	// 登录用户名
+							String userPassword = "";//登录用户密码
+							
+							//日志信息
+							SysLog syslog = new SysLog();
+							syslog.setRemote_ip(networkIp);
+							syslog.setAddress(address);
+							syslog.setCreate_time(new Date());
+							syslog.setBrowser(browser.toString());//浏览器类型
+							syslog.setSys_name(os.toString());//系统类型
+							syslog.setDo_from(do_from);//日志来源
+							syslog.setDo_url(do_url);//路径
+							
+							if (logger.isDebugEnabled()) {//
+								//获取session信息
+								User user = (User) request.getSession().getAttribute("currentUser");//此session对象只在前台存在
+								if (user != null) {//前台用户已经登录！---孙宇
+									// 登录用户Id
+									userId = user.getId();
+									// 登录用户名
+									userName = user.getUsername();
+									//判断是否为手机端登录
+									if("webService_login".equals(methodName)){//手机端登录
+										/*//解析json参数包
+										JSONObject resJson = AppJson.toJson(request.getParameter("jsondata"));
+										userName = resJson.getString("loginName");
+										userPassword  = resJson.getString("loginPwd"); */
+									}else{//WEB端登录
+										//获取登录用户名
+										userName = request.getParameter("username");
+										//用户密码
+										userPassword = request.getParameter("password");
+									}
+									
+								}else{//获取后台登录信息
+									//获取登录用户名
+									userName = request.getParameter("username");
+									//用户密码
+									userPassword = request.getParameter("password");
+								}
+								//判断日志是否为登录日志
+								if ("doNotNeedSession_login".equals(methodName)|| "login".equals(methodName)) {
+								
+									//封装日志信息
+									user = new User();
+									user.setUsername(userName!=""?userName:request.getParameter("username"));
+									user.setPassword(userPassword!=""?userPassword:request.getParameter("password"));
+									syslog.setLog_type(1);
+									syslog.setUser_name(userName);
+									
+									User u = backUserService.login(user);
+									if (u != null) {
+										boolean b = true;
+										if(!u.getStatus().equals("1")){//该用户已被禁用
+											syslog.setMsg("登录失败！该用于已被禁用");
+											b = false;
+										}
+										if ("doNotNeedSession_login".equals(methodName)){
+											if(!u.getUser_type().equals("0")){
+												syslog.setMsg("登录失败！您没有权限登录后台！");//网站用户,不能登录后台
+												b = false;
+											}
+										}
+										if(b){
+											syslog.setMsg("登录成功！");
+											syslog.setUser_id(u.getId());
+										}
+									}
+								} else if ("doNotNeedSession_logout".equals(methodName)|| "frontAjaxLogout".equals(methodName)) {//退出或注销日志
+									//由于是在用户注销之后才记录日志，此时无法获取用户信息，所以需要查询
+									//1，由于注销操作使session对象死亡，所以直接获取；2，
+									String id = request.getParameter("extraId");
+//									User u = backUserService.login(user);
+									syslog.setLog_type(2);
+									syslog.setUser_name(userName);
+									syslog.setUser_id(userId);
+									syslog.setMsg("注销成功！");
+								} else {//用户操作日志
+									if(do_id.equals("0")){
+										String do_type = request.getParameter("sourceType");
+										String id= request.getParameter("id");
+										syslog.setDo_id(id!=null?Long.parseLong(id):0);
+										syslog.setDo_type(do_type!=null?Integer.parseInt(do_type):-1);
+									}
+									syslog.setLog_type(3);
+									syslog.setUser_name(userName);
+									syslog.setUser_id(userId);
+									syslog.setMsg(methodDescp);
+								}
+								//添加日志
+								sysLogService.saveSysLog(syslog);
+							}
+							break;
+		                }  
+		            }  
+				}
+			}
+		} catch (Throwable e) {
+			logger.error("日志添加异常", e);
+		}
+	}
+	
+}

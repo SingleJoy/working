@@ -1,0 +1,78 @@
+<%@ page language="java" import="java.util.*,cn.bnsr.edu_yun.frontstage.base.po.User" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% User user = (User)request.getSession().getAttribute("currentUser");%>
+
+<div class="col-md-3">
+    <div class="sidenav locked">
+        <ul class="list-group">
+            <li class="list-group-heading">培训信息</li>
+            <li class="list-group-item <c:if test="${trainView.sign==1 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/train/to_train_info.action?id=${trainView.id}&flag=2&sign=1">
+                    <span  ></span>基本信息
+                </a>
+            </li>
+            <li class="list-group-item <c:if test="${trainView.sign==2 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/train/to_train_info.action?id=${trainView.id}&flag=2&sign=2">
+                    <span></span>培训图片
+                </a>
+            </li>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-heading ">培训设置</li>
+            <c:if test="${trainView.type==1}">
+                <li class="list-group-item <c:if test="${trainView.sign==5 }">active</c:if>">
+                    <a href="${pageContext.request.contextPath}/train_phase/to_train_phase.action?train_id=${trainView.id}&flag=2&sign=5">
+                        <span></span>培训项目内容
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${trainView.type==0}">
+                <li class="list-group-item <c:if test="${trainView.sign==3 }">active</c:if>">
+                    <a href="${pageContext.request.contextPath}/train_course/to_train_course.action?source_id=${trainView.id}&flag=2&sign=3&source_type=0">
+                        <span></span>课程管理
+                    </a>
+                </li>
+            </c:if>
+            <li class="list-group-item <c:if test="${trainView.sign==4 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/train/to_train_info.action?id=${trainView.id}&flag=2&sign=4">
+                    <span ></span>价格设置
+                </a>
+            </li>
+            <c:if test="${trainView.is_check==0 }">
+            <li class="list-group-item <c:if test="${trainView.sign==9 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/train_exam_standard/to_train_exam_standard.action?id=${trainView.id}&flag=2&sign=9&type=${trainView.type}">
+                    <span></span>考核标准设置
+                </a>
+            </li>
+            </c:if>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-heading">班级</li>
+            <li class="list-group-item <c:if test="${trainView.sign==10 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/class/to_class.action?id=${trainView.id}&flag=2&sign=10&source_id=${trainView.id}&source_type=1">
+                    <span></span>班级管理
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".list-group>li.curr").css("border-left","2px solid #3ebbce");
+        $(".list-group>li.curr").css("background-color","#eaeaea");
+        $(".list-group>li.curr>a").css("color","#3ebbce");
+    });
+
+</script>

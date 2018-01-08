@@ -1,0 +1,107 @@
+package cn.bnsr.edu_yun.backstage.train.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.controller.BaseController;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.backstage.train.view.UserAppraiseView;
+import cn.bnsr.edu_yun.frontstage.train.service.UserAppraiseService;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+
+@Controller
+@RequestMapping("/back_user_appraise")
+public class BackUserAppraiseController extends BaseController {
+
+	private final Logger log = LoggerFactory.getLogger(BackUserAppraiseController.class);
+	
+	@Autowired
+	private UserAppraiseService userAppraiseService;
+	
+	/**
+	 *跳转评价管理页面
+	 */
+	@RequestMapping("/to_user_appraise")
+	public ModelAndView toUserAppraise(){
+		return new ModelAndView("backstage/train/userAppraise/user_appraise");
+	}
+	
+	/**
+	 *跳转评价详细页面
+	 */
+	@RequestMapping("/to_user_appraise_detail")
+	public ModelAndView toUserAppraiseDetail(Long id,Integer source_type){
+		ModelAndView modelandview = new ModelAndView();
+		try{
+			UserAppraiseView userAppraiseView = null;
+			if(id!=null){
+				userAppraiseView = userAppraiseService.getById(id,source_type);
+				String content = userAppraiseView.getAppraise_content();
+				if(content!=null&&content!=""){
+					userAppraiseView.setAppraise_content(content.replace("\"", "\'").trim());
+			    }
+				if(userAppraiseView.getAppraise_time()!=null){			
+					userAppraiseView.setAppraise_time(userAppraiseView.getAppraise_time().replace(".0", ""));
+				}
+				modelandview.addObject(userAppraiseView);
+				
+		    	modelandview.setViewName("backstage/train/userAppraise/user_appraise_detail");
+			}
+		}catch(Exception e){
+			log.error("跳转课程评价详细信息页面失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelandview;
+	}
+	
+	/**
+	 * 获得评价管理datagrid
+	 */
+	@RequestMapping("/datagrid")
+	public void datagrid(HttpServletResponse response,UserAppraiseView userAppraiseView) {
+		super.writeJson(userAppraiseService.datagrid(userAppraiseView),response);
+	}
+
+	/**
+	 * 评价假删除
+	 */
+	@RequestMapping("/delete_user_appraise") 
+	public void delete(HttpServletResponse response,UserAppraiseView userAppraiseView){
+		Json j = new Json();
+		try{
+			userAppraiseService.updateStatus(userAppraiseView.getIds(), userAppraiseView.getStates());
+			j.setSuccess(true);
+			j.setMsg("删除成功！");
+		} catch (Exception e) {
+			log.error("课程评价删除失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("删除失败！");
+		}
+		
+		super.writeJson(j,response);
+	}
+	
+	/**
+	 * 评价状态更改
+	 */
+	@RequestMapping("/change_user_appraise_status") 
+	public void doChangeStatus(HttpServletResponse response,UserAppraiseView userAppraiseView){
+		Json j = new Json();
+		try{
+			userAppraiseService.updateStatus(userAppraiseView.getIds(), userAppraiseView.getStates());
+			j.setSuccess(true);
+			j.setMsg("更改状态成功！");
+		} catch (Exception e) {
+			log.error("课程评价状态更改失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("更改状态失败！");
+		}
+		
+		super.writeJson(j,response);
+	}
+
+}

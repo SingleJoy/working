@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>查看作业</title>
+	<link href="./edusoho/bootstrap.css" rel="stylesheet">
+	<link href="./edusoho/es-question.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body>
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="question-set homework-set" id="homework-set">
+            <div class="row question-set-heading">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="question-set-type">作业</div>
+                            <div class="question-set-title">ceshi</div>
+                            <div class="homwork-status">
+                                <a href="" class="pull-right" style="margin-left:10px;">再次尝试</a>
+                                <!-- <div class="pull-right label label-danger" style="margin-left:10px;">   
+                                    不合格
+                                </div> -->
+                                <div class="pull-right label label-success" style="margin-left:10px;">
+                                    优秀
+                                </div>
+                            </div>
+                            <div class="question-set-description">
+                                <p>1111</p>
+                                <p class="text-muted">所属课程 <a href="#">ceshi</a></p>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row question-set-body">
+                <div class="col-md-9 question-set-main">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">作业题目 <small class="text-muted">共2题</small></div>
+                        <div class="panel-body">
+                            <div class="question-set-items">
+                                <div id="mask-question-1" class="question-set-item">
+                                    <div class="question-set-item-side">
+                                        <span class="question-set-item-seq">1</span>
+                                    </div>
+                                    <div class="question-set-item-main">
+                                        <div class="question question-single_choice question-1">
+                                            <div class="question-heading editor-text">  （单选）<p>111</p></div>
+                                            <div class="question-body clearfix">
+                                                <ul class="question-choices">
+                                                    <li>
+                                                        <div class="homwork-choice-index ">A.</div>
+                                                        <div class="choice-body "><p>2</p></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="homwork-choice-index ">B.</div>
+                                                        <div class="choice-body "><p>3</p></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="homwork-choice-index question-text-success">C.</div>
+                                                        <div class="choice-body question-text-success"><p>4</p></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="homwork-choice-index ">D.</div>
+                                                        <div class="choice-body "><p>5</p></div>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="homework-question-result">
+                                                      <span class="glyphicon glyphicon-ok question-text-success"></span> 你答对了!
+                                                </div>
+                                            </div>
+                                            <div class="question-footer"></div>
+                                        </div>
+                                        <div class="homework-question-actions text-right">
+                                            <a class="btn btn-sm btn-link analysis-btn dis-anay" value="1" style="display: inline-block;"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+                                            <a class="btn btn-sm btn-link unanalysis-btn dis-anay" value="2" style="display: none;"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+                                        </div>
+                                        <div class="homework-question-analysis well editor-text" style="display: none;">
+                                            <p>1111</p>
+                                        </div>
+                                    </div>
+                                </div>                                                                  
+                                <div id="mask-question-2" class="question-set-item">
+                                    <div class="question-set-item-side">
+                                        <span class="question-set-item-seq">2</span>
+                                    </div>
+                                    <div class="question-set-item-main">
+                                        <div class="question question-fill question-2">
+                                            <div class="question-heading editor-text"><p>111111<span class="question-stem-fill-blank">(1)</span></p></div>
+
+                                            <div class="question-body clearfix">
+                                                <div class="question-fill-inputs ">
+                                                    <div class="">
+                                                        <div class="homework-question-fill">
+                                                            <ul>
+                                                                <li>
+                                                                    填空(1)： 正确答案
+                                                                    <strong class="question-text-success">111 或 </strong>
+                                                                    回答是
+                                                                    <strong class="question-text-danger">dfg</strong>。
+                                                                    <span class="glyphicon glyphicon-remove question-text-danger">
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="question-footer"></div>
+                                        </div>
+                                        <div class="homework-question-actions text-right">
+                                            <a class="btn btn-sm btn-link analysis-btn dis-anay" style="display: inline-block;" value="1"><span class="glyphicon glyphicon-chevron-down"></span> 展开解析</a>
+                                            <a class="btn btn-sm btn-link unanalysis-btn dis-anay" style="display: none;" value="2"><span class="glyphicon glyphicon-chevron-up"></span> 收起解析</a>
+                                        </div>
+                                        <div class="homework-question-analysis well editor-text" style="display: none;">
+                                            <p>解析</p>
+                                        </div>
+                                    </div>
+                                </div>                                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 question-set-side">
+                    <div class="panel panel-default question-set-card affix-top" >
+                        <div class="panel-body">
+                            <a href="#mask-question-1" class="question-index for-question-1 " >1</a>
+                            <a href="#mask-question-2" class="question-index for-question-2 ">2</a>
+                        </div>
+                        <div class="panel-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(e){
+        $('.question-set-item-main .homework-question-actions a').on("click",function(){
+            var num = $(this).attr('value');
+            // console.log(num);
+            $(this).hide();
+            $(this).siblings('.dis-anay').show();
+            if (num == 1) {
+                $(this).parent().next(".homework-question-analysis").eq(0).show();
+            }else if (num == 2) {
+                $(this).parent().next(".homework-question-analysis").eq(0).hide();
+            }
+        })
+    })
+</script>
+</body>
+</html>

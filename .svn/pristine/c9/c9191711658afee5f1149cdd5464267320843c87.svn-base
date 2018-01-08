@@ -1,0 +1,113 @@
+package cn.bnsr.edu_yun.backstage.train.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.controller.BaseController;
+import cn.bnsr.edu_yun.backstage.base.view.Json;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseInfoService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.view.CourseView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+
+/**
+ * 后台课程管理
+ * @author fangxiongwei
+ * @date 2016年11月17日
+ */
+@Controller
+@RequestMapping("/back_course")
+public class BackCourseController extends BaseController{
+	private final Logger log = LoggerFactory.getLogger(BackCourseController.class);
+	
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private CourseInfoService courseInfoService;
+	
+	/**
+	 *跳转课程管理页面
+	 */
+	@RequestMapping("/to_back_course")
+	public ModelAndView toBackCourse(){
+		return new ModelAndView("backstage/train/course/course");
+	}
+	
+	/**
+	 * 获得课程管理datagrid
+	 */
+	@RequestMapping("/datagrid")
+	public void datagrid(HttpServletResponse response,
+			HttpServletRequest request, CourseView courseView) {
+		super.writeJson(courseService.datagrid(courseView),response);
+	}
+	
+	/**
+	 * 课程删除、关闭
+	 */
+	@RequestMapping("/update_status") 
+	public void updateStatus(HttpServletResponse response,CourseView courseView){
+		Json j = new Json();
+		try{
+			courseService.updateStatus(courseView);
+			j.setSuccess(true);
+			j.setMsg("操作成功！");
+		} catch (Exception e) {
+			log.error("课程管理操作失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("操作失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	/**
+	 *跳转推荐课程页面
+	 */
+	@RequestMapping("/to_recommend_course")
+	public ModelAndView toRecommendCourse(){
+		return new ModelAndView("backstage/train/course/recommend_course");
+	}
+	
+	/**
+	 *查询最大推荐课程序号
+	 */
+	@RequestMapping("/get_max_seq")
+	public void getMaxSeq(HttpServletRequest request,HttpServletResponse response){
+		Json j = new Json();
+		try {
+			int seq = courseInfoService.getMaxSeq();
+			j.setObj(seq+1); 
+			j.setMsg("查询成功！");
+			j.setSuccess(true);
+		} catch (Exception e) {
+			log.error("查询失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("查询失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	/**
+	 * 课程推荐、取消推荐
+	 */
+	@RequestMapping("/is_recommend_course") 
+	public void isRecommendCourse(HttpServletResponse response,CourseView courseView){
+		Json j = new Json();
+		try{
+			courseInfoService.isRecommendCourse(courseView);
+			j.setSuccess(true);
+			j.setMsg("操作成功！");
+		} catch (Exception e) {
+			log.error("课程操作失败",ExceptionUtil.getExceptionMessage(e));
+			j.setMsg("操作失败！");
+		}
+		super.writeJson(j,response);
+	}
+	
+	
+}

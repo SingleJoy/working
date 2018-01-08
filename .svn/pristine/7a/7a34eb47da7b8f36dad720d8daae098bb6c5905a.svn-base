@@ -1,0 +1,188 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+      <c:if test="${source_type==0}"><jsp:include page="community_header.jsp"></jsp:include></c:if>
+      <c:if test="${source_type==1}"><jsp:include page="workshop_header.jsp"></jsp:include></c:if>
+
+        <div class="row">
+
+
+            <c:if test="${source_type==0}"><jsp:include page="community_left.jsp"></jsp:include></c:if>
+            <c:if test="${source_type==1}"><jsp:include page="workshop_left.jsp"></jsp:include></c:if>
+			<div class="col-md-9">
+
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">信息列表
+                        <a href="${pageContext.request.contextPath}/message/to_info_add.action?source_id=${source_id}&source_type=${source_type}&stamp=5" class="btn btn-info pull-right">添加信息</a>
+                    </div>
+                    <div class="panel-body">
+                        <form id="searchInfo" method="post" action="${pageContext.request.contextPath}/message/to_info_manager.action" class="form-horizontal form-inline well well-sm" >
+		                    <input type="hidden" name="source_id"  <c:if test="${source_type==0}">value="${communityView.id}"</c:if><c:if test="${source_type==1}">value="${workshopView.id}"</c:if>/>
+		                    <input type="hidden" name="source_type"  value="${source_type}"/>
+		                    <input type="hidden" name="stamp" <c:if test="${source_type==0}">value="${communityView.stamp}"</c:if><c:if test="${source_type==1}">value="${workshopView.stamp}"</c:if>/>
+                            <input type="hidden" name="sort" id="sort" value="${messageView.sort}"/>
+		                    <input type="hidden" name="order" id="order" value="${messageView.order}"/>
+                            <input type="hidden" name="page" id="page" value="${messageView.page}"/>
+		                    <input type="hidden" name="rows" id="rows" value="${messageView.rows}"/>
+		                    <input type="hidden" name="total" id="total" value="${messageView.total}"/>
+		                    <input type="hidden" name="totalPage" id="totalPage" value="${messageView.totalPage}"/>
+                            <div class="form-group">
+                                <input type="text"   class="form-control" name="title" value="${messageView.title}" placeholder="标题">
+                                <button type="submit" class="btn btn-primary btn-sm" >搜索</button>
+                            </div>
+                         </form>
+                         <table class="table table-striped">
+                             <!--默认箭头向下,即caret,点击重新排序之后箭头向上,即caret_01-->
+                             <tbody>
+                             <tr class="border">
+                                 <th  width="4%"><input class="checkAll subCheckbox" type="checkbox"></th>
+                                 <th  width="25%">标题</th>
+                                 <th  width="10%">类别</th>
+                                 <th  width="15%">发布人</th>
+                                 <th  width="15%">发布时间<span data-sort="release_time" onclick="order(this);" <c:if test="${messageView.order eq 'desc'}">class="caret"</c:if><c:if test="${messageView.order eq 'asc'}">class="caret_01"</c:if>></span></th>
+                                 <th >状态<span data-sort="status" onclick="order(this);" <c:if test="${messageView.order eq 'desc'}">class="caret"</c:if><c:if test="${messageView.order eq 'asc'}">class="caret_01"</c:if>></span></th>
+                                 <th >
+                                     <div class="btn-group" >
+                                         <a href="#" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">操作</a>
+                                         <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                             <span class="caret"></span>
+                                         </button>
+                                         <ul class="dropdown-menu pull-right" role="menu">
+                                             <li><a href="javascript:void (0);" onclick="changeStatus(1);">开启</a></li>
+                                             <li><a href="javascript:void (0);" onclick="changeStatus(2);">关闭</a></li>
+                                         </ul>
+                                     </div>
+                                 </th>
+                             </tr>
+                             <c:forEach items="${messageList}" var="message">
+	                             <tr class="border">
+	                                 <td class="active"><input class="subCheckbox" value="${message.id}" type="checkbox"></td>
+	                                 <td>${message.title}</td>
+	                                 <td><c:choose>
+	                                 <c:when test="${message.type==0}">新闻动态</c:when>
+	                                 <c:when test="${message.type==1}">政策文件</c:when>
+	                                 <c:when test="${message.type==2}">通知文件</c:when>
+	                                 <c:when test="${message.type==3}">使用帮助</c:when>
+	                                 <c:when test="${message.type==4}">简报</c:when>
+	                                 </c:choose></td>
+	                                 <td>${message.username}</td>
+	                                 <td>${message.release_time}</td>
+	                                 <c:choose>
+	                                 <c:when test="${message.status==0}"><td class="text-info">草稿</td></c:when>
+	                                 <c:when test="${message.status==1}"><td class="text-info">已发布</td></c:when>
+	                                 <c:when test="${message.status==2}"><td class="text-danger">已关闭</td></c:when>
+	                                 </c:choose>
+	                                 <td><span class="text-info"><c:choose>
+	                                 <c:when test="${message.status==1}"><a href="${pageContext.request.contextPath}/message/save_message.action?source_id=${source_id}&source_type=${source_type}&stamp=5&id=${message.id}&status=2">关闭</a></c:when>
+	                                 <c:when test="${message.status!=1}"><a href="${pageContext.request.contextPath}/message/save_message.action?source_id=${source_id}&source_type=${source_type}&stamp=5&id=${message.id}&status=1">开启</a></c:when>
+	                                 </c:choose></span>
+	                                 <c:if test="${message.status==0}">
+	                                 <span class="text-info openStatus"  style="cursor: pointer;"><a href="${pageContext.request.contextPath}/message/to_info_add.action?id=${message.id}&source_id=${source_id}&source_type=${source_type}&stamp=5">编辑</a></span></c:if></td>
+	                             </tr>
+	                          </c:forEach>
+                             </tbody>
+                         </table>
+                          <c:if test="${empty messageList }">
+                                <div class="empty">暂无数据</div>
+	                        </c:if>
+	                        <c:if test="${!empty messageList }">
+								<div id="test" class="pager" style="padding-top: 10px;"></div>
+	                        </c:if>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+$(function(){
+    //翻页
+    var total = $("#total").val();
+    var page =  parseInt($("#page").val())+1;
+
+    $("#btn5").on('click', function () {
+        $("#div1").PageChanged(5);
+    });
+
+    $(".pager").pagination({
+        thisPageIndex:page,
+        recordCount: total,       //总记录数
+        pageSize:  $("#rows").val(),            //一页记录数
+        onPageChange: function (page) {
+            document.title = page;
+            $("#page").val(page-1);
+            $('#searchInfo').submit();
+
+        }
+    });
+});
+function order(obj){
+	var sort = obj.data-sort;
+	if(sort=="release_time"){
+		$("#sort").val("release_time");
+	}else if(sort=="status"){
+		$("#sort").val("status");
+	}
+	var css = obj.className;
+	if(css=="caret"){//升序
+		$("#order").val("asc");
+	}else if(css=="caret_01"){//降序
+		$("#order").val("desc");
+	}
+	$("#searchInfo").submit(); 
+}
+var infoIds = [];
+$(function(){
+    // 全选
+    $(".checkAll").click(function () {
+        var isChecked = $(this).prop("checked");
+        $(".subCheckbox").prop("checked", isChecked);
+        infoIds = [];
+        if(isChecked){
+      	  $(".subCheckbox").each(function(){
+      		  var info_id = $(this).val();
+      		  if(info_id!="on"){
+      			infoIds.push(info_id);
+      		  } 
+      	  })
+        }
+    })
+    //单选
+    $(".subCheckbox").click(function(){
+  	  var isChecked = $(this).prop("checked");
+  	  var info_id = $(this).val();
+  	  if(info_id!="on"){
+  		  if(isChecked){
+  			infoIds.push(info_id);
+      	  }else{
+      		infoIds.splice($.inArray(info_id, infoIds), 1);
+      		  //$.inArray(student_id, studentIds)返回student_id在studentIds中的下标
+      		  //studentIds.splice(index,len,[item])index:数组开始下标        len: 替换/删除的长度       item:替换的值，删除操作的话 item为空
+      	  }
+  	  }
+  	  
+    })
+
+});
+function changeStatus(status){
+	if(infoIds.length==0){
+		  alert("请选择信息！")
+	  }else{
+		  var ids = "";
+		  for(var i=0;i<infoIds.length;i++){
+			  ids += infoIds[i]+",";
+		  }
+		  ids=ids.substring(0,ids.length-1);
+		  window.location.href = "${pageContext.request.contextPath}/message/save_message.action?source_id=${source_id}&source_type=${source_type}&stamp=5&status="+status+"&ids="+ids;
+	  }
+}
+</script>
+

@@ -1,0 +1,396 @@
+<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<script>
+    $(function(){
+        $(".js-search").focus(function(){
+            $(this).css("width","150px");
+        }).blur(function(){
+            $(this).css("width","100px");
+        });
+    });
+
+    $(function(){
+        $(".hover_show").mouseover(function(){
+            $(this).siblings("ul").show();
+        }).mouseout(function(){
+            $(this).siblings("ul").hide();
+        });
+        $(".dropdown-menu").mouseover(function(){
+            $(this).show();
+        }).mouseout(function(){
+            $(this).hide();
+        })
+
+    });
+
+
+</script>
+<style>
+
+    .teacher_info_text>span{font-size: 18px;padding-right: 40px;}
+    .nav-btn-tab>ul>li.active{border-bottom: 2px solid #46c37b}
+    .topic_reply_time{margin-left: 62px;}
+    .full-content{padding: 10px;}
+    .topic_list_page{margin-bottom: 30px;padding-left: 20px;}
+    .teachers-course-tabs{margin-top: -30px;}
+</style>
+
+<div class="es-wrap" style="background-color: #fff;">
+
+
+    <!--全部-->
+    <section class="course-list-section " style="background-color: #eaeaea;width: 100%;">
+
+        <div class="container">
+
+            <div class="course_page" >
+
+                <div class="media" style="margin-top: 50px;">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object  avatar-lg" src="${pageContext.request.contextPath}${user.icon }"  >
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+
+                        <h3 class="media-heading">${user.username }
+                            <c:if test="${userAttent==0 }">
+                                <button type="button" class="btn btn-default btn-sm  follow-btn" data-user="${user.id }">关注</button>
+                            </c:if>
+                            <c:if test="${userAttent==1 }">
+
+                                <button type="button" class="btn btn-default btn-sm unfollow-btn" >已关注</button>
+                            </c:if>
+
+                        </h3>
+                        <h4 style="margin-top:10px;" class="teacher_info_text">
+                            <span>课程:${courseTotal }</span>
+                            <span>收藏:${collectTotal }</span>
+
+                        </h4>
+                        <h4 class="teacher_intro text-muted" style="margin-right: 50px;margin-top: 10px;">
+                            ${userInfo.profile }
+                        </h4>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="container" style="margin-top: 20px;">
+
+
+        <div class="nav-btn-tab teachers_info_tabs " >
+
+
+            <ul class="nav nav-tabs" style="margin-top: 20px;">
+                <li <c:if test="${teacherCenterView.stamp==0 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=0&user_id=${teacherCenterView.user_id}">在教课程</a></li>
+                <li <c:if test="${teacherCenterView.stamp==1 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=1&user_id=${teacherCenterView.user_id}">在教培训</a></li>
+                <li <c:if test="${teacherCenterView.stamp==2 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=2&user_id=${teacherCenterView.user_id}">在教课例</a></li>
+                <li <c:if test="${teacherCenterView.stamp==3 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=3&user_id=${teacherCenterView.user_id}">话题</a></li>
+                <li <c:if test="${teacherCenterView.stamp==4 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=4&user_id=${teacherCenterView.user_id}">关注的人</a></li>
+            </ul>
+
+        </div>
+
+
+
+
+        <div class="course-list clearfix" style="margin-top:50px;">
+
+            <!-- 老师的课程 -->
+            <div class="teachers-course-tabs " <c:if test="${teacherCenterView.stamp!=0 }">style="display: none;"</c:if>>
+
+                <ul class="nav nav-pills mbl">
+                    <li <c:if test="${teacherCenterView.type==0 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=0&type=0&user_id=${teacherCenterView.user_id}">创建的课程</a></li>
+                    <li <c:if test="${teacherCenterView.type==1 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=0&type=1&user_id=${teacherCenterView.user_id}">参与的课程</a></li>
+                </ul>
+                <c:forEach items="${courseList}" var="course">
+
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="javascript:void(0);" target="_blank">
+                                    <img src="${pageContext.request.contextPath}${course.img }" alt="如何创建课程？" class="img-responsive" style="height: 160px;">
+                                </a>
+                            </div>
+                            <div class="course-info ">
+                                <div class="title">
+                                    <a class="link-dark " href="javascript:void(0);" target="_blank">${course.title }</a>
+                                    <div class="teacher_info">
+                                        <span class="teacher_name pull-left">${course.createUser }</span>
+                                        <span class="teacher_address pull-right">工作单位</span>
+                                    </div>
+                                </div>
+                                <div class="metas clearfix ">
+
+                                    <span class="num">
+                                        <i class="es-icon es-icon-people"></i>${course.studentNum }人参加
+                                    </span>
+                                    <span class="course-price-widget">
+
+                                        <span class="price">￥10元</span>
+												  <%--免费--%>
+                                        <%--<span class="free">免费</span>--%>
+
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </c:forEach>
+            </div>
+
+            <!-- 老师的培训 -->
+            <div class="teachers-course-tabs" <c:if test="${teacherCenterView.stamp!=1 }">style="display: none;"</c:if>>
+
+                <ul class="nav nav-pills mbl" >
+                    <li <c:if test="${teacherCenterView.type==0 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=1&type=0&user_id=${teacherCenterView.user_id}">创建的培训</a></li>
+                    <li <c:if test="${teacherCenterView.type==1 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=1&type=1&user_id=${teacherCenterView.user_id}">参与的培训</a></li>
+                </ul>
+
+                <c:forEach items="${trainList }" var="t">
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="javascript:void(0);" target="_blank">
+                                    <img src="${pageContext.request.contextPath}${t.img }" alt="如何创建课程？" class="img-responsive" style="height: 160px;">
+                                </a>
+                            </div>
+                            <div class="course-info ">
+                                <div class="title ">
+                                    <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                            ${t.name }
+                                    </a>
+                                    <div class="teacher_info" style="min-height: 20px;">
+                                        <span class="teacher_address">${t.sponsor }</span>
+                                    </div>
+
+                                </div>
+                                <div class="metas clearfix ">
+                                    <span class="num" >
+                                        <i class="es-icon es-icon-people"></i>${t.studentNum }人参与
+                                    </span>
+                                    <span class="course-price-widget">
+
+                                        <span class="price">￥10元</span>
+                                         <%--免费--%>
+                                        <%--<span class="free">免费</span>--%>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
+            <!-- 老师的课例 -->
+            <div class="teachers-course-tabs" <c:if test="${teacherCenterView.stamp!=2 }">style="display: none;"</c:if>>
+
+                <ul class="nav nav-pills mbl" >
+                    <li <c:if test="${teacherCenterView.type==0 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=2&type=0&user_id=${teacherCenterView.user_id}">创建的课例</a></li>
+                    <li <c:if test="${teacherCenterView.type==1 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=2&type=1&user_id=${teacherCenterView.user_id}">参与的课例</a></li>
+                </ul>
+
+
+                <c:forEach items="${lessonList }" var="l">
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="course-item">
+                            <div class="course-img">
+                                <a href="${pageContext.request.contextPath}/lesson_main/to_lesson.action?id=${l.id }" target="_blank">
+                                    <img <c:if test="${empty l.lesson_pic}">src="${pageContext.request.contextPath}/frontstage/images/course.png"</c:if>
+                                         <c:if test="${!empty l.lesson_pic}">src="${pageContext.request.contextPath}/${l.lesson_pic}"</c:if>  class="img-responsive" style="height: 160px;">
+                                    <c:if test="${l.excellent==1}">
+                                        <div class="tags" style="left: 0;">
+                                            <img src="${pageContext.request.contextPath}/frontstage/images/excellent_teaching_plan.png" title="优秀课例">
+                                        </div>
+                                    </c:if>
+                                    <div class="progress" style="width: 235px;margin-left: 10px;margin-top: 10px;">
+                                        <c:if test="${l.finish_count/l.all_count>=0.11 }">
+                                            <c:set var="width" value="${l.finish_count/l.all_count }"></c:set>
+                                        </c:if>
+                                        <c:if test="${l.finish_count/l.all_count<0.11 }">
+                                            <c:set var="width" value="0.11"></c:set>
+                                        </c:if>
+                                        <div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:<fmt:formatNumber type="percent" maxFractionDigits="3" value="${width }" />"><fmt:formatNumber type="percent" maxFractionDigits="0" value="${l.finish_count/l.all_count }" /></div>
+                                    </div>
+                                    <span class="tags">
+                                        <span class="course_tags" style="color: #fff;padding-left: 5px;font-size: 12px;">${l.grade }${l.subject }</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="course-info text-center" style="margin-top: -20px;">
+                                <div class="title ">
+                                    <a class="link-dark " href="javascript:void(0);" target="_blank">
+                                            ${l.name }
+                                    </a><br/>
+                                    <a class="link-dark" href="javascript:void(0);" target="_blank" style="line-height: 35px;">
+                                        工作坊:${l.workshop_name }
+                                    </a>
+                                </div>
+                                <div class="metas clearfix">
+                                    <span>组长:${l.lesson_username }</span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
+            <!-- 老师的话题 -->
+            <div class="teachers-course-tabs" <c:if test="${teacherCenterView.stamp!=3 }">style="display: none;margin-top: -30px;"</c:if>>
+                <c:forEach items="${topicQuestionViews }" var="question">
+                    <div class="topic_list_page">
+                        <div style="font-size: 20px;">
+                            <a href="${pageContext.request.contextPath}/community/to_community_index.action?sourceType=${question.source_type-2}&classifyId=-1&stamp=6&id=${question.source_id}&questionId=${question.questionId }">${question.querstionName }</a>
+                        </div>
+                        <div style="font-size: 14px;margin: 20px;">发起时间: <fmt:formatDate type="date"  value="${question.question_time }" /></div>
+                        <div style="margin-left: 20px;">
+
+                            <div class="js-reviews">
+                                <div class="media media-evaluate">
+
+                                    <div class="media-body thread-post">
+                                        <c:forEach items="${question.topicAnswers }" var="answer">
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">${answer.user.username }:&nbsp;&nbsp;</span>
+                                                        ${answer.answer_content }
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;<fmt:formatDate type="date"  value="${answer.answer_time }" /></div>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
+            <!-- 关注和粉丝 -->
+            <div class="teachers-course-tabs" <c:if test="${teacherCenterView.stamp!=4 }">style="display: none;"</c:if>>
+
+                <ul class="nav nav-pills mbl" style="margin-left: 10px;">
+                    <li <c:if test="${teacherCenterView.type==0 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=4&type=0&user_id=${teacherCenterView.user_id}">关注</a></li>
+                    <li <c:if test="${teacherCenterView.type==1 }">class="active"</c:if>><a href="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action?stamp=4&type=1&user_id=${teacherCenterView.user_id}">粉丝</a></li>
+                </ul>
+                <c:forEach items="${myAttention }" var="attent">
+                    <div class="col-lg-2 col-md-4 col-xs-6 attent"  data-user="${attent.userId }">
+                        <div class="teacher-item">
+                            <div class="teacher-top">
+                                <a class="teacher-img" href="javascript:void(0);">
+                                    <img class="avatar-md" src="${pageContext.request.contextPath}${attent.img}" alt="">
+                                </a>
+                                <h3 class="title">
+                                    <a class="link-dark" href="javascript:void(0);"> ${attent.realName }</a>
+                                </h3>
+                                <div class="position" style="display: block;min-height: 20px;">
+                                        ${attent.school }
+                                    <!--<div class="empty">暂无头衔</div>-->
+                                </div>
+                            </div>
+
+                            <div class="teacher-bottom">
+                                <div class="about">
+                                    &nbsp; &nbsp;${attent.titles }
+                                </div>
+                                <div class="metas" style="left: 0;right:0;">
+                                    <a class="btn btn-primary btn-sm follow-btn" href="javascript:;"  style="display:none;"  data-user="${attent.userId }">关注</a>
+                                    <a class="btn btn-default btn-sm unfollow-btn" href="javascript:;"  >已关注</a>
+                                    <a class="btn btn-default btn-sm"  href="#private-modal" data-toggle="modal" onclick="send_private_messages(${attent.userId },'${attent.realName }')">私信</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+            <div id="test" class="pager" style="clear: both;"></div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+</div>
+<form id="teacherForm" action="${pageContext.request.contextPath}/teacher_center/to_teacher_center.action" method="get">
+
+    <input type="hidden" name="rows" id="rows" value="${teacherCenterView.rows}"/>
+    <input type="hidden" name="page" id="page" value="${teacherCenterView.page}"/>
+    <input type="hidden" name="total" id="total" value="${teacherCenterView.total}" />
+    <input type="hidden" name="stamp" id="stamp" value="${teacherCenterView.stamp}"/>
+    <input type="hidden" name="type" id="type" value="${teacherCenterView.type}"/>
+    <input type="hidden" name="user_id" id="user_id" value="${teacherCenterView.user_id}"/>
+</form>
+<script type="text/javascript">
+    //翻页
+    var total = $("#total").val();
+    var page =  parseInt($("#page").val())+1;
+
+    $("#btn5").on('click', function () {
+        $("#div1").PageChanged(5);
+    });
+
+    $(".pager").pagination({
+        thisPageIndex:page,
+        recordCount: total,       //总记录数
+        pageSize:  $("#rows").val(),            //一页记录数
+        onPageChange: function (page) {
+            document.title = page;
+            $("#page").val(page-1);
+            $('#teacherForm').submit();
+
+        }
+    });
+    $(".attent").mouseover(function(){
+        var flag="${teacherCenterView.type}"==1;
+        var id=$(this).data("user");
+        var _this=$(this);
+        if(flag)
+            $.ajax({
+                url : '${pageContext.request.contextPath}/teacher_center/attent.action',
+                data : {
+                    id : id,
+                },
+                dataType : 'json',
+                success : function(response) {
+
+                    if (response.userAttent == 0) {
+                        $(".follow-btn").show();
+                        $(".unfollow-btn").hide();
+                    }
+                    if (response.userAttent == 1) {
+                        _this.find(".unfollow-btn").show();
+                        _this.find(".follow-btn").hide();
+                    }
+                }
+            });
+    });
+    $(".follow-btn").click(function () {
+        var id=$(this).data("user");
+        send_attent(id);
+    })
+</script>
+
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>

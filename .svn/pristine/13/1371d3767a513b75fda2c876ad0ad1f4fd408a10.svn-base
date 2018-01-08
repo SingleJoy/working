@@ -1,0 +1,15 @@
+package cn.bnsr.edu_yun.frontstage.train.service;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.frontstage.train.view.TrainExamStandardView;
+
+public interface TrainExamStandardService {
+
+	TrainExamStandardView queryByTrainId(Long trainId);
+	
+	void saveOrUpdate(TrainExamStandardView standardView);
+
+	List<TrainExamStandardView> queryExamStandard(Long trainId,int type);
+	
+}

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>试卷列表</title>
+	<link href="./edusoho/bootstrap.css" rel="stylesheet">
+	<link href="./edusoho/es-question.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body>
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                <ul class="list-group">
+                <li class="list-group-heading">课程信息</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>基本信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>详细信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程图片
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课时管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>录播管理</a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程文件
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程设置</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>价格设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>教师设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>学员管理
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">题库</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>题目管理
+                </a>
+                </li>
+
+                <li class="list-group-item active">
+                <a href="">
+                <span></span>试卷管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>试卷批阅</a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>作业批改</a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程运营</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程学习数据</a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href=""><span></span>课程订单查询</a>
+                </li>
+                </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">
+                        <a href="exam_add.html" target="_blank" class="btn btn-info btn-sm pull-right mls">
+                            <span class="glyphicon glyphicon-plus"></span>创建试卷
+                        </a>试卷管理
+                    </div>
+                    <div class="panel-body " id="quiz-table-container">
+                        <table class="table table-striped table-hover" id="quiz-table">
+                        <thead>
+                        <tr>
+                          <th><input type="checkbox" autocomplete="off" class="checkAll subCheckbox"></th>
+                          <th width="38%">名称</th>
+                          <th>状态</th>
+                          <th>题目统计</th>
+                          <th>时间限制</th>
+                          <th>更新人/时间</th>
+                          <th>操作</th>
+                        </tr>
+                        </thead>
+                            <tbody class="sel-div">
+                                <tr>
+                                    <td><input value="27" type="checkbox" class="subCheckbox"></td>
+                                    <td>
+                                        <a href="/test/27/preview" target="_blank">测试试卷1</a>
+                                    </td>
+                                    <td>
+                                        草稿                
+                                    </td>
+                                    <td>
+                                          7题 <span class="text-muted">/</span> 14.0分
+                                    </td>
+                                    <td>
+                                        100分钟    
+                                    </td>
+                                    <td>
+                                        <a class="link-dark " href="/user/15">ceshi001</a><br>
+                                        <span class="text-muted text-sm">2016-12-05 09:21:21</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="exam_detail.html" class="btn btn-default btn-sm" target="_blank">预览</a>
+                                            <a href="javascript:;" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                  <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li>
+                                                    <a class="open-testpaper" href="javascript:" title="发布试卷测试试卷1"><span class="glyphicon glyphicon-ok"></span> 发布试卷</a>
+                                                </li>     
+                                                <li>
+                                                    <a href=""><span class="glyphicon glyphicon-edit"></span> 编辑试卷信息</a>
+                                                </li>
+                                                <li>
+                                                    <a href="exam_question.html"><span class="glyphicon glyphicon-list"></span> 管理题目</a>
+                                                </li>
+                                                <li>
+                                                    <a href=""><span class="glyphicon glyphicon-repeat"></span> 重新生成题目</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:" class="del-question"><span class="glyphicon glyphicon-remove-circle"></span> 删除试卷</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input value="27" type="checkbox" class="subCheckbox"></td>
+                                    <td>
+                                        <a href="/test/27/preview" target="_blank">测试试卷2</a>
+                                    </td>
+                                    <td>
+                                        已发布                
+                                    </td>
+                                    <td>
+                                          7题 <span class="text-muted">/</span> 14.0分
+                                    </td>
+                                    <td>
+                                        100分钟    
+                                    </td>
+                                    <td>
+                                        <a class="link-dark " href="/user/15">ceshi001</a><br>
+                                        <span class="text-muted text-sm">2016-12-05 09:21:21</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="exam_detail.html" class="btn btn-default btn-sm" target="_blank">预览</a>
+                                            <a href="javascript:;" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                  <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li>
+                                                    <a class="close-testpaper" href="javascript:" title="关闭试卷测试试卷1" >
+                                                        <span class="glyphicon glyphicon-list"></span> 关闭试卷
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>    
+                                <tr>
+                                    <td><input value="27" type="checkbox" class="subCheckbox"></td>
+                                    <td>
+                                        <a href="" target="_blank">测试试卷1</a>
+                                    </td>
+                                    <td> 已关闭 </td>
+                                    <td>
+                                        7题 <span class="text-muted">/</span> 14.0分
+                                    </td>
+                                    <td> 100分钟    </td>
+                                    <td>
+                                        <a class="link-dark " href="">ceshi001</a><br>
+                                        <span class="text-muted text-sm">2016-12-05 09:21:21</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="exam_detail.html" class="btn btn-default btn-sm" target="_blank">预览</a>
+                                            <a href="javascript:;" type="button" class="btn btn-default btn-sm dropdown-toggle">
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li><a class="open-testpaper" href="javascript:"><span class="glyphicon glyphicon-ok"></span> 发布试卷</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>             
+                            </tbody>
+                        </table>
+                        <div>
+                            <label class="checkbox-inline">
+                                <input type="checkbox" autocomplete="off" class="checkAll subCheckbox"> 全选
+                            </label>
+                            <button class="btn btn-default btn-sm mlm del-sel" >删除</button>
+                        </div>
+                        <div class="text-muted mtl">
+                            提示：试卷一旦发布不能修改，发布后的试卷需要
+                            <strong>
+                              添加到课时
+                            </strong>
+                            中才能正常使用。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(e){
+      //点击下拉框
+      $('.btn-group .dropdown-toggle').click(function(e){
+          e.stopPropagation();
+          if ($(this).siblings(".dropdown-menu").css("display") == "none") {
+              $(".dropdown-menu").hide();
+              $(this).siblings(".dropdown-menu").show();
+          }else{
+              $(".dropdown-menu").hide();
+          }
+      })
+      $(document).click(function(){
+          $(".dropdown-menu").hide();
+      })
+      // 全选
+      $(".checkAll").click(function () {
+          var isChecked = $(this).prop("checked");
+          $(".subCheckbox").prop("checked", isChecked);
+      })
+      //删除选中
+      $('.del-sel').click(function(){
+          $('.sel-div input:checked').each(function(i,ck){
+              $(ck).parent().parent().remove();
+          })
+          $(".checkAll").prop("checked", false);
+      })
+      $('.del-question').click(function(){
+          $(this).parent().parent().parent().parent().parent().remove();
+      })
+  })
+</script>
+</body>
+</html>

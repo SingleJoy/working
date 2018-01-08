@@ -1,0 +1,175 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.view.StudyTimeView;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyTimeService;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassView;
+import cn.bnsr.edu_yun.util.ExportExcel;
+import cn.bnsr.edu_yun.util.JsonUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+@Controller
+@RequestMapping("course_chart")
+public class CourseChartController {
+	@Autowired
+	private ClassService classService;
+	@Autowired
+	private UserStudyTimeService userStudyTimeService;
+	
+
+	@RequestMapping("/to_course_chart")
+	public ModelAndView toCourseChart(ClassView classView, HttpServletResponse response, HttpServletRequest request) throws Exception {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			Integer type = classView.getSource_type();
+			Long classId = classView.getId();
+			String sign=classView.getSign();
+			classView = classService.selectOne(classId, type);
+			classView.setSign(sign);
+			modelAndView.addObject("classView", classView);
+			modelAndView.setViewName("frontstage/train/class/course_chart");
+			modelAndView.addObject("head_title", "课程学习统计");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+	@RequestMapping("/to_course_hour_chart")
+	public ModelAndView toCourseHourChart(ClassView classView, HttpServletResponse response, HttpServletRequest request) throws Exception {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			Integer type = classView.getSource_type();
+			Long classId = classView.getId();
+			String sign=classView.getSign();
+			classView = classService.selectOne(classId, type);
+			classView.setSign(sign);
+			modelAndView.addObject("classView", classView);
+			modelAndView.setViewName("frontstage/train/class/course_hour_chart");
+			modelAndView.addObject("head_title", "课时学习统计");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+	@RequestMapping("/get_chart")
+	public void getChart(HttpServletRequest request, HttpServletResponse response, StudyTimeView studyTimeView) throws Exception {
+		JSONObject result = new JSONObject();
+		if (studyTimeView.getGroup() == null) {
+			studyTimeView.setGroup("1");
+			
+		}
+		if(studyTimeView.getTimeType()==0){//今天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date()));
+		}
+		else if(studyTimeView.getTimeType()==1){//昨天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-24*60*60*1000)));
+		}else if(studyTimeView.getTimeType()==2){//三天
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+			Date date =new Date();
+			 studyTimeView.setEndTime(s.format(date)+" 23:59:59");
+			 Date otherDate=new Date(new Date().getTime()-24*60*60*1000*2);
+			 studyTimeView.setStartTime(s.format(otherDate)+" 00:00:00");
+		}else if(studyTimeView.getTimeType()==3){//七天
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+			Date date =new Date();
+			 studyTimeView.setEndTime(s.format(date)+" 23:59:59");
+			 Date otherDate=new Date(new Date().getTime()-24*60*60*1000*6);
+			 studyTimeView.setStartTime(s.format(otherDate)+" 00:00:00");
+		}else if(studyTimeView.getTimeType()==4){//三十天
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+			Date date =new Date();
+			 studyTimeView.setEndTime(s.format(date)+" 23:59:59");
+			 Date otherDate=new Date(new Date().getTime()-new Long(24*60*60*1000)*29);
+			 studyTimeView.setStartTime(s.format(otherDate)+" 00:00:00");
+		}else if(studyTimeView.getTimeType()==5){
+			 studyTimeView.setStartTime(studyTimeView.getStartTime()+" 00:00:00");
+			 
+			 studyTimeView.setEndTime(studyTimeView.getEndTime()+" 23:59:59");
+		}
+		
+		List<StudyTimeView> studyTimeViews =userStudyTimeService.selectSumByCourseId(studyTimeView);
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+	@RequestMapping("/get_chart_compare")
+	public void getChartCompare(HttpServletRequest request, HttpServletResponse response, StudyTimeView studyTimeView,int index) throws Exception {
+		JSONObject result = new JSONObject();
+		if (studyTimeView.getGroup() == null) {
+			studyTimeView.setGroup("1");
+			
+		}
+		 int timeType=studyTimeView.getTimeType();
+		if(index==0&&timeType==0){//昨天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-24*60*60*1000)));
+		}else if(index==1&&timeType==0){//7天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-new Long(24*60*60*1000)*7)));
+		}else if(index==0&&timeType==1){//昨天昨天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-new Long(24*60*60*1000)*2)));
+		}else{//昨天 7天
+			studyTimeView.setDays(TimeUtil.dateToString1(new Date(new Date().getTime()-new Long(24*60*60*1000)*7)));
+		}
+		List<StudyTimeView> studyTimeViews =userStudyTimeService.selectSumByCourseId(studyTimeView);
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+	@RequestMapping("/get_course_hour_chart")
+	public void getCourseHourChart(HttpServletRequest request, HttpServletResponse response, StudyTimeView studyTimeView) throws Exception {
+		JSONObject result = new JSONObject();
+		
+		List<StudyTimeView> studyTimeViews =userStudyTimeService.selectSumByCourseHour(studyTimeView);
+		result.put("studyTimeViews", studyTimeViews);
+		ResponseUtil.write(response, result);
+	}
+	@RequestMapping("export")
+	public void export(HttpServletRequest request, HttpServletResponse response,StudyTimeView studyTimeView) throws IOException{
+		String[] heads={"时间","观看次数","观看人数","平均观看时长"};		 
+	String str = null;
+		if(studyTimeView.getGroup().equals("1")){
+			str="hours";
+		}else if(studyTimeView.getGroup().equals("2")){
+			str="days";
+		}else{
+			str="weeks";
+		}
+		String[] fieldNames = { str, "count", "user_count", "avg" };
+		System.out.println(studyTimeView.getStudyTimeViews());
+		String jsonString=studyTimeView.getStudyTimeViews();
+		
+		List<StudyTimeView> studyTimeViews = JsonUtil.getList4Json(jsonString, StudyTimeView.class);
+		int i=1;
+		for(StudyTimeView s:studyTimeViews){
+			BigDecimal   b   =   new   BigDecimal( s.getAvg()*1.0/1000/60); 
+			double   f  =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue(); 
+			s.setAvg(f);
+
+			if(studyTimeView.getGroup().equals("3")){
+			s.setWeeks("第"+i+"周");	
+			i++;
+			}
+		}
+		ExportExcel<StudyTimeView> excel = new ExportExcel<StudyTimeView>();
+		String fileName = "课程学习统计.xls";
+		response.setHeader("Content-Disposition", excel.getFileName(fileName, excel.getExplorer(request)));
+		OutputStream out = response.getOutputStream();
+		excel.exportExcel("用户趋势", heads, fieldNames, studyTimeViews, out);
+	}
+}

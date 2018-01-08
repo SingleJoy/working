@@ -1,0 +1,147 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityService;
+import cn.bnsr.edu_yun.frontstage.train.service.MessageService;
+import cn.bnsr.edu_yun.frontstage.train.service.WorkshopService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityView;
+import cn.bnsr.edu_yun.frontstage.train.view.MessageView;
+import cn.bnsr.edu_yun.frontstage.train.view.WorkshopView;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+/**
+ * 信息（社区，工作坊）
+ * @author sunyu
+ * @date 2017年5月18日
+ */
+@Controller
+@RequestMapping("/message")
+public class MessageController {
+	private final Logger log = LoggerFactory.getLogger(MessageController.class);
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private WorkshopService workshopService;
+	@Autowired
+	private MessageService messageService;
+	/**
+	 * 跳转社区信息管理页面
+	 */
+	@RequestMapping("/to_info_manager")
+	public ModelAndView toCommunityInfoManager(HttpServletRequest request,MessageView messageView){
+		String stamp = request.getParameter("stamp");
+		String source_type = request.getParameter("source_type");
+		Long source_id = Long.parseLong(request.getParameter("source_id"));
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			if("0".equals(source_type)){
+				CommunityView communityView = communityService.getById(source_id);
+				communityView.setStamp(Integer.parseInt(stamp));
+				modelAndView.addObject("communityView", communityView);
+			}else if("1".equals(source_type)){
+				WorkshopView workshopView = new WorkshopView();
+				workshopView.setId(source_id);
+				workshopView=workshopService.showWorkshop(workshopView).get(0);
+				workshopView.setStamp(Integer.parseInt(stamp));
+				modelAndView.addObject("workshopView", workshopView);
+			}
+			messageView.setRows(10);
+			if (messageView.getPage() == 0) {
+				messageView.setStartLine(0);
+			} else {
+				messageView.setStartLine(messageView.getPage() * messageView.getRows());
+			}
+			Integer total = messageService.countMessage(messageView);
+			messageView.setTotal(total);
+			// 分页总数
+			messageView.setTotalPage(NumUtil.totalPage(total, messageView.getRows()));
+			List<MessageView> messageList = messageService.showAllMessage(messageView);
+			modelAndView.addObject("messageList", messageList);
+			modelAndView.addObject("messageView", messageView);
+			modelAndView.addObject("source_id", source_id);
+			modelAndView.addObject("source_type", source_type);
+			modelAndView.setViewName("frontstage/train/community/info_management");
+		} catch (Exception e) {
+			log.error("社区信息列表查询失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	
+	
+	/**
+	 * 跳转社区信息管理页面
+	 */
+	@RequestMapping("/to_info_add")
+	public ModelAndView toCommunityInfoAdd(HttpServletRequest request){
+		String id = request.getParameter("id");
+		String stamp = request.getParameter("stamp");
+		String source_type = request.getParameter("source_type");
+		Long source_id = Long.parseLong(request.getParameter("source_id"));
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			if("0".equals(source_type)){
+				CommunityView communityView = communityService.getById(source_id);
+				communityView.setStamp(Integer.parseInt(stamp));
+				modelAndView.addObject("communityView", communityView);
+			}else if("1".equals(source_type)){
+				WorkshopView workshopView = new WorkshopView();
+				workshopView.setId(source_id);
+				workshopView=workshopService.showWorkshop(workshopView).get(0);
+				workshopView.setStamp(Integer.parseInt(stamp));
+				modelAndView.addObject("workshopView", workshopView);
+			}
+			if(id!=null){//去更新
+				MessageView messageView = messageService.selectOne(Long.parseLong(id));
+				modelAndView.addObject("message", messageView);
+			}
+			modelAndView.addObject("source_id", source_id);
+			modelAndView.addObject("source_type", source_type);
+			modelAndView.setViewName("frontstage/train/community/info_add");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+	
+	/**
+	 * 保存信息（社区、工作坊）
+	 */
+	@RequestMapping("/save_message")
+	public ModelAndView saveMessage(HttpServletRequest request,MessageView messageView){
+		User user = (User) request.getSession().getAttribute("currentUser");
+		String source_type = request.getParameter("source_type");
+		String source_id = request.getParameter("source_id");
+		String stamp = request.getParameter("stamp");
+		try {
+			messageView.setUser_id(user.getId());
+			messageView.setIs_read(0);
+			if(messageView.getIds()!=null){//批量更新
+				messageService.batchUpdateMessage(messageView);
+			}else{
+				if(messageView.getId()!=null){
+					messageService.updateMessage(messageView);
+				}else{
+					messageService.saveMessage(messageView);
+				}
+			}
+		} catch (Exception e) {
+			log.error("保存信息失败",ExceptionUtil.getExceptionMessage(e));
+		}
+		return new ModelAndView("redirect:/message/to_info_manager.action?id="+source_id+"&source_id="+source_id+"&stamp="+stamp+"&source_type="+source_type+"&sort=id&order=desc");
+	}
+
+
+}

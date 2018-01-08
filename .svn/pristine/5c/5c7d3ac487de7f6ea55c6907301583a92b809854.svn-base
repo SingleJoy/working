@@ -1,0 +1,879 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+    <script>
+        $(function(){
+            $("#lesson-toolbar-secondary").click(function(){
+                $("#lesson-pane").hide();
+                $("#lesson-dashboard").toggleClass("lesson-dashboard-open");
+                $("#lesson-dashboard-toolbar").toggleClass("toolbar-open");
+
+                var index=$(".toolbar-nav-stacked>li.active").index();
+                $(".panel_index").hide().eq(index).show();
+
+
+                if($("#lesson-dashboard").hasClass("lesson-dashboard-open")){
+                    $(".glyphicon-chevron-right").addClass("glyphicon-chevron-left").removeClass("glyphicon-chevron-right");
+                }else{
+                    $(".glyphicon-chevron-left").addClass("glyphicon-chevron-right").removeClass("glyphicon-chevron-left");
+
+                }
+
+            })
+        });
+    $(function(){
+        $(".toolbar-nav-stacked>li").click(function(){
+            $(this).addClass("active").siblings().removeClass("active");
+            var index=$(this).index();
+            $(".panel_index").hide().eq(index).show();
+        })
+    });
+    $(function(){
+        $("#quit").click(function(){
+          $(".subject_discuss>form").toggle();
+            $(".subject-comment").show();
+        })
+    });
+
+    $(function(){
+        $(".subject-comment").click(function(){
+            $(".subject_discuss>form").show();
+            $(this).hide();
+        })
+    });
+
+
+    </script>
+
+</head>
+<body class="lesson-dashboard-page" >
+
+<div class="es-wrap" style="overflow-y: scroll;">
+
+
+    <div class="lesson-dashboard lesson-dashboard-open" id="lesson-dashboard" style="position: absolute;" >
+
+        <div class="dashboard-content">
+            <a class="btn btn-primary  nav-btn back-course-btn" href="">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                返回课程
+            </a>
+
+            <a class="btn btn-primary  nav-btn prev-lesson-btn" href="javascript:"   title="上一课时">
+                <span class="glyphicon glyphicon-chevron-up" title="上一课时"></span>
+            </a>
+            <a class="btn btn-primary nav-btn next-lesson-btn" href="javascript:"  title="下一课时">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+
+            <div class="dashboard-header">
+                <div class="pull-left title-group">
+                     <span class="chapter-label">
+                          第<span data-role="chapter-number">1</span>章</span>
+                    <span class="divider">»</span>
+                     <span class="chapter-label">
+                          第<span data-role="unit-number">1</span>节</span>
+                    <span class="divider">»</span>
+                    <span class="item-label">课时<span >2</span></span>
+                    <span class="item-title" >系统三大特色：班课交互体系、教育云、ES应用</span>
+                </div>
+            </div>
+
+            <div class="dashboard-body">
+
+
+                <!--视频播放-->
+                <div class="lesson-content lesson-content-audio" id="lesson-audio-content"  style="background-color: #000;">
+                    <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width: 100%;height: 100%;"
+                           poster="http://video-js.zencoder.com/oceans-clip.png">
+                        <source src="http://vjs.zencdn.net/v/oceans.mp4" type='video/mp4' />
+                        <source src="http://vjs.zencdn.net/v/oceans.webm" type='video/webm' />
+                        <!--<source src="http://vjs.zencdn.net/v/oceans.ogv" type='video/ogg' />-->
+                    </video>
+                </div>
+
+
+            </div>
+
+            <div class="dashboard-footer clearfix">
+                <div class="pull-right">
+                    <button class="btn btn-primary finish-btn btn-success"  style="">
+                        <span class="glyphicon glyphicon-unchecked"></span> 学过了
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="toolbar toolbar-open" id="lesson-dashboard-toolbar"  >
+
+
+
+            <div class="toolbar-pane-container" style="overflow-y: auto;">
+
+                <!--目录-->
+                <div  class="lesson-pane panel_index" style="" id="lesson-pane">
+                    <div class="course-item-list-in-toolbar-pane ps-container"  >
+                        <ul class="period-list" id="course-item-list">
+
+                            <li class="period lesson-item l">
+                                <a href="" title="商业版与开源版对比">
+                                    <!--es-icon-doing表示正在学习,es-icon-undone表示未学习-->
+                                    <i class="es-icon es-icon-doing color-primary status-icon"></i>
+
+                                    <span class="title">   课时3：商业版与开源版对比</span>
+                                    <!-- 紧跟标题 -->
+
+                                    <!-- 右边图标 -->
+
+                                  <span class="course-type">
+                                     <i class="es-icon es-icon-graphicclass"  title="图文课程"></i>
+                                  </span>
+
+                                </a>
+                            </li>
+                            <li class="chapter clearfix">
+                                <i class="es-icon es-icon-toc"></i>
+                               <span class="title">
+                                   第 2章：课程制作服务
+                               </span>
+                               <span class="period-show">
+                                   <i class="es-icon es-icon-remove"></i>
+                               </span>
+                            </li>
+                            <li class="period lesson-item " >
+                                <a href="" title="EduSoho直播、录播软硬件环境">
+                                    <i class="es-icon es-icon-doing color-primary status-icon"></i>
+                                    <span class="title">   课时4：EduSoho直播、录播软硬件环境</span>
+                                    <!-- 紧跟标题 -->
+                                    <!-- 右边图标 -->
+                                 <span class="course-type">
+                                     <i class="es-icon es-icon-graphicclass" data-toggle="tooltip" title="图文课程"></i>
+                                 </span>
+                                </a>
+                            </li>
+                            <li class="section"><span class="title">第 1节：课程展示及报价</span></li>
+                            <li class="period lesson-item " >
+                                <a href="#" title="课程形式">
+                                    <i class="es-icon es-icon-doing color-primary status-icon"></i>
+                                    <span class="title">课时5：课程形式</span>
+                                    <!-- 紧跟标题 -->
+
+                                    <!-- 右边图标 -->
+
+                                <span class="course-type">
+                                    <i class="es-icon es-icon-graphicclass" title="图文课程"></i>
+                                </span>
+
+
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+                <!--问答-->
+                <div  class="question panel_index" style="display: none;" >
+                    <div class="question-list-pane ps-container">
+                        <div data-role="list-pane">
+
+                            <form  method="post" action="" id="lesson-question-plugin-form">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <input type="text"  name="" required="required" class="form-control expand-form-trigger" placeholder="我要提问" data-display="标题">
+                                    </div>
+                                </div>
+
+                                <div class="form-group detail-form-group hide">
+                                    <div class="controls">
+                                        <textarea  name="" required="required" class="form-control" rows="5" placeholder="详细描述你的问题"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group detail-form-group hide">
+                                    <div class="controls clearfix">
+                                        <button class="btn btn-primary btn-sm pull-right" type="submit">提问</button>
+                                        <button class="btn btn-link btn-sm collapse-form-btn pull-right" type="button">取消</button>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <ul class="media-list thread-list-small mtl" data-role="list">
+                                <!--若此课程没有问题显示-->
+                                <li class="empty-item" style="display: none;">此课时还没有问题</li>
+
+                                <li class="media thread-item" >
+                                   <div class="media-body thread-item-body">
+                                       <div class="title mbm">
+                                          <a href="javascript:void(0);" class="show-question-item" >你好吗</a>
+                                       </div>
+                                       <div class="metas">
+                                         <a class="link-dark " href="#">体验管理员1</a>
+                                           发表于 6分钟前<span class="bullet">•</span>
+                                         <a href="#">0回答</a>
+                                       </div>
+                                   </div>
+                                </li>
+
+                                <li class="media thread-item" >
+                                     <div class="media-body thread-item-body">
+                                        <div class="title mbm">
+                                            <a href="javascript:void(0);" class="show-question-item" >14254235</a>
+                                        </div>
+                                       <div class="metas">
+                                         <a class="link-dark " href="#">体验管理员1</a>
+                                          发表于 7分钟前<span class="bullet">•</span>
+                                         <a href="#">0回答</a>
+                                       </div>
+                                     </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--笔记-->
+                <div  class="note-pane panel_index"  style="display: none;">
+                    <form id="lesson-note-plugin-form" method="post" action="">
+                        <div class="form-group note-content">
+                            <div class="controls">
+                                <textarea   >编辑器工具</textarea>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group note-actions">
+                            <div class="controls clearfix">
+                                <span class="text-muted" data-role="saved-message" style="display: none;">已保存</span>
+                                <button class="btn btn-primary btn-xs pull-right" type="submit">保存笔记</button>
+
+                                <label class="text-muted">
+                                    <input type="checkbox" name="" checked=""> 分享笔记
+                                </label>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!--资料-->
+                <div  class="material-pane ps-container panel_index"  style="display: none;">
+                    <h5>课时简介</h5>
+                    <div class="lesson-about">此课时无简介。</div>
+
+                    <h5>课时资料</h5>
+
+                    <ul class="media-list toolbar-pane-list">
+                        <li class="empty-item" style="text-align:left;margin-left:10px;">此课时无资料</li>
+                    </ul>
+
+                </div>
+
+                <!--作业-->
+                <div  class="homework-pane panel_index"  style="display: none;">
+
+                    <h5>课后作业</h5>
+                    <div class="lesson-about">
+                        共3个作业题
+                        <a href="" class="btn btn-primary btn-sm mlm" target="_blank">开始做题</a>
+                    </div>
+
+                    <h5>课时练习</h5>
+
+                    <div class="lesson-about">
+                        此课时暂无练习
+                    </div>
+                </div>
+
+                <!--主题研讨-->
+                <div  class="subject_discuss panel_index"  style="display: none;">
+                    <h5 style="margin:20px 0 10px 10px;">如何学好数学?</h5>
+                    <button class="btn btn-primary btn-sm pull-right subject-comment" style="display: block;">评论</button>
+                    <form  method="post" action="" style="padding: 15px 10px 0 10px;display: none;" class="form-expanded" >
+
+
+                        <div class="form-group controls">
+                            <textarea class="form-control" rows="6"  name="content" style="width: 340px;" placeholder="不超过150个字" ></textarea>
+                            <div class="help-block" style="display: none;">请输入评价内容</div>
+                        </div>
+
+                        <div class="form-group clearfix">
+
+                            <a href="javascript:;" class="btn btn-primary pull-right js-btn-save" >保存</a>
+                            <a href="javascript:;" class="btn btn-link pull-right js-hide-review-form" id="quit">取消</a>
+                        </div>
+
+                    </form>
+                    <div class="help-block" style="margin-top: 50px;"></div>
+
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679679679679236534634736796796792365346347367967967923653463473
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >67967967923653463473
+                                        679679679236534634736796796792365346347367967967923653463473679679679236534634736796796792365346347367967967923653463473679679679236534634736796796792365346347367967967923653463473
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">杜塞尔多夫</a>
+                                    &nbsp;&nbsp;2016-11-21
+                                </div>
+
+                                <div class="content">
+
+                                    <div class="full-content" >679679679
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="js-reviews"  style="margin-left: 10px;">
+                        <div class="media media-evaluate">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="" >
+                                    <img class="avatar-sm" src="http://scc1a8b2s6-static.qiqiuyun.net/files/user/2016/11-18/132259346fe6280239.jpg">
+                                </a>
+
+                            </div>
+
+                            <div class="media-body thread-post">
+                                <div class="title">
+                                    <a class="link-dark " href="">李明</a>
+                                    &nbsp;&nbsp;2017-03-01
+                                </div>
+
+                                <div class="content">
+                                    <div class="full-content" >20170301</div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="toolbar-nav">
+
+            <ul class="toolbar-nav-stacked" id="lesson-toolbar-primary">
+                <li class="active list">
+                    <a href="#"><span class="glyphicon glyphicon-th-list"> </span>目录</a>
+                </li>
+                <li class="questions">
+                    <a href="#"><span class="glyphicon glyphicon-question-sign"> </span>问答</a>
+                </li>
+                <li class="notes">
+                    <a href="#"><span class="glyphicon glyphicon-edit"> </span>笔记</a>
+                </li>
+                <li class="data">
+                    <a href="#"><span class="glyphicon glyphicon-download-alt"> </span>资料</a>
+                </li>
+                <li class="homework">
+                    <a href="#"><span class="glyphicon glyphicon-list-alt"> </span>作业</a>
+                </li>
+                <li class="subject_discuss">
+                    <a href="#"><span class="glyphicon glyphicon-list-alt"> </span>主题研讨</a>
+                </li>
+            </ul>
+
+            <ul class="toolbar-nav-stacked" id="lesson-toolbar-secondary">
+                <li class="hide-pane" >
+                    <a href="javascript:"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<%@ page language="java" import="java.util.*,cn.bnsr.edu_yun.frontstage.base.po.User" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<div class="col-md-3" >
+    <div class="sidenav locked">
+        <ul class="list-group">
+            <li class="list-group-heading">班级信息</li>
+            <li class="list-group-item <c:if test="${classView.sign==2 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/class/to_class_home.action?id=${classView.id}&flag=2&sign=2&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>班级主页
+                </a>
+            </li>
+
+
+            <li class="list-group-item <c:if test="${classView.sign==8 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/class/to_class_setting.action?id=${classView.id}&flag=2&sign=8&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>班级设置
+                </a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==1 }">active</c:if> ">
+                <a href="${pageContext.request.contextPath}/class/to_class_service_setting.action?id=${classView.id}&flag=2&sign=1&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>服务设置
+                </a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==10 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/class/to_class_notice_manager.action?classId=${classView.id}&flag=2&sign=10&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>公告管理
+                </a>
+            </li>
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-heading">班级管理</li>
+            <li class="list-group-item <c:if test="${classView.sign==3 }">active</c:if>">
+                <!--"${pageContext.request.contextPath}/user_study/to_class_student_manage.action?id=${cla.id}&flag=2&sign=2&tab=0&sourceId=${cla.source_id}&sourceType=${cla.source_type }"  -->
+                <a href="${pageContext.request.contextPath}/user_study/to_class_student_manage.action?id=${classView.id}&flag=2&sign=3&tab=0&sourceId=${classView.source_id}&sourceType=${classView.source_type}">
+                    <span></span>学员管理
+                </a>
+            </li>
+
+            <li class="list-group-item <c:if test="${classView.sign==4 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/exam/exam.action?required=1&class_id=${classView.id}&flag=2&sign=4&exam_type=0&status=1&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>试卷批阅
+                </a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==5 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/exam/exam.action?required=1&class_id=${classView.id}&flag=2&sign=5&exam_type=1&status=1&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>作业批改
+                </a>
+            </li>
+
+            <li class="list-group-item <c:if test="${classView.sign==6 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/class/to_class_theme_discuss.action?required=1&id=${classView.id}&flag=2&sign=6&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>主题研讨
+                </a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==7 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/class/to_class_scores_manage.action?id=${classView.id}&flag=2&sign=7&exam_type=4&source_id=${classView.source_id}&source_type=${classView.source_type}">
+                    <span></span>成绩管理
+                </a>
+            </li>
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-heading">班级运营</li>
+            <li class="list-group-item <c:if test="${classView.sign==9 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/course_data/to_data.action?id=${classView.id}&source_id=${classView.source_id}&source_type=${classView.source_type}&flag=2&sign=9">
+                    <span></span>班级学习数据</a>
+            </li>
+             <li class="list-group-item <c:if test="${classView.sign==11 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/course_chart/to_course_chart.action?id=${classView.id}&source_id=${classView.source_id}&source_type=${classView.source_type}&flag=2&sign=11">
+                    <span></span>课程学习统计</a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==12 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/course_chart/to_course_hour_chart.action?id=${classView.id}&source_id=${classView.source_id}&source_type=${classView.source_type}&flag=2&sign=12">
+                    <span></span>课时学习统计</a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==14 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/course_chart/to_topic_chart.action?id=${classView.id}&source_id=${classView.source_id}&source_type=${classView.source_type}&flag=2&sign=14">
+                    <span></span>课程讨论统计</a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==15 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/course_track/to_track.action?id=${classView.id}&source_id=${classView.source_id}&source_type=${classView.source_type}&flag=2&sign=15">
+                    <span></span>用户轨迹</a>
+            </li>
+            <li class="list-group-item <c:if test="${classView.sign==16 }">active</c:if>">
+                <a href="${pageContext.request.contextPath}/class_question/to_class_question.action?id=${classView.id}&source_id=${classView.source_id}&source_type=${classView.source_type}&flag=2&sign=16">
+                    <span></span>考试作业统计</a>
+            </li>
+        </ul>
+
+
+    </div>
+</div>

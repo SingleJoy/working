@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>社区信息-社区课程</title>
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../css/community.css"  type="text/css"/>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+        <div class="es-section course-manage-header clearfix">
+
+            <div class="student-num hidden-xs pull-right" >
+                <i class="es-icon es-icon-people" style="font-size: 20px;padding-right: 5px;"></i>70人
+            </div>
+
+            <a href="javascript:void(0);">
+                <img class="picture" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" >
+
+            </a>
+
+            <div class="teachers">
+                社区名称: 北京四中数学组<br/>
+                成员：
+                <a href="javascript:void(0);" style="line-height: 30px;">
+                    李老师 张老师  刘老师
+                </a>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <ul class="list-group">
+                        <li class="list-group-heading">社区信息</li>
+                        <li class="list-group-item ">
+                            <a href="community-course.html">
+                                <span  ></span>社区课程
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="community-train.html">
+                                <span  ></span>社区培训
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="community-lesson.html">
+                                <span  ></span>社区课例
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="community-workshop.html">
+                                <span  ></span>工作坊
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="community-topic.html">
+                                <span  ></span>话题
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="community-info-management.html">
+                                <span  ></span>信息管理
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="community-user-management.html">
+                                <span  ></span>用户管理
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="plan-management.html">
+                                <span  ></span>计划管理
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-heading">分类管理</li>
+                        <li class="list-group-item ">
+                            <a href="community-course-sort-management.html">
+                                <span  ></span>课程分类管理
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="community-train-management.html">
+                                <span  ></span>培训分类管理
+                            </a>
+                        </li>
+
+
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-heading">统计</li>
+                        <li class="list-group-item">
+                            <a href="data-statistics.html">
+                                <span  ></span>数据统计
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </div>
+            </div>
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">信息列表
+                        <a href="community-info-add.html" class="btn btn-info pull-right">添加信息</a>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal form-inline well well-sm" >
+
+                            <div class="form-group">
+                                <input type="text"   class="form-control" value="" placeholder="关键词">
+                                <button class="btn btn-primary btn-sm">搜索</button>
+                            </div>
+
+                            <table class="table table-striped">
+                                <!--默认箭头向下,即caret,点击重新排序之后箭头向上,即caret_01-->
+                                <tbody>
+                                <tr class="border">
+                                    <th  width="4%"><input type="checkbox"></th>
+                                    <th  width="25%">标题</th>
+                                    <th  width="10%">类别</th>
+                                    <th  width="15%">发布人</th>
+                                    <th  width="15%">发布时间<span class="caret"></span></th>
+                                    <th >状态<span class="caret"></span></th>
+                                    <th >
+                                        <div class="btn-group" >
+                                            <a href="#" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">操作</a>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                <li><a href="javascript:void (0);">置顶</a></li>
+                                                <li><a href="javascript:void (0);">开启</a></li>
+                                                <li><a href="javascript:void (0);">关闭</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </th>
+                                </tr>
+
+
+
+                                <tr class="border">
+                                    <td class="active"><input type="checkbox"></td>
+                                    <td>一元二次函数</td>
+                                    <td>新闻动态</td>
+                                    <td>李老师</td>
+                                    <td>2017-05-01</td>
+                                    <td>正在开班</td>
+                                    <td><span class="text-info">开启</span></td>
+                                </tr>
+
+
+
+                                </tbody>
+                            </table>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

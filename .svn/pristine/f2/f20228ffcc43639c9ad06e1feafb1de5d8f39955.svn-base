@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)http://13661239841.test.edusoho.com.cn/course/33/manage/testpaper/create -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>编辑试卷信息</title>
+  
+    <link href="./edusoho/bootstrap.css" rel="stylesheet">
+  <link href="./edusoho/es-question.css" rel="stylesheet">
+  <link href="./edusoho/nouislider.css" rel="stylesheet">
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+  <script type="text/javascript" src="./edusoho/nouislider.js"></script>
+  
+</head>
+<body>
+
+<div class="es-wrap">    
+    <div id="content-container" class="container">
+        <div class="row">
+          <div class="col-md-3">
+                <div class="sidenav locked">
+                <ul class="list-group">
+                <li class="list-group-heading">课程信息</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>基本信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>详细信息
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程图片
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课时管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>录播管理</a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程文件
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程设置</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>价格设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>教师设置
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>学员管理
+                </a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">题库</li>
+                <li class="list-group-item">
+                <a href="">
+                <span></span>题目管理
+                </a>
+                </li>
+
+                <li class="list-group-item active">
+                <a href="">
+                <span></span>试卷管理
+                </a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>试卷批阅</a>
+                </li>
+                <li class="list-group-item ">
+                <a href=""><span></span>作业批改</a>
+                </li>
+                </ul>
+
+                <ul class="list-group">
+                <li class="list-group-heading">课程运营</li>
+                <li class="list-group-item ">
+                <a href="">
+                <span></span>课程学习数据</a>
+                </li>
+
+                <li class="list-group-item ">
+                <a href=""><span></span>课程订单查询</a>
+                </li>
+                </ul>
+                </div>
+          </div>
+          <div class="col-md-9">
+              <div class="panel panel-default panel-col test-creator">
+                <div class="panel-heading clearfix">编辑试卷信息</div>
+                <div class="panel-body">
+
+                  <ol class="breadcrumb">
+                    <li><a href="">试卷管理</a></li>
+                    <li class="active">编辑试卷信息</li>
+                  </ol>
+
+                  <form class="form-horizontal" method="post">
+                            
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label for="testpaper-name-field">试卷名称</label></div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control" value="" name="name" id="testpaper-name-field">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label for="testpaper-description-field">试卷说明</label></div>
+                      <div class="col-md-8 controls">
+                        <textarea class="form-control" style="height: 180px;" ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-md-2 control-label"><label for="testpaper-limitedTime-field">时间限制</label></div>
+                      <div class="col-md-8 controls">
+                          <input class="form-control width-input width-input-large" name="limitedTime" value="0" > 分钟
+                          <div class="help-block">0分钟，表示无限制</div>
+                      </div>
+                    </div> 
+                    <div class="form-group mbm">
+                      <div class="col-md-8 col-md-offset-2 controls">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <a href="" class="btn btn-link  ">返回</a>
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

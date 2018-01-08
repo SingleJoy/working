@@ -1,0 +1,506 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.Notification;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.service.NotificationService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicAnswer;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicQuestion;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicAnswerService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicQuestionService;
+import cn.bnsr.edu_yun.frontstage.train.service.WorkshopService;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityView;
+import cn.bnsr.edu_yun.frontstage.train.view.TopicAnswerView;
+import cn.bnsr.edu_yun.frontstage.train.view.TopicQuestionView;
+import cn.bnsr.edu_yun.frontstage.train.view.WorkshopView;
+import cn.bnsr.edu_yun.util.ConfigInfo;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+
+@Controller
+@RequestMapping("topic_question")
+public class TopicQuestionController {
+	private final Logger log = LoggerFactory.getLogger(TopicQuestionController.class);
+
+	@Autowired
+	private TopicQuestionService topicQuestionService;
+	@Autowired
+	private TopicAnswerService topicAnswerService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private NotificationService notificationService;
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private WorkshopService workshopService;
+
+	/**
+	 * 提问题
+	 * 
+	 * @param id
+	 * @param response
+	 * @param request
+	 * @throws Exception
+	 */
+	@RequestMapping("/put_question")
+	public void put_question(TopicQuestion topicQuestion, HttpServletResponse response, HttpServletRequest request) throws Exception {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("currentUser");
+		topicQuestion.setUser_id(user.getId());
+		topicQuestion.setQuestion_time(new Date());
+		topicQuestion.setWatch_times(0);
+		topicQuestion.setReply_times(0);
+		topicQuestion.setUser(user);
+		int flag = topicQuestionService.insert(topicQuestion);
+
+		JSONObject result = new JSONObject();
+		result.put("flag", flag);
+		result.put("topicQuestion", topicQuestion);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/put_question_m")
+	public void put_questionM(TopicQuestion topicQuestion, HttpServletResponse response, HttpServletRequest request) throws Exception {
+
+		topicQuestion.setQuestion_time(new Date());
+		topicQuestion.setWatch_times(0);
+		topicQuestion.setReply_times(0);
+		int flag = topicQuestionService.insert(topicQuestion);
+		JSONObject result = new JSONObject();
+		result.put("flag", flag);
+		ResponseUtil.write(response, result);
+	}
+	
+	/**
+	 * 回答问题
+	 * 
+	 * @param topicAnswer
+	 * @param response
+	 * @param request
+	 * @throws Exception
+	 */
+	@RequestMapping("/put_answer")
+	public void put_answer(TopicAnswer topicAnswer, HttpServletResponse response, HttpServletRequest request) throws Exception {
+
+		Date date = new Date();
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("currentUser");
+		TopicQuestion topicQuestion = topicQuestionService.selectById(topicAnswer.getQuestion_id());
+
+		topicAnswer.setAnswer_time(date);
+		topicAnswer.setUser_id(user.getId());
+		topicQuestion.setLast_answer_user(user.getId());
+		topicQuestion.setLast_reply_time(date);
+		topicQuestion.setReply_times(topicQuestion.getReply_times() + 1);
+		topicQuestionService.update(topicQuestion);
+		int flag = topicAnswerService.insert(topicAnswer);
+		if (user.getId() != topicQuestion.getUser_id()) {
+			Notification notification = new Notification();
+			notification.setQuestion_id(topicQuestion.getId());
+			notification.setIs_read(1);
+			notification.setCreate_time(date);
+			notification.setNotice_time(date);
+			notification.setUser_id(topicQuestion.getUser_id());
+			notification.setOther_user_id(user.getId());
+			notification.setNotice_type_id(9);
+			notificationService.insert(notification);
+		}
+		topicAnswer.setUser(user);
+		JSONObject result = new JSONObject();
+		result.put("flag", flag);
+		result.put("topicAnswer", topicAnswer);
+		ResponseUtil.write(response, result);
+	}
+
+	@RequestMapping("/update_question")
+	public void update_question(TopicQuestion topicQuestion, HttpServletResponse response, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("currentUser");
+		int flag = topicQuestionService.update(topicQuestion);
+		topicQuestion = topicQuestionService.selectById(topicQuestion.getId());
+		if (user.getId() != topicQuestion.getUser_id()) {
+			Notification notification = new Notification();
+			Date date = new Date();
+			notification.setQuestion_id(topicQuestion.getId());
+			notification.setIs_read(1);
+			notification.setCreate_time(date);
+			notification.setNotice_time(date);
+			notification.setUser_id(topicQuestion.getUser_id());
+			notification.setNotice_type_id(14);
+			notificationService.insert(notification);
+		}
+
+		JSONObject result = new JSONObject();
+		result.put("flag", flag);
+
+		ResponseUtil.write(response, result);
+	}
+
+	/**
+	 * 查看问题
+	 * 
+	 * @param topicQuestion
+	 * @param response
+	 * @param request
+	 * @throws Exception
+	 */
+	@RequestMapping("/read_question_ajax")
+	public void read_question_ajax(TopicQuestion topicQuestion, HttpServletResponse response, HttpServletRequest request) throws Exception {
+		int pageSize = 10;
+		int page = 1;
+		int start = pageSize * (page - 1);
+		List<TopicAnswer> topicAnswers = topicAnswerService.selectAnswerByQuestionId(topicQuestion.getId(), start, pageSize);
+		topicQuestion = topicQuestionService.selectById(topicQuestion.getId());
+		topicQuestion.setWatch_times(topicQuestion.getWatch_times() + 1);
+		topicQuestionService.update(topicQuestion);
+
+		JSONObject result = new JSONObject();
+		result.put("topicAnswers", topicAnswers);
+		result.put("topicQuestion", topicQuestion);
+		ResponseUtil.write(response, result);
+	}
+
+	/**
+	 * 学员问答
+	 */
+	@RequestMapping("/query_question")
+	public ModelAndView queryQuestion(HttpServletRequest request, TopicQuestionView topicQuestionView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		String state = request.getParameter("state");// 二级分类标识
+		String stamp = request.getParameter("stamp");// 一级分类标识
+		try {
+			topicQuestionView.setRows(10);
+			if (topicQuestionView.getPage() == 0) {
+				topicQuestionView.setStartLine(0);
+			} else {
+				topicQuestionView.setStartLine(topicQuestionView.getPage() * topicQuestionView.getRows());
+			}
+			topicQuestionView.setUser_id(user.getId());
+			List<TopicQuestionView> questionList = topicQuestionService.queryQuestion(topicQuestionView);
+			int total = topicQuestionService.queryTotalQuestion(topicQuestionView);// 提问总数
+			topicQuestionView.setTotal(total);
+			// 分页总页数
+			topicQuestionView.setTotalPage(NumUtil.totalPage(total, topicQuestionView.getRows()));
+
+			modelAndView.addObject("questionList", questionList);
+			modelAndView.addObject("topicQuestionView", topicQuestionView);
+
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			//个人中心统计数据  
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+			modelAndView.addObject("head_title", "学员问答");
+			request.setAttribute("state", state);
+			request.setAttribute("stamp", stamp);
+			modelAndView.setViewName("frontstage/train/personalCenter/students_ask");
+		} catch (Exception e) {
+			log.error("学员问答查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 我的问答
+	 */
+	@RequestMapping("/user_question")
+	public ModelAndView userQuestion(HttpServletRequest request, TopicQuestionView topicQuestionView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		String state = request.getParameter("state");// 二级分类标识
+		String stamp = request.getParameter("stamp");// 一级分类标识
+		try {
+			topicQuestionView.setRows(10);
+			if (topicQuestionView.getPage() == 0) {
+				topicQuestionView.setStartLine(0);
+			} else {
+				topicQuestionView.setStartLine(topicQuestionView.getPage() * topicQuestionView.getRows());
+			}
+			topicQuestionView.setUserId(user.getId());
+			List<TopicQuestionView> questionList = topicQuestionService.queryUserStudentsAsk(topicQuestionView);
+			int total = topicQuestionService.queryUserTotalQuestion(topicQuestionView);
+			topicQuestionView.setTotal(total);
+			// 分页总页数
+			topicQuestionView.setTotalPage(NumUtil.totalPage(total, topicQuestionView.getRows()));
+
+			modelAndView.addObject("questionList", questionList);
+			modelAndView.addObject("topicQuestionView", topicQuestionView);
+
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			//个人中心统计数据  
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+			modelAndView.addObject("head_title", "我的问答");
+			request.setAttribute("state", state);
+			request.setAttribute("stamp", stamp);
+			modelAndView.setViewName("frontstage/train/personalCenter/students_ask");
+		} catch (Exception e) {
+			log.error("学员问答查询失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping("/stick_and_elite")
+	public void stick_and_elite(TopicQuestion topicQuestion, String type, HttpServletResponse response, HttpServletRequest request) {
+		JSONObject result = new JSONObject();
+		Notification notification = new Notification();
+		Date date = new Date();
+		try {
+			topicQuestion = topicQuestionService.selectById(topicQuestion.getId());
+			if (type.equals("stick")) {
+				Integer stick = topicQuestion.getStick();
+				if (stick == null) {
+					stick = 0;
+				}
+				if (stick == 0) {
+					topicQuestion.setStick(1); // 置顶
+					notification.setQuestion_id(topicQuestion.getId());
+					notification.setIs_read(1);
+					notification.setCreate_time(date);
+					notification.setNotice_time(date);
+					notification.setUser_id(topicQuestion.getUser_id());
+					notification.setNotice_type_id(10);
+					notificationService.insert(notification);
+				} else {
+					topicQuestion.setStick(0); // 取消置顶
+					notification.setQuestion_id(topicQuestion.getId());
+					notification.setIs_read(1);
+					notification.setCreate_time(date);
+					notification.setNotice_time(date);
+					notification.setUser_id(topicQuestion.getUser_id());
+					notification.setNotice_type_id(11);
+					notificationService.insert(notification);
+				}
+
+			}
+			if (type.equals("elite")) {
+				Integer elite = topicQuestion.getElite();
+				if (elite == null) {
+					elite = 0;
+				}
+				if (elite == 0) {
+					topicQuestion.setElite(1);
+					notification.setQuestion_id(topicQuestion.getId());
+					notification.setIs_read(1);
+					notification.setCreate_time(date);
+					notification.setNotice_time(date);
+					notification.setUser_id(topicQuestion.getUser_id());
+					notification.setNotice_type_id(12);
+					notificationService.insert(notification);
+				} else {
+					topicQuestion.setElite(0);
+					notification.setQuestion_id(topicQuestion.getId());
+					notification.setIs_read(1);
+					notification.setCreate_time(date);
+					notification.setNotice_time(date);
+					notification.setUser_id(topicQuestion.getUser_id());
+					notification.setNotice_type_id(13);
+					notificationService.insert(notification);
+				}
+
+			}
+			int flag = topicQuestionService.update(topicQuestion);
+			result.put("flag", flag);
+
+			ResponseUtil.write(response, result);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping("/delete_question")
+	public ModelAndView deleteQuestion(TopicQuestion topicQuestion, HttpServletResponse response, HttpServletRequest request) {
+		try {
+			// 删除问题
+			Notification notification = new Notification();
+			Date date = new Date();
+			notification.setQuestion_id(topicQuestion.getId());
+			notification.setIs_read(1);
+			notification.setCreate_time(date);
+			notification.setNotice_time(date);
+			notification.setUser_id(topicQuestion.getUser_id());
+			notification.setNotice_type_id(15);
+			notificationService.insert(notification);
+			topicQuestion = topicQuestionService.selectById(topicQuestion.getId());
+			topicQuestion.setIs_delete(1);
+			topicQuestionService.update(topicQuestion);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("redirect:/user_study/to_course_study.action?page=1&tab=2&learnId=" + topicQuestion.getSource_id() + "&sourceType=0");
+	}
+
+	@RequestMapping("/ajax_answer")
+	public void getMoreAnswer(int page, long id, HttpServletResponse response, HttpServletRequest request) throws Exception {
+		JSONObject result = new JSONObject();
+		int pageSize = 10;
+		int start = pageSize * (page - 1);
+		TopicQuestion topicQuestion = topicQuestionService.selectById(id);
+		long totalAppraise = topicQuestion.getReply_times();
+		List<TopicAnswer> topicAnswers = topicAnswerService.selectAnswerByQuestionId(id, start, pageSize);
+		boolean flag = totalAppraise > pageSize * page;
+		String path = request.getContextPath();
+		String html = "";
+		for (TopicAnswer topicAnswer : topicAnswers) {
+			StringBuffer str = new StringBuffer();
+			str.append("<li id=\"post-1\" class=\"thread-post media clearfix\">");
+			str.append("<a class=\"pull-left media-object js-user-card\" href=\"\" >");
+			str.append("<img class=\"avatar-sm\" src=\"" + path + ConfigInfo.getString("userImages") + "/" + topicAnswer.getUser().getIcon() + "\">");
+			str.append("</a>");
+
+			str.append("<div class=\"thread-post-dropdown\">");
+			str.append("<a href=\"javascript:\" class=\"dropdown-toggle text-muted\" data-toggle=\"dropdown\">");
+			str.append("<i class=\"glyphicon glyphicon-collapse-down\"></i>");
+			str.append("</a>");
+			str.append("<ul class=\"dropdown-menu pull-right\">");
+			str.append("<li><a href=\"\"><i class=\"glyphicon glyphicon-edit\"></i> 编辑</a></li>");
+			str.append("<li><a href=\"javascript:\" ><i class=\"glyphicon glyphicon-remove\"></i> 删除</a></li>");
+			str.append("</ul>");
+			str.append("</div>");
+
+			str.append("<div class=\"thread-post-body media-body\" style=\"word-break:break-all;\">");
+			str.append("<div class=\"media-heading\">");
+			str.append("<a href=\"javascript:\">" + topicAnswer.getUser().getUsername() + "</a>");
+			str.append("&nbsp;<span class=\"bullet\">•</span>&nbsp;");
+			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String time = formater.format(topicAnswer.getAnswer_time());
+			str.append("<span class=\"text-muted\">" + time + "</span>");
+			str.append("</div>");
+			str.append("<div class=\"editor-text\"><p>" + topicAnswer.getAnswer_content() + "</p></div>");
+			str.append("</div>");
+			str.append("</li>");
+			html += new String(str);
+		}
+		result.put("html", html);
+		result.put("flag", flag);
+		ResponseUtil.write(response, result);
+	}
+
+	/**
+	 * 社区工作坊话题
+	 */
+	@RequestMapping("/to_topic")
+	public ModelAndView toTopic(HttpServletRequest request, TopicQuestionView topicQuestionView) {
+		// 0：社区1：工作坊 source_type
+		// 和数据库不一样
+		ModelAndView modelAndView = new ModelAndView();
+		String search = "";
+		Integer source_type = topicQuestionView.getSource_type();
+		if (topicQuestionView.getSearch() != null) {
+			search = topicQuestionView.getSearch();
+			topicQuestionView.setSearch("%" + search + "%");
+		}
+		if (topicQuestionView.getSource_type() == 0) {
+			CommunityView communityView = communityService.getById(topicQuestionView.getSource_id());
+			communityView.setStamp(4);
+			modelAndView.addObject("communityView", communityView);
+			topicQuestionView.setSource_type(2);
+			modelAndView.addObject("head_title", "社区话题");
+		} else {
+			WorkshopView workshopView = workshopService.showWorkshopById(topicQuestionView.getSource_id());
+			workshopView.setStamp(4);
+			modelAndView.addObject("workshopView", workshopView);
+			topicQuestionView.setSource_type(3);
+			modelAndView.addObject("head_title", "工作坊话题");
+		}
+		topicQuestionView.setRows(10);
+		if (topicQuestionView.getPage() == 0) {
+			topicQuestionView.setStartLine(0);
+		} else {
+			topicQuestionView.setStartLine(topicQuestionView.getPage() * topicQuestionView.getRows());
+		}
+		int total=topicQuestionService.queryTopicCount(topicQuestionView);
+		topicQuestionView.setTotal(total);
+		// 分页总页数
+		topicQuestionView.setTotalPage(NumUtil.totalPage(total, topicQuestionView.getRows()));
+		List<TopicQuestionView> topicQuestionViews = topicQuestionService.queryTopic(topicQuestionView);
+		topicQuestionView.setSearch(search);
+		topicQuestionView.setSource_type(source_type);
+		modelAndView.addObject("topicQuestionViews", topicQuestionViews);
+		modelAndView.addObject("topicQuestionView", topicQuestionView);
+		modelAndView.setViewName("frontstage/train/community/community_topic");
+
+		return modelAndView;
+	}
+
+	/**
+	 * 开启关闭
+	 */
+	@RequestMapping("/openOrClose")
+	public void openOrClose(HttpServletRequest request, HttpServletResponse response, TopicQuestion topicQuestion) throws Exception {
+
+		topicQuestion = topicQuestionService.selectById(topicQuestion.getId());
+		if(topicQuestion.getIs_delete()==0){
+		topicQuestion.setIs_delete(1);
+		}else{
+			topicQuestion.setIs_delete(0);	
+		}
+		topicQuestionService.update(topicQuestion);
+		JSONObject result = new JSONObject();
+
+		ResponseUtil.write(response, result);
+
+	}
+
+	@RequestMapping("/more_answer")
+	public void moreAnswer(HttpServletRequest request, HttpServletResponse response,TopicAnswerView topicAnswerView) throws Exception {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		JSONObject result = new JSONObject();
+		topicAnswerView.setUser_id(user.getId());
+		topicAnswerView.setSource_type(2);
+		topicAnswerView.setRows(3);
+		topicAnswerView.setStartLine(topicAnswerView.getPage()*3);
+		List<TopicAnswerView> topicAnswerViews = topicAnswerService.queryMyTopicAnswer(topicAnswerView);
+		String html="";
+		SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
+		for(TopicAnswerView view:topicAnswerViews){
+			html+="<div class=\"js-reviews\"><div class=\"media media-evaluate\">";
+			html+="<div class=\"media-left\"><a class=\" js-user-card\" href=\"#\">";
+			html+="<img class=\"avatar-sm\" src=\""+request.getContextPath()+view.getIcon()+"\"></a></div>";
+			html+="<div class=\"media-body thread-post\"><div class=\"title\">";
+			html+="<a class=\"link-dark\" href=\"#\"><span class=\"text-danger\">"+view.getUsername()+":</span>";
+			html+="<span style=\"padding: 0 3px;opacity: 0.8;\">"+view.getQuestion_content()+"</span></a><br/>";
+			html+="<div style=\"padding-top: 15px;\">发起日期:&nbsp;&nbsp;"+formater.format(view.getQuestion_time())+"</div>";
+			html+="</div><div class=\"content\" style=\"background-color:#f9f9f9;\"><div class=\"full-content\" style=\"padding: 5px;\">";
+			html+="<span class=\"text-danger\">我的回复:&nbsp;&nbsp;&nbsp;&nbsp;</span>"+view.getAnswer_content()+"</div>";
+			html+="<div style=\"padding: 5px;opacity: 0.8;\">回复时间:&nbsp;&nbsp;"+formater.format(view.getAnswer_time())+"</div>";
+			html+="</div></div></div></div>";
+		}
+		result.put("html", html);
+		
+		ResponseUtil.write(response, result);
+
+	}
+}

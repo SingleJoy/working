@@ -1,0 +1,105 @@
+package cn.bnsr.edu_yun.interceptor;
+
+import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import cn.bnsr.edu_yun.frontstage.base.po.Area;
+import cn.bnsr.edu_yun.frontstage.base.po.IpIntercept;
+import cn.bnsr.edu_yun.frontstage.base.service.AreaService;
+import cn.bnsr.edu_yun.frontstage.base.service.IpInterceptService;
+import cn.bnsr.edu_yun.frontstage.base.view.IpIntercepterView;
+import cn.bnsr.edu_yun.util.AddressUtils;
+import cn.bnsr.edu_yun.util.IpUtil;
+import cn.bnsr.edu_yun.util.TimeUtil;
+
+public class AreaInterceptor extends HandlerInterceptorAdapter {
+
+	private final Logger log = LoggerFactory.getLogger(AreaInterceptor.class);
+
+	@Autowired
+	private AreaService areaService;
+	@Autowired
+	private IpInterceptService ipInterceptService;
+	
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		log.info("===========AreaInterceptor.preHandle============");
+		// 获取用户登录的外网IP
+		String networkIp = IpUtil.getIpAddr(request);
+		networkIp = StringUtils.isBlank(networkIp) ? "" : networkIp;
+		networkIp = "223.72.70.130";
+		if (!"".equals(networkIp)&&!"127.0.0.1".equals(networkIp)&&(!"本地".equals(networkIp))&&networkIp.indexOf("192.168.10.")==-1) {
+			IpIntercepterView ipIntercept0 = new IpIntercepterView();
+			ipIntercept0.setRemote_ip(networkIp);
+			ipIntercept0.setCreate_time(TimeUtil.dateToString1(new Date()));
+			IpIntercept ipIntercept1 = ipInterceptService.queryIpInfoByIp(ipIntercept0);
+			if(ipIntercept1!=null){//找到访问过的ip 及 地址了
+				if(ipIntercept1.getIs_intercept()==0){//关闭
+					log.info("Interceptor："+ipIntercept1.getRegion()+"还未开放，敬请期待！");  
+					request.setAttribute("msg", "<p style='font-size:12px;'>抱歉，"+ipIntercept1.getRegion()+"不再服务区内！</p>");
+					request.getRequestDispatcher("../area_close.jsp").forward(request, response);  
+					return false;
+				}
+				return true;
+			}else{//这是新的ip，需要验证
+				IpIntercept ipIntercept = new IpIntercept();
+				ipIntercept.setRemote_ip(networkIp);
+				ipIntercept.setCreate_time(new Date());
+				// 地理位置 省市
+				String address = "";
+				Map<String, String> addressMap = AddressUtils.getAddress(networkIp, "utf-8");
+				if (addressMap != null && (addressMap.get("region") != null)) {
+					address = addressMap.get("region");
+					ipIntercept.setRegion(address);
+					if (address!=null&&address.length()>0&&address!="内网IP") {
+						Area area = areaService.selectByName(address);
+						if(area!=null){
+							ipIntercept.setProvince_id(area.getId());
+							if(area.getIs_open()==1){//该省暂未开放
+								ipIntercept.setIs_intercept(0);
+								ipInterceptService.insert(ipIntercept);
+								log.info("Interceptor："+address+"还未开放，敬请期待！");  
+								request.setAttribute("msg", "<p style='font-size:12px;'>抱歉，"+address+"不再服务区内！</p>");
+								request.getRequestDispatcher("../area_close.jsp").forward(request, response); 
+								System.out.println("successsuccesssuccessSUCCESSsuccesssuccesssuccesssuccess");
+								return false;
+							}else{
+								//该省已经开放
+								ipIntercept.setArea(addressMap.get("area"));
+								ipIntercept.setCity(addressMap.get("city"));
+								ipIntercept.setCountry(addressMap.get("country"));
+								ipIntercept.setCounty(addressMap.get("county"));
+								ipIntercept.setIsp(addressMap.get("isp"));
+								ipIntercept.setIs_intercept(1);
+								ipInterceptService.insert(ipIntercept);
+								return true;
+							}
+						}
+						
+					}
+					if(addressMap.get("country") == "内网IP"||addressMap.get("country") == "内网IP"||addressMap.get("city") == "内网IP"||addressMap.get("county") == "内网IP"||address=="内网IP"){//没有找到地理位置，排除内网的情况
+						return true;
+					}
+				}
+			}
+		}
+		if(networkIp=="本地"||"127.0.0.1".equals(networkIp)||networkIp.indexOf("192.168.10.")>=0){//公司内网要放过啦
+			return true;
+		}
+		request.setAttribute("msg", "<p style='font-size:12px;'>抱歉，找不到您的地址了！</p>");
+		request.getRequestDispatcher("../area_close.jsp").forward(request, response);  
+		return false;
+	}
+
+}

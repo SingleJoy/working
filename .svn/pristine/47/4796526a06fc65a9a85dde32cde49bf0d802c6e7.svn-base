@@ -1,0 +1,12 @@
+
+
+/*上传资源页面重构 css代码*/
+
+.circle{border-radius: 50%;border: 1px solid #ddd;width: 50px;height: 50px;text-align: center;}
+.circle>span{line-height: 50px;text-align: center;}
+.stage_step>div.active{background-color: #3ebbce;}
+.stage_step>div.active>span{color: #fff}
+.stage_step>span{text-align: center;}
+.stage_step>span.active{color: #3ebbce;}
+.stage_step>p{width:170px;height: 10px;margin-left: 48px;margin-top:-50px;}
+.stage_step>p.active{background-color: #3ebbce;}

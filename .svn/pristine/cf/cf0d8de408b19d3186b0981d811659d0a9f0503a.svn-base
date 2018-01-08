@@ -1,0 +1,872 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+<link href="${pageContext.request.contextPath}/frontstage/css/course-info.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/course-info.js"></script>
+
+<link href="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/JMEditor/jmeditor/JMEditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/train/course_hour.js?v=6"></script>
+
+
+<div class="es-wrap">
+
+	<div id="content-container" class="container">
+		<jsp:include page="course_header.jsp"></jsp:include>
+
+		<div class="row">
+			<jsp:include page="course_left.jsp"></jsp:include>
+			<div class="col-md-9">
+
+				<div class="panel panel-default panel-col lesson-manage-panel">
+
+					<div class="panel-heading">
+						<input type="hidden" id="isSon" value="-1"/>
+
+						<div class="pull-right">
+							<c:if test="${courseView.status !=1 }">
+								<button data-target="#add_chapter" data-toggle="modal" class="add_chapter add_chapter_popup btn btn-info btn-sm" type="button"><i class="glyphicon glyphicon-plus"></i>章节</button>
+								<c:if test="${courseView.type!=2}">
+									<button type="button" onclick="addHour(${courseView.id},-1);" data-toggle="modal" class="add_class_hour_button btn btn-info btn-sm"><i class="glyphicon glyphicon-plus"></i>课时</button>
+								</c:if>
+								<c:if test="${courseView.type==2}">
+									<button type="button" data-toggle="modal" data-target="#modal1" class="add_class_hour_button btn btn-info btn-sm"><i class="glyphicon glyphicon-plus"></i>直播课时</button>
+								</c:if>
+								<button type="button" data-toggle="modal"  onclick="openDiv('add_paper');" class="add_class_hour_button btn btn-info btn-sm" ><i class="glyphicon glyphicon-plus"></i>试卷</button>
+								<button type="button" data-toggle="modal"  onclick="openDiv('add_discuss');"  class="add_class_hour_button btn btn-info btn-sm"><i class="glyphicon glyphicon-plus"></i>研讨</button>
+								<button type="button" onclick="addTask(${courseView.id},${courseView.sign},${courseView.flag});" class=" btn btn-info btn-sm"><i class="glyphicon glyphicon-plus"></i>作业</button>
+							</c:if>
+						</div>
+						课时管理
+					</div>
+
+					<div class="panel-body">
+						<div  class="page_content_list">
+							<c:if test="${empty chapterList}">
+								<div class="empty">暂无数据</div>
+							</c:if>
+							<c:forEach items="${chapterList}" var="chapter" >
+								<!--章节-->
+								<b class="line"></b>
+								<div class="page_list page_section_01">
+									第<span>${chapter.hour_seq }</span>章节&nbsp;:<span>${chapter.hour_title}</span>
+
+									<c:if test="${courseView.status !=1 }">
+										<div class="add_page_style add_page_add">
+											<button type="button" title="添加"><i class="glyphicon glyphicon-plus-sign"></i></button>
+										</div>
+										<ul style="display: none;margin-left:400px;" class="add_more_ul">
+											<li class="add_class_hour_button"><a onclick="addHour(${courseView.id},${chapter.id });"  href="javascript:void(0);"><i class="glyphicon glyphicon-plus" style="padding-left: 10px;"></i>添加&nbsp;课时</a></li>
+											<li><a  data-toggle="modal"  onclick="openHour('add_paper',${chapter.id });" class="add_class_hour_button "><i class="glyphicon glyphicon-plus" style="padding-left: 10px;"></i>添加&nbsp;试卷</a></li>
+											<li><a  data-toggle="modal"  onclick="openHour('add_discuss',${chapter.id });"  ><i class="glyphicon glyphicon-plus" style="padding-left: 10px;"></i>添加&nbsp;讨论</a></li>
+											<li><a  onclick="addTask(${courseView.id},${courseView.sign},${courseView.flag},${chapter.id});" ><i class="glyphicon glyphicon-plus" style="padding-left: 10px;"></i>添加&nbsp;练习</a></li>
+
+										</ul>
+
+										<div class="add_page_style add_page_edit " onclick="doEdit(${chapter.id},1);"><button type="button" title="编辑"><i class="glyphicon glyphicon-edit"></i></button></div>
+										<div class="add_page_style add_page_delete">
+											<button type="button" onclick="doDeleteHour(${chapter.id},1,${courseView.id },${courseView.sign });" title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+										</div>
+									</c:if>
+
+								</div>
+								<br/>
+
+								<c:forEach items="${hourList}" var="hour" varStatus="status">
+									<!--课时-->
+									<c:if test="${chapter.id==hour.parent_id}">
+										<b class="line_02"></b>
+										<b class="line_03"></b>
+										<div class="page_list page_section_03">
+											<span>${hour.hour_seq}
+											<c:if test="${hour.attribute_type==2}">课时</c:if><c:if test="${hour.attribute_type==0}">试卷</c:if>
+											<c:if test="${hour.attribute_type==3}">讨论</c:if><c:if test="${hour.attribute_type==4}">作业</c:if>
+												<c:if test="${hour.attribute_type==5}">直播课时</c:if>
+											&nbsp;
+											<c:if test="${hour.attribute_type==5}">${status.count }</c:if> </span>&nbsp;:
+											<span>
+							            		<c:if test="${hour.is_free == 0}"><span style="background-color:#a94442;color:#fff;">免费</span></c:if>
+							            		${hour.hour_title}
+							            		<c:if test="${hour.attribute_type==2}"> <span>${hour.minute}:${hour.second}</span></c:if>
+							            	</span>
+											<c:if test="${courseView.status !=1 }">
+												<div class="add_page_edit_01"><a href="javascript:void(0);"  onclick="doEdit(${hour.id},${hour.attribute_type});"><span class="es-icon es-icon-edit prs"></span>编辑</a></div>
+
+												<div class="add_page_preview" ><a href="javascript:void(0);" onclick="doPreview(${hour.id});"><span class="es-icon es-icon-visibility prs"></span>预览</a></div>
+												<div class="add_page_read_more">
+													<a class="dropdown-toggle dropdown-more"  href="javascript:void(0);">
+														<i class="es-icon es-icon-keyboardarrowdown" style="margin-right:3px"></i>
+														更多</a>
+												</div>
+
+												<ul class="add_more_ul" style="display: none;">
+													<c:if test="${hour.attribute_type==2}">
+														<li class="add_data add_data_content">
+															<a href="#add_data" data-toggle="modal" onclick="addHourFile(${hour.id},${courseView.id },${courseView.sign });">添加资料</a>
+														</li>
+													</c:if>
+													<li >
+														<a href="javascript:void(0);" onclick="doDeleteHour(${hour.id},${hour.attribute_type},${courseView.id },${courseView.sign });">删除</a>
+													</li>
+												</ul>
+											</c:if>
+										</div>
+									</c:if>
+								</c:forEach>
+
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+
+</div>
+
+
+
+<!--添加课时按钮点击弹窗-->
+<c:if test="${courseView.type!=2}">
+ <div id="add_hour" class="modal" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog  modal-lg">
+
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">添加课时</h4>
+			</div>
+
+			<div class="modal-body">
+				<form class="form-horizontal" id="hourAdd" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post" >
+					<input type="hidden" name="course_id" value="${courseView.id}"/>
+					<input type="hidden" name="sign" value="${courseView.sign}"/>
+					<input type="hidden" name="attribute_type" value="2"/>
+					<input type="hidden" name="id" value=""/>
+					<input type="hidden" name="file_source" id="file_source" value="0"/>
+					<input type="hidden" name="course_file_id" id="course_file_id" value=""  >
+					<div class="form-group">
+						<div class="col-md-2 control-label"><label>类型</label></div>
+						<div class="col-md-9 controls">
+							<div class="radios">
+								<label><input type="radio" name="type" value="video" checked="checked"> 视频</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group ">
+						<div class="col-md-2 control-label">
+							<label >标题</label>
+						</div>
+						<div class="col-md-9 controls">
+							<div class="row">
+								<div class="col-md-10">
+									<input  id="hour_title" name="hour_title" class="form-control" type="text" >
+								</div>
+								<div class="col-md-2">
+									<div class="checkbox">
+										<label><input id="free" type="checkbox" onclick="doChecked();"> 免费课时<input type="hidden" id="is_free" name="is_free" value="1"/></label>
+									</div>
+								</div>
+							</div>
+							<div id="check_hour_title_msg" class="help-block" style="display:none;">请输入标题</div>
+						</div>
+					</div>
+
+					<div class="form-group ">
+						<div class="col-md-2 control-label">
+							<label >摘要</label>
+						</div>
+						<div class="col-md-9 controls">
+							<textarea  name="remarks" class="form-control">${courseHour.remarks}</textarea>
+							<div class="help-block" style="display:none;">请输入摘要</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2 control-label for-video-type"><label>视频</label></div>
+						<div class="col-md-10 controls">
+							<div id="useVideo" style="display:none;" class="file-chooser-bar"></div>
+
+							<div id="selectVideo" class="file-chooser-main" style="padding-top: 4px;">
+								<ul  class="nav nav-pills nav-pills-sm mbs file-chooser-tabs">
+									<li class="active">
+										<a  href="javascript:void(0);" data-toggle="tab">上传视频</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" data-toggle="tab">从课程文件中选择</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" data-toggle="tab">从资源列表中选择</a>
+									</li>
+								</ul>
+
+							</div>
+
+
+						</div>
+					</div>
+					<%--上传视频--%>
+					<div id="fileList" class="form-group clearfix upload_video video_source">
+						<div id="uploadFile" class="file  col-md-offset-5">
+							 <div class="text-center col-md-offset-5">
+	                            <button class="btn btn-default btn-lg" type="button">
+	                                <i class="glyphicon glyphicon-plus"></i>上传视频
+	                            </button>
+                            </div>
+						</div>
+					</div>
+				    <%--从课程文件选择--%>
+					<div class="class_hour_upload_video_plug upload_video_tabs video_source" style="display: none;">
+						<c:if test="${empty fileList}" >
+							<div class="empty">暂无视频文件，请先上传。</div>
+						</c:if>
+						<div class="course_file_choose">
+							<c:if test="${!empty fileList}">
+								<ul class="course_select_ul">
+									<c:forEach items="${fileList }" var="file">
+										<li onclick="doCourseFile('${file.name}',${file.id},0,0);"><span class="file_name">${file.name}</span><span class="file_size">${file.size}</span><span class="file_time"><fmt:formatDate value="${file.create_time}" type="date" pattern="yyyy-MM-dd HH:mm"/></span></li>
+									</c:forEach>
+								</ul>
+							</c:if>
+						</div>
+					</div>
+					<%--从资源列表选择--%>
+					<div class="import_network_video upload_video_tabs video_source" style="display: none;">
+						<c:if test="${empty fileBaseList}">
+							<p style="text-align: center;font-size:14px;font-weight: bold;">暂无视频文件，请先上传。</p>
+						</c:if>
+						<div class="course_file_choose">
+							<c:if test="${!empty fileBaseList}">
+
+								<ul class="course_select_ul" >
+									<c:forEach items="${fileBaseList }" var="fileBase">
+										<li onclick="doCourseFile('${fileBase.filename}',${fileBase.id},1,0);"><span class="file_name">${fileBase.filename}</span><span class="file_size">${fileBase.size}</span><span class="file_time"><fmt:formatDate value="${fileBase.upload_time}" type="date" pattern="yyyy-MM-dd HH:mm"/></span></li>
+									</c:forEach>
+								</ul>
+							</c:if>
+						</div>
+					</div>
+					<span class="file_val" style="display:none;">请选择上传文件</span>
+					<div class="form-group" >
+						<div class="col-md-2 control-label "><label>视频时长</label></div>
+						<div class="col-md-9 controls">
+							<input class="form-control width-input width-input-small"  id="minute" type="text" name="minute" value="" >分
+							<input class="form-control width-input width-input-small"  id="second" type="text" name="second" value="" >秒
+							<b id="times">( 时长必须为非负整数。)</b><br/>
+							<div id="upload_video_time_msg"  class="help-block" style="display:none;"><span class="text-danger">请输入时长, 时长必须为非负整数。</span></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label">所属章节</label>
+						<div class="col-md-3 controls">
+
+							<select id="chapter_parent_id" name="parent_id" onchange="doSeq(this.value,${courseView.id});" class="form-control width-input width-input-large">
+								<option value="0">请选择所属章节</option>
+								<c:forEach items="${chapterList }" var="chapter">
+									<option value="${chapter.id}">${chapter.hour_title }</option>
+								</c:forEach>
+							</select><br/>
+							<div id="section_val" class="help-block" style="display:none;"><span class="text-danger">请选择所属章节</span></div>
+						</div>
+					</div>
+					<div class="form-group ">
+						<div class="col-md-2 control-label">
+							<label >序号</label>
+						</div>
+						<div class="col-md-3 controls">
+							<input  class="form-control" name="hour_seq" type="text" >
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" data-toggle="form-submit" onclick="doSubmitHour();">保存</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+</c:if>
+
+
+
+<!--添加章节-->
+<div id="add_chapter" class="modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">编辑章节</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="chapterAdd" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post" >
+                    <input type="hidden" name="course_id" value="${courseView.id}"/>
+					<input type="hidden" name="sign" value="${courseView.sign}"/>
+					<input type="hidden" name="attribute_type" value="1"/>
+					<input type="hidden" name="parent_id" value="0"/>
+					<input type="hidden" name="id" value=""/>
+                    <div class="form-group">
+                        <div class="col-md-2 control-label"><label>章节标题</label></div>
+                        <div class="col-md-6 controls">
+                            <input class="form-control"  id="chapter_title" name="hour_title" onblur="doSeq(0,${courseView.id});" type="text" >
+                            <div class="help-block" style="display: none;">
+                                <span class="text-danger">请输入章节标题</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2 control-label"><label>章节序号</label></div>
+                        <div class="col-md-6 controls">
+                            <input class="form-control" name="hour_seq" type="text" >
+                            <div class="help-block" style="display: none;">
+                                <span class="text-danger">请输入章节序号</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                <button type="button" onclick="doSubmitCha();" class="btn btn-primary" data-toggle="form-submit" >保存</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--课时编辑-->
+<div  id="course_hour_edit"  aria-hidden="true" class="add_page_edit_course" style="display: none;">
+	<p>编辑课时</p>
+	<button type="button" class="close_page">×</button>
+
+	<div class="edit_course_main">
+		<form id="hourEdit" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+			<input type="hidden" name="course_id" value="${courseView.id}"/>
+			<input type="hidden" name="sign" value="${courseView.sign}"/>
+			<input type="hidden" name="attribute_type" value="2"/>
+			<input type="hidden" name="id" value=""/>
+			<div class="class_hour_title_">
+				<p>标题</p>
+				<input type="text" id="hour_title_" onblur="validate_();" name="hour_title" value="" class="class_hour_title_input">
+				<input type="checkbox" id="free_" onclick="doChecked();" class="class_hour_title_checkbox" style="margin-left: 700px;"><span style="font-size: 14px;">免费课时</span><br/><br/>
+				<input type="hidden" id="is_free_" name="is_free" value="1"/>
+				<div class="title_val" style="display:none" >请输入标题</div>
+			</div>
+			<div class="class_hour_abstract_">
+				<p>摘要</p>
+				<textarea id="remarks_" name="remarks"></textarea><br/><br/>
+			</div>
+			<div class="class_hour_upload_video_time_">
+				<p>视频时长</p>
+				<div class="video_time_add_info">
+					<input type="text" id="minute_" name="minute" class="time_minute"><span>分</span>
+					<input type="text" id="second_" name="second" class="time_second"><span>秒</span>
+					<b id="times">时长必须为整数。</b><br/>
+					<div class="time_val"  style="display:none">请输入时长</div>
+				</div>
+			</div>
+			<div class="edit_section_">
+				<p>所属章节</p>
+				<select id="chapter_parent_id_" name="parent_id" onchange="doSeq(this.value,${courseView.id});">
+					<option value="0">请选择所属章节</option>
+					<c:forEach items="${chapterList}" var="chapter">
+						<option value="${chapter.id}">${chapter.hour_title }</option>
+					</c:forEach>
+				</select><br/>
+				<span class="section_val"  style="display:none">请选择所属节</span>
+			</div>
+			<div class="class_hour_title class_hour_title_" style="margin-top: 5px;">
+				<p>序号</p>
+				<input type="text" name="hour_seq" value="" style="width: 120px;height:33px;border: 1px solid #ccc;border-radius: 5px;margin-left: 160px;margin-top: -5px;position: absolute;" >
+			</div>
+		</form>
+	</div>
+
+	<div class="edit_course_main_bottom">
+		<a href="javascript:void(0);">取消</a>
+		<button type="button" onclick="doEditHour();">保存</button>
+
+	</div>
+</div>
+
+
+<!--添加资料
+<div id="add_ziliao" class="add_data_content_popup" style="display: none;">
+	<form id="hourFileAdd" action="${pageContext.request.contextPath}/course_hour_file/save_hour_file.action" method="post">
+		<input type="hidden" name="courseId" value="${courseView.id}"/>
+		<input type="hidden" name="sign" value="${courseView.sign}"/>
+		<input type="hidden" id="hourId" name="course_hour_id" value=""/>
+		<input type="hidden" id="courseFileId" name="course_file_id" value=""/>
+		<p>添加资料</p>
+		<button type="button" class="close_page">×</button>
+		<ul id="content" style="text-align: center;">
+		</ul>
+		<br/>
+		<div id="hourFileList" class="upload_data_content">
+			<div id="uploadHourFile" class="file" style="margin-left: 90px;">
+				<p class="plus_number">+</p>
+			</div>
+		</div>
+		<textarea name="file_profile" placeholder="填写资料简介 (可选)"></textarea>
+		<li><button type="button" onclick="doAddFile();">添加</button></li>
+	</form>
+</div>
+-->
+<%--修改后的添加资料 --%>
+<div id="add_data" class="modal in" aria-hidden="false" style="display:none;">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">添加资料</h4>
+			</div>
+			<div class="modal-body">
+
+				<form  class="form-horizontal" id="hourFileAdd" action="${pageContext.request.contextPath}/course_hour_file/save_hour_file.action" method="post">
+					<input type="hidden" name="courseId" value="${courseView.id}"/>
+					<input type="hidden" name="sign" value="${courseView.sign}"/>
+					<input type="hidden" id="hourId" name="course_hour_id" value=""/>
+					<input type="hidden" id="courseFileId" name="course_file_id" value=""/>
+					<input type="hidden" id="courseFileName" />
+					<div class="form-group">
+						<div class="col-md-10 col-md-offset-1  controls">
+							<ul id="content" class="list-group" >
+                                <%--上传成功后显示
+								<li class="list-group-item clearfix">
+									<button class="close delete-btn" type="button" title="删除" >×</button>
+									<a href="#">html2canvas-master.zip</a>
+								</li>--%>
+							</ul>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-10 col-md-offset-1 controls">
+
+
+							<div class="file-chooser">
+
+								<div class="file-chooser-main">
+
+									<ul id="ziliao_ul" class="nav nav-pills nav-pills-sm mbs file-chooser-tabs">
+										<li class="active">
+											<a class="file-chooser-uploader-tab" href="#file-chooser-upload-pane" data-toggle="tab">上传文件</a></li>
+										<li><a href="#file-chooser-browser-pane" data-toggle="tab">从资料库中选择</a></li>
+
+									</ul>
+
+									<div class="tab-content">
+
+										<div class="tab-pane active" >
+
+											<div class="balloon-uploader"  >
+												<div class="balloon-uploader-heading">上传文件</div>
+
+												<div class="balloon-uploader-body">
+
+													<div class="balloon-filelist">
+														<div class="balloon-filelist-heading">
+															<div class="file-name">文件名</div>
+															<!-- <div class="file-size">大小</div>
+															<div class="file-status">状态</div> -->
+															<div class="file-manage">操作</div>
+														</div>
+                                                        <div id="hourFileList" class="upload_data_content">
+															<div id="uploadHourFile" class="file" style="margin-left: 90px;">
+																<button type="button" class="btn btn-default">
+																	<i class="glyphicon glyphicon-plus"></i>添加文件
+																</button>
+															</div>
+														</div>
+
+															<div id="file_msg" class="file-chooser-bar" style="margin-left: 20px;margin-top: 10px;display: none;">
+																
+															</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+
+										<div class="tab-pane" >
+
+											<div data-role="file-browser"  class="file-browser">
+                                               
+												<div  class="file-browser-list-container">
+												    <c:if test="${empty fileBaseList}">
+														<p style="text-align: center;font-size:14px;font-weight: bold;">暂无资料，请先上传。</p>
+													</c:if>
+													<ul id="ziliaoku" class="file-browser-list">
+													    <c:forEach items="${fileBaseList }" var="fileBase">
+															<li class="file-browser-item clearfix" onclick="doCourseFile('${fileBase.filename}',${fileBase.id},1,1);">
+															    <span class="filename">${fileBase.filename}</span>
+															    <span class="filesize">${fileBase.size}</span>
+															    <span class="filetime"><fmt:formatDate value="${fileBase.upload_time}" type="date" pattern="yyyy-MM-dd HH:mm"/></span>
+															</li>
+														</c:forEach>
+													</ul>
+												</div>
+											</div>
+										</div>
+
+
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-md-10 col-md-offset-1 controls">
+							<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+							<button class="btn btn-primary"  type="button" onclick="doAddFile();">添加</button>
+						</div>
+					</div>
+
+
+				</form>
+
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 添加研讨 -->
+<div class="modal" id="add_discuss"  role="dialog" aria-hidden="true" >
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">添加主题研讨</h4>
+			</div>
+			<div class="modal-body">
+				<form id="courseDiscuss" class="form-horizontal lesson-form lesson-form-video" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+					<input type="hidden" name="course_id" value="${courseView.id}"/>
+					<input type="hidden" name="sign" value="${courseView.sign}"/>
+					<input type="hidden" name="attribute_type" value="3"/>
+					<input type="hidden" name="id" value=""/>
+					<div class="form-group" id="discuss_input">
+						<%--输入框内容为空添加,添加class位has-error--%>
+						<div class="col-md-2 control-label"><label>标题</label></div>
+						<div class="col-md-9 controls">
+							<div class="row">
+								<div class="col-md-10">
+									<input class="form-control" id="discussTitle" type="text" name="hour_title" >
+								</div>
+							</div>
+							<div class="help-block" style="display: none;">
+								<span class="text-danger">请输入标题</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+
+						<div class="col-md-2 control-label"><label class="style1">内容描述</label></div>
+						<div class="col-md-9 controls">
+							<textarea class="form-control"  id="discussRemarks" name="remarks"></textarea>
+						</div>
+					</div>
+					<div class="form-group" id="fre_input">
+						<div class="col-md-2 control-label"><label>参与次数</label></div>
+						<div class="col-md-9 controls">
+							<input class="form-control width-input width-input-small" id="discussFre" name="frequency" type="text" >次
+							<div class="help-block" style="display: none;">
+								<span class="text-danger fre_input">请输入参与次数(大于零的正整数)</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" id="parent_select">
+						<div class="col-md-2 control-label"><label class="style1">所属章节</label></div>
+						<div class="col-md-5 controls">
+							<select id="discussParentId"  name="parent_id" onchange="doSeq(this.value,${courseView.id});" class="form-control">
+								<option value="0">请选择所属章节</option>
+								<c:forEach items="${chapterList }" var="chapter">
+									<option value="${chapter.id}">${chapter.hour_title }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="help-block parent_select" style="display: none;">
+							<span class="text-danger">请选择所属章节</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-2 control-label">
+							<label class="style1">序号</label>
+						</div>
+						<div class="col-md-9 controls">
+							<div class="row">
+								<div class="col-md-4">
+									<input class="form-control" id="discussSeq" type="text" name="hour_seq" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary"  onclick="doDiscussAdd();">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 添加试卷 -->
+<div class="modal" id="add_paper"  role="dialog" aria-hidden="true">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title"> 添加试卷</h4>
+			</div>
+			<div class="modal-body">
+				<form id="courseExam" class="form-horizontal lesson-form lesson-form-video" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+					<input type="hidden" name="course_id" value="${courseView.id}"/>
+					<input type="hidden" name="sign" value="${courseView.sign}"/>
+					<input type="hidden" name="attribute_type" value="0"/>
+					<input type="hidden" name="id" value=""/>
+					<input type="hidden" id="test_paper_id" name="test_paper_id" value=""/>
+					<input type="hidden" id="isEdit" value="0"/>
+					<div class="form-group" id="test_paper_select">
+						<div class="col-md-2 control-label"><label >试卷</label></div>
+						<div class="col-md-9 controls">
+							<select  id="testPaperId" class="form-control" onchange="doChangeTestPaper(this.value);">
+								<option value="0">请选择试卷</option>
+								<c:forEach items="${testPaperList }" var="paper">
+									<option value="${paper.id }">${paper.name }</option>
+								</c:forEach>
+							</select>
+							<div class="help-block">如果找不到试卷，请先确定该试卷已经发布</div>
+							<div class="help-block parent_select" style="display: none;">
+								<span class="text-danger">请选择试卷</span>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="form-group " id="exam_input">
+						<div class="col-md-2 control-label">
+							<label >标题</label></div>
+						<div class="col-md-9 controls">
+							<input  class="form-control" type="text" name="hour_title" id="examTitle" value="" >
+							<div class="help-block" style="display:none;">
+								<span class="text-danger">请输入标题</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" id="exam_parent_select">
+						<div class="col-md-2 control-label"><label class="style1">所属章节</label></div>
+						<div class="col-md-5 controls">
+							<select id="examParentId"  name="parent_id" onchange="doSeq(this.value,${courseView.id});" class="form-control">
+								<option value="0">请选择所属章节</option>
+								<c:forEach items="${chapterList }" var="chapter">
+									<option value="${chapter.id}">${chapter.hour_title }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="help-block parent_select" style="display: none;">
+							<span class="text-danger">请选择所属章节</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-2 control-label">
+							<label class="style1">序号</label>
+						</div>
+						<div class="col-md-9 controls">
+							<div class="row">
+								<div class="col-md-4">
+									<input class="form-control" id="examSeq" type="text" name="hour_seq" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="doExamAdd();">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 编辑作业 -->
+<div class="modal" role="dialog" aria-hidden="true" id="editTask">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">编辑作业</h4>
+			</div>
+			<div class="modal-body">
+				<form id="courseTask" class="form-horizontal lesson-form lesson-form-video" action="${pageContext.request.contextPath}/course_hour/save_course_hour.action" method="post">
+					<input type="hidden" name="course_id" value="${courseView.id}"/>
+					<input type="hidden" name="sign" value="${courseView.sign}"/>
+					<input type="hidden" name="attribute_type" value="4"/>
+					<input type="hidden" name="id" value=""/>
+
+					<div class="form-group " id="task_input">
+						<div class="col-md-2 control-label">
+							<label >标题</label></div>
+						<div class="col-md-9 controls">
+							<input  class="form-control" type="text" name="hour_title" id="taskTitle" value="" >
+							<div class="help-block" style="display:none;">
+								<span class="text-danger">请输入标题</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group " >
+						<div class="col-md-2 control-label"><label class="style1">说明</label></div>
+						<div class="col-md-9 controls">
+							<textarea class="form-control" name="remarks"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group" id="task_parent_select">
+						<div class="col-md-2 control-label"><label class="style1">所属章节</label></div>
+						<div class="col-md-5 controls">
+							<select id="taskParentId"  name="parent_id" onchange="doSeq(this.value,${courseView.id});" class="form-control">
+								<option value="0">请选择所属章节</option>
+								<c:forEach items="${chapterList }" var="chapter">
+									<option value="${chapter.id}">${chapter.hour_title }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="help-block parent_select" style="display: none;">
+							<span class="text-danger">请选择所属章节</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-2 control-label">
+							<label class="style1">序号</label>
+						</div>
+						<div class="col-md-9 controls">
+							<div class="row">
+								<div class="col-md-4">
+									<input class="form-control" type="text" name="hour_seq" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" onclick="doTaskAdd();">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<%--弹出框遮罩层--%>
+<div id="mask" class="mask"></div>
+<%--弹窗--%>
+<div id="modal1" class="modal" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">新增直播课时</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" id="live-lesson-form" method="post" >
+					<input type="hidden" name="course_id" value="${courseView.id}"/>
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="live-title-field">标题</label>
+						<div class="col-md-8 controls">
+							<input class="form-control" id="live-title-field" name="hour_title" value=""  type="text">
+							<div class="help-block" id="live-title-block"></div></div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2 control-label">直播开始时间</label>
+						<div class="col-md-8 controls" style="z-index:2000;">
+							<input name="start_time" class="form-control width-input width-input-large" value=""  data-explain="教师可在直播开始前1小时内进入直播教室，以准备相关教学资料。" type="text">
+							<div class="help-block" id="starttime-help-block">教师可在直播开始前1小时内进入直播教室，以准备相关教学资料。</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2 control-label">直播时长</label>
+						<div class="col-md-8 controls">
+							<input name="minute" id="live-length-field" class="form-control width-input width-input-large" value="60" placeholder="时长"  type="text"> 分钟
+							<div class="help-block" id="timelength-help-block"></div>
+						</div>
+
+
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-2 control-label">直播说明</label>
+						<div class="col-md-8 controls">
+							<textarea class="form-control" id="live_lesson-content-field" name="remarks" ></textarea>
+						</div>
+					</div>
+					<div class="edit_section">
+						<p>所属章节</p>
+						<select id="chapter_parent_id"  name="parent_id" onchange="doSeq(this.value,${courseView.id});">
+							<option value="0">请选择所属章节</option>
+							<c:forEach items="${chapterList }" var="chapter">
+								<option value="${chapter.id}">${chapter.hour_title }</option>
+							</c:forEach>
+						</select><br/>
+						<div class="section_val" ><span class="text-danger" >请选择所属章节</span></div>
+					</div>
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+					<button type="submit" class="btn btn-primary" data-toggle="form-submit" data-submiting-text="正在保存" data-target="#live-lesson-form" id="live-course-create-btn">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+    $(function () {
+        $("#ziliao_ul li").click(function () {
+            var index=$(this).index();
+            $(".tab-pane").hide().eq(index).show();
+        })
+		
+        $(".upload_file").click(function () {
+            $(this).hide();
+            $(".file-chooser-bar").show();
+        })
+
+
+
+    })
+</script>

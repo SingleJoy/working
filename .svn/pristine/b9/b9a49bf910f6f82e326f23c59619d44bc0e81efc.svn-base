@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>教学资料库</title>
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+
+
+    </script>
+
+</head>
+<body >
+
+<div class="es-wrap">
+
+    <div id="content-container" class="container">
+
+
+        <div class="row row-3-9">
+
+            <div class="col-md-3">
+                <div class="sidenav locked">
+                    <input type="hidden" id="stamp" value="0">
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_0">社区中心</li>
+                        <li class="list-group-item "><a href="#">我的社区</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/workshop/to_workshop_center.action?stamp=0&amp;state=1&amp;sign=0">我的工作坊</a></li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_8">校本教研</li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/lesson/to_lesson.action?state=30">
+                                课例管理
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/lesson/to_my_lesson.action?state=31&amp;status=0">
+                                <span></span>我的课例
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- 教师 -->
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_1">教学中心</li>
+                        <li class="list-group-item  "><a href="/edu_yun/course/to_course.action?&amp;stamp=1&amp;state=12&amp;sign=1&amp;type=0&amp;status=-1">在教课程</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/train/to_train.action?&amp;stamp=1&amp;state=13&amp;sign=1&amp;type=0">培训管理</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/topic_question/query_question.action?&amp;stamp=1&amp;state=14"><span></span>学员问答</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/class/to_tutor_class.action?&amp;stamp=1&amp;state=15&amp;sourceType=0"><span></span>助教班级</a></li>
+                        <li class="list-group-item  "><a href="/edu_yun/cert_model/to_cert_model_manager.action?stamp=1&amp;state=29"><span></span>证书管理</a></li>
+                    </ul>
+
+
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_3">我的学习</li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=22&amp;is_studyed=0&amp;source_type=0">
+                                <span></span>我的课程
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=23&amp;is_studyed=0&amp;source_type=1">
+                                <span></span>我的培训
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/user_collect/to_user_collect.action?stamp=2&amp;state=20">
+                                <span></span>我的收藏
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/topic_question/user_question.action?stamp=2&amp;state=24">
+                                <span></span>我的问答
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span></span>我的话题
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>我的笔记
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>我的考试
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>我的作业
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span></span>我的小组
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="">
+                                <span></span>我的证书
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span></span>我的资料库
+                            </a>
+                        </li>
+                    </ul>
+
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" >关注中心</li>
+                        <li class="list-group-item  "><a href=""><span></span>我关注的人</a></li>
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading" id="stamp_7">设置</li>
+                        <li class="list-group-item  active"><a href=""><span></span>个人设置</a></li>
+                        <li class="list-group-item  "><a href=""><span></span>密码修改</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">基础信息</div>
+                    <div class="panel-body">
+
+                        <form  class="form-horizontal" method="post" novalidate="novalidate" >
+
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">用户名</label>
+                                <div class="col-md-8 controls">
+                                    <div class="control-text">
+                                        体验管理员1  <a href="#change_user_name" data-toggle="modal">修改</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" >姓名</label>
+                                <div class="control-text">孙同学</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">性别</label>
+                                <div class="col-md-8 controls radios">
+                                    <div id="profile_gender">
+                                        <input type="radio"  name="profile[gender]" required="required" value="male" checked="checked">
+                                        <label  class="required">男</label>
+                                        <input type="radio"  name="profile[gender]" required="required" value="female">
+                                        <label  class="required">女</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" >身份证号</label>
+                                <div class="col-md-8 controls">
+                                    <div class="control-text">4290************31</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-md-2 control-label">手机号码</label>
+                                <div class="col-md-8 controls">
+                                    <div class="control-text">
+                                        136****9841
+                                        <small class="text-success">(已绑定)</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">头衔</label>
+                                <div class="col-md-8 controls">
+                                    <input type="text"  class="form-control" value="qqq"  >
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">个人签名</label>
+                                <div class="col-md-8 controls">
+                                    <textarea type="text" rows="4"  class="form-control"></textarea>
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">自我介绍</label>
+                                <div class="col-md-8 controls">
+                                    <textarea type="text" rows="4"  class="form-control"></textarea>
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <label class="col-md-2 control-label">学校信息</label>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择省！--</option>
+                                        <option value="">北京市</option>
+                                        <option value="">天津市</option>
+                                        <option value="">河北省</option>
+                                        <option value="">辽宁省</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择市！--</option>
+                                        <option value="">XX市</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择县！--</option>
+                                        <option value="">XX县</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择学校！--</option>
+                                        <option value="">XX学校</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label class="col-md-2 control-label">学科信息</label>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择学段！--</option>
+                                        <option value="">小学</option>
+                                        <option value="">初中</option>
+                                        <option value="">高中</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择学科！--</option>
+                                        <option value="">语文</option>
+                                        <option value="">数学</option>
+                                        <option value="">外语</option>
+                                        <option value="">化学</option>
+                                        <option value="">物理</option>
+                                        <option value="">生物</option>
+                                        <option value="">地理</option>
+                                        <option value="">政治</option>
+                                        <option value="">历史</option>
+                                        <option value="">其他</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择版本！--</option>
+                                        <option value="">北师大2011版</option>
+                                        <option value="">新课标</option>
+                                        <option value="">沪教版</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-2 controls">
+                                    <select class="form-control" >
+                                        <option value="-1">--请选择年级！--</option>
+                                        <option value="">一年级</option>
+                                        <option value="">二年级</option>
+                                        <option value="">三年级</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">个人主页</label>
+                                <div class="col-md-7 controls">
+                                    <input type="text"  class="form-control"  value="">
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2 control-label">
+                                    <label>微博</label>
+                                </div>
+                                <div class="col-md-7 controls">
+                                    <input type="text" class="form-control"  value="">
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                                <div class="col-md-2 controls mts">
+                                    <input type="checkbox">公开</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">微信</label>
+                                <div class="col-md-7 controls">
+                                    <input type="text"  class="form-control" value="">
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                                <div class="col-md-2 controls mts">
+                                    <input type="checkbox">公开</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label  class="col-md-2 control-label">QQ</label>
+                                <div class="col-md-7 controls">
+                                    <input type="text" class="form-control"  value="">
+                                    <div class="help-block" style="display:none;"></div>
+                                </div>
+                                <div class="col-md-2 controls mts">
+                                    <input type="checkbox" >公开
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-2">
+                                    <button  type="submit" class="btn btn-primary">保存</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--修改用户名-->
+<div id="change_user_name" class="modal in" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><span class="text-muted">资料预览</span></h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">
+                            <label >用户名</label>
+                        </div>
+                        <div class="col-md-8 controls">
+                            <input  type="text"  class="form-control" value="" >
+                            <div class="help-block" style="display:none;"></div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

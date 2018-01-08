@@ -1,0 +1,133 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+
+
+<div class="es-footer-link" style="background: #393b56;">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 footer-main clearfix">
+                <div class="link-item ">
+                    <h3>我是学生</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">如何注册</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">如何学习</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">如何互动</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item ">
+                    <h3>我是老师</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">发布课程</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">使用题库</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">教学资料库</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item ">
+                    <h3>我是管理员</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_self">修改底部链接</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">系统设置</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">课程设置</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item hidden-xs">
+                    <h3>商业应用</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">会员专区</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">题库增强版</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">用户导入导出</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-item hidden-xs">
+                    <h3>关于我们</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">ES官网</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">教程网站</a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">产品演示站</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="col-md-4 footer-logo hidden-sm hidden-xs">
+
+                <a class="" href="http://www.edusoho.com" target="_blank">
+                    <img src="${pageContext.request.contextPath}/frontstage/images/qiuzi_index.png" alt="建议图片大小为233*64">
+                </a>
+
+                <div class="footer-sns">
+                    <a href="#" target="_blank">
+                        <i class="es-icon es-icon-weibo"></i>
+                    </a>
+                    <a class="qrcode-popover top">
+                        <i class="es-icon es-icon-weixin"></i>
+                        <div class="qrcode-content">
+                            <img src="javascript:void()" alt="">
+                        </div>
+                    </a>
+                    <a class="qrcode-popover top">
+                        <i class="es-icon es-icon-apple"></i>
+                        <div class="qrcode-content">
+                            <img src="javascript:void()" alt="">
+                        </div>
+                    </a>
+                    <a class="qrcode-popover top">
+                        <i class="es-icon es-icon-android"></i>
+                        <div class="qrcode-content">
+                            <img src="javascript:void()" alt="">
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<footer class="es-footer">
+    <div class="copyright">
+        <div class="container">
+            Powered by <a href="#" target="_blank">求资网 1.0.0</a>
+            ©1998-2017 <a class="mlm" href="#" target="_blank"></a>
+            <a class="mlm" href="#">课程存档</a>
+            <div class="mts"></div>
+        </div>
+    </div>
+</footer>
+
+

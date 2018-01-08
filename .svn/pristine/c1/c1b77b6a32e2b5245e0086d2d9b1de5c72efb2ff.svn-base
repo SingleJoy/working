@@ -1,0 +1,13 @@
+
+
+.lesson_plan{background: #3ebbce;}
+.teaching_plan{background: #32ad1c; }
+.lesson_plan,.teaching_plan{padding: 0 10px;border-radius: 20px; color: #fff;margin-left: 20px;}
+.content_page{width: 268px;height: 40px;background-color: #fff;margin-left: 10px;}
+.content_page>a,.content_page>span{color:#616161;line-height: 40px;font-weight: bold;font-size: 18px;}
+#content_sel{position: absolute;z-index: 9999;border-radius: 4px;background-color: #fff;padding:0;margin-left: 5px;}
+#nav_content_img{padding-left: 10px;}
+.resource_info{margin:25px 15px 0 120px;}
+.resource_info>h4{margin-bottom: 20px;}
+.author_info{margin-left: 30px;margin-top: 5px;display: inline-block;margin-bottom: 10px;}
+

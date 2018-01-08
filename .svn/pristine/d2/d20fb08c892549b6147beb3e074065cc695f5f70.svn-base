@@ -1,0 +1,78 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.train.mapper.UserCollectMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.UserCollect;
+import cn.bnsr.edu_yun.frontstage.train.service.UserAppraiseService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserCollectService;
+import cn.bnsr.edu_yun.frontstage.train.service.UserStudyService;
+import cn.bnsr.edu_yun.frontstage.train.view.UserCollectView;
+import cn.bnsr.edu_yun.frontstage.train.view.UserStudyView;
+
+public class UserCollectServiceImpl implements UserCollectService {
+
+	@Autowired
+	private UserCollectMapper userCollectMapper;
+	@Autowired
+	private UserAppraiseService userAppraiseService;
+	@Autowired
+	private UserStudyService userStudyService;
+
+	@Override
+	public UserCollect selectByCourseIdAndUserId(UserCollect userCollect) {
+
+		return userCollectMapper.selectByCourseIdAndUserId(userCollect);
+	}
+
+	@Override
+	public int insert(UserCollect userCollect) {
+
+		return userCollectMapper.insertSelective(userCollect);
+	}
+
+	@Override
+	public int delete(long id) {
+
+		return userCollectMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public List<UserCollectView> queryMyCollect(UserCollectView userCollectView) {
+
+		List<UserCollectView> userCollectList = userCollectMapper.queryMyCollect(userCollectView);
+		for (UserCollectView uc : userCollectList) {
+			// 评价数
+			long totalAppraise = userAppraiseService.selectCountBySourceId(uc.getId(), uc.getSource_type());
+			// 评价平均分
+			Integer totalScore = userAppraiseService.selectTotalScore(uc.getId(), uc.getSource_type());
+			int average = 0;
+			if(totalAppraise!=0 && totalScore!=null){
+				average = (int) (totalScore / totalAppraise);
+			}
+			// 学员数
+			UserStudyView userStudyView = new UserStudyView();
+			userStudyView.setLearnId(uc.getId() + "");
+			int student_total = userStudyService.countStudent(userStudyView);
+			uc.setAppraiseNum((int) totalAppraise);
+			uc.setAppraiseScore(average);
+			uc.setStudentNum(student_total);
+		}
+
+		return userCollectList;
+	}
+
+	@Override
+	public int countMyCollect(UserCollectView userCollectView) {
+		return userCollectMapper.countMyCollect(userCollectView);
+	}
+
+	@Override
+	public int countMyAllCollect(Long user_id) {
+
+		return userCollectMapper.countMyAllCollect(user_id);
+	}
+
+}

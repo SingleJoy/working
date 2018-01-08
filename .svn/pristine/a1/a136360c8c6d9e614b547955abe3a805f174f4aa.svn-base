@@ -1,0 +1,255 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- jquery库 -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-1.8.2.min.js" charset="utf-8"></script>
+	<!-- easyui相关库 -->
+	<link id="easyuiTheme" rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/<c:out value="${cookie.easyuiThemeName.value}" default="default"/>/easyui.css" type="text/css"></link>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/icon.css" type="text/css"></link>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/jquery.easyui.min.js?v0.1" charset="utf-8"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/jquery.1.10.2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/echarts.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body class="easyui-layout" data-options="fit:true">
+	<div>
+		<div id="everyday" style="<c:if test="${timeType==4}">display:none;</c:if>margin:5px 10px;">
+			时长：<select id="timeUnit" name="timeUnit">
+			<option value="1" <c:if test="${timeUnit==1}">selected="selected"</c:if>>分钟</option>
+			<option value="2" <c:if test="${timeUnit==2}">selected="selected"</c:if>>小时</option>
+			</select>
+			<button onclick="doSearch(0)" <c:if test="${timeType==0}">style="background:#87cefa;"</c:if>>本月</button>
+			<button onclick="doSearch(1)" <c:if test="${timeType==1}">style="background:#87cefa;"</c:if>>上月</button>
+			<button onclick="doSearch(2)" <c:if test="${timeType==2}">style="background:#87cefa;"</c:if>>近三月</button>
+			<input type="hidden" id="timeType" value="${timeType}">
+		 	<input id="startTime" name="startTime" <c:if test="${!empty startTime&&startTime!='undefined'}">value="${startTime}"</c:if> class="easyui-datebox" data-options="editable:false" style="width: 155px;" />至
+		    <input id="endTime" name="endTime" <c:if test="${!empty endTime&&endTime!='undefined'}">value="${endTime}"</c:if> class="easyui-datebox" data-options="editable:false" style="width: 155px;" />
+			<input type="button" onclick="doSearch(3)" value="查询"/>
+			<input type="button" onclick="doSearch(0);" value="清空" />
+			<input type="button" onclick="changeUnit(4);" value="按小时统计" />
+		</div>
+		<div id="everytime" style="<c:if test="${timeType!=4}">display:none;</c:if>margin:5px 191px;">
+			时长：<select id="timeUnit1" name="timeUnit">
+			<option value="1" <c:if test="${timeUnit==1}">selected="selected"</c:if>>分钟</option>
+			<option value="2" <c:if test="${timeUnit==2}">selected="selected"</c:if>>小时</option>
+			</select>
+			<input id="days" name="days" <c:if test="${!empty days&&days!='undefined'}">value="${days}"</c:if> class="easyui-datebox" data-options="editable:false" style="width: 155px" />
+			<input type="button" id="search" onclick="doSearch(4);" value="查询" />
+			<input type="button" onclick="changeUnit(0);" value="按天统计" />
+		</div>
+	</div>
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+   <div id="studyTimestats" style="width: 780px;height:470px;margin-top: 5px;"></div>
+<script type="text/javascript">
+	var days = new Array();
+	var watchNum = new Array();
+	var averageNum = new Array(); 
+	var totalNum = new Array(); 
+	var timeUnit = "";
+	if("${timeUnit}"==1){
+		timeUnit = "分钟";
+	}else if("${timeUnit}"==2){
+		timeUnit = "小时";
+	}
+	$(function(){
+		$.ajax({
+			type : 'POST',
+			url : '${pageContext.request.contextPath}/back_user_study/query_study_time_stats.action',
+			data :{
+				timeType : "${timeType}",
+				startTime : "${startTime}",
+				endTime : "${endTime}",
+				timeUnit : "${timeUnit}",
+				days : "${days}"
+			},
+			dataType : 'json',
+			success : function(d) {
+				var list = d.obj;
+				for(var i=0;i<list.length;i++){
+					days[i] = list[i].days;
+					watchNum[i] = list[i].watchNum;
+					averageNum[i] = list[i].averageNum;
+					totalNum[i] = list[i].totalNum; 
+				}  
+			}
+		});
+	});
+	 //基于准备好的dom，初始化echarts实例
+	var myChart = echarts.init(document.getElementById('studyTimestats'));
+	option = {
+	    tooltip : {
+	        trigger: 'axis'
+	    },
+	    legend: {
+	        data:['观看人数','平均观看时长','观看总时长']
+	    },
+	    toolbox: {
+	        show : true,
+	        feature : {
+	            mark : {show: true},
+	            dataView : {show: true, readOnly: false},
+	            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+	            restore : {show: true},
+	            saveAsImage : {show: true}
+	        }
+	    },
+	    calculable : true,
+	    xAxis : [
+	        {
+	            type : 'category',
+	            boundaryGap : false,
+	            data : []//横坐标
+	        }
+	    ],
+	    yAxis : [
+			{
+			    name: '观看人数',
+			    type: 'value'
+			},
+			{
+			    name: '时长（'+timeUnit+'）',
+			    type: 'value'
+			}
+	        
+	    ],
+	    series : [{
+            name:'观看人数',
+            type:'line',
+            smooth:true,
+          /*   areaStyle: {
+                normal: {}
+            }, */
+            lineStyle: {
+                normal: {
+                    width: 1
+                }
+            },
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            data:[]
+         } ,{
+  	        name:'平均观看时长',
+  	        type:'line',
+  	        yAxisIndex:1,
+            lineStyle: {
+                normal: {
+                    width: 1
+                }
+            }, 
+  	        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+  	        data:[]
+  	    },{
+  	        name:'观看总时长',
+  	        type:'line',
+  	        yAxisIndex:1,
+            lineStyle: {
+                normal: {
+                    width: 1
+                }
+            }, 
+  	        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+  	        data:[]
+  	    } ]
+	};
+	
+ 	myChart.showLoading(); 
+ 	fetchData(function(data) {
+  		myChart.hideLoading();
+  		var seriesFetchData = [{
+			// 根据名字对应到相应的系列
+			name : '观看人数',
+			data : data.watchNum
+		},{
+			name : '平均观看时长',
+			data : data.averageNum
+		},{
+			name : '观看总时长',
+			data : data.totalNum
+		}];
+  		myChart.setOption({
+   			xAxis : {
+   				data : data.days
+
+   			},
+   			series : seriesFetchData
+   		});
+   	}); 
+   // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+	
+
+    function fetchData(cb) {
+		// 通过 setTimeout 模拟异步加载
+		setTimeout(function() {
+			cb({
+				days : days,
+				watchNum : watchNum ,
+				averageNum : averageNum,
+				totalNum : totalNum
+			});
+		}, 1000);
+	}
+    
+ 
+    function changeUnit(value){
+    	if(value==4){
+    		$("#everytime").show();
+    		$("#everyday").hide();
+    	}else if(value==0){
+    		$("#everytime").hide();
+    		$("#everyday").show();
+    	}
+    }
+    
+    function doSearch(value){
+		if(!validate(value)){
+			return;
+		}
+		if(value==0||value==1||value==2){
+			window.location.href = "${pageContext.request.contextPath}/back_user_study/to_study_time_stats.action?timeType="+value+"&timeUnit="+$("#timeUnit").val();
+		}else if(value==3){
+			window.location.href = "${pageContext.request.contextPath}/back_user_study/to_study_time_stats.action?timeType="+value+"&timeUnit="+$("#timeUnit").val()+"&startTime="+$("input[name='startTime']").val()+"&endTime="+$("input[name='endTime']").val();
+		}else if(value==4){
+			window.location.href = "${pageContext.request.contextPath}/back_user_study/to_study_time_stats.action?timeType="+value+"&timeUnit="+$("#timeUnit1").val()+"&days="+$("input[name='days']").val();
+		}
+    }
+    
+    function validate(value){
+		if(value==3){
+			var startTime = $("input[name='startTime']").val();
+			var endTime = $("input[name='endTime']").val();
+			if((startTime==null||startTime=="")||(endTime==null||endTime=="")){
+				parent.sy.messagerShow({
+   					msg : "时间不能为空！",
+   					title : '提示'
+   				});
+				return false;
+			}else if(startTime>=endTime){
+				parent.sy.messagerShow({
+   					msg : "开始时间必须小于结束时间！！",
+   					title : '提示'
+   				});
+				return false;
+			}else{
+				return true
+			}
+		}else if(value==0||value==1||value==2||value==4||value==5){
+			return true;
+		}else{
+			parent.sy.messagerShow({
+					msg : "信息提交异常！",
+					title : '提示'
+			});
+			return false;
+		}
+	}
+   
+     
+     
+</script>  
+</body>
+</html>

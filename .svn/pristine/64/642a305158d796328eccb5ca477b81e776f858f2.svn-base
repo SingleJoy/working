@@ -1,0 +1,910 @@
+package cn.bnsr.edu_yun.frontstage.train.controller;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.train.view.TopicAnswerView;
+import cn.bnsr.edu_yun.frontstage.base.po.Area;
+import cn.bnsr.edu_yun.frontstage.base.po.SubjectList;
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.base.po.UserInfo;
+import cn.bnsr.edu_yun.frontstage.base.service.AreaService;
+import cn.bnsr.edu_yun.frontstage.base.service.SubjectListService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserInfoService;
+import cn.bnsr.edu_yun.frontstage.base.service.UserService;
+import cn.bnsr.edu_yun.frontstage.base.view.UserCenterView;
+import cn.bnsr.edu_yun.frontstage.resource.service.File_baseService;
+import cn.bnsr.edu_yun.frontstage.resource.view.ResourceView;
+import cn.bnsr.edu_yun.frontstage.tiku.service.ExamService;
+import cn.bnsr.edu_yun.frontstage.tiku.view.ExamView;
+import cn.bnsr.edu_yun.frontstage.train.po.CertModelPicture;
+import cn.bnsr.edu_yun.frontstage.train.po.ClassifyRelation;
+import cn.bnsr.edu_yun.frontstage.train.po.Community;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicAnswer;
+import cn.bnsr.edu_yun.frontstage.train.po.TopicQuestion;
+import cn.bnsr.edu_yun.frontstage.train.service.CertModelPictureService;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassService;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassifyRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.CommunityService;
+import cn.bnsr.edu_yun.frontstage.train.service.CourseService;
+import cn.bnsr.edu_yun.frontstage.train.service.MessageService;
+import cn.bnsr.edu_yun.frontstage.train.service.StudentRelationService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicAnswerService;
+import cn.bnsr.edu_yun.frontstage.train.service.TopicQuestionService;
+import cn.bnsr.edu_yun.frontstage.train.service.TrainService;
+import cn.bnsr.edu_yun.frontstage.train.service.WorkshopService;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassTestView;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassView;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityCenterView;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityRelationView;
+import cn.bnsr.edu_yun.frontstage.train.view.CommunityView;
+import cn.bnsr.edu_yun.frontstage.train.view.DataStatsView;
+import cn.bnsr.edu_yun.frontstage.train.view.MessageView;
+import cn.bnsr.edu_yun.frontstage.train.view.StudentRelationView;
+import cn.bnsr.edu_yun.frontstage.train.view.TopicQuestionView;
+import cn.bnsr.edu_yun.frontstage.train.view.WorkshopView;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonService;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonView;
+import cn.bnsr.edu_yun.util.ConfigInfo;
+import cn.bnsr.edu_yun.util.ExceptionUtil;
+import cn.bnsr.edu_yun.util.MyArrayComparator;
+import cn.bnsr.edu_yun.util.NumUtil;
+import cn.bnsr.edu_yun.util.ResponseUtil;
+import cn.bnsr.edu_yun.util.UserLog;
+import net.sf.json.JSONObject;
+
+/**
+ * 社区
+ * 
+ * @author fangxiongwei
+ * @date 2017年5月15日
+ */
+@Controller
+@RequestMapping("/community")
+public class CommunityController {
+	private final Logger log = LoggerFactory.getLogger(CommunityController.class);
+
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private SubjectListService subjectListService;
+	@Autowired
+	private CommunityRelationService communityRelationService;
+	@Autowired
+	private ClassifyRelationService classifyRelationService;
+	@Autowired
+	private WorkshopService workshopService;
+	@Autowired
+	private TopicQuestionService topicQuestionService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private TrainService trainService;
+	@Autowired
+	private LessonService lessonService;
+	@Autowired
+	private StudentRelationService studentRelationService;
+	@Autowired
+	private TopicAnswerService topicAnswerService;
+	@Autowired
+	private MessageService messageService;
+	@Autowired
+	private ExamService examService;
+	@Autowired
+	private AreaService areaService;
+	@Autowired
+	private ClassService classService;
+
+	@Autowired
+	private CertModelPictureService certModelPictureService;
+	@Autowired
+	private File_baseService fileBaseService;
+
+	/**
+	 * 跳转社区中心页面
+	 */
+	@RequestMapping("/to_community_center")
+	public ModelAndView toCommunityCenter(HttpServletRequest request, CommunityView communityView) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			communityView.setUser_id(user.getId());
+			if (communityView.getSign() == 0) {
+				// 部分展开
+				if (!"0".equals(communityView.getPaging())) {
+					communityView.setRows(3);
+					communityView.setPaging("1");
+				}
+			} else {
+				if (communityView.getRows() == 0) {
+					communityView.setRows(12);
+				} else {
+					communityView.setRows(12 + communityView.getRows());
+				}
+			}
+			communityView.setStartLine(0);
+			List<CommunityView> communityList = communityService.queryCommunity(communityView);
+			int total = communityService.queryTotalCommunity(communityView);// 社区总数
+			communityView.setTotal(total);
+			// 分页总页数
+			communityView.setTotalPage(NumUtil.totalPage(total, communityView.getRows()));
+
+			/** 用户关注，资源等信息 */
+			// @TODO优化
+			/**
+			 * long user_propertyId = user.getProperty_id(); UserProperty
+			 * userProperty =
+			 * userService.selectUserPropertyById(user_propertyId);
+			 * request.setAttribute("userProperty", userProperty);
+			 */
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			// 个人中心统计数据
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+
+			// 社区
+			request.setAttribute("state", state);
+			request.setAttribute("stamp", stamp);
+			modelAndView.addObject("communityList", communityList);
+			modelAndView.addObject("communityView", communityView);
+			// 主页选中某一社区 加载通知、课例、课程、培训、作业、研讨、考试
+			if (communityView.getSign() == 0 && communityView.getCurrentCommunity() != null) {
+				if (communityView.getCurrentCommunity() > 0) {
+					// 通知
+					MessageView messageView = new MessageView();
+					messageView.setSource_id(communityView.getCurrentCommunity());
+					messageView.setSource_type(0);
+					messageView = messageService.showLastMessage(messageView);
+					modelAndView.addObject("messageView", messageView);
+
+					// 课例
+					CommunityCenterView ccv = new CommunityCenterView();
+					ccv.setId(communityView.getCurrentCommunity());
+					ccv.setUserId(user.getId());
+					ccv.setSourceType(0);
+					ccv.setStatus(1);
+					ccv.setStartLine(0);
+					ccv.setRows(4);
+					ccv.setIs_studyed(0);
+					// 收集未完成的课例、课程、培训
+					if (communityView.getOpen_index() == 1) {
+						ccv.setRows(0);
+					}
+					List<LessonView> lessonList = lessonService.queryCommunityLesson(ccv);
+					if (communityView.getOpen_index() == 2) {
+						ccv.setRows(0);
+					} else {
+						ccv.setRows(4);
+					}
+					List<CommunityCenterView> courseList = courseService.queryMyCommunityCourse(ccv);
+					if (communityView.getOpen_index() == 3) {
+						ccv.setRows(0);
+					} else {
+						ccv.setRows(4);
+					}
+					List<CommunityCenterView> trainList = trainService.queryMyCommunityTrain(ccv);
+					// 收集未完成、已完成的课例、课程、培训
+					int unfinish_le = lessonService.queryTotalCommunityLesson(ccv);
+					int unfinish_cu = courseService.queryTotalMyCommunityCourse(ccv);
+					int unfinish_train = trainService.queryTotalMyCommunityTrain(ccv);
+					ccv.setStatus(2);
+					ccv.setIs_studyed(1);
+					int finish_le = lessonService.queryTotalCommunityLesson(ccv);
+					int finish_cu = courseService.queryTotalMyCommunityCourse(ccv);
+					int finish_train = trainService.queryTotalMyCommunityTrain(ccv);
+
+					communityView.setUnfinish_total_lesson(unfinish_le);
+					communityView.setFinish_total_lesson(finish_le);
+					communityView.setUnfinish_total_course(unfinish_cu);
+					communityView.setFinish_total_course(finish_cu);
+					communityView.setUnfinish_total_train(unfinish_train);
+					communityView.setFinish_total_train(finish_train);
+					modelAndView.addObject("lessonList", lessonList);
+					modelAndView.addObject("courseList", courseList);
+					modelAndView.addObject("trainList", trainList);
+
+					// 统计作业
+					ExamView examView = new ExamView();
+					examView.setUser_id(user.getId());
+					examView.setCommunity_id(communityView.getCurrentCommunity());
+					examView.setCommunity_type(0);
+					examView.setExam_type(1);
+					examView.setStartLine(0);
+					if (communityView.getOpen_index() == 4) {
+						examView.setRows(0);
+					} else {
+						examView.setRows(2);
+					}
+					List<ExamView> examList = examService.queryMyCommunityExam(examView);
+					int unExfinish = examService.queryMyCommunityExamCount(examView);
+					examView.setStatus(1);
+					int Exfinish = examService.queryMyCommunityExamCount(examView);
+					examView.setStatus(0);
+					communityView.setFinish_total_exam(Exfinish);
+					communityView.setUnfinish_total_exam(unExfinish);
+					modelAndView.addObject("examList", examList);
+
+					// 研讨
+					ClassView discussView = new ClassView();
+					discussView.setCurrent_user(user.getId());
+					discussView.setCurrent_community_id(communityView.getCurrentCommunity());
+					discussView.setCurrent_community_type(0);
+					discussView.setIs_studyed(0);
+					discussView.setStartLine(0);
+					if (communityView.getOpen_index() == 5) {
+						discussView.setRows(0);
+					} else {
+						discussView.setRows(2);
+					}
+					List<ClassTestView> discussList = classService.queryMyCommunityDiscuss(discussView);
+					int unfinish_total_discuss = classService.queryTotalMyCommunityDiscuss(discussView);
+					discussView.setIs_studyed(1);
+					int finish_total_discuss = classService.queryTotalMyCommunityDiscuss(discussView);
+					communityView.setUnfinish_total_discuss(unfinish_total_discuss);
+					communityView.setFinish_total_discuss(finish_total_discuss);
+					modelAndView.addObject("discussList", discussList);
+
+					// 统计考试
+					ExamView testView = new ExamView();
+					testView.setUser_id(user.getId());
+					testView.setCommunity_id(communityView.getCurrentCommunity());
+					testView.setCommunity_type(0);
+					testView.setExam_type(0);
+					testView.setStartLine(0);
+					if (communityView.getOpen_index() == 6) {
+						testView.setRows(0);
+					} else {
+						testView.setRows(2);
+					}
+					List<ExamView> testList = examService.queryMyCommunityExam(testView);
+					int untsfinish = examService.queryMyCommunityExamCount(testView);
+					testView.setStatus(1);
+					int tsfinish = examService.queryMyCommunityExamCount(testView);
+					testView.setStatus(0);
+					communityView.setFinish_total_test(tsfinish);
+					communityView.setUnfinish_total_test(untsfinish);
+					modelAndView.addObject("testList", testList);
+				}
+			}
+
+			// 课程
+			/*
+			 * StudyView studyCourseView = new StudyView();
+			 * studyCourseView.setIs_studyed(0);
+			 * studyCourseView.setSource_type(0);
+			 * studyCourseView.setUser_id(user.getId()); String scpaping =
+			 * request.getParameter("scpaping"); int
+			 * uncompleteAmount=userStudyService
+			 * .countUserSutdy(studyCourseView); studyCourseView.setPaping("1");
+			 * //采用分页 if(scpaping==null||!"0".equals(scpaping.trim())){
+			 * studyCourseView.setStartLine(0); studyCourseView.setRows(3);
+			 * }else{ studyCourseView.setPaping("0"); } List<StudyView>
+			 * studyCourseList =
+			 * userStudyService.queryUserStudy(studyCourseView);
+			 * studyCourseView.setIs_studyed(1); int
+			 * completeAmount=userStudyService.countUserSutdy(studyCourseView);
+			 * studyCourseView.setCompletedAmount(completeAmount);
+			 * studyCourseView.setUncompletedAmount(uncompleteAmount);
+			 * modelAndView.addObject("studyCourseList", studyCourseList);
+			 * modelAndView.addObject("studyCourseView",studyCourseView);
+			 */
+			// 培训
+
+			modelAndView.setViewName("frontstage/train/personalCenter/community_center");
+			if (communityView.getSign() == 3) {
+				TopicQuestionView topicQuestionView = new TopicQuestionView();
+				topicQuestionView.setUser_id(user.getId());
+				topicQuestionView.setStartLine(communityView.getStartLine());
+				topicQuestionView.setRows(communityView.getRows() - 7);
+				topicQuestionView.setSource_type(2);
+				List<TopicQuestionView> topicQuestionViews = topicQuestionService.queryTopic(topicQuestionView);
+				modelAndView.addObject("topicQuestionViews", topicQuestionViews);
+				// my answer
+				cn.bnsr.edu_yun.frontstage.train.view.TopicAnswerView topicAnswerView = new cn.bnsr.edu_yun.frontstage.train.view.TopicAnswerView();
+				topicAnswerView.setUser_id(user.getId());
+				topicAnswerView.setSource_type(2);
+				topicAnswerView.setStartLine(communityView.getStartLine());
+				topicAnswerView.setRows(3);
+				List<cn.bnsr.edu_yun.frontstage.train.view.TopicAnswerView> topicAnswerViews = topicAnswerService.queryMyTopicAnswer(topicAnswerView);
+				modelAndView.addObject("topicAnswerViews", topicAnswerViews);
+				modelAndView.addObject("topicAnswerView", topicAnswerView);
+				Integer topicAnswerCount = topicAnswerService.queryMyTopicAnswerCount(topicAnswerView);
+				modelAndView.addObject("topicAnswerCount", topicAnswerCount);
+			}
+			if (communityView.getSign() == 0) {
+				modelAndView.addObject("head_title", "社区中心");
+			} else if (communityView.getSign() == 1) {
+				modelAndView.addObject("head_title", "我加入的社区");
+			} else if (communityView.getSign() == 2) {
+				modelAndView.addObject("head_title", "我组建的社区");
+			} else if (communityView.getSign() == 3) {
+				modelAndView.addObject("head_title", "我发起的话题");
+			}
+		} catch (Exception e) {
+			log.error("社区中心查询失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 跳转创建社区页面
+	 */
+	@RequestMapping("/to_create_community")
+	public ModelAndView toCreateCommunity(HttpServletRequest request, CommunityView communityView) {
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		ModelAndView modelAndView = new ModelAndView();
+		User user = (User) request.getSession().getAttribute("currentUser");
+		try {
+			UserInfo userInfo = userInfoService.getByUserId(user.getId());
+			request.setAttribute("user", user);
+			request.setAttribute("userInfo", userInfo);
+			UserCenterView userCenter = userService.queryUserCenter(user.getId());
+			modelAndView.addObject("userCenter", userCenter);
+			// 学段list
+			List<SubjectList> periodList = subjectListService.querySubject("0");
+			// 地区
+			List<Area> provinceList = areaService.selectByPid("1");
+			MyArrayComparator comparator = new MyArrayComparator();
+			Collections.sort(provinceList, comparator);
+			request.setAttribute("provinceList", provinceList);
+			request.setAttribute("state", state);
+			request.setAttribute("stamp", stamp);
+			modelAndView.addObject("periodList", periodList);
+			modelAndView.addObject("communityView", communityView);
+			modelAndView.setViewName("frontstage/train/community/community");
+			modelAndView.addObject("head_title", "创建社区");
+		} catch (Exception e) {
+			log.error("跳转创建社区页面失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 保存社区
+	 */
+	@RequestMapping("/save_community")
+	public ModelAndView saveCommunity(HttpServletRequest request, Community community) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		String periods = request.getParameter("periods");// 学段
+		String subjects = request.getParameter("subjects");// 学科
+		String flag = request.getParameter("flag");// 标记 0-关闭；1-修改
+		String path = "/to_community_center.action?stamp=0&state=0&sign=2";
+		try {
+			if (community.getId() != null) {
+				if (flag.equals("0")) {
+					community.setStatus(1);
+				} else {// 修改
+					path = "/to_community.action?id=" + community.getId() + "&stamp=11";
+					// 全删
+					communityRelationService.deleteByCommunityId(community.getId());
+					// 全加
+					communityRelationService.saveCommunityRelation(periods, subjects, community.getId());
+				}
+				communityService.updateCommunity(community);
+			} else {
+				if(community.getHead_img()==null){
+					CertModelPicture defaultImg = certModelPictureService.getDefaultImg(6);
+					community.setHead_img(defaultImg.getPath());
+					community.setIs_default_img(0);
+				}else{
+					community.setIs_default_img(1);
+				}
+				community.setUser_id(user.getId());
+				community.setStatus(0);
+				communityService.saveCommunity(community);
+				communityRelationService.saveCommunityRelation(periods, subjects, community.getId());
+			}
+		} catch (Exception e) {
+			log.error("保存社区失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return new ModelAndView("redirect:/community" + path);
+	}
+
+	@RequestMapping("/upload_img")
+	public void upload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		String communityPicture = ConfigInfo.getString("communityPicture");
+		String path = request.getSession().getServletContext().getRealPath(communityPicture);
+		Date date = new Date();
+		long time = date.getTime();
+		String fileName = "img" + time;
+		String format = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+		Random ra = new Random();
+		fileName = fileName + ra.nextInt(10) + format;
+		File targetFile = new File(path, fileName);
+		if (!targetFile.exists()) {
+			targetFile.mkdirs();
+		}
+		// 保存
+		try {
+			file.transferTo(targetFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JSONObject result = new JSONObject();
+		result.put("fileName", communityPicture + "/" + fileName);
+		ResponseUtil.write(response, result);
+
+	}
+
+	/**
+	 * 跳转社区管理页面
+	 */
+	@RequestMapping("/to_community")
+	public ModelAndView toCommunity(HttpServletRequest request, CommunityView communityView) {
+		ModelAndView modelAndView = new ModelAndView();
+		Long communityId = communityView.getId();
+		try {
+			int stamp = communityView.getStamp();
+			communityView = communityService.getById(communityId);
+			communityView.setStamp(stamp);
+
+			if (stamp == 11 || stamp == 0) {// 基础信息
+				// 地区
+				List<Area> provinceList = areaService.selectByPid("1");
+				MyArrayComparator comparator = new MyArrayComparator();
+				Collections.sort(provinceList, comparator);
+				request.setAttribute("provinceList", provinceList);
+				String areaId = communityView.getArea_id();// 所属地区id
+				if (!communityView.getArea_id().equals("1")) {// 不是全国
+					// 所属地区信息
+					Area area = areaService.selectByid(areaId);
+					String areaParentId = area.getParentId();// 所属父id
+
+					if (areaParentId.equals("1")) {// 省级
+						communityView.setProvince(areaId);
+						communityView.setCity("-1");
+						communityView.setCounty("-1");
+					} else {// 市县级
+						List<Area> cityList = new ArrayList<Area>();
+						if (area.getArea_id().length() < 9) {// 市级
+							cityList = areaService.selectByPid(areaParentId);
+							Collections.sort(cityList, comparator);
+							communityView.setProvince(areaParentId);
+							communityView.setCity(areaId);
+							communityView.setCounty("-1");
+						} else {// 县级
+							Area cityArea = areaService.selectByid(areaParentId);// 市
+							Area provinceArea = areaService.selectByid(cityArea.getParentId());// 省
+							// 市级
+							cityList = areaService.selectByPid(cityArea.getParentId());
+							Collections.sort(cityList, comparator);
+							// 县级
+							List<Area> countyList = areaService.selectByPid(areaParentId);
+							Collections.sort(countyList, comparator);
+							request.setAttribute("countyList", countyList);
+							communityView.setProvince(provinceArea.getId());
+							communityView.setCity(areaParentId);
+							communityView.setCounty(areaId);
+						}
+						request.setAttribute("cityList", cityList);
+					}
+				}
+
+				// 学段list
+				List<SubjectList> periodList = subjectListService.querySubject("0");
+
+				List<CommunityRelationView> crList = communityRelationService.searchSubjects(communityId);
+				List<String> list = new ArrayList<String>();
+				if (crList.size() > 0) {
+					for (CommunityRelationView cr : crList) {
+						if (cr.getType() == 0) {// 学段
+							communityView.setPeriods(cr.getSubjects());
+						} else {// 学科
+							communityView.setSubjects(cr.getSubjects());
+						}
+					}
+					if (!communityView.getPeriods().equals("")) {
+						list = NumUtil.getList(communityView.getPeriods());
+					}
+				}
+				if (list.size() > 0) {
+					// 根据选中的学段查询所有学科
+					List<SubjectList> periodSubjectList = subjectListService.searchSubject(list);
+					modelAndView.addObject("periodSubjectList", periodSubjectList);
+				}
+				modelAndView.addObject("periodList", periodList);
+			}
+			modelAndView.addObject("head_title", "基础信息");
+			modelAndView.addObject("communityView", communityView);
+			modelAndView.setViewName("frontstage/train/community/community");
+		} catch (Exception e) {
+			log.error("社区管理列表查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 跳转数据统计
+	 */
+	@RequestMapping("/to_data_stats")
+	public ModelAndView toDataStats(HttpServletRequest request, DataStatsView dataStatsView) {
+		ModelAndView modelAndView = new ModelAndView();
+		Long id = dataStatsView.getId();
+		int dataType = dataStatsView.getDataType();
+		int stamp = dataStatsView.getStamp();
+		try {
+			if (dataType == 0) {// 社区
+				CommunityView communityView = communityService.getById(id);
+				communityView.setStamp(stamp);
+				modelAndView.addObject("communityView", communityView);
+			} else {// 工作坊
+				WorkshopView workshopView = workshopService.showWorkshopById(id);
+				workshopView.setStamp(stamp);
+				modelAndView.addObject("workshopView", workshopView);
+			}
+			modelAndView.addObject("head_title", "数据统计");
+			modelAndView.addObject("dataStatsView", dataStatsView);
+			modelAndView.setViewName("frontstage/train/community/data_stats");
+		} catch (Exception e) {
+			log.error("数据统计查询失败", ExceptionUtil.getExceptionMessage(e));
+		}
+		return modelAndView;
+	}
+
+	/**
+	 * 查询统计数据
+	 */
+	@RequestMapping("/query_data_stats")
+	public void queryDataStats(HttpServletResponse response, DataStatsView dataStatsView) {
+		JSONObject result = new JSONObject();
+		try {
+			List<DataStatsView> dataStatsList = communityService.queryDataStats(dataStatsView);
+			result.put("success", true);
+			result.put("dataStatsList", dataStatsList);
+			ResponseUtil.write(response, result);
+		} catch (Exception e) {
+			log.error("查询统计数据失败", ExceptionUtil.getExceptionMessage(e));
+		}
+	}
+
+	/**
+	 * 跳转社区主页页面
+	 */
+	@UserLog(description = "访问主页", do_id = "0")
+	@RequestMapping("/to_community_index")
+	public ModelAndView toCommunityIndex(HttpServletRequest request, CommunityCenterView ccv) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = (User) request.getSession().getAttribute("currentUser");
+		try {
+			int sourceType = ccv.getSourceType();// 0-社区；1-工作坊
+			int stamp = ccv.getStamp();// 标记
+			String str = "";
+			String title = "";
+			if (sourceType == 0) {// 社区
+				CommunityView communityView = communityService.getById(ccv.getId());
+				modelAndView.addObject("communityView", communityView);
+				str = "community_index";
+				title = "社区";
+			} else {// 工作坊
+				WorkshopView workshopView = workshopService.showWorkshopById(ccv.getId());
+				modelAndView.addObject("workshopView", workshopView);
+				str = "workshop_index";
+				title = "工作坊";
+			}
+			if (user != null) {// 用户登录查询用户是否加入培训
+				StudentRelationView sr = new StudentRelationView();
+				sr.setSource_id(ccv.getId());
+				sr.setUser_id(user.getId());
+				sr.setSource_type(sourceType);
+				int total = studentRelationService.countStudent(sr);
+				if (total > 0) {
+					ccv.setIsJoin(1);
+				}
+			}
+			ccv.setRows(20);
+			if (ccv.getPage() == 0) {
+				ccv.setStartLine(0);
+			} else {
+				ccv.setStartLine(ccv.getPage() * ccv.getRows());
+			}
+			int total = 0;
+			List<String> list = new ArrayList<String>();
+			if (stamp == 0 || stamp == 1) {// 课程、培训
+				// 社区分类
+				List<ClassifyRelation> classifyList = classifyRelationService.queryCLassifysByPid(null, sourceType, stamp);
+				if (ccv.getClassifyId() != -1) {// 选中一级分类查询二级分类
+					List<ClassifyRelation> sonClassifyList = classifyRelationService.queryCLassifysByPid(ccv.getClassifyId(), sourceType, stamp);
+					list.add(ccv.getClassifyId().toString());
+					for (ClassifyRelation cr : sonClassifyList) {
+						list.add(cr.getId().toString());
+					}
+					ccv.setClassifyIds(list);
+					modelAndView.addObject("sonClassifyList", sonClassifyList);
+				}
+				modelAndView.addObject("classifyList", classifyList);
+			}
+			// 课程总数
+			int courseTotal = courseService.queryTotalCommunityCourse(ccv);
+			// 培训总数
+			int trainTotal = trainService.queryTotalCommunityTrain(ccv);
+			// 课例总数
+			ccv.setOpen_status(-1);// 显示开启的
+			int lessonTotal = lessonService.queryTotalCommunityLesson(ccv);
+			// 资源总数
+			ResourceView resourceView1 = new ResourceView();
+			resourceView1.setSource_id(ccv.getId());
+			resourceView1.setSource_type(sourceType + 1);
+			resourceView1.setStatus(0);
+			// 资源
+			int resourceTotal = fileBaseService.queryTotalResource(resourceView1);
+			modelAndView.addObject("resourceTotal", resourceTotal);
+			//头部各个模块的总数量必须单独算，不然会因为条件而变动
+			CommunityCenterView ccv2=new CommunityCenterView();
+			ccv2.setSourceType(ccv.getSourceType());
+			ccv2.setId(ccv.getId());
+			modelAndView.addObject("courseTotal",  courseService.queryTotalCommunityCourse(ccv2));
+			modelAndView.addObject("trainTotal",  trainService.queryTotalCommunityTrain(ccv2));
+			modelAndView.addObject("lessonTotal",  lessonService.queryTotalCommunityLesson(ccv2));
+			if (stamp == 0) {// 课程列表
+				List<CommunityCenterView> courseList = courseService.queryCommunityCourse(ccv);
+				if (courseList.size() > 0) {
+					total = courseTotal;// 课程总数
+				}
+				modelAndView.addObject("courseList", courseList);
+				modelAndView.addObject("head_title", title + "课程");
+			} else if (stamp == 1) {// 培训列表
+				List<CommunityCenterView> trainList = trainService.queryCommunityTrain(ccv);
+				if (trainList.size() > 0) {
+					total = trainTotal;// 课程总数
+				}
+				modelAndView.addObject("trainList", trainList);
+				modelAndView.addObject("head_title", title + "培训");
+			} else if (stamp == 2) {// 课例列表
+				total = lessonTotal;// 总数
+				List<LessonView> lessonViews = lessonService.queryCommunityLesson(ccv);
+				List<SubjectList> subjectList = subjectListService.querySubject(ccv.getStage_id());
+				if (ccv.getStage_id() == null || ccv.getStage_id() == "") {
+					subjectList = subjectListService.querySubject("XX");
+				}
+				modelAndView.addObject("lessonViews", lessonViews);
+				modelAndView.addObject("subjectList", subjectList);
+				modelAndView.addObject("head_title", title + "课例");
+			} else if (stamp == 3) {// 工作坊
+				total = workshopService.queryWorkshopCommunityCount(ccv);// 总数
+				List<WorkshopView> workshopViews = workshopService.queryWorkshopCommunity(ccv);
+				modelAndView.addObject("workshopViews", workshopViews);
+				List<SubjectList> subjectList = subjectListService.querySubject(ccv.getStage_id());
+				if (ccv.getStage_id() == null || ccv.getStage_id() == "") {
+					subjectList = subjectListService.querySubject("XX");
+				}
+				modelAndView.addObject("subjectList", subjectList);
+				modelAndView.addObject("head_title", "社区工作坊");
+			} else if (stamp == 4) {// 社区话题
+				ccv.setRows(8);
+				total = topicQuestionService.queryTopicCommunityCount(ccv);
+				List<TopicQuestionView> topicQuestionViews = topicQuestionService.queryTopicCommunity(ccv);
+				modelAndView.addObject("topicQuestionViews", topicQuestionViews);
+				modelAndView.addObject("head_title", title + "话题");
+			} else if (stamp == 6) {
+				List<TopicAnswer> topicAnswers = topicAnswerService.selectAnswerByQuestionId(ccv.getQuestionId(), ccv.getStartLine(), ccv.getRows());
+				TopicAnswerView topicAnswerView = new TopicAnswerView();
+				topicAnswerView.setQuestionId(ccv.getQuestionId());
+				long topicAnswersCount = topicAnswerService.count(topicAnswerView);
+				TopicQuestion topicQuestion = topicQuestionService.selectById(ccv.getQuestionId());
+				topicQuestion.setWatch_times(topicQuestion.getWatch_times() + 1);
+				topicQuestionService.update(topicQuestion);
+				modelAndView.addObject("topicAnswers", topicAnswers);// 问题回答list
+				modelAndView.addObject("topicAnswersCount", topicAnswersCount);// 问题回答总数
+				modelAndView.addObject("topicQuestion", topicQuestion);// 问题
+				modelAndView.addObject("head_title", topicQuestion.getTitle());
+				// 身份
+				if (user != null) {
+					StudentRelationView student = new StudentRelationView();
+					student.setSource_type(ccv.getSourceType());
+					student.setSource_id(ccv.getId());
+					student.setUser_id(user.getId());
+					List<StudentRelationView> studentRelationViews = studentRelationService.findAll(student);
+					if (studentRelationViews.size() > 0) {
+						StudentRelationView studentRelationView = studentRelationViews.get(0);
+						if (studentRelationView.getRole_type() == 0 || studentRelationView.getRole_type() == 3) {
+							modelAndView.addObject("is_teacher", true);
+						}
+					}
+				}
+			} else if (stamp == 7) {// 老师
+				StudentRelationView student = new StudentRelationView();
+				student.setRows(ccv.getRows());
+				student.setStartLine(ccv.getStartLine());
+				student.setFrom_type(1);// 前台展示
+				student.setSource_id(ccv.getId());
+				student.setSource_type(sourceType);
+				total = studentRelationService.countStudent(student);
+				List<StudentRelationView> studentList = studentRelationService.findAll(student);
+				modelAndView.addObject("studentList", studentList);
+				modelAndView.addObject("head_title", title + "老师");
+			} else if (stamp == 8) {// 资讯
+				MessageView messageView = new MessageView();
+
+				messageView.setRows(ccv.getRows());
+				messageView.setStartLine(ccv.getStartLine());
+				messageView.setSource_id(ccv.getId());
+				messageView.setSource_type(sourceType);
+				messageView.setStatus(1);// 发布的
+				messageView.setSort("release_time");
+				messageView.setOrder("desc");
+				total = messageService.countMessage(messageView);
+				List<MessageView> messageList = messageService.showAllMessage(messageView);
+				modelAndView.addObject("messageList", messageList);
+				modelAndView.addObject("head_title", title + "资讯");
+			} else if (stamp == 9) {
+				total = resourceTotal;
+				resourceView1.setSort(ccv.getSortType()+"");
+				resourceView1.setStartLine(0);
+				resourceView1.setRows(ccv.getRows());
+				resourceView1.setStartLine(ccv.getStartLine());
+				if(ccv.getSubject_id()!=null&&!ccv.getSubject_id().equals("")){
+					resourceView1.setSectionId(ccv.getSubject_id());
+				}else if(ccv.getStage_id() != null ){
+					resourceView1.setSectionId(ccv.getStage_id());
+				}
+				List<ResourceView> resourceList = fileBaseService.queryResource(resourceView1);
+				List<SubjectList> subjectList = subjectListService.querySubject(ccv.getStage_id());
+				if (ccv.getStage_id() == null || ccv.getStage_id().equals("")) {
+					subjectList = subjectListService.querySubject("XX");
+				}
+				modelAndView.addObject("subjectList", subjectList);
+				modelAndView.addObject("head_title", title + "资源");
+				modelAndView.addObject("resourceList", resourceList);
+			} else {// 社区主页
+				ccv.setRows(4);
+				ccv.setStartLine(0);
+				List<CommunityCenterView> courseList = courseService.queryCommunityCourse(ccv);
+				List<CommunityCenterView> trainList = trainService.queryCommunityTrain(ccv);
+				List<LessonView> lessonList = lessonService.queryCommunityLesson(ccv);
+				if (sourceType == 0) {
+					List<WorkshopView> workshopList = workshopService.queryWorkshopCommunity(ccv);
+					modelAndView.addObject("workshopList", workshopList);// 工作坊
+				}
+				StudentRelationView student = new StudentRelationView();
+				student.setRows(4);
+				student.setStartLine(0);
+				student.setFrom_type(1);// 前台展示
+				student.setSource_id(ccv.getId());
+				student.setSource_type(sourceType);
+				List<StudentRelationView> studentList = studentRelationService.findAll(student);
+
+				MessageView messageView = new MessageView();
+
+				messageView.setRows(12);
+				messageView.setStartLine(0);
+				messageView.setSource_id(ccv.getId());
+				messageView.setSource_type(sourceType);
+				messageView.setStatus(1);// 发布的
+				List<MessageView> messageList = messageService.showAllMessage(messageView);
+
+				modelAndView.addObject("messageList", messageList);
+				modelAndView.addObject("studentList", studentList);
+				modelAndView.addObject("courseList", courseList);// 课程
+				modelAndView.addObject("trainList", trainList);// 培训
+				modelAndView.addObject("lessonList", lessonList);// 课例
+				modelAndView.addObject("head_title", title + "主页");
+
+				ResourceView resourceView = new ResourceView();
+				resourceView.setRows(4);
+				resourceView.setSort("3");
+				resourceView.setStartLine(0);
+				resourceView.setSource_id(ccv.getId());
+				resourceView.setSource_type(sourceType + 1);
+				resourceView.setStatus(0);
+				// 资源
+				List<ResourceView> resourceList = fileBaseService.queryResource(resourceView);
+				modelAndView.addObject("resourceList", resourceList);
+			}
+
+			ccv.setTotal(total);
+			// 分页总页数
+			ccv.setTotalPage(NumUtil.totalPage(total, ccv.getRows()));
+
+			modelAndView.addObject("communityCenterView", ccv);
+			modelAndView.setViewName("frontstage/train/community_show/" + str);
+		} catch (Exception e) {
+			log.error("社区主页查询失败", ExceptionUtil.getExceptionMessage(e));
+			e.printStackTrace();
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping("/to_community_home")
+	public ModelAndView toCommunityHome(HttpServletRequest request, CommunityView communityView) {
+		ModelAndView modelAndView = new ModelAndView();
+		// 没有选择城市的时候，热门社区
+		if (communityView.getCity() == null || communityView.getCity().equals("")) {
+			CommunityView communityView1 = new CommunityView();
+			communityView1.setSort("sort");
+			communityView1.setRows(8);
+			communityView1.setPaging("1");
+			communityView1.setSign(99);
+			List<CommunityView> hot = communityService.queryCommunity(communityView1);
+			modelAndView.addObject("hot", hot);
+		} else {
+			Area city = areaService.selectByArea_id(communityView.getCity());
+			List<Area> areaList = areaService.selectByPid(city.getId());
+			MyArrayComparator comparator = new MyArrayComparator();
+			Collections.sort(areaList, comparator);
+			modelAndView.addObject("city", city);
+			modelAndView.addObject("areaList", areaList);
+			if (communityView.getCounty() != null && !communityView.getCounty().equals("")) {
+				communityView.setArea_id("%" + communityView.getCounty() + "%");
+			} else {
+				communityView.setArea_id("%" + communityView.getCity() + "%");
+			}
+			communityView.setRows(16);
+			communityView.setPaging("1");
+			communityView.setSign(99);
+			int total = communityService.queryTotalCommunity(communityView);
+			List<CommunityView> communityViews = communityService.queryCommunity(communityView);
+			modelAndView.addObject("total", total);
+			modelAndView.addObject("communityViews", communityViews);
+		}
+		modelAndView.addObject("head_title", "社区主页");
+		modelAndView.addObject("communityView", communityView);
+		modelAndView.setViewName("frontstage/train/community/community_home");
+		return modelAndView;
+	}
+
+	// 获取地级市
+	@RequestMapping("/ajax_city")
+	public void getCity(HttpServletResponse response, HttpServletRequest request, String area_id) throws Exception {
+		StringBuffer str = new StringBuffer();
+		Area area = areaService.selectByArea_id(area_id);
+		List<Area> areaList = areaService.selectByPid(area.getId());
+		MyArrayComparator comparator = new MyArrayComparator();
+		Collections.sort(areaList, comparator);
+		for (Area a : areaList) {
+			str.append("<a href=\"javascript:void(0);\" class=\"area_city\" id=\"" + a.getArea_id() + "\">" + a.getArea_name() + "</a>");
+		}
+		String s = new String(str);
+		ResponseUtil.write(response, s);
+	}
+
+	// 获取更多
+	@RequestMapping("/ajax_more")
+	public void getMore(HttpServletResponse response, HttpServletRequest request, int num) throws Exception {
+		JSONObject result = new JSONObject();
+		CommunityView communityView = new CommunityView();
+		communityView.setRows(16);
+		communityView.setStartLine(num);
+		communityView.setPaging("1");
+		communityView.setSign(99);
+		int total = communityService.queryTotalCommunity(communityView);
+		List<CommunityView> communityViews = communityService.queryCommunity(communityView);
+		num += 16;
+		boolean flag = true;
+		if (total < num) {
+			flag = false;
+		}
+		result.put("flag", flag);
+		result.put("num", num);
+		result.put("communityViews", communityViews);
+		ResponseUtil.write(response, result);
+	}
+}

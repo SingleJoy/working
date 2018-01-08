@@ -1,0 +1,114 @@
+package cn.bnsr.edu_yun.util;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import cn.bnsr.edu_yun.frontstage.tiku.po.Question;
+
+
+public class Test2 {
+
+	public static void main(String[] args) {
+	
+		Question question1=new Question();
+		question1.setId(new Long(1));
+		Question question2=new Question();
+		question2.setId(new Long(2));
+		Question question3=new Question();
+		question3.setId(new Long(3));
+		Question question4=new Question();
+		question4.setId(new Long(4));
+		Question question5=new Question();
+		question5.setId(new Long(5));
+		Question question6=new Question();
+		question6.setId(new Long(6));
+		question1.setDifficulty(1);
+		question2.setDifficulty(0);
+		question3.setDifficulty(0);
+		question4.setDifficulty(0);
+		question5.setDifficulty(2);
+		question6.setDifficulty(1);
+		List<Question> questionList=new ArrayList<Question>();
+		questionList.add(question1);
+		questionList.add(question2);
+		questionList.add(question3);
+		questionList.add(question4);
+		questionList.add(question5);
+		questionList.add(question6);
+		List<Question> questionList0=new ArrayList<Question>();
+		questionList0.add(question2);
+		questionList0.add(question3);
+		questionList0.add(question4);
+		List<Question> questionList1=new ArrayList<Question>();
+		questionList1.add(question1);
+		questionList1.add(question6);
+		List<Question> questionList2=new ArrayList<Question>();
+		questionList2.add(question5);
+		List<Question> questionList_=new ArrayList<Question>();
+		int xu=6;
+		double p0=xu*0.8;
+		double p1=xu*0.1;
+		double p2=xu*0.1;
+		System.out.println(p0);
+		System.out.println(p1);
+		System.out.println(p2);
+		Random ra =new Random();
+		for(int i=1;i<=p0;i++){
+			if(questionList0.size()==0){
+				continue;
+			}
+		int index=ra.nextInt(questionList0.size());
+		Question q=questionList0.get(index);
+		questionList_.add(q);
+		int allIndex=questionList.indexOf(q);
+		questionList0.remove(index);
+		questionList.remove(allIndex);
+		}
+		for(int i=1;i<=p1;i++){
+			if(questionList1.size()==0){
+				continue;
+			}
+			int index=ra.nextInt(questionList1.size());
+			Question q=questionList1.get(index);
+			questionList_.add(q);
+			int allIndex=questionList.indexOf(q);
+			questionList1.remove(index);
+			questionList.remove(allIndex);
+			}
+		for(int i=1;i<=p2;i++){
+			if(questionList2.size()==0){
+				continue;
+			}
+			int index=ra.nextInt(questionList2.size());
+			Question q=questionList2.get(index);
+			questionList_.add(q);
+			int allIndex=questionList.indexOf(q);
+			questionList2.remove(index);
+			questionList.remove(allIndex);
+			}
+System.out.println(questionList_.size());
+System.out.println(questionList.size());
+int shen=xu-questionList_.size();
+System.out.println(shen);
+System.out.println(" ");
+
+if(questionList_.size()<xu){
+	for(int i=1;i<=shen;i++){
+		int index=ra.nextInt(questionList.size());
+		Question q=questionList.get(index);
+		questionList_.add(q);
+	   System.out.println(q.getId());
+		questionList.remove(index);
+		}
+	System.out.println("*******************************");
+	System.out.println(questionList_.size());
+	System.out.println("*******************************");
+	for(Question q:questionList_){
+		System.out.println(q.getDifficulty()+"&"+q.getId());
+	}
+
+}
+	}
+	
+	}

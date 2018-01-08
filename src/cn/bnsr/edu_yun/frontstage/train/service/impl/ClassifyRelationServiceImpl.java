@@ -1,0 +1,80 @@
+package cn.bnsr.edu_yun.frontstage.train.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.bnsr.edu_yun.frontstage.train.mapper.ClassifyRelationMapper;
+import cn.bnsr.edu_yun.frontstage.train.po.ClassifyRelation;
+import cn.bnsr.edu_yun.frontstage.train.service.ClassifyRelationService;
+import cn.bnsr.edu_yun.frontstage.train.view.ClassifyRelationView;
+
+public class ClassifyRelationServiceImpl implements ClassifyRelationService {
+
+	@Autowired
+	private ClassifyRelationMapper classifyRelationMapper;
+
+	@Override
+	public void saveClassifyRelation(ClassifyRelation classify) {
+		classifyRelationMapper.insertSelective(classify);
+	}
+
+	@Override
+	public void updateClassifyRelation(ClassifyRelation classify) {
+		classifyRelationMapper.updateByPrimaryKeySelective(classify);
+	}
+
+	@Override
+	public List<ClassifyRelationView> queryAllClassify(ClassifyRelationView classify) {
+		List<ClassifyRelationView> classifyList = classifyRelationMapper.queryAllBaseClassify(classify);
+		for (ClassifyRelationView classif : classifyList) {
+			List<ClassifyRelation> sonClassifys = classifyRelationMapper.getSonClassifys(classif.getId());
+			if (sonClassifys != null) {
+				classif.setSonClassifys(sonClassifys);
+			}
+		}
+		return classifyList;
+	}
+
+	@Override
+	public ClassifyRelation selectOne(Long id) {
+		// TODO Auto-generated method stub
+		return classifyRelationMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void deleteClassify(Long id) {
+		classifyRelationMapper.deleteByPrimaryKey(id);
+		List<ClassifyRelation> classifys = classifyRelationMapper.getSonClassifys(id);
+		for(ClassifyRelation c:classifys){
+			if(c!=null){
+				classifyRelationMapper.deleteByPrimaryKey(c.getId());
+			}
+		}
+	}
+
+	@Override
+	public List<ClassifyRelation> queryCLassifysByPid(Long parentId,
+			Integer sourceType, Integer type) {
+		return classifyRelationMapper.queryCLassifysByPid(parentId,sourceType,type);
+	}
+
+	@Override
+	public List<ClassifyRelation> getSonClassifys(Long parent_id) {
+		// TODO Auto-generated method stub
+		return classifyRelationMapper.getSonClassifys(parent_id);
+	}
+
+	@Override
+	public int countClassifyRelation(ClassifyRelationView classify) {
+		// TODO Auto-generated method stub
+		return classifyRelationMapper.countBaseClassifyRelation(classify);
+	}
+
+	@Override
+	public Integer getMaxSeq(ClassifyRelationView classify) {
+		// TODO Auto-generated method stub
+		return classifyRelationMapper.getMaxSeq(classify);
+	}
+
+}

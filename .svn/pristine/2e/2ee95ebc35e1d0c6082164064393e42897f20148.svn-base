@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>申请教师认证</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link href="../../css/bootstrap/main.css" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <style>
+        .tutor_del{right:23px;color: red;float:right;z-index: 9999;position: relative;}
+        .certification_img{position: relative;z-index:1;}
+    </style>
+
+</head>
+<body class="homepage">
+
+<div id="content-container" class="container">
+
+    <div class="row ">
+
+        <div class="col-md-3">
+            <div class="sidenav locked">
+                <input type="hidden" id="stamp" value="0">
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_0">社区中心</li>
+                    <li class="list-group-item "><a href="#">我的社区</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/workshop/to_workshop_center.action?stamp=0&amp;state=1&amp;sign=0">我的工作坊</a></li>
+                </ul>
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_8">校本教研</li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/lesson/to_lesson.action?state=30">
+                            课例管理
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/lesson/to_my_lesson.action?state=31&amp;status=0">
+                            <span></span>我的课例
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- 教师 -->
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_1">教学中心</li>
+                    <li class="list-group-item  "><a href="/edu_yun/course/to_course.action?&amp;stamp=1&amp;state=12&amp;sign=1&amp;type=0&amp;status=-1">在教课程</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/train/to_train.action?&amp;stamp=1&amp;state=13&amp;sign=1&amp;type=0">培训管理</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/topic_question/query_question.action?&amp;stamp=1&amp;state=14"><span></span>学员问答</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/class/to_tutor_class.action?&amp;stamp=1&amp;state=15&amp;sourceType=0"><span></span>助教班级</a></li>
+                    <li class="list-group-item  "><a href="/edu_yun/cert_model/to_cert_model_manager.action?stamp=1&amp;state=29"><span></span>证书管理</a></li>
+                </ul>
+
+
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_3">我的学习</li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=22&amp;is_studyed=0&amp;source_type=0">
+                            <span></span>我的课程
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/user_study/to_user_study.action?stamp=2&amp;state=23&amp;is_studyed=0&amp;source_type=1">
+                            <span></span>我的培训
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/user_collect/to_user_collect.action?stamp=2&amp;state=20">
+                            <span></span>我的收藏
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/topic_question/user_question.action?stamp=2&amp;state=24">
+                            <span></span>我的问答
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="javascript:void(0);">
+                            <span></span>我的话题
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/course_note/to_my_notes.action?stamp=2&amp;state=26">
+                            <span></span>我的笔记
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/exam/to_my_exam.action?stamp=2&amp;state=27">
+                            <span></span>我的考试
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="/edu_yun/exam/to_my_homework.action?stamp=2&amp;state=28">
+                            <span></span>我的作业
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="javascript:void(0);">
+                            <span></span>我的小组
+                        </a>
+                    </li>
+                    <li class="list-group-item ">
+                        <a href="">
+                            <span></span>我的证书
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="javascript:void(0);">
+                            <span></span>我的资料库
+                        </a>
+                    </li>
+                </ul>
+
+
+                <ul class="list-group">
+                    <li class="list-group-heading" >关注中心</li>
+                    <li class="list-group-item  "><a href=""><span></span>我关注的人</a></li>
+                </ul>
+
+                <ul class="list-group">
+                    <li class="list-group-heading" id="stamp_7">设置</li>
+                    <li class="list-group-item  active"><a href=""><span></span>教师认证</a></li>
+                    <li class="list-group-item  "><a href=""><span></span>个人设置</a></li>
+                    <li class="list-group-item  "><a href=""><span></span>密码修改</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="col-md-9">
+
+            <div class="panel panel-default" >
+
+                <div class="panel-heading">
+                    申请教师认证
+                </div>
+
+                <div class="panel-body">
+
+                    <h3 class="col-md-4 col-md-offset-5 text-warning" style="margin-bottom: 30px;">请填写实名认证信息</h3>
+
+
+                    <form class="form-horizontal clearfix"  method="post"  style="clear: both;">
+
+                        <div class="form-group ">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>真实姓名</div>
+                            <div class="col-md-8 controls">
+                                <input type="text"  name="name"   value="" class="form-control" >
+                                <div class="text-warning" style="display: none;">请输入真实姓名</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group" >
+
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>省</div>
+                            <div class="col-md-1 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">北京</option>
+                                    <option  value="1">上海</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>市</div>
+                            <div class="col-md-1 controls" style="margin-left: -15px;">
+                                <select class="form-control width-input ">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">北京</option>
+                                    <option  value="1">上海</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>县</div>
+                            <div class="col-md-1 controls">
+                                <select  class="form-control width-input" style="margin-left: -15px;">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">北京</option>
+                                    <option  value="1">上海</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>类型</div>
+                            <div class="col-md-8 controls">
+
+                                <select class="form-control">
+                                    <option value="-1" selected="selected">--请选择--</option>
+                                    <option value="0">教师</option>
+                                    <option value="1">教研员</option>
+                                    <option value="other">其他</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>学校</div>
+                            <div class="col-md-8 controls">
+
+                                <select class="form-control">
+                                    <option value="-1" selected="selected">--请选择--</option>
+                                    <option value="0">学校01</option>
+                                    <option value="1">学校01</option>
+                                    <option value="other">其他</option>
+                                </select>
+                                <textarea class="form-control" name="" placeholder="请输入您的学校" style="margin-top: 10px;display: none;"></textarea>
+                                <span class="text-danger warnning" style="display: none;">学校不可为空</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>学段</div>
+                            <div class="col-md-1 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">学段01</option>
+                                    <option  value="1">学段02</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>科目</div>
+                            <div class="col-md-1 controls" style="margin-left: -15px;">
+                                <select class="form-control width-input ">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">科目01</option>
+                                    <option  value="1">科目02</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>年级</div>
+                            <div class="col-md-1 controls">
+                                <select  class="form-control width-input" style="margin-left: -15px;">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">年级01</option>
+                                    <option  value="1">年级02</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+
+                            <div class="col-md-2 control-label"> <span class="text-danger">*</span>职位</div>
+                            <div class="col-md-3 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">职位01</option>
+                                    <option  value="1">职位02</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 control-label col-md-offset-1" style="margin-left: 40px;"> <span class="text-danger">*</span>职称</div>
+                            <div class="col-md-3 controls">
+                                <select class="form-control width-input">
+                                    <option  value="-1">--请选择！--</option>
+                                    <option  value="0">职称01</option>
+                                    <option  value="1">职称02</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>教材版本</div>
+                            <div class="col-md-8 controls">
+
+                                <select class="form-control">
+                                    <option value="-1" selected="selected">--请选择--</option>
+                                    <option value="0">版本01</option>
+                                    <option value="1">版本02</option>
+                                    <option value="other">其他</option>
+
+                                </select>
+                                <textarea class="form-control" name="" placeholder="请输入您的教材版本" style="margin-top: 10px;display: none;"></textarea>
+                                <span class="text-danger warnning" style="display: none;">教材版本不可为空</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>身份证号</div>
+                            <div class="col-md-8 controls">
+                                <input type="text"   value="" class="form-control" placeholder="请输入身份证号">
+                                <div class="text-warning" style="display: none;">请输入身份证号</div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>性别</div>
+                            <div class="col-md-10 controls radios">
+                                <label><input type="radio" name="sex" value="serialize" checked> 男</label>
+                                <label><input type="radio" name="sex" value="finished"> 女</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>邮箱</div>
+                            <div class="col-md-8 controls">
+                                <input type="email"   value="" class="form-control" placeholder="请输入邮箱">
+                                <div class="text-warning" style="display: none;">请输入邮箱</div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2 control-label"><span class="text-danger">*</span>上传照片</div>
+                            <div class="col-md-3 controls">
+
+                                <a href="#certification_img_modal" class="certification_img" data-toggle="modal">
+
+                                    <img style="width:170px;height:90px;clear: both;" src="http://www.qiqiuyu.com//files/default/2016/04-05/1038582980d2485608.jpg">
+                                    <span class="tutor_del" >X</span>
+                                </a>
+
+                            </div>
+                            <div class="col-md-3 controls">
+
+                                <a href="#certification_img_modal" class="certification_img" data-toggle="modal">
+                                    <img style="width:170px;height:90px;clear: both;" src="http://img3.duitang.com/uploads/item/201503/19/20150319110837_RvzJ4.thumb.700_0.jpeg">
+                                    <span class="tutor_del" >X</span>
+                                </a>
+
+                            </div>
+                            <div class="col-md-3 controls">
+                                <a href="#certification_img_modal" class="certification_img" data-toggle="modal">
+
+                                    <img style="width:170px;height:90px;clear: both;" src="http://e.hiphotos.baidu.com/zhidao/wh%3D450%2C600/sign=e777264e044f78f0805e92f74c012663/bd3eb13533fa828bba8425f9fa1f4134970a5a00.jpg">
+                                    <span class="tutor_del" >X</span>
+                                </a>
+
+                            </div>
+
+                            <!--上传照片按钮-->
+
+                            <!--<div class="col-md-3 controls">-->
+                                <!--<button type="button" class="btn btn-info">上传照片</button>-->
+                            <!--</div>-->
+
+                            <div class="help-block col-md-offset-2" style="margin-top: 120px;">包括身份证正反照片各一张,以及一张个人证件照.</div>
+
+                        </div>
+
+                        <div class="form-group" style="margin-top: 100px;">
+                            <div class="col-md-offset-2 col-md-8 controls">
+                                <button class="btn btn-fat btn-primary"  type="submit">保存</button>
+                                <button class="btn btn-fat btn-warning col-md-offset-2"  type="submit">提交</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<!--上传认证照片预览-->
+<div id="certification_img_modal" class="modal in" aria-hidden="false" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><span class="text-muted">上传认证照片预览</span></h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+                    <img  src="http://www.qiqiuyu.com//files/default/2016/04-05/1038582980d2485608.jpg" style="width: 200%;">
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(function(){
+        $(".tutor_del").click(function () {
+            event.stopPropagation();
+            $(this).parent().parent().remove();
+        })
+    })
+</script>
+
+</body>
+</html>
+
+
+
+
+

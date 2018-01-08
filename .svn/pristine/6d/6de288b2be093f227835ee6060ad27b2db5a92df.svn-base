@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>个人中心-我的社区主页</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet"  href="../../../css/community.css"  type="text/css"/>
+
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</head>
+<body class="course-dashboard-page" >
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+
+        <div class="col-lg-9 col-md-8">
+
+            <section class="cn-section">
+
+                <div class="nav-btn-tab community_tabs">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="my-community-index.html">社区主页</a></li>
+                        <li ><a href="my-community-join.html" >我加入的社区</a></li>
+                        <li><a href="my-community-create-index.html" >我组建的社区</a></li>
+                        <li><a href="my-community-topic.html" >我发起的话题</a></li>
+                    </ul>
+                </div>
+
+                <!--我参加的小组-->
+                <div class="my-group">
+                    <h5 style="margin: 10px 0 20px 0;">我参加的小组:
+                        <a href="#">
+                            <span class="pull-right num num_num">7</span>
+                        </a>
+                    </h5>
+
+                    <div class="row">
+                        <div class="col-md-3 community_list">
+                            <div class="media" style="padding:5px 0;">
+                                <a class="pull-left" href="javascript:void(0);">
+                                    <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 80px;height: 80px;">
+                                </a>
+                                <div class="media-body">
+                                    <h5 class="media-heading">慕课第一组</h5>
+                                    <div class="student-num hidden-xs"><i class="es-icon es-icon-people text-muted">48</i></div>
+                                    <div><i class="es-icon es-icon-textsms text-muted">19</i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 community_list">
+                            <div class="media" style="padding:5px 0;">
+                                <a class="pull-left" href="javascript:void(0);">
+                                    <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 80px;height: 80px;">
+                                </a>
+                                <div class="media-body">
+                                    <h5 class="media-heading">慕课第一组</h5>
+                                    <div class="student-num hidden-xs"><i class="es-icon es-icon-people text-muted"></i>20</div>
+                                    <div><i class="es-icon es-icon-textsms text-muted">23</i></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3 community_list">
+                            <div class="media" style="padding:5px 0;">
+                                <a class="pull-left" href="javascript:void(0);">
+                                    <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width: 80px;height: 80px;">
+                                </a>
+                                <div class="media-body">
+                                    <h5 class="media-heading">慕课第一组</h5>
+                                    <div class="student-num hidden-xs">
+                                        <i class="es-icon es-icon-people text-muted"></i>71</div>
+                                    <div><i class="es-icon es-icon-textsms text-muted"></i>10</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a class="pull-right more_data">更多 ></a>
+
+                    <br/>
+                    <br/>
+                    <hr/>
+
+                </div>
+
+                <!--我的通知-->
+                <div class="my-note">
+                    <h5 style="margin: 10px 0 20px 0;">
+                      我的通知:
+                    </h5>
+
+                    <ul class="course-wide-list">
+
+                        <li class="course-item clearfix">
+
+                            <div style="padding-left: 30px;">
+                                <br/>
+                                <a href="#" target="_blank" style="margin-top: 5px;">2017-04-20</a>
+                                <div style="margin:10px 0;">
+                                    李老师给你发了一条消息
+                                    <img src="../../../images/no_read.png" class="pull-right" style="padding-right: 20px;">
+                                   </div>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!--课例-->
+                <div class="my-lesson">
+                    <h5 style="margin: 10px 0 20px 0;">
+                        <img src="../../../images/per-lesson.png" style="padding-right: 10px;">课例:
+                        <a href="#" >
+                            <span class="pull-right num num_num">27</span>
+                        </a>
+                    </h5>
+                    <h5 >已完成
+                        <span class="text-danger" style="padding: 0 3px;">10</span>门课例,正在研究
+                        <span class="text-danger" style="padding: 0 3px;">10</span>门课例
+                    </h5>
+                    <div class="row" >
+
+                        <div class="col-lg-3 col-md-4 col-xs-6" >
+                            <div class="course-item" >
+                                <div class="course-img">
+                                    <a href="#" target="_blank">
+                                        <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width:190px;height: 100px;">
+                                    </a>
+                                </div>
+
+                                <div class="course-info">
+                                    <div class="title">
+                                        <div class="lesson_info">
+                                            <a class="lesson_grade" href="#">一元二次方程</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="progress" style="width:170px;margin-left: 10px;margin-top: 10px;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:8.333%">8%</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="course-item">
+                                <div class="course-img">
+                                    <a href="#" target="_blank">
+                                        <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width:190px;height: 100px;">
+                                    </a>
+                                </div>
+
+                                <div class="course-info">
+                                    <div class="title">
+                                        <div class="lesson_info">
+                                            <a class="lesson_grade" href="#">一元二次方程</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="progress" style="width:170px;margin-left: 10px;margin-top: 10px;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:8.333%">8%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a class="pull-right more_data">更多 ></a>
+
+                    <br/>
+                    <br/>
+                    <hr/>
+                </div>
+
+                <!--课程-->
+                <div class="my-course">
+                    <h5 style="margin: 10px 0 20px 0;">
+                        <img src="../../../images/per-course.png" style="padding-right: 10px;">课程:
+                        <a href="#">
+                            <span class="pull-right num num_num">27</span>
+                        </a>
+                    </h5>
+                    <h5 >已完成
+                        <span class="text-danger" style="padding: 0 3px;">10</span>门课程,正在研究
+                        <span class="text-danger" style="padding: 0 3px;">10</span>门课程
+                    </h5>
+                    <div class="row" >
+
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="course-item">
+                                <div class="course-img">
+                                    <a href="#" target="_blank">
+                                        <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width:190px;height: 100px;">
+                                    </a>
+                                </div>
+
+                                <div class="course-info">
+                                    <div class="title">
+                                        <div class="lesson_info">
+                                            <a class="lesson_grade" href="#">林教头风雪山神庙</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="progress" style="width:170px;margin-left: 10px;margin-top: 10px;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:8.333%">8%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="course-item">
+                                <div class="course-img">
+                                    <a href="#" target="_blank">
+                                        <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width:190px;height: 100px;">
+                                    </a>
+                                </div>
+
+                                <div class="course-info">
+                                    <div class="title">
+                                        <div class="lesson_info">
+                                            <a class="lesson_grade" href="#">一元二次方程</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="progress" style="width:170px;margin-left: 10px;margin-top: 10px;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:8.333%">8%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a class="pull-right more_data">更多 ></a>
+
+                    <br/>
+                    <br/>
+                    <hr/>
+                </div>
+
+                <!--培训-->
+                <div class="my-course">
+                    <h5 style="margin: 10px 0 20px 0;">
+                        <img src="../../../images/per-train.png" style="padding-right: 10px;">培训
+                        <a href="#">
+                            <span class="pull-right num num_num">27</span>
+                        </a>
+                    </h5>
+                    <h5 >已完成
+                        <span class="text-danger" style="padding: 0 3px;">10</span>门培训,正在研究
+                        <span class="text-danger" style="padding: 0 3px;">10</span>门培训
+                    </h5>
+                    <div class="row" >
+
+                        <div class="col-lg-3 col-md-4 col-xs-6">
+                            <div class="course-item">
+                                <div class="course-img">
+                                    <a href="#" target="_blank">
+                                        <img class="media-object" src="http://edusoho-demo.b0.upaiyun.com/files/default/2015/06-10/155158e4340f775236.jpg" style="width:190px;height: 100px;">
+                                    </a>
+                                </div>
+
+                                <div class="course-info">
+                                    <div class="title">
+                                        <div class="lesson_info">
+                                            <a class="lesson_grade" href="#">林教头风雪山神庙</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div style="padding: 5px;">总学时:
+                                    <span class="text-danger" style="padding: 0 3px;">10</span>学时
+                                    <span class="student-num hidden-xs pull-right" >
+                                        <i class="es-icon es-icon-people text-muted"></i>70
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <a class="pull-right more_data">更多 ></a>
+
+                    <br/>
+                    <br/>
+                    <hr/>
+                </div>
+
+                <!--作业-->
+                <div class="my-homework">
+                    <h5 style="margin: 10px 0 20px 0;">
+                        <img src="../../../images/per-homework.png" style="padding-right: 10px;">作业:
+                        <a href="#">
+                            <span class="pull-right num num_num">27</span>
+                        </a>
+                    </h5>
+                    <div style="padding-left:30px;line-height: 25px;">
+                        您需要完成<span>10</span>份作业,你已经完成<span>6</span>份
+                    </div>
+                    <div  style="padding-left: 15px;">
+
+                        <div class="homework_page">
+
+                            <div class="homework_list">
+                                <a href="javascript:void(0);" class="homework_name">作业1:背诵课文
+                                    <span class="text-danger">(未完成)</span>
+                                    <span class="pull-right">进入作业 &gt;&gt;</span>
+                                </a>
+                            </div>
+
+                            <div class="homework_list">
+                                <a href="javascript:void(0);" class="homework_name">作业2:默写生字词
+                                    <span class="text-danger">(未完成)</span>
+                                    <span class="pull-right">进入作业 &gt;&gt;</span>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <a class="pull-right more_data">更多 ></a>
+
+                    <br/>
+                    <br/>
+                    <hr/>
+                </div>
+
+                <!--研讨-->
+                <div class="my-discuss">
+                    <h5 style="margin: 10px 0 20px 0;">
+                        <img src="../../../images/per-discuss.png" style="padding-right: 10px;">研讨:
+                        <a href="#">
+                            <span class="pull-right num num_num">34</span>
+                        </a>
+                    </h5>
+                    <div style="padding-left:30px;line-height: 25px;">
+                        您需要完成<span>16</span>次研讨,你已经完成<span>5</span>次
+                    </div>
+                    <div  style="padding-left: 15px;">
+
+                        <div class="homework_page">
+
+                            <div class="homework_list">
+                                <a href="javascript:void(0);" class="homework_name">研讨1:说说班级里的"奇葩学生"
+                                    <span class="text-info">(已完成)</span>
+                                    <!--<span class="pull-right">进入研讨 &gt;&gt;</span>-->
+                                </a>
+                            </div>
+
+                            <div class="homework_list">
+                                <a href="javascript:void(0);" class="homework_name">研讨1:我常用的与学生交流方式
+                                    <span class="text-danger">(未完成)</span>
+                                    <span class="pull-right">进入研讨 &gt;&gt;</span>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <a class="pull-right more_data">更多 ></a>
+
+                    <br/>
+                    <br/>
+                    <hr/>
+                </div>
+
+                <!--考试-->
+                <div class="my-discuss">
+                    <h5 style="margin: 10px 0 20px 0;">
+                        <img src="../../../images/per-test.png" style="padding-right: 10px;">考试:
+                        <a href="#">
+                            <span class="pull-right num num_num">15</span>
+                        </a>
+                    </h5>
+                    <div style="padding-left:30px;line-height: 25px;">
+                        您需要完成<span>16</span>次考试,你已经完成<span>5</span>次
+                    </div>
+                    <div  style="padding-left: 15px;">
+
+                        <div class="homework_page">
+
+                            <div class="homework_list">
+                                <a href="javascript:void(0);" class="homework_name">考试1:二次函数单元考试
+                                    <span class="text-info">(已完成)</span>
+                                    <!--完成状态不需要进入入口-->
+                                    <!--<span class="pull-right">进入考试 &gt;&gt;</span>-->
+                                </a>
+                            </div>
+
+                            <div class="homework_list">
+                                <a href="javascript:void(0);" class="homework_name">考试2:写一篇800字《水浒传》读后感
+
+                                    <span class="text-danger">(未完成)</span>
+                                    <span class="pull-right">进入考试 &gt;&gt;</span>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <a class="pull-right more_data">更多 ></a>
+
+                    <br/>
+                    <br/>
+                    <hr/>
+                </div>
+
+            </section>
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+</div>
+
+
+</body>
+</html>

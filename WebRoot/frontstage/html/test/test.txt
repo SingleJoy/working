@@ -1,0 +1,9 @@
+{
+    "name":"test",
+    "num":3,
+    "sites": [
+        { "name":"Google", "info":[ "A1", "A2", "A3" ] },
+        { "name":"Runoob", "info":[ "B1", "B2", "B3" ] },
+        { "name":"Taobao", "info":[ "C1", "C2","C3 ] }
+    ]
+}

@@ -1,0 +1,136 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+public class MessageView extends PageBase {
+
+	private Long id;
+	private String ids;
+	private String title;
+	private String content;
+	private Integer type;//类型：0-新闻动态；1-政策文件；2-通知文件；3-使用帮助；4-简报 5-班级公告
+	private Integer status;//状态：0-草稿；1-发布；2-关闭
+	private Integer is_read;//是否已读：0-是；1-否
+	private String release_time;//发布时间
+	private Long user_id;
+	private String username;
+	private String create_time;
+	private String path;
+	private Integer source_type;// 0-社区 1-工作坊 2-课程班级3-培训班级	
+	private Long source_id;
+	private Long message_relation_id;
+	private Long message_file_id;
+	private String file_path;
+	private String file_name;//附件名称
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public Integer getIs_read() {
+		return is_read;
+	}
+	public void setIs_read(Integer is_read) {
+		this.is_read = is_read;
+	}
+	public String getRelease_time() {
+		return release_time;
+	}
+	public void setRelease_time(String release_time) {
+		this.release_time = release_time;
+	}
+	public Long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public Integer getSource_type() {
+		return source_type;
+	}
+	public void setSource_type(Integer source_type) {
+		this.source_type = source_type;
+	}
+	public Long getSource_id() {
+		return source_id;
+	}
+	public void setSource_id(Long source_id) {
+		this.source_id = source_id;
+	}
+	public Long getMessage_relation_id() {
+		return message_relation_id;
+	}
+	public void setMessage_relation_id(Long message_relation_id) {
+		this.message_relation_id = message_relation_id;
+	}
+	public Long getMessage_file_id() {
+		return message_file_id;
+	}
+	public void setMessage_file_id(Long message_file_id) {
+		this.message_file_id = message_file_id;
+	}
+	public String getFile_path() {
+		return file_path;
+	}
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+	
+	
+}

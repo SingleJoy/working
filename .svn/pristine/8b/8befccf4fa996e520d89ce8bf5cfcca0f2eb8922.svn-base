@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://13661239841.test.edusoho.com.cn/course/33/manage/question -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>批阅试卷</title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidenav">
+                    <ul class="list-group">
+                        <li class="list-group-item ">
+                        <a target="_blank" href="./class_manage.html">管理首页</a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级管理</li>
+                        <li class="list-group-item ">
+                        <a target="_blank" href="./class_student_manage.html">学员管理</a>
+                        </li>
+                        <li class="list-group-item active">
+                        <a target="_blank" href="./class_mark.html">试卷批阅</a>
+                        </li>
+                        <li class="list-group-item ">
+                        <a target="_blank" href="./class_task.html">作业批改</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-col">
+                    <div class="panel-heading">
+                        试卷批阅
+                    </div>
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs">
+                            <li class="" value="1"><a href="">未批阅</a></li>
+                            <li class="active" value="2"><a href="">已批阅</a></li>
+                            <!-- 未批阅 -->
+                            <!-- <li class="highlight" style="left: 0px; width: 108px; overflow: hidden;"></li> -->
+                            <!-- 已批阅 -->
+                            <li value="3" class="highlight" style="left: 108px; width: 108px; overflow: hidden;"></li>
+                        </ul>
+                        <br>
+                        <!-- 未批阅 -->
+                        <table class="table table-striped table-hover" style="display:none;">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="" target="_blank">666</a>
+                                        <br>
+                                        <small class="text-muted">来自课程《ceshi》</small>
+                                        <small class="text-muted mhs">•</small>
+                                        <small class="text-muted">共12.0分 / 6道题  </small>
+                                    </td>
+                                    <td>
+                                        <a class="link-dark " href="/user/15">ceshi001</a>
+                                        <br>
+                                        <small class="text-muted">2016年12月08日 16:26 交卷</small>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn-default btn-sm pull-right" target="_blank">批阅</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- 已批阅 -->
+                        <table class="table table-striped table-hover" style="">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="" target="_blank">44</a>
+                                    <br>
+                                    <small class="text-muted">来自课程《ceshi》</small>
+                                    <small class="text-muted mhs">•</small>
+                                    <small class="text-muted">共4.0分 / 2道题   </small>
+                                </td>
+                                <td>
+                                    <a class="link-dark " href="/user/15">ceshi001</a>
+                                    <br>
+                                    <small class="text-muted">2016年12月08日 16:25 交卷</small>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div class="text-warning">总分 <strong>0.0</strong> 分</div>
+                                        <div class="text-muted"><small>客观题0.0分 / 主观题0.0分</small></div>
+                                        <div class="text-success"><small>系统 批于2016年12月08日 16:25</small></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="/test/1/result?source=course&amp;targetId=0" target="_blank">666</a>
+                                    <br>
+                                    <small class="text-muted">来自课程《ceshi》</small>
+                                    <small class="text-muted mhs">•</small>
+                                    <small class="text-muted">共12.0分 / 6道题  </small>
+                                </td>
+                                <td>
+                                    <a class="link-dark " href="/user/14">体验管理员1</a>
+                                    <br>
+                                    <small class="text-muted">2016年11月24日 10:16 交卷</small>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div class="text-warning">总分 <strong>5.0</strong> 分</div>
+                                        <div class="text-muted"><small>客观题4.0分 / 主观题1.0分</small></div>
+                                        <div class="text-success"><small>体验管理员1 批于2016年11月24日 10:18</small></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(e){
+    var sum = $('.panel-body .nav-tabs>.active').attr('value');
+    $('.panel-body .nav-tabs>li').mouseover(function(){
+        var num = $(this).attr('value');
+        if (num == 1) {
+            $('.highlight').remove();
+            $('.panel-body .nav-tabs').append('<li class="highlight" style="left: 0px; width: 108px; overflow: hidden;"></li>');
+            $(this).addClass('active');
+        }else if (num == 2) {
+            $('.highlight').remove();
+            $('.panel-body .nav-tabs').append('<li class="highlight" style="left: 108px; width: 108px; overflow: hidden;"></li>');
+            $(this).addClass('active');
+        }
+    }).mouseout(function(){
+        $('.panel-body .nav-tabs>li').removeClass('active');
+        $('.panel-body .nav-tabs>li').each(function(i,ck){
+            var sn = $(ck).attr('value');
+            if (sn == sum ) {
+                $('.highlight').remove();
+                if (sn == 1) {
+                    $('.panel-body .nav-tabs').append('<li class="highlight" style="left: 0px; width: 108px; overflow: hidden;"></li>');
+                }else if (sn == 2) {
+                    $('.panel-body .nav-tabs').append('<li class="highlight" style="left: 108px; width: 108px; overflow: hidden;"></li>');
+                }
+                $(ck).addClass('active');
+            }
+        })
+    })
+})
+</script>
+
+</body>
+</html>

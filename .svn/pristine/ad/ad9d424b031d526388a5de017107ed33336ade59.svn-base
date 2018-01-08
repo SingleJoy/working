@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>老师主页</title>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.12" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.12">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.12" rel="stylesheet">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.12" rel="stylesheet">
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+            $(".js-search").focus(function(){
+                $(this).css("width","150px");
+            }).blur(function(){
+                $(this).css("width","100px");
+            });
+        });
+
+        $(function(){
+            $(".hover_show").mouseover(function(){
+                $(this).siblings("ul").show();
+            }).mouseout(function(){
+                $(this).siblings("ul").hide();
+            });
+            $(".dropdown-menu").mouseover(function(){
+                $(this).show();
+            }).mouseout(function(){
+                $(this).hide();
+            })
+
+        });
+
+        //全部课程切换
+        $(function(){
+            $(".nav-btn-tab>ul>li").click(function(){
+                $(".nav-btn-tab>ul>li").removeClass("active");
+                $(this).addClass("active");
+                var index=$(this).index();
+                $(".teachers-course-tabs").hide().eq(index).show();
+            });
+        });
+
+    </script>
+    <style>
+
+        .teacher_info_text>span{font-size: 18px;padding-right: 40px;}
+        .nav-btn-tab>ul>li.active{border-bottom: 2px solid #46c37b}
+        .topic_reply_time{margin-left: 62px;}
+        .full-content{padding: 10px;}
+        .topic_list_page{margin-bottom: 30px;padding-left: 20px;}
+        .teachers-course-tabs{margin-top: -30px;}
+    </style>
+
+
+
+</head>
+<body >
+
+<div class="es-wrap " >
+    <header class="es-header navbar">
+
+        <div class="navbar-header">
+            <a href="" class="navbar-brand">
+                <img src="/edu_yun/frontstage/images/qiuzi_index.png">
+            </a>
+        </div>
+        <nav class="collapse navbar-collapse">
+
+            <ul class="nav navbar-nav clearfix hidden-xs " id="nav">
+
+                <li class="nav-hover"><a href="/edu_yun">首页 </a></li>
+
+                <li><a href="" target="_blank">个人中心</a></li>
+
+                <li><a href="" target="_blank">课程中心</a></li>
+                <li><a href="" target="_blank">培训中心</a></li>
+
+                <li class=""><a href="" target="_blank">课程列表 </a></li>
+
+                <li><a href="" target="_blank">教研主页</a></li>
+
+            </ul>
+
+            <div class="navbar-user ">
+
+                <ul class="nav user-nav">
+                    <li class="user-avatar-li nav-hover">
+                        <a href="javascript:void (0);" class="dropdown-toggle" id="my_pic">
+                            <img class="avatar-xs" src="">
+                        </a>
+                        <ul class="dropdown-menu" role="menu" id="header_mine">
+                            <li role="presentation" class="dropdown-header">ceshi</li>
+                            <li><a href="" target="_blank"><i class="es-icon es-icon-person"></i>个人主页</a></li>
+                            <li><a href="" target="_blank"><i class="es-icon es-icon-setting"></i>私信</a></li>
+                            <li class="hidden-lg">
+                                <a href="">
+                                    <span class="pull-right num">20</span>
+                                    <i class="es-icon es-icon-notificationson"></i>
+                                    通知
+                                </a>
+                            </li>
+                            <li class="hidden-lg">
+                                <a href="">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-mail"></i>私信
+                                </a>
+                            </li>
+                            <li><a href="" class="sign_out" onclick="return false">
+                                <i class="es-icon es-icon-power"></i>退出登录</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="visible-lg nav-hover">
+
+                        <a href="javascript:return false;" id="header_icon_mail">
+                            <span class="dot" style="position: absolute;margin-left: 15px;"></span>
+                            <i class="es-icon es-icon-mail"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" id="header_notes">
+                            <li>
+                                <a href="">
+                                    <span class="pull-right num">20</span>
+                                    <i class="es-icon es-icon-notificationson"></i>通知
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="pull-right num"></span>
+                                    <i class="es-icon es-icon-mail"></i>私信
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                </ul>
+                <form class="navbar-form navbar-right hidden-xs hidden-sm" action="" method="get">
+                    <div class="form-group">
+                        <input class="form-control js-search" name="str" placeholder="搜索">
+                        <button class="button es-icon es-icon-search"></button>
+                    </div>
+                </form>
+
+            </div>
+
+
+        </nav>
+    </header>
+
+    <!--全部-->
+    <section class="course-list-section " style="background-color: #f4f7fc;">
+
+        <div class="container">
+
+            <div class="course_page" >
+
+                <div class="media" style="margin-top: 50px;">
+                    <a class="pull-left" href="javascript:void(0);">
+                        <img class="media-object img-circle" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1495529431360&di=33c5e2ebf2fdac78d95269c8a6c13635&imgtype=0&src=http%3A%2F%2Fimg1.qq.com%2Fsports%2Fpics%2F5250%2F5250150.jpg" alt="..." style="width: 200px;height: 200px;">
+                    </a>
+                    <div class="media-body" style="padding-left: 10px;">
+
+                        <h3 class="media-heading">老师名字
+                            <span class="pull-right" style="font-size: 14px;padding-right:40px;" >
+                                <span class="es-share top">
+	                               <a class="dropdown-toggle link-dark" href="javascript:void(0);" id="share" data-toggle="dropdown">
+                                       <p><i class="es-icon es-icon-share"></i></p>
+                                       <p>分享</p>
+                                   </a>
+	                           </span>
+                            </span>
+                        </h3>
+                        <h4 style="margin-top:30px;" class="teacher_info_text">
+                            <span>课程:87</span>
+                            <span>收藏:87</span>
+                            <span>学员:87</span>
+                            <br/><br/><br/>
+                            <span>擅长:初高中英语语法 中高考作文解析</span>
+                        </h4>
+                        <h4 class="teacher_intro text-muted" style="margin-right: 50px;">
+                            胡红炼：中共党员，本科学历，小学高级教师。长沙市小学语文优秀教师。1995年参加湖南省小学语文教学比武，
+                            荣获一等奖的第一名，同年10月代表湖南省参加全国语文教学比武再获二等奖 。2005年——2007年多次代表学校担任省级，
+                            国家级观摩课的执教任务，并获得各级领导及专家们的一致好评。2006年10月，作为语文学科带头人被学校派往昆明进行
+                            课题骨干培训，使自己的专业水平得以提升。撰写的经验论文多次获国家、省、市级一、二等奖。2001年编写了
+                            《轻轻松松学作文》系列丛书，2003年参与编写《教学兵法》一书。2008年担任《金典》多册练习册主编。
+                            所带班级班风正，学风浓，2007年被评为长沙市“红旗中队”。辅导学生习作参加各级各类比赛多次获特等奖及一、二等奖。
+                        </h4>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="container" style="margin-top: 30px;">
+
+        <div class="panel panel-default panel-col" style="border: none;">
+
+            <div class="panel-heading" style="border: none;">
+                <a class="btn btn-default btn-lg pull-right" href="teacher-index.html">返回</a>
+            </div>
+            <br/>
+            <br/>
+
+
+            <div class="panel-body">
+
+                <div class="course-list clearfix">
+
+                    <!-- 老师的研讨 -->
+                    <div class="row teachers-course-tabs" >
+
+                        <div class="topic_list_page">
+                            <div style="font-size: 20px;">
+                                <a href="teacher-topic-detail.html">如何评价水浒中林冲主人公的性格特征?</a>
+                            </div>
+                            <div style="font-size: 14px;margin: 20px;">发起时间:2017年11月20日</div>
+                            <div style="margin-left: 20px;">
+
+                                <div class="js-reviews">
+                                    <div class="media media-evaluate">
+
+                                        <div class="media-body thread-post">
+
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人甲:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人乙:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+
+                                            <div class="content topic_content">
+                                                <div class="full-content" >
+                                                    <span class="text-danger">路人丙:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+                                                </div>
+                                                <div  class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人丁:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人戊:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人己:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人庚:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人辛:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人壬:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+                                            <div class="content topic_content">
+                                                <div class="full-content">
+                                                    <span class="text-danger">路人癸:&nbsp;&nbsp;</span>
+                                                    林冲妻子张氏（又称林娘子）去东岳庙上香时，碰到太尉高俅的义子高衙内.
+
+                                                </div>
+                                                <div class="topic_reply_time">回复时间:&nbsp;&nbsp;2017-02-25</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

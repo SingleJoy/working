@@ -1,0 +1,38 @@
+package cn.bnsr.edu_yun.backstage.base.controller;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.backstage.base.service.BackUserService;
+import cn.bnsr.edu_yun.backstage.base.view.UserTrackView;
+
+@Controller
+@RequestMapping("/back_user_track")
+public class UserTrackController  extends BaseController{
+	
+	private final Logger log = LoggerFactory.getLogger(UserTrackController.class);
+	@Autowired
+	private BackUserService backUserService;
+	
+	/**
+	 * 获得datagrid
+	 * @throws Exception 
+	 */
+	@RequestMapping("/datagrid")
+	public void datagrid(HttpServletResponse response,UserTrackView userTrackview) throws Exception {
+		super.writeJson(backUserService.datagridTrack(userTrackview),response);
+	}
+	/**
+	 *跳转评价项管理页面
+	 */
+	@RequestMapping("/to_user_track")
+	public ModelAndView toUserTrack(){
+		return new ModelAndView("backstage/base/userTrack/userTrack");
+	}
+}

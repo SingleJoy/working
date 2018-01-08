@@ -1,0 +1,448 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://"
+            + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
+<head>
+
+    <link href="${pageContext.request.contextPath}/frontstage/css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/frontstage/css/bootstrap/font-awesome.min.css" />
+    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/frontstage/css/bootstrap/es-icon.css" />
+
+    <link href="${pageContext.request.contextPath}/frontstage/css/bootstrap/main.css" rel="stylesheet" />
+    <style>
+        ul.period-list>li.chapter i,ul.period-list>li.chapter span{font-size: 30pt;}
+    </style>
+
+
+</head>
+<body class="lesson-dashboard-page" >
+
+<div class="cn-wrap" style="overflow-y: scroll;">
+
+    <div class="lesson-dashboard " id="lesson-dashboard" style="width: 100%;right: 0;position: relative;" >
+
+        <div class="dashboard-content" style="left: 5px;right: 5px;position: relative;">
+            <br/>
+
+            <div class="dashboard-header" style="left: 0;padding-top: 20pt;bottom: 20pt;">
+                <div class="pull-left title-group" style="font-size: 30pt;">
+                     <span class="chapter-label" style="font-size: 30pt;">
+                          第<span data-role="chapter-number">1</span>章
+                     </span>
+                    <span class="divider">»</span>
+                    <span class="item-label" style="font-size:30pt;">课时
+                        <span>:</span></span>
+                    <span class="item-title" style="font-size: 30pt;">第一章第一小节</span>
+                </div>
+            </div>
+
+            <!--视频播放-->
+            <div class="dashboard-body" style="position: relative;bottom:0;padding-top: 10pt;right: 0;left:0;">
+
+                <div class="lesson-content lesson-content-audio" id="lesson-audio-content"  style="top: 0;background-color: #000;height: auto;">
+                    <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" style="width:100%;"
+                           poster="http://video-js.zencoder.com/oceans-clip.png" onended="end()" onplaying="playing()" onpause="pause1()" autoplay oncontextmenu="return false">
+                        <source id="video_source" src="${file_server_path }${courseFile.path }" type='video/mp4' />
+
+                    </video>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <!--目录-->
+        <div class="lesson-pane panel_index" style="position: relative;clear: both;margin-top: 50px;" id="lesson-pane">
+
+            <div class="course-item-list-in-toolbar-pane ps-container" style=";position: relative;">
+
+
+                <ul class="period-list" id="course-item-list">
+
+                    <%--<li class="chapter clearfix" id="list813" >--%>
+                    <%--<i class="es-icon es-icon-toc" style="padding: 0 10pt;"></i>--%>
+                    <%--<span class="title" title="第一章">--%>
+                    <%--&nbsp;&nbsp;&nbsp;&nbsp;第1章：第一章--%>
+                    <%--</span>--%>
+
+                    <%--<span class="period-show" >--%>
+                    <%--<i class="es-icon es-icon-remove" ></i>--%>
+                    <%--</span>--%>
+                    <%--</li>--%>
+
+                    <c:forEach items="${chapterList}" var="chapter" varStatus="status1">
+
+                        <li class="chapter clearfix" id="list${chapter.id}">
+                            <i class="es-icon es-icon-toc" ></i>
+                            <span class="title" title="${chapter.hour_title}" >
+                                   第${chapter.hour_seq}章：${chapter.hour_title}
+                            </span>
+                            <span class="period-show">
+                                <i class="es-icon es-icon-remove" ></i>
+                            </span>
+                        </li>
+
+                        <c:forEach items="${hourList}" var="hour" varStatus="status">
+
+                            <c:if test="${chapter.id==hour.parent_id}">
+
+                                <li class="period lesson-item <c:if test="${courseHour.id==hour.id}">project</c:if>"
+                                    id="hour${status.index+1}list${chapter.id}">
+                                    <a<c:if test="${hour.attribute_type==0||hour.attribute_type==2||hour.attribute_type==4||hour.attribute_type==5||hour.attribute_type==3}">
+                                        <c:choose>
+                                            <c:when test="${empty trainType&&(isTeacher==1&&isPreview==1) }">
+                                                href="${pageContext.request.contextPath}/course_study/to_study_preview.action?id=${hour.id }&source_type=${classType}&learn_id=${learnId}"
+                                            </c:when>
+                                            <c:when test="${empty trainType&&isPreview!=1 }">
+                                                href="${pageContext.request.contextPath}/course_study/to_study.action?id=${hour.id }&source_id=${courseHourStudent.class_id}&source_type=${classType}&learn_id=${courseHourStudent.course_id}&user_study_id=${user_study_id}"
+                                            </c:when>
+                                            <c:otherwise>
+                                                href="${pageContext.request.contextPath}/course_study/to_study.action?id=${hour.id }&source_id=${courseHourStudent.class_id}&source_type=${classType}&learn_id=${courseHourStudent.course_id}&user_study_id=${user_study_id}&is_direct=1&trainType=${trainType }"
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if> title="${hour.hour_title}">
+
+                                        <c:if test="${hour.is_studyed==0 }"><i class="es-icon es-icon-undone color-primary status-icon"></i></c:if>
+                                        <c:if test="${hour.is_studyed==2 }"><i class="es-icon es-icon-doing color-primary status-icon"></i></c:if>
+                                        <c:if test="${hour.is_studyed==1 }"><i class="es-icon es-icon-done1 color-primary status-icon"></i></c:if>
+
+                                        <c:if test="${hour.attribute_type==2}"><span class="title">${hour.hour_seq}&nbsp;&nbsp;课时：${hour.hour_title}</span>
+
+                                            <span class="course-type">
+                                                <i class="es-icon es-icon-videoclass" data-toggle="tooltip" title="视频课程"></i>
+                                            </span>
+
+                                        </c:if>
+                                        <c:if test="${hour.attribute_type==0}">
+                                            <span class="title">${hour.hour_seq}&nbsp;&nbsp;试卷：${hour.hour_title}</span>
+                                            <span class="course-type">
+                                            <i class="es-icon es-icon-check" data-toggle="tooltip" title="试卷"></i>
+                                        </span>
+
+                                        </c:if>
+                                        <c:if test="${hour.attribute_type==3}">
+                                            <span class="title">${hour.hour_seq}&nbsp;&nbsp;讨论：${hour.hour_title}</span>
+                                            <span class="course-type">
+                                            <i class="es-icon es-icon-graphicclass" data-toggle="tooltip" title="讨论"></i>
+                                        </span>
+                                        </c:if>
+                                        <c:if test="${hour.attribute_type==4}">
+                                            <span class="title">${hour.hour_seq}&nbsp;&nbsp;作业：${hour.hour_title}</span>
+                                            <span class="course-type">
+                                                <i class="es-icon es-icon-check" data-toggle="tooltip" title="作业"></i>
+                                            </span>
+                                        </c:if>
+
+                                        <c:if test="${hour.attribute_type==5}">
+                                            <span class="title">${hour.hour_seq}&nbsp;&nbsp;直播课时：${hour.hour_title}</span>
+                                            <span class="course-type">
+                                                <i class="es-icon es-icon-videocam" data-toggle="tooltip" title="直播课时"></i>
+                                            </span>
+                                        </c:if>
+
+                                    </a>
+                                </li>
+
+                            </c:if>
+                        </c:forEach>
+
+                    </c:forEach>
+
+
+                </ul>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    //    启动全屏
+    launchFullScreen(document.documentElement);
+
+   //    全屏播放
+    var videoF = (function() {
+        var tmpV = {};
+        var video_playing;
+        /**
+         * @description 切换内容列时暂停当前播放的视频
+         */
+        function pausedVBeforeChangeLi() {
+            if (video_playing && !video_playing.ended && !video_playing.paused) {
+                video_playing.pause();
+            }
+        };
+        tmpV.pausedVBeforeChangeLi= pausedVBeforeChangeLi;
+        /**
+         * @description 播放全屏 很诡异，这个方法居然不可用
+         * @param {Object} element
+         */
+        function launchFullScreen(element) {
+            if (element.requestFullScreen) {
+                element.requestFullScreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullScreen) {
+                element.webkitRequestFullScreen();
+            }
+        };
+        /**
+         * @description 取消全屏 这个方法也是不可用
+         * @param {Object} elem
+         */
+        function cancelFullScrren(elem) {
+            elem = elem || document;
+            if (elem.cancelFullScrren) {
+                elem.cancelFullScrren();
+            } else if (elem.mozCancelFullScreen) {
+                elem.mozCancelFullScreen();
+            } else if (elem.webkitCancelFullScreen) {
+                console.log("webkitCancelFullScreen");
+                elem.webkitCancelFullScreen();
+            }
+        };
+        /**
+         * @return 返回支持的全屏函数 从网上找到了这段代码，具体网址忘记了，返回支持的全屏方法，在Safari上可用
+         * @param {Object} elem
+         */
+        function fullscreen(elem) {
+            var prefix = 'webkit';
+            if (elem[prefix + 'EnterFullScreen']) {
+                return prefix + 'EnterFullScreen';
+            } else if (elem[prefix + 'RequestFullScreen']) {
+                return prefix + 'RequestFullScreen';
+            };
+            return false;
+        };
+        /**
+         * @description video相关事件的绑定
+         * @param {Object} v
+         */
+        function videoEvent(v) {
+            var video = v,
+                doc = document;
+            video.addEventListener('play', function() {
+                //每次只能播放一个视频对象
+                if (video_playing && video_playing !== this) {
+                    console.log('multi')
+                    pausedVBeforeChangeLi();
+                }
+                video_playing = this;
+                console.log('play');
+                var fullscreenvideo = fullscreen(video);
+                video[fullscreenvideo]();
+            });
+            video.addEventListener('click', function() {
+                //点击时如果在播放，自动全屏；否则全屏并播放
+                console.log('click')
+                if (this.paused) {
+                    console.log('paused');
+                    this.play();
+                } else {
+                    var fullscreenvideo = fullscreen(video);
+                    video[fullscreenvideo]();
+                }
+            })
+            video.addEventListener('pause', function(e) {
+                this.webkitExitFullScreen();
+            });
+            video.addEventListener("webkitfullscreenchange", function(e) {
+                //TODO 未侦听到该事件
+                console.log(3);
+                if (!doc.webkitIsFullScreen) { //退出全屏暂停视频
+                    video.pause();
+                };
+            }, false);
+            video.addEventListener("fullscreenchange ", function(e) {
+                console.log(31);
+                if (!doc.webkitIsFullScreen) { //退出全屏暂停视频
+                    video.pause();
+                };
+            }, false);
+            video.addEventListener('ended', function() {
+                //播放完毕，退出全屏
+                console.log(4)
+                this.webkitExitFullScreen();
+            }, false);
+        };
+        tmpV.videoEvent = videoEvent;
+        return tmpV;
+    }());
+
+    $(function(){
+        if("${courseHour.hour_type }"==="0" || "${courseHour.hour_type }"==="2"){
+            initvideo();
+        }else if("${courseHour.hour_type }"==="1"){
+            initdoc();
+        }
+
+        /* 视频初始化 */
+        function initvideo(){
+            //创建XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            //配置请求方式、请求地址以及是否同步
+            xhr.open('POST', '${pageContext.request.contextPath}/course_study/read_video.action?id=${courseFile.id }', true);
+            //设置请求结果类型为blob
+            xhr.responseType = 'blob';
+            //请求成功回调函数
+            xhr.onload = function(e) {
+                if (this.status == 200) {//请求成功
+                    //获取blob对象
+                    var blob = this.response;
+                    if("${courseHour.hour_type }"==="0"){
+                        //获取blob对象地址，并把值赋给容器
+                        $("#video_source").attr("src", URL.createObjectURL(blob));
+                    }else{
+                        //音频
+                        $("#audio_player1").attr("src", URL.createObjectURL(blob));
+                        $("#audio_player2").attr("src", URL.createObjectURL(blob));
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+    });
+    var startTimeFirst;//第一次开始时间
+    var startTime;//每一次开始时间
+    var endTime;//每一次结束时间，含暂停
+    var duration=0;//视频时长
+    var studyTime=0;//学习时间
+
+    $(window).unload(function (){
+        if("${isPreview }"!=='1'){
+            endTime  = new Date();
+            var time=endTime.getTime()-startTime.getTime();
+
+            studyTime+=time;
+
+
+            var dura=parseInt(duration+"");
+            $.ajax({
+                async: false,
+                url : '${pageContext.request.contextPath}/user_study_time/ajax_insert.action',
+                data : {
+                    course_hour_id : '${courseHourStudent.course_hour_id}',
+                    start_time:startTimeFirst,
+                    class_id:'${class_id}',
+                    study_time:studyTime,
+                    duration:dura,
+                },
+                dataType : 'json',
+                success : function(response) {
+
+                }
+            });
+        }
+    });
+
+    function playing(){
+        var status;
+
+        var a=document.getElementById("example_video_1");
+        startTime  = new Date();
+        //改
+        if(startTime==null){
+            startTimeFirst=startTime;
+        }
+
+        duration=a.duration*1000;
+
+        var box=$("#learning_box");
+        if('${courseHourStudent.is_studyed}'!=0){
+            return false;
+        }else{
+            status=2;
+        }
+        if("${isPreview }"!=='1'){
+            $.ajax({
+                url : '${pageContext.request.contextPath}/course_study/studyed.action',
+                data : {
+                    id : '${courseHourStudent.id}',
+                    is_studyed:status,
+                    user_study_id:'${user_study_id}',
+                },
+                dataType : 'json',
+                success : function(response) {
+
+                }
+            });
+        }
+    }
+    function end(){
+        if("${isPreview}"!=='1'){
+            var status;
+            endTime  = new Date();
+            var time=endTime.getTime()-startTime.getTime();
+
+            studyTime+=time;
+
+            var box=$("#learning_box");
+            var dura=parseInt(duration+"");
+            $.ajax({
+                url : '${pageContext.request.contextPath}/user_study_time/ajax_insert.action',
+                data : {
+                    course_hour_id : '${courseHourStudent.course_hour_id}',
+                    start_time:startTimeFirst,
+                    class_id:'${class_id}',
+                    study_time:studyTime,
+                    duration:dura,
+                },
+                dataType : 'json',
+                success : function(response) {
+                    if('${courseHourStudent.is_studyed}'==1){
+                        return false;
+                    }else{
+                        status=1;
+
+                        $.ajax({
+                            url : '${pageContext.request.contextPath}/course_study/studyed.action',
+                            data : {
+                                id : '${courseHourStudent.id}',
+                                is_studyed:status,
+                                user_study_id:'${user_study_id}',
+                            },
+                            dataType : 'json',
+                            success : function(response) {
+
+                                if(response.status==0){
+                                    box.removeClass("glyphicon-check").addClass("glyphicon-unchecked");
+                                }
+                                if(response.status==1){
+                                    box.removeClass("glyphicon-unchecked").addClass("glyphicon-check");
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+    function pause1(){
+        return;
+        endTime  = new Date();
+        var time=endTime.getTime()-startTime.getTime();
+        studyTime+=time;
+        var newTime=new Date(time);
+    }
+
+
+
+</script>
+
+

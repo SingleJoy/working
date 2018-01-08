@@ -1,0 +1,81 @@
+* {margin:0;padding:0;text-decoration:none;color:#6d6d6d;}
+body {background-color:#eaeaea;font-family:"Microsoft YaHei";}
+li{list-style:none;}
+input,button,select,textarea td,table{outline:none;box-shadow: none;padding-left: 10px;border-radius: 5px;resize: none;}
+img,button,td{outline:none;box-shadow: none;border: none;}
+button{cursor: pointer;}
+table{border-spacing:0; }
+textarea{resize: none;padding-left: 10px;}
+a:hover{text-decoration:none;}
+/*教学中心   teaching_center*/
+
+.teaching_center_main{width: 1000px;margin: 20px auto;}
+.mask{position:absolute;top:0;filter:alpha(opacity=60);background-color:#777;z-index:998;left: 0;opacity:0.5;-moz-opacity:0.5;}
+
+/*main_right布局*/
+.teaching_center_main_right{width: 850px;height: 730px;background-color:#fff;float: left;margin-top: 20px;margin-left: 20px;border-radius: 5px;}
+.teaching_center_main_right>p{font-size: 14px;font-weight: bold;padding:15px 0;border-bottom: 1px solid #ddd;width: 820px;margin-left: 15px;}
+.create_course{float: right;display: inline;position: relative;margin-top: -35px;margin-right:10px;}
+.create_course a{padding: 5px 10px;font-size: 12px;line-height: 1.5;border-radius: 5px;color: #fff;background-color:#3ebbce; margin-right: 10px;}
+.course_type{margin-top: 30px;}
+.course_type ul{margin-left: 15px;}
+.course_type ul li{width: 90px;padding-bottom: 20px;display:inline-block;text-align: center;margin-right: 5px;}
+.course_type ul li.curr{border-bottom: 1px solid #3ebbce;}
+.course_type ul li.curr_01{border-bottom: 1px solid #3ebbce;}
+.course_type ul li a{font-size: 16px;}
+.course_type ul li a.curr{color: #3ebbce}
+.course_type ul li a.curr_01{color: #3ebbce;}
+
+
+
+/*学校课程*/
+/*普通课程*/
+.ordinary_course{clear: both;}
+.ordinary_course table{}
+.ordinary_course table tr{height: 80px;border-bottom: 1px solid #ddd;}
+.ordinary_course table tr th{font-size: 14px;font-weight: bold;line-height: 37px;border-bottom: 2px solid #ddd;padding-bottom: 10px;}
+.ordinary_course table tr th,.ordinary_course table tr td{font-size: 14px;text-align: left;}
+.ordinary_course table tr td{border-bottom:1px solid #ddd;}
+.ordinary_course table tr td a img{width: 100px;height: 56px;}
+.course_title_name{position: absolute;margin-left: 10px;}
+.course_operation{width: 62px;height: 30px;font-size: 14px;text-align: center;line-height: 32px;opacity: 0.8;}
+.course_operation:hover{border: 1px solid #3ebbce;color: #3ebbce;}
+.triangle{width: 26px;height: 30px;border:1px solid #ddd;border-radius: 0 30px 30px 0;display: inline-block;position: absolute;}
+.course_operation_list{position:absolute;width: 120px;height: 160px;border-radius: 5px;border: 1px solid #ddd;z-index: 999;background-color: #fff;}
+.course_operation_list li{width: 100px;height: 40px;padding-left: 20px;line-height: 40px;}
+.course_operation_list li:hover{background-color: #3ebbce;color: #fff;}
+.course_operation_list li a{font-size: 14px;}
+.course_operation_list li a:hover{color: #fff;}
+
+
+
+
+/*学习中*/
+.course_learning>ul>li>a>div{width:220px;height: 20px;background-color: #3ebbce;border-radius: 5px;margin-left: 10px;margin-top: 40px;}
+.course_learning>ul>li>a>span{width:86px;height: 30px;border-radius: 30px;margin-left: 80px;margin-top: 15px;border: 1px solid #3ebbce;color: #3ebbce;display: inline-block;text-align: center;font-size: 14px;line-height: 30px;}
+
+
+/*学校老师*/
+#course-table thead tr th,#course-table tbody tr td{padding: 20px 0;}
+.school_teachers{margin-top: 20px;}
+.school_teachers table tr{height: 75px;border-bottom: 1px solid #ddd;}
+/*学校老师*/
+.teacher_info_popup{width: 800px;height: 750px;border: 1px solid #ddd;border-radius: 5px;position: absolute;background-color: #fff;z-index: 999;margin-top: -1500px;}
+.teacher_info_popup>p{font-size: 16px;border-bottom: 1px solid #ccc;padding: 15px;}
+.teacher_info_popup>button{font-size: 22px;margin-left: 760px;background-color: #fff;margin-top:5px;position: absolute;opacity: 0.6;}
+.teacher_info_popup table{margin-top: 20px;margin-left: 10px;}
+.teacher_info_popup table tr th,.teacher_info_popup table tr td{padding: 8px 20px;line-height: 1.43;vertical-align:top;font-size: 14px;}
+.teacher_info_popup table tr th{text-align: left;font-weight: bold;width: 120px;}
+.teacher_info_popup table tr td{width: 500px;}
+.teacher_info_popup table tr td img{width: 120px;height: 120px;float: left;margin-left: 10px;}
+.teacher_info_popup table tr td a{font-size: 14px;color:#3ebbce;}
+.teacher_info_popup>a{font-size: 14px;color:#3ebbce;width:76px;height: 32px;border: 1px solid #3ebbce;border-radius: 30px;text-align: center;line-height: 34px;margin-left: 200px;margin-top: 30px;display: inline-block;}
+.teacher_info_popup>a:hover{color:#fff;background-color: #3ebbce;}
+
+
+/*学校资源*/
+
+
+
+
+/*footer*/

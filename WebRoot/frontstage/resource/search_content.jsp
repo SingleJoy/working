@@ -1,0 +1,300 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+
+    <link href="${pageContext.request.contextPath}/frontstage/css/search-content.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/frontstage/css/login.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/jquery.1.10.2.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/search-content.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/login.js"></script>
+      <!--翻页-->
+	<link href="${pageContext.request.contextPath}/frontstage/css/msdn.css" rel="stylesheet" type="text/css" />
+	<script src="${pageContext.request.contextPath}/frontstage/js/jquery.pagination.js"></script>
+	
+    <script type="text/javascript">
+     $(function(){
+       
+        $(".search_input").keyup(function(e){
+   var keycode = e.which;  
+   if(keycode==13){    
+     var login= $(".cd-user-modal").attr("class");
+ 
+      $("#search_value").val($(".search_input").val());
+          $(".search_form").submit();
+
+     }
+});
+
+  $(".search_button").click(function(){
+    
+    $("#search_value").val($(".search_input").val());
+   $(".search_form").submit();
+ 
+    });
+ 
+ 
+    var s=$(".search_input_content span").attr("title");
+    
+   $(".title").each(function(){
+   var str=$(this).attr("title");
+   var strs=str.split(s);
+ var newStr="";
+
+     for(var i=0;i<strs.length;i++){
+     
+     if(i==0){
+     newStr+=strs[i];
+     }else{
+      newStr+= "<span style='color: red'>"+s+"</span>"+strs[i];
+     }
+        
+     }
+ $(this).html(newStr);
+   });
+     });
+
+    </script>
+</head>
+<body>
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+
+
+<div class="search">
+    <input class="search_input" placeholder="同步课件">
+    <div class="search_button">搜索</div><br/>
+    <form action="${pageContext.request.contextPath}/search/search.action" class="search_form" method="post"  target="_blank">
+        <input type="radio" name="file_attr" checked="checked" value=""><label>全部</label>
+        <input type="radio" name="file_attr" value="doc"><label>DOC</label>
+        <input type="radio" name="file_attr" value="ppt"><label>PPT</label>
+        <input type="radio" name="file_attr" value="pdf"><label>PDF</label>
+
+        <input id="search_value" type="hidden" name="str" >
+        <input  type="hidden" name="pageSize" value="5" >
+        <input  type="hidden" name="pageNo" value="0" >
+        <input  type="hidden" name="type" value="zh" >
+    </form>
+</div>
+
+
+<div class="login">
+    <div class="cd-user-modal">
+        <div class="cd-user-modal-container">
+            <div class="login_top_title">教育信息公共服务云平台</div>
+            <img src="${pageContext.request.contextPath}/frontstage/images/login.jpg" class="login_img">
+            <div id="cd-login">
+
+                <form class="cd-form">
+                    <a class="cd-form_login" href="#">账号登录</a>
+                    <a class="cd-form_phone" href="#">手机动态登录</a>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-username" for="signin-username">用户名</label>
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="手机/邮箱/用户名">
+                    </p>
+
+                    <p class="fieldset"  >
+                        <label class="image-replace cd-password" for="signin-password">密码</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="输入密码">
+                    </p>
+
+
+                    <p class="fieldset phone-admin" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-phone" type="text" placeholder="请输入手机号">
+                    </p>
+
+                    <p class="fieldset var-password" style="display: none;">
+                        <input class="full-width has-padding has-border" id="signin-var-password" type="text"  placeholder="请输入验证码">
+                        <input type="button" class="login_button" value="点击获取验证码">
+                    </p>
+
+
+
+                    <p class="fieldset remember-state">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me" class="remember_state">记住登录状态</label>
+                        <a href="#" class="login_problem">登录遇到问题</a>
+                    </p>
+
+                    <p class="fieldset admin">
+                        <input class="full-width2" type="submit" value="登 录"><br/>
+                        <a class="register_now" href="#">立即注册</a>
+                    </p>
+                </form>
+
+                <div class="login_border"></div>
+
+                <div class="other_login">
+                    <p>可以使用以下方式登录</p>
+                    <a href="#"><img src="${pageContext.request.contextPath}/frontstage/images/wechat.jpg" class="wechat_login"></a>
+                    <a href="#"><img src="${pageContext.request.contextPath}/frontstage/images/qq.jpg" class="qq_login"></a>
+                </div>
+
+            </div>
+            <a href="#" class="cd-close-form">关闭</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="main_content">
+    <div class="search_input_content"><span  title="${str}">"${str}"</span>搜索结果:</div>
+    <div class="main_content_sum"><span class="main_content_sum_num">共${total}</span>篇文章
+        <ul class="main_content_sort">
+            
+            <c:if test="${type=='hp' }"><li  class="curr"><a href="#" style="color:#3ebbce;">好评最多</a></li></c:if>
+            <c:if test="${type!='hp' }"><li><a href="${pageContext.request.contextPath}/search/search.action?pageSize=5&type=hp&pageNo=${pageNo}&str=${str}&file_attr=${file_attr}">好评最多</a></li></c:if>
+            <c:if test="${type=='xz' }"><li  class="curr"><a href="#" style="color:#3ebbce;">下载最多</a></li></c:if>
+            <c:if test="${type!='xz' }"><li><a href="${pageContext.request.contextPath}/search/search.action?pageSize=5&type=xz&pageNo=${pageNo}&str=${str}&file_attr=${file_attr}">下载最多</a></li></c:if>
+            <c:if test="${type=='zx' }"><li  class="curr"><a href="#" style="color:#3ebbce;">最新发布</a></li></c:if>
+            <c:if test="${type!='zx' }"><li><a href="${pageContext.request.contextPath}/search/search.action?pageSize=5&type=zx&pageNo=${pageNo}&str=${str}&file_attr=${file_attr}">最新发布</a></li></c:if>
+            <c:if test="${type=='zh' }"><li  class="curr"><a href="#" style="color:#3ebbce;">综合排序</a></li></c:if>
+            <c:if test="${type!='zh' }"><li><a href="${pageContext.request.contextPath}/search/search.action?pageSize=5&type=zh&pageNo=${pageNo}&str=${str}&file_attr=${file_attr}">综合排序</a></li></c:if>
+          
+        </ul>
+    </div>
+
+ <c:forEach items="${fileBaseList}" var="fileBase" varStatus="status">
+                      
+        <div class="content_page">
+          <c:if test="${fileBase.file_catalog.icon == '0'}">
+            <a href="javascript:return false;"><img src="${pageContext.request.contextPath}/frontstage/images/maitian.jpg" class="main_content_page_img"></a>
+          </c:if>
+          <c:if test="${fileBase.file_catalog.icon != '0'}">
+          	<img src="${pageContext.request.contextPath}/resumeUpload/${fileBase.file_catalog.icon}" class="main_content_page_img">
+          </c:if>
+            <p class="content_page_title"><a href="${pageContext.request.contextPath}/read/toRead.action?id=${fileBase.id}" class="title" title="${fileBase.file_catalog.title}">${fileBase.file_catalog.title}</a></p>
+            <span class="score">评分:${fileBase.file_property.score}</span>
+            
+            <div class="main_content_formate">格式:<span class="main_content_page_formate_type">${fileBase.format}</span><span class="upload_num">${fileBase.file_property.download_times}位老师下载</span><span>${fileBase.file_property.click_times}位老师浏览</span><span class="file_size">${fileBase.size}</span></li>
+                <div class="main_content_page_type">
+              <c:if test="${fileBase.file_catalog.type==1}">  <span class="main_content_page_charge">付费</span></c:if>
+                  <c:if test="${fileBase.file_catalog.type==2}">  <span class="main_content_page_charge">免费</span></c:if>
+                <span class="main_content_page_style_span">|</span>
+                    上传人:<span class="main_content_page_author">${fileBase.user.username}</span>
+                    <span class="main_content_page_style_span">|</span>
+                    <span class="main_content_page_upload_time"><fmt:formatDate type="date"  value="${fileBase.upload_time}" />上传</span>
+                </div>
+                <div class="main_content_page_star_img">
+                <c:forEach begin="1" end="${fileBase.file_property.score }" varStatus="status">
+                    <img  src="${pageContext.request.contextPath}/frontstage/images/icon_star.png">
+                    
+                   </c:forEach>
+                </div>
+            </div>
+            </div>
+         </c:forEach>
+
+
+</div>
+<div id="test" class="pager"></div>
+
+ <form id="fileForm" action="${pageContext.request.contextPath}/search/search.action" method="post">
+ 	<input type="hidden" name="pageNo" id="page" value="${pageNo }"/>
+  	<input type="hidden" name="pageSize" id="rows" value="${pageSize }"/>
+  	<input type="hidden" name="total" id="total" value="${total }"/>
+  	<input type="hidden" name="totalPage" id="totalPage" value="${totalPage}"/>
+  		 <input type="hidden" value="${str}" name="str">
+  		 <input type="hidden" value="${file_attr}" name="file_attr">
+          <input id="" type="hidden" name="type" value="${type}" >
+  		
+  		</form>
+
+<script type="text/javascript">
+$(function(){
+	var isNot = $("#isNot").val();
+	if(isNot=="true"){
+		$("#sortType").val("1");
+		$("#fileForm").submit();
+	}
+});
+function _searchFile(value){
+	$("#type").val(value);
+	$("#fileForm").submit();
+}
+function _searchLeft(){
+	var page = $("#page").val();
+	if(page!=0){
+		$("#page").val(page-1);
+		$('#fileForm').submit();
+	}
+}
+function _searchRight(){
+	var page =  parseInt($("#page").val())+1;
+	var total = $("#total").val();
+	if(page<total){
+		$("#page").val(page);
+		$('#fileForm').submit();
+	}
+}
+function _searchSort(value){
+	var sortType=$("#sortType").val();
+	var sort=$("#sort").val();
+	if(sort!=value){
+		sortType = 1;
+	}
+	$("#sort").val(value);
+	if(sortType==1){//为默认顺序时选中并倒序
+		$("#jt"+value).css("color","#3ebbce");
+		$("#jt"+value).find("img").attr("src","${pageContext.request.contextPath}/frontstage/images/download_03.png");
+		$("#sortType").val("3");
+	}else if(sortType==2){//为正序时选中并默认
+		$("#jt"+value).css("color","#000000");
+		$("#jt"+value).find("img").attr("src","${pageContext.request.contextPath}/frontstage/images/download_01.png");
+		$("#sortType").val("1");
+	}else{//为倒序时选中并正序
+		$("#jt"+value).css("color","#3ebbce");
+		$("#jt"+value).find("img").attr("src","${pageContext.request.contextPath}/frontstage/images/download_02.png");
+		$("#sortType").val("2");
+	}
+	$('#fileForm').submit();
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	//翻页
+	var total = $("#total").val();
+	var page =  parseInt($("#page").val())+1;
+	var rows=$("#rows").val();
+	
+    $("#btn5").on('click', function () {
+        $("#div1").PageChanged(5);
+    });
+
+    $(".pager").pagination({
+    	thisPageIndex:page,
+        recordCount: total,       //总记录数
+        pageSize: rows,           //一页记录数
+        onPageChange: function (page) {
+            document.title = page;
+    		$("#page").val(page-1);
+    		$('#fileForm').submit();
+
+        }
+    });
+	$("#cBtn").click(function(){
+	
+		$("fileForm").submit();
+	});
+});
+    $(function(){
+        $(".pager").css("background-color","#f5f5f5")
+    })
+</script>
+
+<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>

@@ -1,0 +1,18 @@
+package cn.bnsr.edu_yun.frontstage.train.service;
+
+import java.util.List;
+
+import cn.bnsr.edu_yun.backstage.content.view.ContentStatiView;
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudyLog;
+import cn.bnsr.edu_yun.frontstage.train.view.UserStudyLogView;
+
+public interface UserStudyLogService {
+	/** 插入用户学习日志  */
+	Long save(UserStudyLog userStudyLog);
+	
+	/** 查询当天当前用户学习课程/或培训 */
+	Long findUserStudyLogByUSLView(UserStudyLogView  userStudyLogView);
+	/** 学习内容统计-课程/培训 */
+	List<ContentStatiView> queryUserStudyLogStati(ContentStatiView contentSatiView);
+
+}

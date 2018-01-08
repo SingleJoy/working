@@ -1,0 +1,186 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- jquery库 -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-1.8.2.min.js" charset="utf-8"></script>
+	<!-- easyui相关库 -->
+	<link id="easyuiTheme" rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/<c:out value="${cookie.easyuiThemeName.value}" default="default"/>/easyui.css" type="text/css"></link>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/icon.css" type="text/css"></link>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/jquery.easyui.min.js?v0.1" charset="utf-8"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/jquery.1.10.2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/echarts.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body class="easyui-layout" data-options="fit:true">
+	<p/>
+	<div style="font:13.3333px Arial;z-index:9999; position: absolute;margin-left:63px;margin-top:-15px;">
+	    <select id="logType"  style="width: 85px;" >
+            <option value="0" <c:if test="${logType==0}">selected</c:if> >注册用户</option>
+            <option value="1" <c:if test="${logType==1}">selected</c:if> >登录用户</option>
+        </select>
+        <input type="hidden" id="timeType" value="${timeType}">
+        <input type="button" onclick="doSearchMonth(0);" value="本月" <c:if test="${timeType==0}">style="background:#778899;"</c:if>/> 
+        <input type="button" onclick="doSearchMonth(1);" value="上月" <c:if test="${timeType==1}">style="background:#778899;"</c:if>/> 
+        <input type="button" onclick="doSearchMonth(2);" value="近三月" <c:if test="${timeType==2}">style="background:#778899;"</c:if>/> 
+        <input id="startTime" name="startTime" <c:if test="${!empty startTime&&startTime!='undefined'}">value="${startTime}"</c:if> class="easyui-datebox" data-options="editable:false" style="width: 155px;" />至
+		<input id="endTime" name="endTime" <c:if test="${!empty endTime&&endTime!='undefined'}">value="${endTime}"</c:if> class="easyui-datebox" data-options="editable:false" style="width: 155px;" />
+		<input type="button" onclick="doSearchMonth(3);" value="查询" />
+		<input type="button" onclick="doSearchMonth(4);" value="清空" />
+	</div>
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+   <div id="userstats" style="width: 780px;height:450px;margin-top: 30px;"></div>
+<script type="text/javascript">
+	var days = new Array();
+	var newNum = new Array();
+	var countNum = new Array();
+	$(function(){
+		$.ajax({
+			type : 'POST',
+			url : '${pageContext.request.contextPath}/back_user/query_user_stats1.action',
+			data :{
+				startTime : $("#startTime").val(),
+				endTime : $("#endTime").val(),
+				timeType : $("#timeType").val(),
+				logType : $("#logType").val()
+			},
+			dataType : 'json',
+			success : function(d) {
+				var list = d.obj;
+				for(var i=0;i<list.length;i++){
+					days[i] = list[i].days;
+					newNum[i] = list[i].newNum;
+					countNum[i] = list[i].countNum;
+				}  
+			}
+		});
+	});
+	 //基于准备好的dom，初始化echarts实例
+	var myChart = echarts.init(document.getElementById('userstats'));
+	var legendData = ['新增数','总数'];
+	var seriesData = [{
+	                    name:'新增数',
+	                    type:'line',
+	                    smooth:true,
+	                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+	                    data:[]
+		             },{
+		      	        name:'总数',
+		      	        type:'line',
+		      	        stack: '总量',
+		      	        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+		      	        data:[]
+		      	    }];
+	option = {
+	    tooltip : {
+	        trigger: 'axis'
+	    },
+	    legend: {
+	        data:legendData
+	    },
+	    toolbox: {
+	        show : true,
+	        feature : {
+	            mark : {show: true},
+	            dataView : {show: true, readOnly: false},
+	            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+	            restore : {show: true},
+	            saveAsImage : {show: true}
+	        }
+	    },
+	    calculable : true,
+	    xAxis : [
+	        {
+	            type : 'category',
+	            boundaryGap : false,
+	            data : []//横坐标
+	        }
+	    ],
+	    yAxis : [
+	        {
+	            type : 'value'
+	        }
+	    ],
+	    series : seriesData
+	};
+	
+ 	myChart.showLoading(); 
+ 	fetchData(function(data) {
+  		myChart.hideLoading();
+  		var seriesFetchData = [{
+			// 根据名字对应到相应的系列
+			name : '新增数',
+			data : data.newNum
+		},{
+			name : '总数',
+			data : data.countNum
+		}];
+  		myChart.setOption({
+   			xAxis : {
+   				data : data.days
+
+   			},
+   			series : seriesFetchData
+   		});
+   	}); 
+   // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+	
+
+    function fetchData(cb) {
+		// 通过 setTimeout 模拟异步加载
+		setTimeout(function() {
+			cb({
+				days : days,
+				newNum : newNum,
+				countNum : countNum
+			});
+		}, 1000);
+	}
+    
+    /* function selectYear(){
+        WdatePicker({dateFmt: 'yyyy', isShowToday: false, isShowClear: false });  
+    }
+    function selectMonth() {  
+        WdatePicker({dateFmt: 'MM', isShowToday: false, isShowClear: false });  
+    }  
+     */
+    function doSearchMonth(value){
+    	var logType,timeType,startTime,endTime
+   		if(value==4){
+   			logType = 0;
+   			timeType = 0;
+   			$("#startTime").val('');
+   			$("#endTime").val('');
+   		}else if(value==3){
+   			if($("input[name='startTime']").val()==''){
+   				parent.sy.messagerShow({
+   					msg : "请选择起始时间",
+   					title : '提示'
+   				});
+   				return false;
+   			}
+   			if($("input[name='endTime']").val()==''){
+   				parent.sy.messagerShow({
+   					msg : "请选择截止时间",
+   					title : '提示'
+   				});
+   				return false;
+   			}
+   			logType = $("#logType").val();
+   			timeType = value;
+   			startTime = $("input[name='startTime']").val();
+   			endTime = $("input[name='endTime']").val();
+   		}else{
+   			logType = $("#logType").val();
+   			timeType = value;
+   		}
+   		window.location.href = "${pageContext.request.contextPath}/back_user/to_user_stats1.action?logType="+logType+"&timeType="+timeType+"&startTime="+startTime+"&endTime="+endTime;
+    }
+</script>  
+</body>
+</html>

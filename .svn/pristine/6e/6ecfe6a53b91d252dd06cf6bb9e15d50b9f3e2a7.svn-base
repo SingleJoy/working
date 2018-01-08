@@ -1,0 +1,689 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<jsp:include page="/frontstage/base/layout/header.jsp"></jsp:include>
+<style>
+	.add_button{background:url("${pageContext.request.contextPath}/frontstage/images/add_button.png") no-repeat;width: 15px;height: 15px;}
+	.delete_button{background:url("${pageContext.request.contextPath}/frontstage/images/delete_button.png") no-repeat;width:15px;height: 15px; }
+</style>
+
+<div class="es-wrap">
+
+	<div id="content-container" class="container">
+		<jsp:include page="course_header.jsp"></jsp:include>
+
+		<div class="row">
+
+			<jsp:include page="course_left.jsp"></jsp:include>
+
+			<div class="col-md-9">
+			
+				<div class="panel panel-default panel-col">
+
+					<div class="panel-heading">考核标准设置
+						<c:if test="${!empty examStandardMessage }">
+							<span class="text-danger">${examStandardMessage }</span>
+						</c:if>
+					</div>
+
+					<div class="alert alert-success" <c:if test="${courseView.flag!=1}">style="display:none;"</c:if>>考核标准设置已保存!</div>
+
+					<div class="panel-body">
+						<form  class="form-horizontal" id="courseExamStandardAdd" action="${pageContext.request.contextPath}/course_exam_standard/update_course_exam_standard.action" method="post"  >
+							<input type="hidden" id="courseId" name="courseId" value="${courseView.id }" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>/>
+							<input type="hidden" id="sourceType" value="1" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if> />
+							<input type="hidden" name="sign" value="${courseView.sign }" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if> />
+							<input id="is_every" name="is_every" value="0" type="hidden" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if> >
+							<p>各项考核占比及合格分数</p>
+							<table class="table table-striped" style="text-align: center;">
+								<thead>
+								<tr>
+									<th style="width: 15%;font-weight: normal; text-align: center;">考核项</th>
+									<th style="width: 15%;font-weight: normal; text-align: center;">分值</th>
+									<th style="width: 50%;font-weight: normal;text-align: center;">考核内容</th>
+									<th style="width: 20%;font-weight: normal;text-align: center;">考核占比( % )</th>
+								</tr>
+								</thead>
+								<tbody>
+								<c:forEach items="${jobStandard}" var="job">
+									<input name="id" value="${job.id }" type="hidden" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>>
+									<tr>
+										<td >作业</td>
+										<td >${job.score }</td>
+										<td >${job.source_name }</td>
+										<td>
+											<input type="text" class="form-control width-input" name="ratio" value="${job.ratio }" style="width: 60px;" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if> >
+										</td>
+									</tr>
+								</c:forEach>
+								<c:forEach items="${discussionStandard}" var="discussion">
+									<tr>
+										<td><input name="id" value="${discussion.id }" hidden="hidden" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>>主题讨论</td>
+										<td >100</td>
+										<td>${discussion.source_name }</td>
+										<td>
+											<input type="text" class="form-control width-input" name="ratio" value="${discussion.ratio }" style="width: 60px;" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if> >
+										</td>
+									</tr>
+								</c:forEach>
+								<c:forEach items="${examStandard}" var="exam">
+									<tr>
+										<td><input name="id" value="${exam.id }" hidden="hidden">考试</td>
+										<td >${exam.score }</td>
+										<td>${exam.source_name }</td>
+										<td>
+											<input type="text" class="form-control width-input " name="ratio" value="${exam.ratio }" style="width: 60px;" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>>
+										</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+
+							<div class="">证书设置
+								<c:if test="${courseView.status !=1 }">
+									<a class="btn btn-warning pull-right" id="delRows" onclick="delRows();">
+										<span class="glyphicon glyphicon-plus">删除证书</span>
+									</a>
+
+									<a class="btn btn-info pull-right" id="addRows" onclick="addRows();" style="margin-right: 20px;">
+										<span class="glyphicon glyphicon-plus">添加证书</span>
+									</a>
+								</c:if>
+							</div>
+
+							<table class="table table-striped" style="margin-top: 30px;">
+								<thead>
+								<tr>
+									<th width="4%" style="text-align: center;"><input class="checkAll subCheckbox" type="checkbox" autocomplete="off" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>></th>
+									<th style="width:50%;font-weight: normal;">项目成绩</th>
+									<!-- <th style="width:15%;font-weight: normal;">证书类型</th>
+									<th style="width:20%;font-weight: normal;">获取条件</th> -->
+									<th style="width:50%;font-weight: normal;">证书名称</th>
+								</tr>
+								</thead>
+								<tbody id="certificates">
+								<c:forEach items="${certificatesViews}" var="certificate" varStatus="i" >
+									<tr id="row_${i.index}">
+										<td><input class="subCheckbox" onclick="choosedel(this,${i.index},${certificate.certificate_id });" type="checkbox" autocomplete="off" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>/></td>
+										<td>
+											<input type="hidden"  name="certificate_id" value="${certificate.certificate_id }" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>/>
+											<input type="hidden"  name="source_id" value="${courseView.id }" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>/>
+											<input type="hidden"  name="source_type" value="${certificate.source_type }" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>/>
+											<input name="down_score" id="down_score_${i.index}" value="${certificate.down_score }" type="text" class="form-control width-input" onblur="check_down_score(${i.index})" style="width: 100px;<c:if test="${courseView.status ==1 }">border:0px;</c:if>" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>>
+											——
+											<input name="up_score" id="up_score_${i.index}" value="${certificate.up_score }" type="text" class="form-control width-input" onblur="check_up_score(${i.index})" style="width: 100px;<c:if test="${courseView.status ==1 }">border:0px;</c:if>" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>>
+											<input name="cert_model_id" id="cert_model_id_${i.index}" value="${certificate.cert_model_id }" type="hidden" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>>
+										    <div  id="score_msg_${i.index}" class="price_val text-warning" style=" display: none;">请输入100以内的正字</div>
+										</td>
+										<%-- <td>
+											<input name="cert_model_id" id="cert_model_id_${i.index}" value="${certificate.cert_model_id }" type="hidden" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>>
+											<select name="cert_name" onclick=a=this.value; onchange="checkcertype(a,this);" class="form-control width-input width-input-large "  <c:if test="${courseView.status ==1 }">style="border:0px;" disabled="disabled"</c:if>>
+												<option >请选择</option>
+												<option <c:if test="${certificate.cert_name == '及格证书'}">selected = "selected"</c:if>
+														value="及格证书">及格证书</option>
+												<option <c:if test="${certificate.cert_name == '良好证书'}">selected = "selected"</c:if>
+														value="良好证书">良好证书</option>
+												<option <c:if test="${certificate.cert_name == '优秀证书'}">selected = "selected"</c:if>
+														value="优秀证书">优秀证书</option>
+											</select>
+										</td>
+										<td>
+											<input name="is_everything" <c:if test="${certificate.is_every==0}">checked="checked"</c:if> type="checkbox" <c:if test="${courseView.status ==1 }">disabled="disabled"</c:if>> 各项均合格
+										</td> --%>
+										<td>
+
+											<c:if test="${courseView.status !=1 }">
+												<a id="choose_${i.index}" href="javascript:void(0);" class="add_button pull-right"  data-toggle="modal" onclick="chooseCertModel(0,1,${i.index});" <c:if test="${!empty certificate.cert_model_id}">style="display:none"</c:if>>
+
+												</a>
+												<a id="remove_${i.index}" href="javascript:void(0);"  class="delete_button pull-right" onclick="removeCertModel(${i.index});" <c:if test="${empty certificate.cert_model_id}">style="display:none"</c:if>>
+
+												</a>
+											</c:if>
+
+											<span id="cert_model_title_${i.index}">${certificate.cert_model_title}</span>
+										</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+
+							<div class="form-group pull-left">
+								<div class="col-md-offset-2 col-md-8 controls">
+									<c:if test="${courseView.status !=1 }">
+										<button class="btn btn-fat btn-primary" onclick="checkform();" type="button">保存</button>
+									</c:if>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="/frontstage/base/layout/footer.jsp"></jsp:include>
+</div>
+
+<!--选择证书弹窗-->
+<div id="add_certificate" class="modal" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog  modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">选择证书</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info">
+					请选择证书模板
+				</div>
+				<form class="form-inline form-search" role="search-form">
+					<div class="form-group ">
+						<input type="text" class="form-control" name="title" id="title" value="" placeholder="证书模板" >
+					</div>
+					<button id="search_btn" type="button" class="btn btn-primary"  >搜索</button>
+				</form>
+				<div class="row mtl">
+					<div class="col-md-12">
+						<div class="courses-list">
+							<input id="index" type="hidden">
+							<input type="hidden" id="pageFlag" value="0"/>
+							<input type="hidden" name="page" id="page" value="0"/>
+							<table class="table table-striped">
+								<thead>
+								<tr>
+									<th ></th>
+									<th >模板名称</th>
+									<th>作者</th>
+									<th>创建时间</th>
+								</tr>
+								</thead>
+								<tbody id="cert_models">
+								</tbody>
+							</table>
+							<nav class="text-center">
+								<div id="test" class="pager"></div>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="add_cert_model_btn"  class="btn btn-primary">保存</button>
+				<button type="button" class="btn btn-default"  data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#pageFlag").val(0);
+	var rangMapp = {};
+	var certIds = [];
+	<c:forEach items="${certificatesViews}" var="certificate"   varStatus="i">
+	rangMapp['rang${i.index}'] = '${certificate.down_score},${certificate.up_score}';
+	certIds.push('${certificate.cert_model_id}');
+	</c:forEach>
+	$(function(){
+		$(".course-wide-list>li").click(function(){
+			$(this).find("div").find("div").find("div").toggle();
+		})
+	});
+	var length = "${fn:length(certificatesViews)}";
+	function addRows(){
+		var courseId = $("#courseId").val();
+		var sourceType = $("#sourceType").val();
+		//添加证书的行
+		var row = '<tr id="row_'+length+'">'+
+				'<td><input class="subCheckbox" onclick="choosedel(this,'+length+',0);" type="checkbox" autocomplete="off" /></td>'+
+				'<td>'+
+				'<input type="hidden"  name="source_id" value="'+courseId+'"/>'+
+				'<input type="hidden"  name="source_type" value="'+sourceType+'"/>'+
+				'<div class=" controls pull-left" >'+
+				'<input name="down_score" id="down_score_'+length+'"  type="text" class="form-control width-input" onblur="check_down_score('+length+')" style="width: 100px;">'+
+				' —— '+
+				'<input name="up_score" id="up_score_'+length+'"  type="text" class="form-control width-input" onblur="check_up_score('+length+')" style="width: 100px;">'+
+				'<input name="cert_model_id" id="cert_model_id_'+length+'"  type="hidden">'+
+				'<div  id="score_msg_'+length+'" class="price_val text-warning" style=" display: none;">请输入100以内的正数</div>'+
+				'</div>'+
+				'</td>'+
+				'<td>'+
+				'<a id="choose_'+length+'" href="javascript:void(0);" class="add_button pull-right abc"  data-toggle="modal" onclick="chooseCertModel(0,1,'+length+');" >'+
+				'</a>'+
+				'<a id="remove_'+length+'" href="javascript:void(0);"  class="delete_button pull-right" style="display:none" onclick="removeCertModel('+length+');">'+
+				'</a>'+
+				'<span id="cert_model_title_'+length+'"></span>'+
+				'</td>'+
+				'</tr>';
+		$(row).appendTo("#certificates");
+		length ++;
+	}
+	
+	/* function checkcertype(a,obj){
+		if(obj.value!="请选择"){
+			for(var i=0;i<certypes.length;i++){
+				 if(certypes[i]==obj.value){
+					alert("证书类型不能相同！");
+					obj.value="请选择";
+					certypes.splice($.inArray(a, certypes), 1);
+					return false;
+				}
+			}
+			certypes.push(obj.value);
+		}else{
+			certypes.splice($.inArray(a, certypes), 1);
+		} 
+		
+	}
+	 */
+	function inInterval(num,interval){
+		num = num*1;
+		var down = interval.split(",")[0]*1;
+		var up = interval.split(",")[1]*1;
+		if(num<=up&&num>=down){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function check_down_score(id){
+		var score = $('#down_score_'+id);
+		var down_score = parseInt(score.val());
+		if(!isNaN(down_score)&&down_score>=0&&down_score!=''&&down_score<100){
+			$('#score_msg_'+id).hide();
+			/* $('#down_up_score_msg').hide(); */
+		}else{
+			$('#score_msg_'+id).show();
+			score.val("");
+			return;
+		}
+		var up_score = $('#up_score_'+id).val();
+		if(up_score!=""&&down_score-up_score>=0){
+			alert("最低分要小于最高分");
+			score.val("");
+			return;
+		}else{
+			/* 			$('#score_compare_msg').hide();
+			 */		}
+		if(down_score!=""&&up_score!=""){
+			rangMapp['rang'+id] = down_score+","+up_score;
+		}
+		for(var prop in rangMapp){
+			if(rangMapp.hasOwnProperty(prop)&&prop!="rang"+id){
+				if(inInterval(down_score,rangMapp[prop])||inInterval(up_score,rangMapp[prop])){
+					alert("该成绩区间不能和其它成绩区间交叉");
+					score.val("");
+					$('#up_score_'+id).val("");
+					return;
+				}else{
+					/* $("#score_coincide_msg").hide(); */
+				}
+			}
+		}
+	}
+	function check_up_score(id){
+		var score = $('#up_score_'+id);
+		var up_score = score.val();
+		if(!isNaN(up_score)&&up_score>=0&&up_score!=''&&up_score<=100){
+			$('#score_msg_'+id).hide();
+		}else{
+			$('#score_msg_'+id).show();
+			score.val("");
+			return;
+		}
+		var down_score = $('#down_score_'+id).val();
+		if(down_score!=""&&down_score-up_score>=0){
+			alert("最低分要小于最高分");
+			score.val("");
+			return;
+		}else{
+			/* $('#score_compare_msg').hide(); */
+		}
+		if(down_score!=""&&up_score!=""){
+			rangMapp['rang'+id] = down_score+","+up_score;
+		}
+		for(var prop in rangMapp){
+			if(rangMapp.hasOwnProperty(prop)&&prop!="rang"+id){
+				if(inInterval(down_score,rangMapp[prop])||inInterval(up_score,rangMapp[prop])){
+					alert("该成绩区间不能和其它成绩区间交叉");
+					$('#down_score_'+id).val("");
+					score.val("");
+					return;
+				}else{
+					/* $("#score_coincide_msg").hide(); */
+				}
+			}
+		}
+	}
+	$(function(){
+		//考核占比控制:当是最后一个ratio时，自动赋值使其和为100
+		$('input[name="ratio"]').focus(function(){
+			var len = 0*1;
+			$('input[name="ratio"]').each(function(){
+				if($(this).val()==""){
+					len += 1*1;
+				}
+			})
+			if(len==1||len==0){
+				var ratio = 0*1;
+				$('input[name="ratio"]').each(function(){
+					ratio += $(this).val()*1;
+				})
+				if(ratio<100){
+					$(this).val(100-ratio);
+				}
+			}
+		});
+
+		$('input[name="ratio"]').blur(function(){
+			var ratio = $(this).val();
+			if(!isNaN(ratio)&&ratio>=0&&ratio!=''&&ratio<=100){
+
+			}else{
+				alert("考核占比为小于100的非负数");
+				$(this).val("");
+			}
+			var len = 0*1;//ratio未填的个数
+			$('input[name="ratio"]').each(function(){
+				if($(this).val()==""){
+					len += 1*1;
+				}
+			})
+			var ratios = 0*1;
+			$('input[name="ratio"]').each(function(){
+				ratios += $(this).val()*1;
+			})
+			if(ratios>=100&&len>0){
+				alert("考核占比和不能超过100");
+				$('input[name="ratio"]').each(function(){
+					if($(this).val()==""){
+						$(this).attr("disabled",true);
+					}
+				})
+			}else{
+				$('input[name="ratio"]').each(function(){
+					if($(this).val()==""){
+						$(this).removeAttr("disabled");
+					}
+				})
+			}
+			if(len==0){
+				$(this).val(100-ratios+$(this).val()*1);
+			}
+		});
+	});
+	function checkform(){
+		var form = document.getElementById('courseExamStandardAdd');
+		var t1 = form.getElementsByTagName("input");
+		for(i=0;i<t1.length;i++) {
+			if(t1[i].type!="checkbox"&&t1[i].value==""){
+				alert("请填写完整考核数据");
+				return false;
+			}
+		}
+		var t2 = form.getElementsByTagName("select");
+		for(i=0;i<t2.length;i++) {
+			if(t2[i].value=="请选择"){
+				alert("请填写完整考核数据");
+				return false;
+			}
+		}
+		var is_every = "";
+		var every = document.getElementsByName('is_everything');
+		for(var i=0;i<every.length;i++){
+			if(every[i].checked){
+				is_every += "0,";
+			}else{
+				is_every += "1,";
+			}
+		}
+		is_every = is_every.substr(0,is_every.length-1);
+		$("#is_every").val(is_every);
+		form.submit();
+
+	}
+
+	var list = [];
+	function chooseCertModel(value,second,index){
+		if(index!=-1){
+			$("#index").val(index);
+		}
+		var page = $("#page").val();
+		if(value==0){
+			page = 0;
+			$("#title").val("");
+			$(".disabled").find("a").each(function(index,element){
+				if(index==0){
+					$(element).click();
+				}
+			});
+			$("#add_certificate").modal();
+			$("#search_btn").removeAttr("onclick");
+			$("#search_btn").attr("onclick","chooseCertModel(1,0,"+index+")");
+			$("#add_cert_model_btn").removeAttr("onclick");
+			$("#add_cert_model_btn").attr("onclick","addCertModel("+index+")");
+		}
+		//搜索
+		var title = $("#title").val();
+		if(second==0){
+			$(".disabled").find("a").each(function(index,element){
+				if(index==0){
+					$(element).click();
+				}
+			});
+		}
+
+		$.ajax({
+			url:"${pageContext.request.contextPath}/cert_model/query_cert_model.action",
+			data:{
+				page : page,
+				title : title
+			},
+			dataType:'json',
+			success:function(data){
+				var view = data.certModelView;
+				list = data.certModelList;
+				var html = "";
+				for(var i=0;i<list.length;i++){
+					var formatDate;
+					if(list[i].update_time!=null){
+						formatDate = format(list[i].update_time.time,'yyyy-MM-dd HH:mm:ss');
+					}else{
+						formatDate = "";
+					}
+					html += '<tr>'+
+					'<td ><input id="check_'+list[i].id+'" type="checkbox" onclick="doChoose('+index+','+list[i].id+',\''+list[i].title+'\');"></td>'+
+					'<td><a href="${pageContext.request.contextPath}/cert_model/to_cert_model_show.action?id='+list[i].id+'" target="_blank" style="cursor: pointer;">'+list[i].title+'</a></td>'+
+					'<td>'+list[i].username+'</td>'+
+					'<td>'+formatDate+'</td>'+
+					'</tr>';
+				}
+				/* for(var i=0;i<5-list.length;i++){
+				 html += '<tr style="visibility: hidden" ><td style="border-style:none"><input type="checkbox"></td><td style="border-style:none"></td><td style="border-style:none"></td><td style="border-style:none"></td></tr>';
+				 } */
+				$("#cert_models").empty().append(html);
+				$("#page").val(view.page);
+				$("#title").val(view.title);
+				if(value==0){
+					if($("#pageFlag").val()==0){
+						doPages(1,1,index,view.rows,view.total);
+						$("#pageFlag").val(1);
+					}
+				}else if(second==0){
+					$("#pageFlag").val(0);
+					doPages(1,1,index,view.rows,view.total);
+				}
+			}
+		});
+	}
+
+	function doPages(value,second,index,rows,total){
+		//翻页
+		var page =  parseInt($("#page").val())+1;
+		$("#btn5").on('click', function () {
+			$("#div1").PageChanged(5);
+		});
+
+		$(".pager").pagination({
+			thisPageIndex:page,
+			recordCount: total,       //总记录数
+			pageSize: rows,           //一页记录数
+			onPageChange: function (page) {
+				$("#page").val(page-1);
+				chooseCertModel(value,second,-1);
+			}
+		});
+	}
+	function doChoose(indexs,value,title){
+		for(var i=0;i<certIds.length;i++){
+			if(value==certIds[i]){
+				alert("证书模板不能相同！");
+				$("#check_"+value).prop("checked",false);
+				return;
+			}
+		}
+		var index = $("#index").val();
+		if(!$("#check_"+value).attr("checked")){//先点击后触发checkbox的选中
+			$("#cert_model_id_"+index).val(value);
+			$("#cert_model_title_"+index).html(title);
+			certIds.push(value);
+			for(var i=0;i<list.length;i++){
+				if(value!=list[i].id){
+					$("#check_"+list[i].id).attr("checked", false);
+				}
+			}
+		} else{
+			$("#cert_model_id_"+index).val("");
+			$("#cert_model_title_"+index).html("");
+			for(var i=0;i<certIds.length;i++){
+				 if(certIds[i]==value){
+					certIds.splice($.inArray(value, certIds), 1);
+					return;
+				}
+			}
+		}
+	}
+
+	function addCertModel(index){
+		var modelId = $("#cert_model_id_"+index).val();
+		if(modelId!=""){
+			$("#add_certificate").modal('hide');
+			$("#remove_"+index).show();
+			$("#choose_"+index).hide();
+		}else{
+			alert("请选择证书模板！");
+		}
+	}
+
+	function removeCertModel(index){
+		var value = $("#cert_model_id_"+index).val();
+		$("#cert_model_id_"+index).val("");
+		$("#cert_model_title_"+index).html("");
+		$("#remove_"+index).hide();
+		$("#choose_"+index).show();
+		for(var i=0;i<certIds.length;i++){
+			 if(certIds[i]==value){
+				certIds.splice($.inArray(value, certIds), 1);
+				return;
+			}
+		}
+	}
+
+	$(function(){
+		// 全选
+		$(".checkAll").click(function () {
+			var checkboxs = getElementsClass("subCheckbox");
+			for(var i=0;i<checkboxs.length;i++){
+				checkboxs[i].click();
+			}
+		})
+
+	});
+	var certids = [];
+	var certindexs = [];
+	function choosedel(value,index,id){//点击事件晚于checkbox的选中??
+		if($(value).attr("checked")){//去掉要删除的index和id
+			certids.splice($.inArray(id,certids),1);
+			certindexs.splice($.inArray(index,certindexs),1);
+		}else{//增加要删掉的index和id
+			if(id!="0"){
+				certids.push(id);
+			}
+			certindexs.push(index);
+		}
+	}
+	function delRows(){
+		length -= 1;
+		$("#addRows").attr("disabled",false);
+		var indexlength = certindexs.length;
+		var idlength = certids.length;
+		if(indexlength==0){
+			alert("请选择要删除的证书");
+			return false;
+		}
+		for(var i=0;i<indexlength;i++){
+			$("#row_"+certindexs[i]).remove();
+			$(".checkAll").removeAttr("checked");
+		}
+		if(idlength>0){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/course_exam_standard/del_certificate.action",
+				data:{
+					ids : certids.join(",")
+				},
+				dataType:'json',
+				success:function(data){
+				}
+			});
+		}
+
+	}
+	function getElementsClass(classnames){
+		var classobj= new Array();//定义数组
+		var classint=0;//定义数组的下标
+		var tags=document.getElementsByTagName("*");//获取HTML的所有标签
+		for(var i in tags){//对标签进行遍历
+			if(tags[i].nodeType==1){//判断节点类型
+				if(tags[i].getAttribute("class") == classnames){//判断和需要CLASS名字相同的，并组成一个数组
+					classobj[classint]=tags[i];
+					classint++;
+				}
+			}
+		}
+		return classobj;//返回组成的数组
+	}
+	var format = function(time, format) {
+		var t = new Date(time);
+		var tf = function(i) {
+			return (i < 10 ? '0': '') + i
+		};
+		return format.replace(/yyyy|MM|dd|HH|mm|ss/g,
+				function(a) {
+					switch (a) {
+						case 'yyyy':
+							return tf(t.getFullYear());
+							break;
+						case 'MM':
+							return tf(t.getMonth() + 1);
+							break;
+						case 'mm':
+							return tf(t.getMinutes());
+							break;
+						case 'dd':
+							return tf(t.getDate());
+							break;
+						case 'HH':
+							return tf(t.getHours());
+							break;
+						case 'ss':
+							return tf(t.getSeconds());
+							break;
+					}
+				});
+	}
+
+
+</script>
+

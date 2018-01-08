@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>我的证书</title>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.12" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.12">
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.12">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.12" rel="stylesheet">
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.12" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+    <script>
+        $(function(){
+            $("#course-type>li").click(function(){
+                var index=$(this).index();
+
+                $(".course-table").hide().eq(index).show();
+            })
+        });
+
+    </script>
+</head>
+
+<body>
+<div class="col-md-9">
+
+
+    <div class="panel panel-default panel-col">
+
+        <div class="panel-heading">
+            我的证书
+        </div>
+
+        <div class="panel-body">
+            <ul class="nav nav-tabs " id="course-type">
+                <li class="active">
+                    <a href="javascript:void(0);">课程证书</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">培训证书</a>
+                </li>
+            </ul>
+
+            <table class="table table-hover course-table">
+                <thead>
+                <tr>
+                    <th >课程名称</th>
+                    <th>成绩</th>
+                    <th>完成时间</th>
+                    <th>证书类型</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>如何构建良好师生关系</td>
+                    <td>68</td>
+                    <td>2017-04-20</td>
+                    <td>及格</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-hover course-table" style="display: none;">
+                <thead>
+                <tr>
+                    <th >培训课程</th>
+                    <th>成绩</th>
+                    <th>完成时间</th>
+                    <th>证书类型</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>如何成为一名合格的中学老师</td>
+                    <td>88</td>
+                    <td>2017-04-20</td>
+                    <td>优秀</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!--表格无数据时显示 -->
+            <div class="empty" style="display: none;">暂无数据</div>
+
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,681 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>观课报告</title>
+    <link rel="icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" />
+    <link rel="shortcut icon" href="////scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+
+
+    <link href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="////scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="////scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+
+    <link href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+
+
+    <link href="////scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+
+
+        $(function(){
+            $("#all-task").click(function(){
+                $(this).addClass("task1");
+                $("#my-task").removeClass("task2");
+                $(".all-task").show();
+                $(".my-task").hide();
+            });
+
+            $("#my-task").click(function(){
+                $(this).addClass("task2");
+                $("#all-task").removeClass("task1");
+                $(".my-task").show();
+                $(".all-task").hide();
+            });
+        });
+        $(function(){
+            $(".task-list>a").click(function(){
+                $(".task-list").find("ul").find("li").hide();
+                $(this).siblings("ul").show().find("li").toggle();
+            })
+        });
+
+    </script>
+    <style>
+
+        .task1,.task2{color: #fff;}
+        .task1{background:url("../../images/task_right.png") 20px no-repeat; }
+        .task2{background:url("../../images/task_left.png") 10px no-repeat; }
+        .task-list>ul>li>a>span{padding-left: 30px;}
+
+    </style>
+
+</head>
+<body class="course-dashboard-page" >
+
+<div class="es-wrap" >
+
+    <div id="content-container" class="container">
+
+        <section class="course-detail-header after">
+            <div class="container">
+
+                <ol class="breadcrumb breadcrumb-o">
+                    <li><a href="#">北京市</a></li>
+                    <li><a href="#">东城区 </a></li>
+                    <li><a href="#">北京四中语文一组</a></li>
+                    <li><a href="#">丑小鸭</a></li>
+                </ol>
+
+                <div class="es-section clearfix ">
+
+
+                    <div class="course-header-top clearfix">
+
+                        <div class="course-img">
+
+                            <img class="img-responsive" src="////scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531709b0380930.png" alt="如何创建课程？">
+                            <div class="tags"></div>
+                        </div>
+
+
+                        <div class="course-info">
+                            <h2 class="title">
+                                丑小鸭
+                            </h2>
+                            <div class="metas">
+                                <div class="score">
+
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+                                    <i class="es-icon es-icon-star color-warning"></i>
+
+                                    <i class="es-icon es-icon-starhalf color-warning"></i>
+
+
+                                    <span>(8 评论)</span>
+                                </div>
+
+
+                            </div>
+                            <div class="mates">
+                                成员<span class="mrm">140</span><span class="mlm mrm">｜</span>
+                                浏览数<span class="mrm">8000</span><span class="mlm mrm">｜</span>
+                                问题研讨<span class="mrm">25</span><span class="mlm mrm">｜</span>
+                                文章资源<span class="mrm">25</span><span class="mlm mrm">｜</span><br/>
+                                完成任务/总数<span class="mrm">&nbsp;25/50</span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="course-operation">
+                            <div class="student-num hidden-xs">
+                                <i class="es-icon es-icon-people"></i>140人
+                            </div>
+
+                            <ul class="course-data clearfix two-col">
+                                <li id="unfavorite-btn" data-url="/course/22/unfavorite" style="display:none;">
+                                    <a href="javascript:;" class="color-primary">
+                                        <p><i class="es-icon es-icon-bookmark"></i></p>
+                                        <p>已收藏</p>
+                                    </a>
+                                </li>
+
+
+                                <li id="favorite-btn" data-url="/course/22/favorite" >
+                                    <a href="javascript:;">
+                                        <p><i class="es-icon es-icon-bookmarkoutline"></i></p>
+                                        <p>收藏</p>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <span class="es-share top">
+                                        <a class="dropdown-toggle" href="javascript:void(0);" data-toggle="dropdown">
+                                            <p><i class="es-icon es-icon-share"></i></p>
+                                            <p>分享</p>
+                                        </a>
+
+                                        <div class="dropdown-menu  js-social-share-params" data-title="如何创建课程？" data-summary="本课程意在指导用户快速了解如何创建一个具有吸引力的课程，本课不仅介绍了功能的使用，更讲解了如何更好的..." data-message="我正在学习《如何创建课程？》，收获巨大哦，一起来学习吧！快点加入吧~~~~" data-url="http://www.qiqiuyu.com/course/22" data-picture="////scc1a8b2s6-static.qiqiuyun.net/files/course/2014/10-24/1537531709b0380930.png">
+
+                                            <a href="javascript:;" class="js-social-share" data-cmd="weixin" title="分享到微信" data-share="weixin" data-qrcode-url="/common/qrcode?text=http%3A//www.qiqiuyu.com/course/22"><i class="es-icon es-icon-weixin"></i></a>
+                                            <a href="javascript:;" class="js-social-share" data-cmd="tsina" title="分享到新浪微博" data-share="weibo"><i class="es-icon es-icon-weibo"></i></a>
+                                            <a href="javascript:;" class="js-social-share" data-cmd="qq" title="分享到QQ好友" data-share="qq"><i class="es-icon es-icon-qq"></i></a>
+                                            <a href="javascript:;" class="js-social-share" data-cmd="qzone" title="分享到QQ空间" data-share="qzone"><i class="es-icon es-icon-qzone"></i></a>
+
+                                        </div>
+
+
+                                    </span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+        <div class="course-detail row" style="margin-top: 20px;margin-left: 0;">
+
+
+            <div class="col-lg-3 col-md-4  course-sidebar " >
+
+                <div class="sidenav locked">
+
+                    <div class="controls" style="margin: 10px;">
+                        <div class="row text-center">
+                            <div class="col-md-5 task1" id="all-task" style="padding: 5px 15px;cursor: pointer;">
+                                全部任务
+                            </div>
+
+                            <div class="col-md-5" id="my-task" style="padding: 5px 15px;cursor: pointer;">
+                                我的任务
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--全部任务-->
+                    <ul class="list-group all-task task" >
+                        <!--环节一-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);">
+                                <span ></span>环节一:计划
+                            </a>
+                            <ul class="list-group" >
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:制定计划
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务2:提交教学设计与课件
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:问题研讨
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+                        <!--环节二-->
+                        <li class="list-group-item task-list" >
+                            <a href="javascript:void(0);">
+                                <span ></span>环节二:备课
+                            </a>
+                            <ul class="list-group" style="display: none;" >
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:初始教学设计协同修该
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务2:提交教学设计与课件
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务4:提交修改后的教学设计
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+                        <!--环节三-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);">
+                                <span ></span>环节三:上课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:观课准备会会议纪要
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务2:观课量表
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务4:提交上课实录
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+                        <!--环节四-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);">
+                                <span ></span>环节四:上课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:观课报告
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务2:课后评议会议纪要
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:问题研讨
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li >
+                        <!--环节五-->
+                        <li class="list-group-item task-list" >
+                            <a href="javascript:void(0);">
+                                <span ></span>环节五:上课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:反思心得
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务2:提交实践反思后教学设计及课件
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span  ></span>任务3:自我总结
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                    <!--我的任务-->
+                    <ul class="list-group my-task " style="display: none;">
+
+                        <!--环节一-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);">
+                                <span ></span>环节一:计划
+                            </a>
+                            <ul class="list-group" >
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:制定计划
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务2:提交教学设计与课件
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务3:问题研讨
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                        </li>
+                        <!--环节二-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);">
+                                <span></span>环节二:备课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:初始教学设计协同修该
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务2:备课研讨会会议纪要
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务4:提交修改后的教学设计
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <!--环节三-->
+                        <li class="list-group-item task-list">
+                            <a href="javascript:void(0);">
+                                <span ></span>环节三:上课
+                            </a>
+                            <ul class="list-group" style="display: none;">
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务1:观看准备会议纪要
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务2:观课量表
+                                    </a>
+                                </li>
+
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务3:问题研讨
+                                    </a>
+                                </li>
+                                <li class="list-group-item ">
+                                    <a href="javascript:void(0);">
+                                        <span></span>任务4:提交上课实录
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                    <ul class="list-group">
+                        <li class="list-group-heading">
+                            课例组情况
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span  ></span>全组完成情况
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span  ></span>成员统计
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="javascript:void(0);">
+                                <span  ></span>课例评价
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+
+                </div>
+                <!--指导老师-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> <i class="es-icon es-icon-assignmentind"></i>
+                            指导教师
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media media-default">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/10385829878d755245.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body">
+                                <div class="title">
+                                    <a class="link-dark link-light" href="/user/2487">李老师</a>
+
+                                </div>
+                                <div class="content">北京四中 特级教师</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--教研组-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="es-icon es-icon-personadd"></i>
+                            第一教研组
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media media-default">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/10385829878d755245.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body">
+                                <div class="title">
+                                    <a class="link-dark link-light" href="javascript:void(0);">组长:张静秋</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media media-default">
+                            <div class="media-left">
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-md" src="http://scc1a8b2s6-static.qiqiuyun.net/files/default/2016/04-05/10385829878d755245.jpg">
+                                </a>
+
+                            </div>
+                            <div class="media-body">
+                                <div class="title">
+                                    <a class="link-dark link-light" href="javascript:void(0);">副组长:刘明远</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--学员-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <i class="es-icon es-icon-personadd"></i>
+                            组员
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="user-avatar-list clearfix">
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-09/223208892e43082214.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);">
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-24/104148c6f7f9809663.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-09/141612c267d3837531.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2016/08-10/114338a5a4b2009923.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-07/015405db7f77725048.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);"  >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-07/153701d199ea704872.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-07/1335324e9a82904161.jpg">
+
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);"  >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/user/2017/03-04/031138a01cbd218375.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/03-03/10532669a685005747.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);">
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-28/122811b39a26813121.jpg">
+
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-24/1429255015f5048599.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/user/2017/02-24/132010ab4042642756.jpg">
+                                </a>
+
+                            </li>
+                            <li>
+                                <a class=" js-user-card" href="javascript:void(0);" >
+                                    <img class="avatar-sm" src="////scc1a8b2s6-static.qiqiuyun.net/files/default/2017/02-28/230429d8e0d6463377.jpg">
+                                </a>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div >
+
+            <div class="col-lg-9 col-md-8  course-detail-main">
+
+                <div class="panel panel-default panel-col course-data">
+                    <div class="panel-heading" >观课报告
+                        <button type="button" class="btn btn-warning pull-right">上传观课报告</button></div>
+                    <div class="panel-body">
+
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered" style="text-align: center;">
+                                <tbody>
+                                <tr>
+                                    <td class="active" style="width: 30%;">名称</td>
+                                    <td class="active" style="width: 10%;">上传人</td>
+                                    <td class="active" style="width: 20%;">更新时间</td>
+                                    <td class="active" style="width: 10%;">浏览数</td>
+                                    <td class="active" style="width: 25%;">操作</td>
+                                </tr>
+
+                                <tr>
+                                    <td >丑小鸭观课报告</td>
+                                    <td >李老师</td>
+                                    <td >2017-01-02 10:34</td>
+                                    <td >20</td>
+                                    <td style="text-align: center;">
+                                        <a href="javascript:void (0);" class="text-muted">查看</a><span class="mlm mrm">｜</span>
+                                        <a href="javascript:void (0);" class="text-info">下载</a><span class="mlm mrm">｜</span>
+                                        <a href="javascript:void (0);" class="text-warning">删除</a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="help-block">说明：支持格式*.doc;*.docx;*.xls;*.xlsx;*.pdf;*.ppt;*.pptx;
+                                *.gif;*.jpg;*.jpeg;*.rar;*.zip;*.7z;*.flv;*.mp4;*.mp3;文件大小：500MB</div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+</body>
+</html>

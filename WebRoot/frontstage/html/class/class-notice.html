@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>班级管理-通知管理</title>
+    <link rel="shortcut icon" href="http://scc1a8b2s6-static.qiqiuyun.net/files/system/2015/12-08/173446635bc4259176.ico?7.5.5" type="image/x-icon" media="screen"/>
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/bootstrap/css/bootstrap-blue-light.css?7.5.5" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/common.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/css/font-awesome.min.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/es-icon.css?7.5.5" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main.css?7.5.5" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/main-blue-light.css?7.5.5" rel="stylesheet" />
+    <link href="http://scc1a8b2s6-static.qiqiuyun.net/assets/v2/css/header-white.css?7.5.5" rel="stylesheet" />
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+</head>
+<body >
+
+<div class="es-wrap" style="background-color: #fff;">
+
+    <div id="content-container" class="container">
+
+        <div class="row">
+
+
+            <div class="col-md-3">
+
+                <div class="sidenav locked">
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级信息</li>
+                        <li class="list-group-item active">
+                            <a href="/edu_yun/class/to_class_home.action?id=295&amp;flag=2&amp;sign=2&amp;source_id=179&amp;source_type=0">
+                                <span></span>班级主页
+                            </a>
+                        </li>
+
+
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/class/to_class_setting.action?id=295&amp;flag=2&amp;sign=8&amp;source_id=179&amp;source_type=0">
+                                <span></span>班级设置
+                            </a>
+                        </li>
+                        <li class="list-group-item  ">
+                            <a href="/edu_yun/class/to_class_service_setting.action?id=295&amp;flag=2&amp;sign=1&amp;source_id=179&amp;source_type=0">
+                                <span></span>服务设置
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="#">
+                                <span></span>公告管理
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级管理</li>
+                        <li class="list-group-item ">
+                            <!--"/edu_yun/user_study/to_class_student_manage.action?id=&flag=2&sign=2&tab=0&sourceId=&sourceType="  -->
+                            <a href="/edu_yun/user_study/to_class_student_manage.action?id=295&amp;flag=2&amp;sign=3&amp;tab=0&amp;sourceId=179&amp;sourceType=0">
+                                <span></span>学员管理
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/exam/exam.action?required=1&amp;class_id=295&amp;flag=2&amp;sign=4&amp;exam_type=0&amp;status=1&amp;source_id=179&amp;source_type=0">
+                                <span></span>试卷批阅
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/exam/exam.action?required=1&amp;class_id=295&amp;flag=2&amp;sign=5&amp;exam_type=1&amp;status=1&amp;source_id=179&amp;source_type=0">
+                                <span></span>作业批改
+                            </a>
+                        </li>
+
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/class/to_class_theme_discuss.action?required=1&amp;id=295&amp;flag=2&amp;sign=6&amp;source_id=179&amp;source_type=0">
+                                <span></span>主题研讨
+                            </a>
+                        </li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/class/to_class_scores_manage.action?id=295&amp;flag=2&amp;sign=7&amp;exam_type=4&amp;source_id=179&amp;source_type=0">
+                                <span></span>成绩管理
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-heading">班级运营</li>
+                        <li class="list-group-item ">
+                            <a href="/edu_yun/course_data/to_data.action?id=295&amp;source_id=179&amp;source_type=0&amp;flag=2&amp;sign=9">
+                                <span></span>班级学习数据</a>
+                        </li>
+                    </ul>
+
+
+                </div>
+
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="panel panel-default panel-col">
+
+
+                    <div class="panel-heading">
+                        <div class="pull-right">
+                            <a href="class-add-notice.html" class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-plus"></span> 新建通知</a>
+                        </div>
+                        班级通知
+                    </div>
+                    <div class="panel-body ">
+                        <form class="form-horizontal">
+
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th width="25%" >通知名称</th>
+                                    <th style="">发表日期</th>
+                                    <th style="">结束日期</th>
+                                    <th >操作</th>
+                                </tr>
+                                </thead>
+
+                                <tbody >
+                                <tr>
+                                    <td>测试通知名称</td>
+                                    <td>2017-06-30</td>
+                                    <td>2017-07-30</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="javascript:void(0);"  class="btn btn-default btn-sm">管理</a>
+                                            <a href="javascript:void(0);;" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu pull-right">
+
+                                                <li>
+                                                    <a href="javascript:void(0);" class="del-question" >
+                                                        <span class="glyphicon glyphicon-remove-circle"></span> 删除
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" >
+                                                        <i class="es-icon es-icon-edit"  title="编辑"></i> 修改
+                                                    </a>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <title>北京是百年树人远程教育有限公司</title>
+    <meta name="keywords" content="IE=Edge">
+    <link rel="icon" type="image/x-icon" href="../images/logo.ico" media="screen" />
+    <link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../css/school-center.css" rel="stylesheet" type="text/css">
+
+
+    <script type="text/javascript" src="../jq/jq.js"></script>
+    <script type="text/javascript">
+        //        课程类型切换
+        $(function(){
+            $(".course_type ul li").click(function(){
+                $(".course_type ul li").removeClass("curr curr_01").find("a").removeClass("curr curr_01");
+                $(this).addClass("curr").find("a").addClass("curr");
+                var index=$(this).index();
+                $(".course_type_tabs").hide().eq(index).show();
+            }).mouseover(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).addClass("curr_01").find("a").addClass("curr_01");
+                }
+
+            }).mouseout(function(){
+                if($(this).hasClass("curr")){
+
+                }else{
+                    $(this).removeClass("curr_01").find("a").removeClass("curr_01")
+                }
+            })
+        });
+
+
+        $(function(){
+            $(".triangle").click(function(){
+                if($(this).siblings("ul").css("display")=="none"){
+                    $(this).siblings("ul").show();
+                    $(this).addClass("click_style").find("span").addClass("click_style_01");
+                }else{
+                    $(this).siblings("ul").hide();
+                    $(".triangle").removeClass("click_style").find("span").removeClass("click_style_01");
+
+                }
+            })
+        })
+
+
+
+    </script>
+
+
+
+
+</head>
+<body>
+
+
+
+
+
+<div class="teaching_center_main_right">
+
+
+    <!--学校课程 -->
+    <p>学校课程</p>
+    <div class="create_course">
+        <a href="javascript:return false;">创建课程</a>
+        <a href="javascript:return false;">创建直播课程</a>
+    </div>
+
+    <div class="course_type">
+        <ul>
+            <li class="curr"><a href="javascript:return false;" class="curr">普通课程</a></li>
+            <li><a href="javascript:return false;">直播课程</a></li>
+        </ul>
+    </div>
+
+    <!--普通课程-->
+    <div class="ordinary_course course_type_tabs" >
+
+        <table>
+
+            <tr style="border-bottom: 2px solid #ddd;padding-bottom: 5px;height: 40px;">
+                <th style="width:250px;">名称</th>
+                <th style="width:80px;">授课老师</th>
+                <th style="width:80px; ">学员数</th>
+                <th style="width: 100px;">价格(元)</th>
+                <th style="width: 100px;">收入(元)</th>
+                <th style="width: 80px;">状态</th>
+                <th style="width:100px;text-align: center;">操作</th>
+            </tr>
+
+            <tr style="border-bottom: 1px solid #ddd;">
+
+                <td style="width:250px;">
+                    <a href="javascript:return false;"><img src="../images/course.png"></a>
+                    <a href="javascript:return false;" class="course_title_name">测试123</a>
+                </td>
+
+                <td style="width:60px;">赵老师</td>
+                <td style="width:60px;">10</td>
+
+                <td style="width: 90px;">10.00</td>
+                <td style="width:90px;">20.00</td>
+
+                <td style="width: 60px;">
+                    <span style="opacity: 0.8;">未发布</span>
+                    <!--<span style="color: #a94442;">已关闭</span>-->
+                    <!--<span style="color: #3ebbce;">已发布</span>-->
+                </td>
+
+                <td style="width:100px;text-align: center;">
+                    <a href="javascript:return false;" class="course_operation">删除</a>
+                </td>
+            </tr>
+
+
+        </table>
+
+    </div>
+
+
+
+
+    <!--直播课程-->
+    <div class="ordinary_course course_type_tabs" style="display: none;">
+
+        <table>
+
+            <tr style="border-bottom: 2px solid #ddd;padding-bottom: 5px;height: 40px;">
+                <th style="width:250px;">名称</th>
+                <th style="width:80px;">授课老师</th>
+                <th style="width:80px; ">学员数</th>
+                <th style="width: 100px;">价格(元)</th>
+                <th style="width: 100px;">收入(元)</th>
+                <th style="width: 80px;">状态</th>
+                <th style="width:100px;text-align: center;">操作</th>
+            </tr>
+
+            <tr style="border-bottom: 1px solid #ddd;">
+
+                <td style="width:250px;">
+                    <a href="javascript:return false;"><img src="../images/course.png"></a>
+                    <a href="javascript:return false;" class="course_title_name">测试123</a>
+                </td>
+
+                <td style="width:60px;">李老师</td>
+                <td style="width:60px;">10</td>
+
+                <td style="width: 90px;">10.00</td>
+                <td style="width:90px;">20.00</td>
+
+                <td style="width: 60px;">
+                    <span style="opacity: 0.8;">未发布</span>
+                    <!--<span style="color: #a94442;">已关闭</span>-->
+                    <!--<span style="color: #3ebbce;">已发布</span>-->
+                </td>
+
+                <td style="width:100px;text-align: center;">
+                    <a href="javascript:return false;" class="course_operation">删除</a>
+                </td>
+            </tr>
+
+
+        </table>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+</body>
+</html>

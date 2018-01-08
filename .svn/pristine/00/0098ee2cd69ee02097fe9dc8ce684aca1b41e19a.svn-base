@@ -1,0 +1,110 @@
+package cn.bnsr.edu_yun.frontstage.base.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.bnsr.edu_yun.frontstage.base.po.BookCat;
+import cn.bnsr.edu_yun.frontstage.base.po.PubverList;
+import cn.bnsr.edu_yun.frontstage.base.po.SubjectList;
+import cn.bnsr.edu_yun.frontstage.base.service.BookCatService;
+import cn.bnsr.edu_yun.frontstage.base.service.PubverListService;
+import cn.bnsr.edu_yun.frontstage.base.service.SubjectListService;
+import cn.bnsr.edu_yun.frontstage.base.view.TextBookView;
+import cn.bnsr.edu_yun.util.NumUtil;
+
+/**
+ * 学段、科目controller
+ * @author fangxiongwei
+ * @date 2016年9月5日
+ */
+@Controller
+@RequestMapping("/subject")
+public class SubjectListController {
+	@Autowired
+	private SubjectListService subjectListService;
+	@Autowired
+	private PubverListService pubverListService;
+	@Autowired
+	private BookCatService bookCatService;
+	
+	/**
+	 * 查询科目信息
+	 */
+	@RequestMapping("/query_subject")
+	@ResponseBody
+	public  JSONArray  querySubject(HttpServletRequest request) {
+		String subId = request.getParameter("subId");
+		String typeFlag = request.getParameter("typeFlag");
+		TextBookView textBook = new TextBookView();
+		//科目
+		List<SubjectList> subjectList = subjectListService.querySubject(subId);
+		//教材版本
+		List<PubverList> editionList = null;
+		if(subjectList.size()>0){
+			 editionList =  pubverListService.queryPubver(subjectList.get(0).getId());
+		}
+		//年级
+		List<BookCat> gradeList = null;
+		if(editionList != null && editionList.size()>0){
+			gradeList = bookCatService.queryBookCat(editionList.get(0).getId());
+		}
+		if(typeFlag != null && typeFlag.equals("six")){//查6级分类
+			//章节
+			List<BookCat> chapterList = null;
+			if(gradeList!=null&&gradeList.size()>0){
+				chapterList = bookCatService.queryBookCat(gradeList.get(0).getId());
+			}
+			//小节
+			List<BookCat> sectionList = null;
+			if(chapterList!=null && chapterList.size()>0){
+				sectionList = bookCatService.queryBookCat(chapterList.get(0).getId());
+			}
+			textBook.setChapterList(chapterList);
+			textBook.setSectionList(sectionList);
+		}
+		textBook.setSubjectList(subjectList);
+		textBook.setEditionList(editionList);
+		textBook.setGradeList(gradeList);
+		return JSONArray.fromObject(textBook);
+	}
+	/**
+	 * 只查询科目信息
+	 * @return JSONArray
+	 */
+	@RequestMapping("/only_query_subject")
+	@ResponseBody
+	public JSONArray only_query_subject(HttpServletRequest request){
+		String subId = request.getParameter("subId");
+		List<SubjectList> subjectList = subjectListService.querySubject(subId);
+		JSONArray jsonArray = JSONArray.fromObject(subjectList);
+		return jsonArray;
+		
+	}
+	
+	/**
+	 * 查询根据学段ids 学科
+	 */
+	@ResponseBody
+	@RequestMapping("/search_subject")
+	public JSONArray searchSubject(HttpServletRequest request) {
+		String ids = request.getParameter("ids");
+		List<String> list = NumUtil.getList(ids);
+		List<SubjectList> subjectList = subjectListService.searchSubject(list);
+		if (subjectList != null) {
+			return JSONArray.fromObject(subjectList);
+		} else {
+			return JSONArray.fromObject(0);
+		}
+	}
+	
+	
+	
+}

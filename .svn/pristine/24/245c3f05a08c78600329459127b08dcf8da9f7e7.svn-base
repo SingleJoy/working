@@ -1,0 +1,8 @@
+package cn.bnsr.edu_yun.frontstage.train.service;
+
+import cn.bnsr.edu_yun.frontstage.train.po.UserStudyTime;
+
+public interface UserStudyTimeService {
+
+	int insert(UserStudyTime userStudyTime);
+}

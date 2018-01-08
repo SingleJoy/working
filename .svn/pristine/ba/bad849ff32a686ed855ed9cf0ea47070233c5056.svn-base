@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>课程班级作业</title>
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/bootstrap/css/bootstrap.css?7.3.3" rel="stylesheet" />
+
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/common.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/css/font-awesome.min.css?7.3.3" />
+    <link rel="stylesheet" media="screen" href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/es-icon.css?7.3.3" />
+
+    <link href="http://scc1a8b2s6-static.edusoho.net/assets/v2/css/main.css?7.3.3" rel="stylesheet" />
+  <script type="text/javascript" src="./edusoho/jquery.1.10.2.js"></script>
+
+</head>
+<body>
+
+<div class="es-wrap">
+    <div id="content-container" class="container">
+        <div class="question-set homework-set">
+            <div class="row question-set-heading">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="question-set-type">作业名称</div>
+                            <div class="question-set-title" style="    margin-left: 120px;">弹奏C</div>
+                            
+                            <div class="question-set-type" style="top:60px;">作业要求</div>
+                            <div class="question-set-description" style="    margin-left: 120px;">
+                                <p> 1 .写出C的四分音符，二分音符，全音符</p>
+                                <p> 2. 听附件中的曲子，并模仿练习上传练习视频</p>
+                                <p> 附件：<a href="">小农庄</a></p>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row question-set-body">
+                <div class="col-md-12 question-set-main">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">学员作业</div>
+                        <div class="panel-body">
+                            <div class="question-set-items">
+
+
+                                <div class="question-set-item">
+                                    <div class="question-set-item-side" style="width:80px;">
+                                        <span class="question-set-item-seq">张丹丹</span>
+                                    </div>
+                                    <div class="question-set-item-main" style="margin-left:90px;">
+                                        <div class="question question-essay question-3">
+                                            <div class="question-heading editor-text">  
+                                                <p>提交时间：2016/11/4</p>
+                                            </div>
+                                            <div class="question-body clearfix">
+                                                <div class="question-eassy-form-control">
+                                                    <div class="question-eassy-answer">
+                                                        <strong>学员回答:</strong>
+                                                    </div>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio</p>
+                                                </div>
+                                                <div class="question-eassy-form-control question-teacher-say-input">
+                                                    <strong>成绩&nbsp;&nbsp;</strong> 
+                                                    <input class="form-control width-input" name="" value="" >&nbsp;&nbsp;分&nbsp;&nbsp;
+                                                    <button type="submit" class="btn btn-primary">提交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="question-set-item">
+                                    <div class="question-set-item-side" style="width:80px;">
+                                        <span class="question-set-item-seq">张丹丹2</span>
+                                    </div>
+                                    <div class="question-set-item-main" style="margin-left:90px;">
+                                        <div class="question question-essay question-3">
+                                            <div class="question-heading editor-text">  
+                                                <p>提交时间：2016/11/4</p>
+                                            </div>
+                                            <div class="question-body clearfix">
+                                                <div class="question-eassy-form-control">
+                                                    <div class="question-eassy-answer">
+                                                        <strong>学员回答:</strong>
+                                                    </div>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio</p>
+                                                </div>
+                                                <div class="question-eassy-form-control question-teacher-say-input">
+                                                    <strong>成绩&nbsp;&nbsp;</strong> 
+                                                    <input class="form-control width-input" name="" value="" >&nbsp;&nbsp;分&nbsp;&nbsp;
+                                                    <button type="submit" class="btn btn-primary">提交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="question-set-item">
+                                    <div class="question-set-item-side" style="width:80px;">
+                                        <span class="question-set-item-seq">张丹丹3</span>
+                                    </div>
+                                    <div class="question-set-item-main" style="margin-left:90px;">
+                                        <div class="question question-essay question-3">
+                                            <div class="question-heading editor-text">  
+                                                <p>提交时间：2016/11/4</p>
+                                            </div>
+                                            <div class="question-body clearfix">
+                                                <div class="question-eassy-form-control">
+                                                    <div class="question-eassy-answer">
+                                                        <strong>学员回答:</strong>
+                                                    </div>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio</p>
+                                                </div>
+                                                <div class="question-eassy-form-control question-teacher-say-input">
+                                                    <strong>成绩&nbsp;&nbsp;</strong> 
+                                                    <input class="form-control width-input" name="" value="" >&nbsp;&nbsp;分&nbsp;&nbsp;
+                                                    <button type="submit" class="btn btn-primary">提交</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="question-set-item">
+                                    <table class="table table-striped table-hover table-bordered" style="width:30%;margin-left:50px;">
+                                        <thead>
+                                            <tr>
+                                                <th width="25%">姓名</th>
+                                                <th>成绩</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="sel-div">
+                                            <tr>
+                                                <td> 张丹丹 </td>
+                                                <td> 12 </td>
+                                                <td>  </td>
+                                            </tr>
+                                            <tr>
+                                                <td> 张丹丹2 </td>
+                                                <td> 34 </td>
+                                                <td>  </td>
+                                            </tr>
+                                            <tr>
+                                                <td> 张丹丹3 </td>
+                                                <td> 88 </td>
+                                                <td>  </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

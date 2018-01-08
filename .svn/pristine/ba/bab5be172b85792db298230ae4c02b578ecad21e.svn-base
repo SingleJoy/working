@@ -1,0 +1,433 @@
+package cn.bnsr.edu_yun.frontstage.xbjy.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.bnsr.edu_yun.frontstage.base.po.User;
+import cn.bnsr.edu_yun.frontstage.xbjy.po.Lesson;
+import cn.bnsr.edu_yun.frontstage.xbjy.po.LessonDesign;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonAttachmentService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonDesignService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonTimeService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonUserIdentityService;
+import cn.bnsr.edu_yun.frontstage.xbjy.service.LessonUserTaskService;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonAttachmentView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonDesignView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonTimeView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonUserTaskView;
+import cn.bnsr.edu_yun.frontstage.xbjy.view.LessonView;
+
+@Controller
+@RequestMapping("/lesson_design")
+public class LessonDesignController {
+
+	private final Logger log = LoggerFactory.getLogger(LessonDesignController.class);
+	@Autowired
+	private LessonService lessonService;
+	@Autowired
+	private LessonDesignService lessonDesignService;
+	@Autowired
+	private LessonAttachmentService lessonAttachmentService;
+	@Autowired
+	private LessonUserTaskService lessonUserTaskService;
+	@Autowired
+	private LessonTimeService lessonTimeService;
+	@Autowired
+	private LessonUserIdentityService lessonUserIdentityService;
+
+	/**
+	 * 跳转教学设计与课件
+	 * 
+	 * @param request
+	 * @param lessonView
+	 * @return
+	 */
+	@RequestMapping("/to_lesson_design")
+	public ModelAndView toLesson(HttpServletRequest request, LessonDesignView lessonDesignView, Integer tab) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		LessonView lessonView = lessonService.queryLessonView(lessonDesignView.getLesson_id());
+		if (user == null) {
+			// 没有登录的情况
+			lessonDesignView.setOrder("desc");
+			LessonDesignView lessonDesign = lessonDesignService.queryVersion(lessonDesignView);
+			modelAndView.addObject("lessonDesign", lessonDesign);
+			List<LessonDesignView> lessonDesignViews = lessonDesignService.queryAll(lessonDesignView);
+			modelAndView.addObject("lessonDesignViews", lessonDesignViews);
+			modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design_show");
+			if (tab == 0) {
+			modelAndView.addObject("head_title", "提交教学设计与课件");
+			}else if (tab == 1) {
+			modelAndView.addObject("head_title", "初始教学设计协同修改");
+			}else if (tab == 2) {
+			modelAndView.addObject("head_title", "查看内容");
+			}else if (tab == 3) {
+			modelAndView.addObject("head_title", "提交修改后的教学设计");
+			}else if (tab == 4) {
+			modelAndView.addObject("head_title", "提交反思后教学设计");
+			}
+			modelAndView.addObject("flag", false);
+		} else {
+			if (tab == 0) {
+				// tab=0 环节1，任务2入口，
+				LessonAttachmentView lessonAttachmentView = new LessonAttachmentView();
+				lessonAttachmentView.setLesson_id(lessonDesignView.getLesson_id());
+				lessonAttachmentView.setPurview(102);
+				List<LessonAttachmentView> lessonAttachmentViews = lessonAttachmentService.selectFileList(lessonAttachmentView);
+				modelAndView.addObject("lessonAttachmentViews", lessonAttachmentViews);
+				lessonDesignView.setUser_id(user.getId());
+				lessonDesignView.setOrder("asc");
+				LessonDesignView lessonDesign = lessonDesignService.queryVersion(lessonDesignView);
+				boolean flag = true;// 权限
+				LessonUserTaskView lessonUserTaskView = new LessonUserTaskView();
+				lessonUserTaskView.setUser_id(user.getId());
+				lessonUserTaskView.setLesson_id(lessonDesignView.getLesson_id());
+				lessonUserTaskView.setPurview(102);// 102
+				lessonUserTaskView = lessonUserTaskService.findByLUP(lessonUserTaskView);
+				if (lessonUserTaskView == null) {// 是否有权限
+					flag = false;
+				} else {
+					// 是否在任务时间内
+					LessonTimeView lessonTimeView = lessonTimeService.findByLesson(lessonDesignView.getLesson_id());
+					Date start = lessonTimeView.getPlan_sta();
+					Date end = lessonTimeView.getPlan_end();
+					Date date = new Date();
+					if (date.getTime() < start.getTime() || date.getTime() > end.getTime() + 86400000) {
+						flag = false;
+					}
+
+				}
+				modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design_show");
+				modelAndView.addObject("flag", flag);
+				if (flag) {
+					// 时间没到，有权限
+					if (lessonDesign == null) {// 还没有进行过编辑
+						modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design");
+					} else {// 进行过编辑，2为已经提交了，不能在修改
+						if (lessonUserTaskView.getStatus() != 2) {
+							// 1为可以修改
+							modelAndView.addObject("update", 1);
+						} else {
+							// 0为不能修改
+							modelAndView.addObject("update", 0);
+						}
+					}
+				} else {
+					lessonDesignView.setOrder("desc");
+					lessonDesignView.setUser_id(null);
+					lessonDesign = lessonDesignService.queryVersion(lessonDesignView);
+				}
+				modelAndView.addObject("lessonDesign", lessonDesign);
+				modelAndView.addObject("head_title", "提交教学设计与课件");
+			} else if (tab == 1) {
+				// 201，2阶段第1项
+				// 协同修改，自己是否存在数据，没有就显示上一个版本的,有就显示自己的
+				LessonDesignView lessonDesign=null;
+				if(lessonView.getStatus()!=2){
+				lessonDesignView.setUser_id(user.getId());
+				lessonDesignView.setOrder("asc");
+				 lessonDesign = lessonDesignService.queryVersion(lessonDesignView);
+				}else{
+				lessonDesignView.setOrder("desc");
+				 lessonDesign = lessonDesignService.queryVersion(lessonDesignView);
+				}
+				if (lessonDesign == null) {
+					lessonDesignView.setOrder("desc");
+					lessonDesignView.setUser_id(null);
+					lessonDesign = lessonDesignService.queryVersion(lessonDesignView);
+
+				}
+				modelAndView.addObject("lessonDesign", lessonDesign);
+				boolean flag = true;// 权限
+				if (lessonDesign == null) {
+					flag = false;
+				}
+				LessonUserTaskView lessonUserTaskView = new LessonUserTaskView();
+				lessonUserTaskView.setUser_id(user.getId());
+				lessonUserTaskView.setLesson_id(lessonDesignView.getLesson_id());
+				lessonUserTaskView.setPurview(201);
+				lessonUserTaskView = lessonUserTaskService.findByLUP(lessonUserTaskView);
+				if (lessonUserTaskView == null) {
+					flag = false;
+				} else {
+					if (lessonUserTaskView.getStatus() != 2) {
+						// 1为可以修改
+						modelAndView.addObject("update", 1);
+					} else {
+						// 0为不能修改
+						modelAndView.addObject("update", 0);
+					}
+					LessonTimeView lessonTimeView = lessonTimeService.findByLesson(lessonDesignView.getLesson_id());
+					Date start = lessonTimeView.getprepare_sta();
+					Date end = lessonTimeView.getprepare_end();
+					Date date = new Date();
+					if (date.getTime() < start.getTime() || date.getTime() > end.getTime() + 86400000) {
+						flag = false;
+					}
+
+				}
+				modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design_show");
+				modelAndView.addObject("flag", flag);
+				List<LessonDesignView> lessonDesignViews = lessonDesignService.queryAll(lessonDesignView);
+				modelAndView.addObject("lessonDesignViews", lessonDesignViews);
+				modelAndView.addObject("head_title", "初始教学设计协同修改");
+			} else if (tab == 2) {
+				// 协同修改里的查看各个版本的方法，只用来查看
+				LessonDesign lessonDesign = lessonDesignService.selectById(lessonDesignView.getId());
+				modelAndView.addObject("lessonDesign", lessonDesign);
+				modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design_show");
+				modelAndView.addObject("head_title", "查看内容");
+			} else if (tab == 3 || tab == 4) {
+				// 204，tab=3时，为2阶段第4项
+				// 502，tab=4时，为5阶段第2项
+				lessonDesignView.setOrder("desc");
+				LessonDesignView lessonDesign = lessonDesignService.queryVersion(lessonDesignView);
+				modelAndView.addObject("lessonDesign", lessonDesign);
+
+				boolean flag = true;// 权限
+				if (lessonDesign == null) {
+					flag = false;
+				} else if (lessonDesign.getStatus() == null) {
+					if (tab != 4)
+						modelAndView.addObject("update", 1);
+					else
+						modelAndView.addObject("update", 0);
+				} else if (lessonDesign.getStatus() == 1) {
+					if (tab == 4)
+						modelAndView.addObject("update", 1);
+					else
+						modelAndView.addObject("update", 0);
+				} else {
+					modelAndView.addObject("update", 0);
+				}
+				LessonUserTaskView lessonUserTaskView = new LessonUserTaskView();
+				lessonUserTaskView.setUser_id(user.getId());
+				lessonUserTaskView.setLesson_id(lessonDesignView.getLesson_id());
+				if (tab == 3){
+					modelAndView.addObject("head_title", "提交修改后的教学设计");
+					lessonUserTaskView.setPurview(204);
+				}
+				else{
+					modelAndView.addObject("head_title", "提交反思后教学设计");
+					lessonUserTaskView.setPurview(502);
+				}
+				lessonUserTaskView = lessonUserTaskService.findByLUP(lessonUserTaskView);
+				if (lessonUserTaskView == null) {
+					flag = false;
+				} else {
+					LessonTimeView lessonTimeView = lessonTimeService.findByLesson(lessonDesignView.getLesson_id());
+					Date start = null;
+					Date end = null;
+					if (tab == 3) {
+						start = lessonTimeView.getprepare_sta();
+						end = lessonTimeView.getprepare_end();
+					}
+					if (tab == 4) {
+						start = lessonTimeView.getIntrospection_sta();
+						end = lessonTimeView.getIntrospection_end();
+					}
+					Date date = new Date();
+					if (date.getTime() < start.getTime() || date.getTime() > end.getTime() + 86400000) {
+						flag = false;
+					}
+
+				}
+				modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design_show");
+				modelAndView.addObject("flag", flag);
+				LessonAttachmentView lessonAttachmentView = new LessonAttachmentView();
+				lessonAttachmentView.setLesson_id(lessonDesignView.getLesson_id());
+				// 102是指在进行102时上传的附件
+				lessonAttachmentView.setPurview(102);
+				List<LessonAttachmentView> lessonAttachmentViews = lessonAttachmentService.selectFileList(lessonAttachmentView);
+				modelAndView.addObject("lessonAttachmentViews", lessonAttachmentViews);
+			}
+		}
+		Lesson lesson = lessonService.getById(lessonDesignView.getLesson_id());
+		modelAndView.addObject("lessonView", lessonView);
+		modelAndView.addObject("lesson", lesson);
+		modelAndView.addObject("tab", tab);
+
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		request.setAttribute("state", state);
+		request.setAttribute("stamp", stamp);
+		// 获取课例头部统计信息
+		request.setAttribute("lessonHead", lessonUserIdentityService.getLessonHead(lessonView.getId()));
+		// 获取左侧权限部分信息
+		request.setAttribute("lessonLeft", lessonUserIdentityService.getLessonLeft(lessonView.getId(), user));
+
+		return modelAndView;
+	}
+
+	// 修改方法update_design
+	@RequestMapping("/update_design")
+	public ModelAndView updateDesign(HttpServletRequest request, LessonDesignView lessonDesignView, Integer tab) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = (User) request.getSession().getAttribute("currentUser");
+		LessonView lessonView = lessonService.queryLessonView(lessonDesignView.getLesson_id());
+		LessonDesign lessonDesign = lessonDesignService.selectById(lessonDesignView.getId());
+		if (lessonDesign.getVersion_num() != null)
+			if (lessonDesign.getUser_id() != user.getId() || lessonDesign.getVersion_num() == 1) {
+				lessonDesign.setId(null);
+			}
+		modelAndView.addObject("lessonView", lessonView);
+		modelAndView.addObject("tab", tab);
+		modelAndView.addObject("lessonDesign", lessonDesign);
+
+		boolean flag = true;// 权限
+		LessonUserTaskView lessonUserTaskView = new LessonUserTaskView();
+		lessonUserTaskView.setUser_id(user.getId());
+		lessonUserTaskView.setLesson_id(lessonDesignView.getLesson_id());
+		if (tab == 3){
+			lessonUserTaskView.setPurview(204);
+			modelAndView.addObject("head_title", "提交修改后的教学设计");
+		}
+		else if (tab == 4){
+			lessonUserTaskView.setPurview(502);
+			modelAndView.addObject("head_title", "提交反思后教学设计");
+		}
+		else if (tab == 0){
+			lessonUserTaskView.setPurview(102);
+			modelAndView.addObject("head_title", "提交教学设计与课件");
+		}
+		else if (tab == 1){
+			lessonUserTaskView.setPurview(201);
+			modelAndView.addObject("head_title", "初始教学设计协同修改");
+		}
+		else
+			lessonUserTaskView.setPurview(0);
+		lessonUserTaskView = lessonUserTaskService.findByLUP(lessonUserTaskView);
+		// 权限
+		if (lessonUserTaskView == null) {
+			flag = false;
+		} else {
+			LessonTimeView lessonTimeView = lessonTimeService.findByLesson(lessonDesignView.getLesson_id());
+			Date start = null;
+			Date end = null;
+			if (tab == 3 || tab == 1) {
+			    start = lessonTimeView.getprepare_sta();
+				 end = lessonTimeView.getprepare_end();
+			} else if (tab == 0) {
+				start = lessonTimeView.getPlan_sta();
+				end = lessonTimeView.getPlan_end();
+			} else {
+				start = lessonTimeView.getPlan_sta();
+				end = lessonTimeView.getPlan_end();
+			}
+			Date date = new Date();
+
+			if (date.getTime() < start.getTime() || date.getTime() > end.getTime() + 86400000) {
+				flag = false;
+			}
+
+		}
+
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		request.setAttribute("state", state);
+		request.setAttribute("stamp", stamp);
+		// 获取课例头部统计信息
+		request.setAttribute("lessonHead", lessonUserIdentityService.getLessonHead(lessonView.getId()));
+		// 获取左侧权限部分信息
+		request.setAttribute("lessonLeft", lessonUserIdentityService.getLessonLeft(lessonView.getId(), user));
+		Lesson lesson = lessonService.getById(lessonDesignView.getLesson_id());
+		modelAndView.addObject("lesson", lesson);
+		modelAndView.addObject("flag", flag);
+		modelAndView.addObject("update", true);
+		if (flag)
+			modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design");
+		else
+			modelAndView.setViewName("frontstage/xbjy/lesson/lesson_design_show");
+		return modelAndView;
+	}
+
+	// 仅保存方法
+	// 保存方法并提交方法
+	@RequestMapping("/saveOrUpdate")
+	public ModelAndView saveOrUpdate(HttpServletRequest request, LessonDesignView lessonDesignView, Integer tab) {
+		User user = (User) request.getSession().getAttribute("currentUser");
+		ModelAndView modelAndView = new ModelAndView();
+		lessonDesignView.setUser_id(user.getId());
+		if (tab == 3 || tab == 4) {
+			lessonDesignView.setId(null);
+		}
+		if (lessonDesignView.getId() != null && lessonDesignView.getId() != 0) {
+			// update
+			lessonDesignService.update(lessonDesignView, tab);
+		} else {
+			// save
+			lessonDesignService.save(lessonDesignView, tab);
+
+		}
+		if (lessonDesignView.getStatus() == 1) {
+			// 代表保存并提交，然后完成此阶段
+			LessonUserTaskView lessonUserTaskView = new LessonUserTaskView();
+			lessonUserTaskView.setUser_id(user.getId());
+			lessonUserTaskView.setLesson_id(lessonDesignView.getLesson_id());
+			if (tab == 3)
+				lessonUserTaskView.setPurview(204);
+			else if (tab == 4)
+				lessonUserTaskView.setPurview(502);
+			else if (tab == 0)
+				lessonUserTaskView.setPurview(102);
+			else if (tab == 1)
+				lessonUserTaskView.setPurview(201);
+			lessonUserTaskView = lessonUserTaskService.findByLUP(lessonUserTaskView);
+			if (lessonUserTaskView != null) {
+				lessonUserTaskView.setStatus(2);
+				lessonUserTaskService.update(lessonUserTaskView);
+			}
+		}
+		String state = request.getParameter("state");
+		String stamp = request.getParameter("stamp");
+		request.setAttribute("state", state);
+		request.setAttribute("stamp", stamp);
+		modelAndView.setViewName("redirect:/lesson_design/to_lesson_design.action?lesson_id=" + lessonDesignView.getLesson_id() + "&stamp=1&tab=" + tab);
+		return modelAndView;
+	}
+
+	// 比对方法
+	@RequestMapping("/compare")
+	public ModelAndView compare(HttpServletRequest request, LessonDesignView lessonDesignView, int tab) {
+		ModelAndView modelAndView = new ModelAndView("frontstage/xbjy/lesson/lesson_design_compare");
+		LessonDesignView lessonDesign = lessonDesignService.queryById(lessonDesignView.getId());
+		LessonView lessonView = lessonService.queryLessonView(lessonDesign.getLesson_id());
+		LessonDesignView lessonDesign2 = null;
+		// 和上一版本比对
+		if (lessonDesignView.getCompare().equals("before")) {
+			lessonDesignView.setLesson_id(lessonDesign.getLesson_id());
+			lessonDesignView.setVersion_num(lessonDesign.getVersion_num() - 1);
+			lessonDesign2 = lessonDesignService.queryCompare(lessonDesignView);
+			modelAndView.addObject("head_title", "与上一版本比对");
+		}
+		// 和第一个版本比对
+		if (lessonDesignView.getCompare().equals("first")) {
+			lessonDesignView.setLesson_id(lessonDesign.getLesson_id());
+			lessonDesignView.setVersion_num(1);
+			lessonDesign2 = lessonDesignService.queryCompare(lessonDesignView);
+			modelAndView.addObject("head_title", "与第一个版本比对");
+		}
+		// 和最后一个版本比对
+		if (lessonDesignView.getCompare().equals("last")) {
+			lessonDesignView.setLesson_id(lessonDesign.getLesson_id());
+			lessonDesignView.setOrder("desc");
+			lessonDesign2 = lessonDesignService.queryVersion(lessonDesignView);
+			modelAndView.addObject("head_title", "与最后一个版本比对");
+		}
+		modelAndView.addObject("lessonView", lessonView);
+		modelAndView.addObject("lessonDesign1", lessonDesign);
+		modelAndView.addObject("tab", tab);
+		modelAndView.addObject("lessonDesign2", lessonDesign2);
+		return modelAndView;
+	}
+}

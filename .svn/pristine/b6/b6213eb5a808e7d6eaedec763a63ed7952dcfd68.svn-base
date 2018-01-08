@@ -1,0 +1,609 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>数据统计</title>
+
+	<!-- jquery库 -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-1.8.2.min.js" charset="utf-8"></script>
+	<!-- easyui相关库 -->
+	<link id="easyuiTheme" rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/<c:out value="${cookie.easyuiThemeName.value}" default="default"/>/easyui.css" type="text/css"></link>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/themes/icon.css" type="text/css"></link>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/jquery.easyui.min.js?v0.1" charset="utf-8"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/jquery-easyui-1.3.1/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/backstage/css/data.css" type="text/css">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/jquery.1.10.2.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/echarts.min.js"></script>
+	<script src="${pageContext.request.contextPath}/frontstage/js/china.js"></script>
+	<%-- 	<script type="text/javascript" src="${pageContext.request.contextPath}/backstage/js/walden.project.json.js" charset="utf-8"></script> --%>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/frontstage/js/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+        // 统计数据展开与收起
+        $(function () {
+            $(".fold_open").click(function () {
+                $(this).hide();
+                $("#data_pic").show();
+                $(".fold_close").show();
+                $("#data_title").hide();
+
+            });
+            $(".fold_close").click(function () {
+                $(this).hide();
+                $("#data_pic").hide();
+                $(".fold_open").show();
+                $("#data_title").show();
+            });
+        })
+
+	</script>
+	<style>
+        *{margin: 0;padding: 0;}
+        table{border-collapse:collapse;   border-spacing:0; }
+        a{text-decoration: none;}
+        body{background-color: #ececec;}
+        .main_content{}
+        .main_head{font-size: 16px; background-color: #fff; padding: 20px;}
+        .main_head_content{max-width: 1050px;}
+        .main_body{margin: 20px;background-color: #fff;}
+
+        .time>div{float: left;margin-right:10px;}
+
+        .select_time{}
+        .select_time>span>input{width: 100px;}
+        .select_time>span{margin-left: 10px;}
+
+        .choose_date_01>a,.choose_date_02>a{color:#616161;text-decoration: none;margin-right: 5px;}
+        .choose_date_01>a.active{display: inline-block;background-color: #4da7fd;color: #fff;padding:2px;}
+        .choose_date_01>a.inactive{display: inline-block;background-color: #d9d2f0;color: #fff;padding:2px;}
+        .choose_area{margin-right: 15px;}
+
+
+        .user_info{margin: 20px auto;padding-top: 30px;}
+        .user_info>div{float: left;padding: 0 20px;min-width: 180px;text-align: center;}
+        .user_info>div>label{font-size: 20px;text-align: center;color: orange;}
+        .user_info>div>span{font-size:12px;text-align: center;min-width: 60px;}
+        .table_sta{border:1px solid #ddd;border-left: none;border-bottom: none;}
+        .table_sta>thead>tr>th,.table_sta>tbody>tr>td{width: 173px;text-align: center;border-bottom: 1px solid #ddd;
+            border-left: 1px solid #ddd;font-size: 14px;line-height: 30px;}
+        .table_sta>thead>tr>th{background-color: #ececec;padding: 5px 10px;}
+
+        .table_sta_area>thead>tr>th{font-size: 14px;line-height: 30px;background-color: #eaeaea;}
+        .table_sta_area>tbody>tr>td{border-top: 1px solid #ddd;font-size: 12px;line-height: 30px;text-align: center;}
+        .table_sta_area>tbody>tr>td:nth-child(2){text-align: left;}
+        .table_sta_area{border: 1px solid #ddd;margin-left: 220px}
+
+
+        .compare_info{text-align: center;}
+        .compare_info>span{}
+        .compare_info>div{display: inline-block;}
+
+        #databody>tr>td{font-size: 14px;line-height: 25px;}
+        #compares{text-align: center;}
+
+        .fold_open{background-position: left -725px;background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            -background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            background-repeat: no-repeat;width: 50px;height:30px;cursor: pointer;display: none;}
+        .fold_close{background-position: left -761px;background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            -background-image: url("https://tongji.baidu.com/web/css/decorator/common-27e91804d8225c4ae854bd93a9db09b8.png");
+            background-repeat: no-repeat;width: 50px;height:30px;cursor: pointer;margin-top: -70px;}
+        #data_title{display: none;font-size: 18px;margin-top: 20px;}
+
+        .download_data_btn{color: orange;font-size: 16px;margin-left: 60px;}
+
+        .online_title{}
+        .online_title>p{}
+        .online_title>span{}
+
+        .calendar_time{float:left;width: 200px;margin-top: 80px;}
+        .usertrend{float:left;}
+
+    </style>
+
+
+    <style>
+        .data_pic{float: left;width: 45%;margin-right: 20px;}
+    </style>
+
+</head>
+<body>
+<div class="main_content">
+	<div class="main_head">
+		<div class="main_head_content">
+			<h3>地域分布
+				<%-- <a class="download_data_btn" href="${pageContext.request.contextPath}/back_user/export_user_trend.action?<c:if test="${isDuration==0}">startTime=${startTime}&endTime=${endTime}&</c:if>
+                       <c:if test="${isDuration==1}">days=${days}&</c:if>timeUnit=${timeUnit}&device=${device}&province_id=<c:if test="${empty province_id}">0</c:if>
+                      <c:if test="${!empty province_id}">${province_id}</c:if>&logType=${logType}&compare=${compare}">
+					<img src="${pageContext.request.contextPath}/frontstage/images/read_download.png">&nbsp;&nbsp;导出数据
+				</a> --%>
+
+			</h3>
+			<form id="stupid" action="${pageContext.request.contextPath}/back_user/to_areal_distribution.action">
+				<br/>
+				<input type="hidden" name="logType" id="logType" value="${logType}">
+				<div class="time">
+					<div class="choose_date_01">
+						<span>时间：</span>
+						<input type="hidden" name="timeType" id="timeType" value="${timeType}">
+						<a onclick="queryByTimeType(0);" class="<c:if test="${timeType=='0'}">active</c:if>" href="javascript:void(0);">今天</a>
+						<a onclick="queryByTimeType(1);" class="<c:if test="${timeType=='1'}">active</c:if>" href="javascript:void(0);">昨天</a>
+						<a onclick="queryByTimeType(2);" class="<c:if test="${timeType=='2'}">active</c:if>" href="javascript:void(0);">最近7天</a>
+						<a onclick="queryByTimeType(3);" class="<c:if test="${timeType=='3'}">active</c:if>" href="javascript:void(0);">最近30天</a>
+						<select id="isDuration" name="isDuration" onchange="doDuration(this)"  style="height: 25px;padding:2px;" >
+							<option value="1" <c:if test="${isDuration!='0'&&timeType!='2'&&timeType!='3'}">selected</c:if> >一天</option>
+							<option value="0" <c:if test="${isDuration!='1'&&timeType!='0'&&timeType!='1'}">selected</c:if> >时间段</option>
+						</select>
+					</div>
+
+					<div id="single" class="select_time"  style="<c:if test="${isDuration!='1'&&timeType!='0'&&timeType!='1'}">display: none;</c:if>">
+						<span><input id="days" name="days" <c:if test="${!empty days&&days!='undefined'}">value="${days}"</c:if> class="easyui-datebox" data-options="onSelect:onSelect,editable:false" style="width: 100px;" /></span>
+					</div>
+
+					<div id="duration" class="select_time" style="<c:if test="${isDuration!='0'&&timeType!='2'&&timeType!='3'}">display: none;</c:if>">
+						<span>开始日期：<input id="startTime" name="startTime" <c:if test="${!empty startTime&&startTime!='undefined'}">value="${startTime}"</c:if> class="easyui-datebox" data-options="onSelect:onSelect,editable:false" style="width: 100px;" /></span>
+						<span>结束日期：<input id="endTime" name="endTime" <c:if test="${!empty endTime&&endTime!='undefined'}">value="${endTime}"</c:if> class="easyui-datebox" data-options="onSelect:onSelect,editable:false"  style="width: 100px;"/></span>
+					</div>
+				</div>
+				<br/>
+				<br/>
+				<div class="time">
+					<div class="choose_date_01">
+						<span>设备：</span>
+						<input type="hidden" name="device" id="device" value="${device}">
+						<a onclick="queryByDevice('-1');" class="<c:if test="${device=='-1'}">active</c:if>" href="javascript:void(0);">全部</a>
+						<a onclick="queryByDevice('0');" class="<c:if test="${device=='0'}">active</c:if>" href="javascript:void(0);">PC端</a>
+						<a onclick="queryByDevice('1');" class="<c:if test="${device=='1'}">active</c:if>" href="javascript:void(0);">移动端</a>
+					</div>
+					<div class="choose_date_01">
+                        <span>用户：</span>
+                        <input type="hidden" name="status" id="status" value="${status}">
+                        <a onclick="queryByStatus(0);" class="<c:if test="${status==0}">active</c:if>" href="javascript:void(0);">全部</a>
+                        <a onclick="queryByStatus(1);" class="<c:if test="${status==1}">active</c:if>" href="javascript:void(0);">新用户</a>
+                        <a onclick="queryByStatus(2);" class="<c:if test="${status==2}">active</c:if>" href="javascript:void(0);">老用户</a>
+
+                    </div>
+				</div>
+				<br>
+				<br>
+				<%-- <div class="time">
+					<div class="choose_date_01">
+						<span>指标：</span>
+						<input type="hidden" name="logType" id="logType" value="${logType}">
+						<a onclick="queryByLogType('0');" class="<c:if test="${fn:contains(logType,'0')==true}">active</c:if>" href="javascript:void(0);">登录数</a>
+						<a onclick="queryByLogType('1');" class="<c:if test="${fn:contains(logType,'1')==true}">active</c:if>" href="javascript:void(0);">新增数</a>
+						<a onclick="queryByLogType('2');" class="<c:if test="${fn:contains(logType,'2')==true}">active</c:if>" href="javascript:void(0);">IP数</a>
+						<a onclick="queryByLogType('3');" class="<c:if test="${fn:contains(logType,'3')==true}">active</c:if>" href="javascript:void(0);">平均访问时长</a>
+					</div>
+				</div>
+				<br/> --%>
+
+			</form>
+		</div>
+
+	</div>
+
+	 <div class="main_body" style="min-height: 600px;">
+
+
+        <div class="time user_info">
+            <div>
+                <span>登录数</span><br>
+                <label id="loginNum" class="number" >0</label>
+            </div>
+            <div>
+                <span>新增数</span><br>
+                <label id="newNum" class="number" >10</label>
+            </div>
+            <div>
+                <span>IP数</span><br>
+                <label id="ipNum" class="number" >20%</label>
+            </div>
+            <div>
+                <span>平均访问时长</span><br>
+                <label id="avgVisitInterval" class="number" >03:00:00</label>
+            </div>
+        </div>
+
+        <div class="area_content_select" style="margin-top: 90px">
+            <div class="choose_date_01 " style="clear: both;margin-left: 50px;">
+                <span>指标：</span>
+                <span class="choose_area">
+	                    <select  onchange="queryByLogType(this);"  style="padding: 2px;height:25px;">
+                            <option value="0" <c:if test="${logType=='0'}">selected="selected"</c:if>>登录数</option>
+                            <option value="1" <c:if test="${logType=='1'}">selected="selected"</c:if>>新增数</option>                   
+                            <option value="2" <c:if test="${logType=='2'}">selected="selected"</c:if>>IP数</option>
+                        </select>
+	                </span>
+            </div>
+            <div class="choose_date_01 " style="margin-left: -100px;margin-top: -5px;float: left;width: 40%;">
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	            <div id="arealDistribution" style="width:700px; height: 400px;margin: auto;">
+	
+	            </div>
+            </div>
+
+            <table class="table_sta_area" style="float: left;width: 45%;">
+                <thead>
+                <tr>
+                    <th style="width: 15%;text-align: center;"></th>
+                    <th style="width: 25%;text-align: left;">地域</th>
+                    <th style="width: 30%;"><c:if test="${logType=='0'}">登录数</c:if><c:if test="${logType=='1'}">新增数</c:if><c:if test="${logType=='2'}">IP数</c:if></th>
+                    <th style="width: 20%;">占比</th>
+
+                </tr>
+
+                </thead>
+                <tbody id="littleBody">
+                </tbody>
+            </table>
+
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="time" style="clear: both;margin-top:360px;padding-left: 20px;">
+            <table class="table_sta">
+                <thead>
+                <tr>
+                    <th>地域</th>
+                    <th>登录数</th>
+                    <th>新增数</th>
+                    <th>IP数</th>
+                    <th>平均访问时长</th>
+                </tr>
+
+                </thead>
+                <tbody id="databody">
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript">
+    var areass = new Array();
+    $(function(){
+        $.ajax({
+            type : 'POST',
+            async :false,
+            url : '${pageContext.request.contextPath}/back_user/query_areal_distribution.action',
+            data :{
+                timeType : "${timeType}",
+                days : "${days}",
+                startTime : "${startTime}",
+                endTime : "${endTime}",
+                device : "${device}",
+                status : "${status}"
+            },
+            dataType : 'json',
+            success : function(d) {
+                var list = d.list;
+                var tbody = '';
+                var littleBody = '';
+                var loginNum = list[list.length-1].loginNum;
+                var newNum = list[list.length-1].newNum;
+                var ipNum = list[list.length-1].ipNum;
+                for(var i=0;i<list.length;i++){
+                	tbody += '<tr><td>'+list[i].province+'</td><td>'+list[i].loginNum+'</td><td>'+list[i].newNum+'</td><td>'+list[i].ipNum+'</td><td>'+list[i].interval1+'</td></tr>';
+                	if(i!=list.length-1&&i<10){
+                		if("${logType}"=="0"){
+                			littleBody += '<tr><td>'+(i+1)+'</td><td>'+list[i].province+'</td><td>'+list[i].loginNum+'</td><td>';
+                			var ratio = 0;
+                			if(loginNum!=0){
+                				ratio = ((list[i].loginNum/loginNum)*100).toFixed(2);
+                				littleBody += ratio+'%</td></tr>';
+                			}else{
+                				littleBody += '0%</td></tr>';
+                			}
+                			var province = {province_id:list[i].province_id,province:list[i].province,loginNum:list[i].loginNum,ratio:ratio}; 
+                			areass[i] = province;
+                		}else if("${logType}"=="1"){
+                			littleBody += '<tr><td>'+(i+1)+'</td><td>'+list[i].province+'</td><td>'+list[i].newNum+'</td><td>';
+                			var ratio = 0;
+                			if(newNum!=0){
+                				ratio = ((list[i].newNum/newNum)*100).toFixed(2);
+                				littleBody += ratio+'%</td></tr>';
+                			}else{
+                				littleBody += '0%</td></tr>';
+                			}
+                			var province = {province_id:list[i].province_id,province:list[i].province,newNum:list[i].newNum,ratio:ratio}; 
+                			areass[i] = province;
+                		}else if("${logType}"=="2"){
+                			littleBody += '<tr><td>'+(i+1)+'</td><td>'+list[i].province+'</td><td>'+list[i].ipNum+'</td><td>';
+                			var ratio = 0;
+                			if(ipNum!=0){
+                				ratio = ((list[i].ipNum/ipNum)*100).toFixed(2);
+                				littleBody += ratio+'%</td></tr>';
+                			}else{
+                				littleBody += '0%</td></tr>';
+                			}
+                			var province = {province_id:list[i].province_id,province:list[i].province,ipNum:list[i].ipNum,ratio:ratio}; 
+                			areass[i] = province;
+                		}
+                		
+                	}
+                }
+                $("#loginNum").html(loginNum);
+                $("#newNum").html(newNum);
+                $("#ipNum").html(ipNum);
+                $("#avgVisitInterval").html(list[list.length-1].interval1);
+                $("#littleBody").html(littleBody);
+                $("#databody").html(tbody);
+            }
+        });
+    });
+    var area={
+            "西藏":	"01427CC0-BA86-BF18-E870-DB61D89FBEE2",
+            "辽宁":	"0805994F-A5A9-96C4-6BA0-1D1BA3358C08",
+            "宁夏":	"08BCB6FF-16A6-DA60-2AAF-7294659DDF4A",
+            "海南":	"1389C760-61CD-7891-AB6E-FBF873EFD52C",
+            "四川":	"1764FE34-B1D1-E50C-9A70-2A7D9623ACDF",
+            "甘肃":	"18A92CF8-5F66-ABDE-BB42-B1ACCC4180EE",
+            "河北":	"18BC6799-6C22-9869-B28C-70B634AFA4E6",
+            "上海":	"1AEEC319-1AD8-38AB-292C-2F41A2B06A74",
+            "贵州":	"1D2B609A-9C56-B191-B78E-47F4FA3C8509",
+            "山西":	"2F5508BB-4978-D7A1-F70A-CD266A9955BE",
+            "新疆":	"3C2F72BF-23E9-2207-CE2D-B4720ED0F5A5",
+            "北京":	"3D7E21DF-34BF-FF4A-86E6-1A8348779C5F",
+            "天津":	"54FCDCB5-C817-78EE-D3EF-EA689B8F2C3F",
+            "湖南":	"5E50EF88-A9C0-A89D-DED6-D6729E5BC9B2",
+            "浙江":	"6A75DE1F-6365-E64B-3A58-30C2F5873ED5",
+            "广西":	"6E7A2C21-6617-70FB-096B-7B29C456CEEA",
+            "陕西":	"80D4AAD5-294E-F546-59D3-83FAB8B2575E",
+            "江苏":	"834EDAFF-9911-A363-5BF2-2780C2C8178C",
+            "河南":	"8A6FAF01-4D3B-01E6-B0B4-A6736E32CE68",
+            "江西":	"90E49B37-92D5-E5CF-F791-A5AB644885F0",
+            "福建":	"95E54387-9DE6-E242-C9AD-ED1F6197334D",
+            "安徽":	"9812E94D-5778-23BF-8951-244FFBE46E13",
+            "云南":	"98A51568-7E00-4751-4A56-E1C149C602E6",
+            "青海":	"A48BAC63-278F-347E-83AD-1802814011AB",
+            "山东":	"B05F1657-A112-2044-D722-A65C258B323F",
+            "重庆":	"B12117E8-2AF2-7255-2FDD-2A0D4288108C",
+            "吉林":	"CAA73610-4E08-55D5-6C10-F5C6CAC54EEC",
+            "内蒙古":	"CF81131C-8034-3724-1B3C-493EBD8BC4CA",
+            "湖北":	"E46DBE24-FD56-E812-6710-E5F997E517EC",
+            "广东":	"F5A5D471-3372-C892-227F-CCAC4B4B6B0F",
+            "黑龙江":	"FE11ADA4-1E93-78D2-DBEC-DD4FE22CF50B",
+        };
+
+  //基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('arealDistribution'));
+    var option = {
+            tooltip: {
+//                        show: false //不显示提示标签
+                backgroundColor:"#000",//提示标签背景颜色
+                textStyle:{color:"#e1e1e1"}, //提示标签字体颜色
+                formatter: function(params){
+                	var f = params.name+'<br/>';
+                	//1、使用eval方法
+                    //var province_id=eval('area.name'); 
+                    //console.log(province_id);
+                   
+               
+                     for(var i=0;i<areass.length;i++){
+                    	 for(var n in area){
+                     		if(n==params.name){
+                     			if(areass[i].province_id==area[n]){
+                             		f += '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#3398DB"></span>';
+                             		if("${logType}"=="0"){
+                             			f += '登录数:'+areass[i].loginNum+'<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#3398DB"></span>占比:'+areass[i].ratio;
+                             		}else if("${logType}"=="1"){
+                             			f += '新增数:'+areass[i].newNum+'<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#3398DB"></span>占比:'+areass[i].ratio;
+                             		}else if("${logType}"=="2"){
+                             			f += 'IP数:'+areass[i].ipNum+'<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#3398DB"></span>占比:'+areass[i].ratio;
+                             		}
+                             		break;
+                             	} 
+                     		}          	
+                         } 	 
+                     }
+               
+                	return f; 
+                	
+                } //提示标签格式
+            },
+            series: [{
+                type: 'map',
+                mapType: 'china',
+//                roam: true,  //地图是否支持放大缩小
+                label: {
+                    normal: {
+                        show: true,//显示省份标签
+                        textStyle:{color:"#CAE1FF"}//省份标签字体颜色
+                    },
+                    emphasis: {//对应的鼠标悬浮效果
+                        show: true,
+                        textStyle:{color:"#FFFF00"}
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        borderWidth: .5,//区域边框宽度
+                        borderColor: '#FFFFFF',//区域边框颜色
+                        areaColor:"#DBDBDB",//区域颜色
+                    },
+                    emphasis: {
+                        borderWidth: .5,
+                        borderColor: '#FFFFFF',
+                        areaColor:"#FFFF00",
+
+                    }
+                },
+                data:[
+                    //     {name:'北京', selected:true}//北京为选中状态
+                ]
+            }],
+        };
+        myChart.setOption(option);
+        myChart.on('click', function (params) {
+        	var name = params.name;
+            if(name=="台湾"){
+                alert("暂无数据");
+                return false;
+            }
+            //1、使用eval方法
+            var province_id=eval('area.'+name);
+            console.log(province_id);
+            /* for(var i=0;i<areass.length;i++){
+            	console.log(areass[i]);
+            } */
+        });
+        /* myChart.on('click', function (params) {    //params为省名称
+            var name = params.name;
+            $("#p_name").html(name);
+
+            if(name=="台湾"){
+                alert("暂无数据");
+                return false;
+            }
+            //1、使用eval方法
+            var area_id=eval('area.'+name);
+
+            $.ajax ({
+                type:"post",
+                url: '${pageContext.request.contextPath}/community/ajax_city.action?area_id='+area_id,
+                dataType: "html",
+                success: callback
+
+            });
+
+            function callback(html) {
+                $(".popover-content").html("");
+                $(".popover-content").html(html);
+                $("#popover").modal();
+            }
+        });
+    	 */
+    /* myChart.showLoading();
+    fetchData(function(data) {
+        myChart.hideLoading();
+        var seriesFetchData = [{
+            // 根据名字对应到相应的系列
+            name : legend0,
+            data : data.newNum
+        }];
+        myChart.setOption({
+            xAxis : {
+                data : data.interval1
+            },
+            series : seriesFetchData
+        });
+    });
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    
+    function fetchData(cb) {
+		// 通过 setTimeout 模拟异步加载
+		setTimeout(function() {
+			cb({
+				interval1 : interval1,
+				newNum : newNum,
+			});
+		}, 1000);
+	} */
+    function queryByTimeType(value){
+        $("#timeType").val(value);
+        $('input[name="days"]').val("");
+        $('input[name="startTime"]').val("");
+        $('input[name="endTime"]').val("");
+        if(value=="0"||value=="1"){
+            $("#isDuration").val("1");
+        }else if(value=="2"||value=="3"){
+            $("#isDuration").val("0");
+        }
+        $("#stupid").submit();
+    }
+    function doDuration(obj){
+        isDuration = obj.value;
+        if(isDuration=="0"){//是时间段
+            $("#duration").show();
+            $("#single").hide();
+        }else if(isDuration=="1"){//是单一时间
+            $("#startTime").val("");//没用
+            $("#endTime").val("");//没用
+            $("#duration").hide();
+            $("#single").show();
+        }
+    }
+    function onSelect(date){
+        var isDuration = $("#isDuration").val();
+        if(isDuration=="1"){//single
+            //直接清空timeType，若是今天或昨天给timeType赋值
+            $("#timeType").val("");
+            var days = $('input[name="days"]').val();
+            var today = new Date();
+            var yesterday = new Date(today - 1000 * 60 * 60 * 24);
+            var chooseday = new Date(days);
+            if(chooseday.toDateString() === today.toDateString()){//今天
+                $("#timeType").val(0);
+            }
+            if (yesterday.getYear() === chooseday.getYear() && yesterday.getMonth() === chooseday.getMonth() && yesterday.getDate() === chooseday.getDate()) {
+                $("#timeType").val(1);
+            }
+            $("#stupid").submit();
+        }else if(isDuration=="0"){
+            var startTime = $('input[name="startTime"]').val();
+            var endTime = $('input[name="endTime"]').val();
+            if(startTime!=""&&endTime!=""){
+                if(startTime<endTime){
+                    //直接清空timeType，若是最近7天或最近30天给timeType赋值
+                    $("#timeType").val("");
+                    var start = new Date(startTime).getTime();
+                    var end = new Date(endTime).getTime();
+                    var now = new Date().getTime();
+                    var days1 = parseInt((now-end)/(1000 * 60 * 60 * 24));
+                    var days2 = parseInt((end-start)/(1000 * 60 * 60 * 24));
+                    if(days2==6){//最近7天
+                        if(days1==0){
+                            $("#timeType").val("2");
+                        }
+                    }else if(days2==29){//最近30天
+                        if(days1==0){
+                            $("#timeType").val("3");
+                        }
+                    }
+                    $("#stupid").submit();
+                }else{
+                    parent.sy.messagerShow({
+                        msg : "开始时间必须小于结束时间！！",
+                        title : '提示'
+                    });
+                }
+            }
+        }
+
+    }
+    function queryByDevice(value){
+        if(value!=null&&value!=""){
+            $("#device").val(value);
+            $("#stupid").submit();
+        }
+    }
+    function queryByLogType(obj){
+    	$("#logType").val(obj.value);
+    	$("#stupid").submit();
+    }
+    
+    function queryByStatus(value){
+    	$("#status").val(value);
+    	$("#stupid").submit();
+    }
+    
+</script>
+
+</body>
+
+</html>

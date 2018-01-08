@@ -1,0 +1,279 @@
+package cn.bnsr.edu_yun.util;
+
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.csource.common.NameValuePair;
+import org.csource.fastdfs.ClientGlobal;
+import org.csource.fastdfs.StorageClient1;
+import org.csource.fastdfs.StorageServer;
+import org.csource.fastdfs.TrackerClient;
+import org.csource.fastdfs.TrackerServer;
+import org.csource.fastdfs.UploadStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+
+import cn.bnsr.edu_yun.frontstage.base.view.UserFile;
+import cn.bnsr.edu_yun.servlet.FormDataServlet;
+import cn.bnsr.edu_yun.servlet.Range;
+import cn.bnsr.edu_yun.servlet.StreamServlet;
+
+/**
+ * 上传文件处理工具类
+ */
+public class IoUtil {
+	private final static Logger log = LoggerFactory.getLogger(IoUtil.class);
+
+	static final Pattern RANGE_PATTERN = Pattern.compile("bytes \\d+-\\d+/\\d+");
+	
+	/**
+	 * 根据密钥，生成一个文件（如果不存在，则创建一个新的文件。
+	 * @param key
+	 * @return
+	 * @throws IOException
+	 */
+	public static File getFile(String key) throws IOException {
+		return getFile(key, null,null);
+	}
+	
+	/**
+	 * 根据密钥，生成一个文件（如果不存在，则创建一个新的文件。
+	 * @param key
+	 * @param 完整路径的文件的相对路径(比如 `a../bxx/wenjian.txt`)
+	 * @return
+	 * @throws IOException
+	 */
+	public static File getFile(String key, String fullPath,HttpServletRequest req) throws IOException {
+		if (key == null || key.isEmpty())
+			return null;
+		String folder = "";
+		if (fullPath != null && !fullPath.isEmpty()
+				&& fullPath.indexOf("/") > 0) {
+			int index = fullPath.lastIndexOf("/");
+			folder = fullPath.substring(0, index).replaceAll("/", File.separator);
+		}
+		File f = new File(ConfigInfo.getString("stream_file_repository") + File.separator + folder + File.separator + key);
+		if (!f.getParentFile().exists())
+			f.getParentFile().mkdirs();
+		if (!f.exists()){
+			f.createNewFile();
+		}
+		return f;
+	}
+
+	/**
+	 * 获得文件
+	 * @param key
+	 * @return
+	 * @throws FileNotFoundException
+	 */
+	public static File getTokenedFile(String key) throws FileNotFoundException {
+		if (key == null || key.isEmpty())
+			return null;
+
+		File f = new File(ConfigInfo.getString("stream_file_repository") + File.separator + key);
+		if (!f.getParentFile().exists())
+			f.getParentFile().mkdirs();
+		if (!f.exists())
+			throw new FileNotFoundException("File `" +f + "` not exist.");
+		
+		return f;
+	}
+	
+	/**
+	 * 关闭输入输出流
+	 * @param stream
+	 */
+	public static void close(Closeable stream) {
+		try {
+			if (stream != null)
+				stream.close();
+		} catch (IOException e) {
+		}
+	}
+	
+	/**
+	 * 获取Range参数
+	 * @param req
+	 * @return
+	 * @throws IOException
+	 */
+	public static Range parseRange(HttpServletRequest req) throws IOException {
+		String range = req.getHeader(StreamServlet.CONTENT_RANGE_HEADER);
+		Matcher m = RANGE_PATTERN.matcher(range);
+		if (m.find()) {
+			range = m.group().replace("bytes ", "");
+			String[] rangeSize = range.split("/");
+			String[] fromTo = rangeSize[0].split("-");
+
+			long from = Long.parseLong(fromTo[0]);
+			long to = Long.parseLong(fromTo[1]);
+			long size = Long.parseLong(rangeSize[1]);
+
+			return new Range(from, to, size);
+		}
+		throw new IOException("Illegal Access!");
+	}
+
+	/**
+	 * 从输入流、写数据到文件。
+	 */
+	public static long streaming(InputStream in, String key, String fileName) throws IOException {
+		OutputStream out = null;
+		long size = 0;
+		try {
+			File f = getFile(key);
+			out = new FileOutputStream(f);
+
+			int read = 0;
+			final byte[] bytes = new byte[FormDataServlet.BUFFER_LENGTH];
+			while ((read = in.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+			out.flush();
+			/** 重命名文件 */
+			f.renameTo(getFile(fileName));
+			
+			size = getFile(fileName).length();
+		} finally {
+			close(out);
+		}
+		return size;
+	}
+	
+	public static void uploadFastDFS(File file,HttpServletRequest req) throws FileNotFoundException, IOException, Exception{
+		 //fastDFS方式  
+		int pre = (int) System.currentTimeMillis();  
+		ClassPathResource cpr = new ClassPathResource("fdfs_client.conf");  
+        ClientGlobal.init(cpr.getClassLoader().getResource("fdfs_client.conf").getPath());  
+        long fileLength = file.length();
+        InputStream inStream = new FileInputStream(file);
+	    UploadStream uploadStream = new UploadStream(inStream, fileLength);
+	   
+       // byte[] fileBuff = file.getBytes();  
+        String fileId = "";  
+        String tempFileName = file.getName();
+		String fileExtName = tempFileName.substring(tempFileName.lastIndexOf("."));  
+        log.info("====路径:"+file.getPath());    
+        //建立连接  
+        TrackerClient tracker = new TrackerClient();  
+        TrackerServer trackerServer = tracker.getConnection();  
+        StorageServer storageServer = null;  
+        StorageClient1 client = new StorageClient1(trackerServer, storageServer);  
+        
+        //设置元信息  
+        NameValuePair[] metaList = new NameValuePair[3];  
+        metaList[0] = new NameValuePair("fileName", tempFileName);  
+        metaList[1] = new NameValuePair("fileExtName", fileExtName);  
+        metaList[2] = new NameValuePair("fileLength", String.valueOf(fileLength));  
+        
+        //上传文件  
+        fileId = client.upload_file1("group1", fileLength, uploadStream, fileExtName, metaList);
+        log.info("====返回文件路径："+fileId);
+
+        inStream.close();
+        trackerServer.close();
+        int finaltime = (int) System.currentTimeMillis();  
+        log.info("====用时：" + (finaltime - pre)); 
+        
+        //转换文件生成缩略图，返回绝对路径
+        //文件原始名路径，文件服务器上名路径
+        String  fileImage = "";
+        if(fileId!=null){
+        	//fileImage = converFile(file.getPath(),fileId);
+            
+            //暂存tomcat，项目下，相对路径
+    		String filePath=ConfigInfo.getString("stream_file_repository");
+    		if(fileImage.contains(filePath)){
+    			fileImage = fileImage.replace(filePath, "");
+    		}
+        }
+        
+	 	HttpSession session = req.getSession();
+    	UserFile userFile = (UserFile) session.getAttribute("userFile");
+    	String filePaths = "";
+    	String fileNames = "";
+    	String fileLengths = "";
+    	String fileImages = "";
+		if(userFile == null){//第一次文件集合为空
+			if(fileId!=null && !fileId.equals("null")){
+				UserFile ufile = new UserFile();
+				ufile.setFilePaths(fileId);
+				ufile.setFileLengths(fileLength+"");
+				ufile.setFileNames(tempFileName);
+				ufile.setFileImages(fileImage);
+				session.setAttribute("userFile", ufile);
+			}
+		}else{//第二次累加
+			if(fileId==null){
+				session.setAttribute("userFile", userFile);
+			}else{
+				filePaths = userFile.getFilePaths()+","+fileId;
+				fileNames = userFile.getFileNames()+","+tempFileName;
+				fileLengths = userFile.getFileLengths()+","+fileLength;
+				fileImages = userFile.getFileImages()+","+fileImage;
+				UserFile ufile = new UserFile();
+				ufile.setFileNames(fileNames);
+				ufile.setFilePaths(filePaths);
+				ufile.setFileLengths(fileLengths);
+				ufile.setFileImages(fileImages);
+				session.setAttribute("userFile", ufile);
+			}
+		}
+	}
+	/**
+	 * 文件原始名路径，
+	 * 文件服务器上名路径
+	 * 返回图片名
+	 */
+	public static String converFile(String fileId,String fastId) {
+		int index = 0;
+		if(fileId.contains("/")){//linux
+			index = fileId.lastIndexOf("/");
+		}else{//windows
+			index = fileId.lastIndexOf("\\");
+		}
+		//文件名不带后缀
+		String name = fastId.substring(fastId.lastIndexOf("/")+1,fastId.lastIndexOf("."));
+		
+		ConverPdf c = new ConverPdf();
+		String filePath=ConfigInfo.getString("stream_file_repository");
+		String fileName=fileId.substring(index+1,fileId.length());
+		//转换pdf
+		String pdfPath = c.beginConvert(filePath, fileName,name);
+		String imgPath = "";
+		if(!pdfPath.equals("0")){//转换pdf成功
+			ConverImage ci = new ConverImage();
+			String outFile = ConfigInfo.getString("stream_file_repository")+File.separator+name+".jpg";
+			//转换图片
+			imgPath =  ci.pdfToJPG(pdfPath, outFile);
+			if(!imgPath.equals("0")){//转换img成功
+				return imgPath;
+			}
+		}
+		return "0"; 
+	}
+	
+	public static void main(String[] args) {
+		/*String fileId = "group1/M00/00/21/wKgK_FfaBnGAdxHLAAFuAMZRU7820..doc";
+	
+		String fileId = "/opt/resumeUpload/pdf/dd.doc";
+		String fileId1 = "D:\\resumeUpload\\pdf\\dd.doc";
+			String fielPath = fileId.substring(0,index+1);
+		String fileName = fileId.substring(fileId.lastIndexOf("/")+1,fileId.length());
+		System.out.println("..+"+fielPath);
+		System.out.println("..+"+fileName);*/
+	}
+}

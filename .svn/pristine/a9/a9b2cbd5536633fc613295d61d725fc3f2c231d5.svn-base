@@ -1,0 +1,160 @@
+package cn.bnsr.edu_yun.frontstage.train.view;
+
+import java.util.Date;
+
+import cn.bnsr.edu_yun.backstage.base.view.PageBase;
+
+public class PlanView extends PageBase{
+	
+	private Long id;
+	
+	private String name;
+	
+	private Long community_id;
+	
+	private Integer credit;
+	
+	private Integer hour;
+	
+	private Date start_time;
+	
+	private Long user_id;
+	
+	private Date create_time;
+	
+	private Integer status;
+	
+	private Date end_time;
+	
+	private int source_type;
+
+	private String paging;
+	
+	private int stamp;
+	
+	private int sort_type;//0-创建时间 1-学时 2-学分
+	
+	private int sort_desc;//0-是 1-否
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Long getCommunity_id() {
+		return community_id;
+	}
+
+	public void setCommunity_id(Long community_id) {
+		this.community_id = community_id;
+	}
+
+	public Integer getCredit() {
+		return credit;
+	}
+
+	public void setCredit(Integer credit) {
+		this.credit = credit;
+	}
+
+	public Integer getHour() {
+		return hour;
+	}
+
+	public void setHour(Integer hour) {
+		this.hour = hour;
+	}
+
+	public Date getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(Date start_time) {
+		this.start_time = start_time;
+	}
+
+	public Long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
+	}
+
+	public Date getCreate_time() {
+		return create_time;
+	}
+
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Date getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(Date end_time) {
+		this.end_time = end_time;
+	}
+	
+	public int getSource_type() {
+		return source_type;
+	}
+	
+	public void setSource_type(int source_type) {
+		this.source_type = source_type;
+	}
+
+	public void setPaging(String paging) {
+		this.paging = paging;
+	}
+	
+	public String getPaging() {
+		return paging;
+	}
+	
+	public void setStamp(int stamp) {
+		this.stamp = stamp;
+	}
+	
+	public int getStamp() {
+		return stamp;
+	}
+
+	public int getSort_type() {
+		return sort_type;
+	}
+
+	public void setSort_type(int sort_type) {
+		this.sort_type = sort_type;
+	}
+
+	public int getSort_desc() {
+		return sort_desc;
+	}
+
+	public void setSort_desc(int sort_desc) {
+		this.sort_desc = sort_desc;
+	}
+	
+	
+}
